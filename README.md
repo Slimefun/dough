@@ -1,37 +1,6 @@
 # CS-CoreLib2
 This is an updated (LITE) Version of CS-CoreLib. Instead of being a dependency, it should be shaded instead.
 
-# Features
-This Library contains the following Features / Packages:
-
-## Configs and Localization
-```xml
-<include>io.github.thebusybiscuit.cscorelib2.config.*</include>
-```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Config)
-
-## Reflection
-```xml
-<include>io.github.thebusybiscuit.cscorelib2.reflection.*</include>
-```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Reflection)
-
-## Databases (SQL)
-```xml
-<include>io.github.thebusybiscuit.cscorelib2.database.*</include>
-```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Database)
-
-## Protection Plugins Hook
-```xml
-<include>io.github.thebusybiscuit.cscorelib2.protection.*</include>
-```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Protection)
-
 # Integrating CS-CoreLib2 into your own Plugin
 This part presupposes that you have [Maven](https://maven.apache.org/download.cgi) installed and know how to handle your pom.xml
 
@@ -182,3 +151,34 @@ Your pom.xml should now look like this:
 
 </project>
 ```
+
+# Features
+This Library contains the following Features / Packages:
+
+### Configs and Localization
+```xml
+<include>io.github.thebusybiscuit.cscorelib2.config.*</include>
+```
+
+For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Config)
+
+### Reflection
+```xml
+<include>io.github.thebusybiscuit.cscorelib2.reflection.*</include>
+```
+
+For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Reflection)
+
+### Databases (SQL)
+```xml
+<include>io.github.thebusybiscuit.cscorelib2.database.*</include>
+```
+
+For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Database)
+
+### Protection Plugins Hook
+```xml
+<include>io.github.thebusybiscuit.cscorelib2.protection.*</include>
+```
+
+For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Protection)
