@@ -40,10 +40,10 @@ public class BukkitUpdater {
 	protected int timeout = 5000;
 	
 	@Setter
-	protected UpdateCheck predicate = (local, remote) -> {
-		if (local.equals(remote)) return false;
+	protected UpdateCheck predicate = (installed, remote) -> {
+		if (installed.equals(remote)) return false;
 		
-		String[] localSplit = local.split("\\.");
+		String[] localSplit = installed.split("\\.");
         String[] remoteSplit = remote.split("\\.");
         
         for (int i = 0; i < remoteSplit.length; i++) {
