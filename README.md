@@ -21,8 +21,8 @@ You can use "master-SNAPSHOT" to always use the latest Version, otherwise have a
 
 ```xml
 <dependency>
-  <groupId>io.github.thebusybiscuit</groupId>
-  <artifactId>CSCoreLib2</artifactId>
+  <groupId>com.github.thebusybiscuit</groupId>
+  <artifactId>CS-CoreLib2</artifactId>
   <version>master-SNAPSHOT</version>
 </dependency>
 ```
@@ -108,8 +108,8 @@ Your pom.xml should now look like this:
     </dependency>
     
     <dependency>
-      <groupId>io.github.thebusybiscuit</groupId>
-      <artifactId>CSCoreLib2</artifactId>
+      <groupId>com.github.thebusybiscuit</groupId>
+      <artifactId>CS-CoreLib2</artifactId>
       <version>master-SNAPSHOT</version>
     </dependency>
   </dependencies>
