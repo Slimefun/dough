@@ -134,6 +134,7 @@ Your pom.xml should now look like this:
                   <include>io.github.thebusybiscuit.cscorelib2.config.*</include>
                   <include>io.github.thebusybiscuit.cscorelib2.database.*</include>
               </includes>
+            </relocation>
           </relocations>
         </configuration>
 
