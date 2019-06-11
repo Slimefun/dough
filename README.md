@@ -168,3 +168,6 @@ See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Inf
 ```xml
 <include>io.github.thebusybiscuit.cscorelib2.protection.*</include>
 ```
+```xml
+<include>io.github.thebusybiscuit.cscorelib2.updater.*</include>
+```
