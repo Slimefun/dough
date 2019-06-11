@@ -158,16 +158,8 @@ See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Inf
 
 ```xml
 <include>io.github.thebusybiscuit.cscorelib2.config.*</include>
-```
-```xml
 <include>io.github.thebusybiscuit.cscorelib2.reflection.*</include>
-```
-```xml
 <include>io.github.thebusybiscuit.cscorelib2.database.*</include>
-```
-```xml
 <include>io.github.thebusybiscuit.cscorelib2.protection.*</include>
-```
-```xml
 <include>io.github.thebusybiscuit.cscorelib2.updater.*</include>
 ```
