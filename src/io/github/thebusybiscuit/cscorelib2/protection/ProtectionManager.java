@@ -26,19 +26,6 @@ public class ProtectionManager {
 	
 	private final Set<ProtectionModule> modules = new HashSet<>();
 
-	public void registerModule(String name, ProtectionModule module) {
-		this.modules.add(module);
-		this.loadModuleMSG(name);
-	}
-
-	public void registerModule(ProtectionModule module) {
-		registerModule(module.getName(), module);
-	}
-
-	private void loadModuleMSG(String module) {
-		System.out.println("[CS-CoreLib - Protection] Loaded Protection Module \"" + module + "\"");
-	}
-
 	public ProtectionManager(Server server) {
 		if (server.getPluginManager().isPluginEnabled("WorldGuard") && server.getPluginManager().isPluginEnabled("WorldEdit")) {
 			registerModule(new WorldGuardProtectionModule());
@@ -82,6 +69,19 @@ public class ProtectionManager {
 		if (server.getPluginManager().isPluginEnabled("BentoBox")) {
 			registerModule(new BentoBoxProtectionModule());
 		}
+	}
+
+	public void registerModule(String name, ProtectionModule module) {
+		this.modules.add(module);
+		this.loadModuleMSG(name);
+	}
+
+	public void registerModule(ProtectionModule module) {
+		registerModule(module.getName(), module);
+	}
+
+	protected void loadModuleMSG(String module) {
+		System.out.println("[CS-CoreLib - Protection] Loaded Protection Module \"" + module + "\"");
 	}
 
 	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull Action action) {

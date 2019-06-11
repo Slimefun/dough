@@ -13,6 +13,11 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 
 public class PlotSquaredProtectionModule implements ProtectionModule {
+
+	@Override
+	public String getName() {
+		return "PlotSquared";
+	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, org.bukkit.Location l, Action action) {
@@ -31,11 +36,6 @@ public class PlotSquaredProtectionModule implements ProtectionModule {
 			default:
 				return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_BUILD_UNOWNED);
 		}
-	}
-
-	@Override
-	public String getName() {
-		return "PlotSquared";
 	}
 }
 	

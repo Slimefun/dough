@@ -11,6 +11,11 @@ import net.sacredlabyrinth.Phaed.PreciousStones.api.IApi;
 public class PreciousStonesProtectionModule implements ProtectionModule {
 
 	private IApi api = PreciousStones.API();
+
+    @Override
+    public String getName() {
+        return "PreciousStones";
+    }
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
@@ -26,9 +31,4 @@ public class PreciousStonesProtectionModule implements ProtectionModule {
 				return false;
         }
 	}
-
-    @Override
-    public String getName() {
-        return "PreciousStones";
-    }
 }

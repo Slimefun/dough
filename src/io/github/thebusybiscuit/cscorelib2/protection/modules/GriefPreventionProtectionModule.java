@@ -9,11 +9,19 @@ import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
 public class GriefPreventionProtectionModule implements ProtectionModule {
+
+	@Override
+	public String getName() {
+		return "GriefPrevention";
+	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
 		Claim claim = GriefPrevention.instance.dataStore.getClaimAt(l, true, null);
+		
 		if (claim == null) return true;
+		if (p.getUniqueId().equals(claim.ownerID)) return true;
+		
 		if (!(p instanceof Player)) return false;
 		
 		switch (action) {
@@ -25,11 +33,6 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
 			default:
 				return claim.allowBuild((Player) p, l.getBlock().getType()) == null;
 		}
-	}
-
-	@Override
-	public String getName() {
-		return "GriefPrevention";
 	}
 
 }

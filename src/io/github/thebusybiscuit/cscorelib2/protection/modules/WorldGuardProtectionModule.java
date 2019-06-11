@@ -16,6 +16,11 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 
 	private WorldGuardPlugin worldguard = WorldGuardPlugin.inst();
 	private RegionContainer manager = WorldGuard.getInstance().getPlatform().getRegionContainer();
+
+	@Override
+	public String getName() {
+		return "WorldGuard";
+	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
@@ -34,10 +39,5 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 			default:
 				return Flags.BUILD;
 		}
-	}
-	
-	@Override
-	public String getName() {
-		return "WorldGuard";
 	}
 }

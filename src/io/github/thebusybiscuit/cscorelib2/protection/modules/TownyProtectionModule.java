@@ -11,6 +11,11 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class TownyProtectionModule implements ProtectionModule {
 
+    @Override
+    public String getName() {
+        return "Towny";
+    }
+
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
 		if (!(p instanceof Player)) return false;
@@ -30,10 +35,5 @@ public class TownyProtectionModule implements ProtectionModule {
 				return ActionType.BUILD;
 		}
 	}
-
-    @Override
-    public String getName() {
-        return "Towny";
-    }
 
 }

@@ -9,6 +9,11 @@ import org.yi.acru.bukkit.Lockette.Lockette;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class LocketteProtectionModule implements ProtectionModule{
+
+	@Override
+	public String getName() {
+		return "Lockette";
+	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
@@ -22,11 +27,6 @@ public class LocketteProtectionModule implements ProtectionModule{
 			}
 		}
 		else return false;
-	}
-
-	@Override
-	public String getName() {
-		return "Lockette";
 	}
 
 }
