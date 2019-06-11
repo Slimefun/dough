@@ -24,7 +24,6 @@ You can use "master-SNAPSHOT" to always use the latest Version, otherwise have a
   <groupId>io.github.thebusybiscuit</groupId>
   <artifactId>CSCoreLib2</artifactId>
   <version>master-SNAPSHOT</version>
-  <scope>compile</scope>
 </dependency>
 ```
 
@@ -112,7 +111,6 @@ Your pom.xml should now look like this:
       <groupId>io.github.thebusybiscuit</groupId>
       <artifactId>CSCoreLib2</artifactId>
       <version>master-SNAPSHOT</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
 
