@@ -152,33 +152,19 @@ Your pom.xml should now look like this:
 </project>
 ```
 
-# Features
-This Library contains the following Features / Packages:
+# Packages
+This Library contains the following Packages:
+See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Info on what each Package does.
 
-### Configs and Localization
 ```xml
 <include>io.github.thebusybiscuit.cscorelib2.config.*</include>
 ```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Config)
-
-### Reflection
 ```xml
 <include>io.github.thebusybiscuit.cscorelib2.reflection.*</include>
 ```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Reflection)
-
-### Databases (SQL)
 ```xml
 <include>io.github.thebusybiscuit.cscorelib2.database.*</include>
 ```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Database)
-
-### Protection Plugins Hook
 ```xml
 <include>io.github.thebusybiscuit.cscorelib2.protection.*</include>
 ```
-
-For more Info, see the [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/Protection)
