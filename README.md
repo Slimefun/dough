@@ -43,10 +43,10 @@ Add the following to your ```<builds>``` section:
         <relocation>
           <pattern>io.github.thebusybiscuit.cscorelib2</pattern>
           <shadedPattern>YOUR.PACKAGE.NAME.HERE.cscorelib2</shadedPattern>
-          <includes>
-            <!-- This Part will be discussed in step 4 -->
-          </includes>
       </relocations>
+      <filters>
+      <!-- This will become important in Step 4 -->  
+      </filters>
     </configuration>
 
     <executions>
@@ -69,10 +69,15 @@ See Step 2 for a full List of all packages.
 Once you found the ones you need, add their package as an ```<include>``` tag like this:
 
 ```xml
-<includes>
-  <include>io.github.thebusybiscuit.cscorelib2.database.*</include>
-  <include>io.github.thebusybiscuit.cscorelib2.reflection.*</include>
-</includes>
+<filters>
+  <filter>
+    <artifact>com.github.thebusybiscuit:CS-CoreLib2</artifact>
+    <includes>
+      <include>**/cscorelib2/config/**</include>
+      <include>**/cscorelib2/updater/**</include>
+    </includes>
+  </filter>
+</filters>
 ```
 
 ## 5. You are done
@@ -126,14 +131,17 @@ Your pom.xml should now look like this:
             <relocation>
               <pattern>io.github.thebusybiscuit.cscorelib2</pattern>
               <shadedPattern>me.somebody.pluginname.cscorelib2</shadedPattern>
-              <includes>
-                  <include>io.github.thebusybiscuit.cscorelib2.protection.*</include>
-                  <include>io.github.thebusybiscuit.cscorelib2.reflection.*</include>
-                  <include>io.github.thebusybiscuit.cscorelib2.config.*</include>
-                  <include>io.github.thebusybiscuit.cscorelib2.database.*</include>
-              </includes>
             </relocation>
           </relocations>
+          <filters>
+            <filter>
+              <artifact>com.github.thebusybiscuit:CS-CoreLib2</artifact>
+              <includes>
+                <include>**/cscorelib2/config/**</include>
+                <include>**/cscorelib2/updater/**</include>
+              </includes>
+            </filter>
+          </filters>
         </configuration>
 
         <executions>
@@ -156,9 +164,9 @@ This Library contains the following Packages:
 See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Info on what each Package does.
 
 ```xml
-<include>io.github.thebusybiscuit.cscorelib2.config.*</include>
-<include>io.github.thebusybiscuit.cscorelib2.reflection.*</include>
-<include>io.github.thebusybiscuit.cscorelib2.database.*</include>
-<include>io.github.thebusybiscuit.cscorelib2.protection.*</include>
-<include>io.github.thebusybiscuit.cscorelib2.updater.*</include>
+<include>**/cscorelib2/config/**</include>
+<include>**/cscorelib2/updater/**</include>
+<include>**/cscorelib2/database/**</include>
+<include>**/cscorelib2/reflection/**</include>
+<include>**/cscorelib2/protection/**</include>
 ```
