@@ -40,32 +40,34 @@ public class BukkitUpdater {
 	protected int timeout = 5000;
 	
 	@Setter
-	protected UpdateCheck predicate = (installed, remote) -> {
-		if (installed.equals(remote)) return false;
-		
-		String[] localSplit = installed.split("\\.");
-        String[] remoteSplit = remote.split("\\.");
-        
-        for (int i = 0; i < remoteSplit.length; i++) {
-        	if ((localSplit.length - 1) < i) {
-        		return true;
-        	}
-        	if (Integer.parseInt(localSplit[i]) > Integer.parseInt(remoteSplit[i])) {
-        		return false;
-        	}
-        	if (Integer.parseInt(remoteSplit[i]) > Integer.parseInt(localSplit[i])) {
-        		return true;
-        	}
-        }
-        
-        return false;
-	};
+	protected UpdateCheck predicate;
 	
 	public BukkitUpdater(Plugin plugin, File file, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		this.file = file;
 		localVersion = plugin.getDescription().getVersion();
+		
+		this.predicate = (local, remote) -> {
+			if (local.equals(remote)) return false;
+			
+			String[] localSplit = local.split("\\.");
+	        String[] remoteSplit = remote.split("\\.");
+	        
+	        for (int i = 0; i < remoteSplit.length; i++) {
+	        	if ((localSplit.length - 1) < i) {
+	        		return true;
+	        	}
+	        	if (Integer.parseInt(localSplit[i]) > Integer.parseInt(remoteSplit[i])) {
+	        		return false;
+	        	}
+	        	if (Integer.parseInt(remoteSplit[i]) > Integer.parseInt(localSplit[i])) {
+	        		return true;
+	        	}
+	        }
+	        
+	        return false;
+		};
 		
 		// Checking if current Version is a dev-build
 		for (String dev: development_builds) {
