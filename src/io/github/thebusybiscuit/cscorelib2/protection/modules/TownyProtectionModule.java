@@ -11,10 +11,10 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class TownyProtectionModule implements ProtectionModule {
 
-    @Override
-    public String getName() {
-        return "Towny";
-    }
+	@Override
+	public String getName() {
+		return "Towny";
+	}
 
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
@@ -24,7 +24,7 @@ public class TownyProtectionModule implements ProtectionModule {
 		return PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), convert(action));
 	}
 	
-    private ActionType convert(Action action) {
+	private ActionType convert(Action action) {
 		switch (action) {
 			case BREAK_BLOCK:
 				return ActionType.DESTROY;
