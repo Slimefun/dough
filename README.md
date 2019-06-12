@@ -137,8 +137,8 @@ Your pom.xml should now look like this:
             <filter>
               <artifact>com.github.thebusybiscuit:CS-CoreLib2</artifact>
               <includes>
-                <include>**/cscorelib2/config/**</include>
-                <include>**/cscorelib2/updater/**</include>
+                <include>**/thebusybiscuit/cscorelib2/config/**</include>
+                <include>**/thebusybiscuit/cscorelib2/updater/**</include>
               </includes>
             </filter>
           </filters>
@@ -164,9 +164,9 @@ This Library contains the following Packages:
 See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Info on what each Package does.
 
 ```xml
-<include>**/cscorelib2/config/**</include>
-<include>**/cscorelib2/updater/**</include>
-<include>**/cscorelib2/database/**</include>
-<include>**/cscorelib2/reflection/**</include>
-<include>**/cscorelib2/protection/**</include>
+<include>**/thebusybiscuit/cscorelib2/config/**</include>
+<include>**/thebusybiscuit/cscorelib2/updater/**</include>
+<include>**/thebusybiscuit/cscorelib2/database/**</include>
+<include>**/thebusybiscuit/cscorelib2/reflection/**</include>
+<include>**/thebusybiscuit/cscorelib2/protection/**</include>
 ```
