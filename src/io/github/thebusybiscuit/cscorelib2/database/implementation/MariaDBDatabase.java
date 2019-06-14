@@ -12,7 +12,7 @@ public class MariaDBDatabase extends AuthenticatedSQLDatabase<MariaDBDatabase> {
 	
 	@Override
 	public String getType() {
-		return "MySQL";
+		return "MariaDB";
 	}
 	
 	@Override
