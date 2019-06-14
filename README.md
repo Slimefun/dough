@@ -65,7 +65,7 @@ Add the following to your ```<builds>``` section:
 It is very important that you changed your ```<shadedPattern>``` tag to a path WITHIN your project.
 (e.g.   com.something.project.cscorelib2   )
 Now you just need to select the packages you want to include.
-See Step 2 for a full List of all packages.
+You can find a list of all available packages in the wiki or on the bottom of this page.
 Once you found the ones you need, add their package as an ```<include>``` tag like this:
 
 ```xml
