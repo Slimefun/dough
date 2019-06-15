@@ -1,14 +1,56 @@
 package io.github.thebusybiscuit.cscorelib2.inventory;
 
+import java.lang.reflect.Method;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
+
 public final class ItemUtils {
 	
 	private ItemUtils() {}
+	
+	private static Method copy, getName, toString;
+	
+	static {
+		try {
+			copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
+			getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
+			
+			if (ReflectionUtils.isVersion("v1_13_", "v1_14_")) {
+				toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
+			}
+		}
+		catch(Exception x) {
+			x.printStackTrace();
+		}
+	}
+	
+	public static String formatItemName(ItemStack item) {
+		if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+			return item.getItemMeta().getDisplayName();
+		}
+
+		String name = item.getType().toString();
+		try {
+			Object instance = copy.invoke(null, item);
+			
+			if (toString == null) {
+				name = (String) getName.invoke(instance);
+			}
+			else {
+				name = (String) toString.invoke(getName.invoke(instance));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return name;
+	}
 	
 	/**
 	 * This method compares two instances of {@link ItemStack} and checks

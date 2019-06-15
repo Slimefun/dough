@@ -160,14 +160,14 @@ public class ReflectionUtils {
 	}
 
 	/**
-	 * Returns a Class inside a Class
+	 * Returns an NMS Class inside a Class
 	 *
 	 * @param  name The Name of the Class your Inner class is located in
 	 * @param  subname The Name of the inner Class you are looking for
 	 * @return      The Class in your specified Class
 	 */
-	public static Class<?> getInnerClass(String name, String subname) throws Exception {
-		return getClass(name + "$" + subname);
+	public static Class<?> getInnerNMSClass(String name, String subname) throws Exception {
+		return getNMSClass(name + "$" + subname);
 	}
 
 	/**
@@ -176,8 +176,29 @@ public class ReflectionUtils {
 	 * @param  name The Name of the Class you are looking for
 	 * @return      The Class in that Package
 	 */
-	public static Class<?> getClass(String name) throws Exception {
+	public static Class<?> getNMSClass(String name) throws Exception {
 	    return Class.forName(new StringBuilder().append("net.minecraft.server.").append(getVersion()).append(".").append(name).toString());
+	}
+
+	/**
+	 * Returns an OBC Class inside a Class
+	 *
+	 * @param  name The Name of the Class your Inner class is located in
+	 * @param  subname The Name of the inner Class you are looking for
+	 * @return      The Class in your specified Class
+	 */
+	public static Class<?> getInnerOBCClass(String name, String subname) throws Exception {
+		return getOBCClass(name + "$" + subname);
+	}
+
+	/**
+	 * Returns an OBC Class via Reflection
+	 *
+	 * @param  name The Name of the Class you are looking for
+	 * @return      The Class in that Package
+	 */
+	public static Class<?> getOBCClass(String name) throws Exception {
+	    return Class.forName(new StringBuilder().append("org.bukkit.craftbukkit.").append(getVersion()).append(".").append(name).toString());
 	}
 
 	/**
