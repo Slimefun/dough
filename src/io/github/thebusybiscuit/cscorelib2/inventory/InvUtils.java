@@ -66,5 +66,26 @@ public final class InvUtils {
 			}
 		}
 	}
+	
+	/**
+	 * This method checks if an Item can fit into the specified slots.
+	 * Note that this also checks {@link ItemStack#getAmount()}
+	 * 
+	 * @param item		The Item that shall be tested for
+	 * @param slots		The Slots that shall be iterated over
+	 * @return			Whether the slots have space for the {@link ItemStack}
+	 */
+	public static boolean fits(Inventory inv, ItemStack item, int... slots) {
+		for (int slot: slots) {
+			ItemStack stack = inv.getItem(slot);
+			
+			if (stack == null || stack.getType().equals(Material.AIR)) return true;
+			else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 }

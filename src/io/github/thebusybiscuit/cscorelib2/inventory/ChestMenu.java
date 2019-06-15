@@ -476,16 +476,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * @return			Whether the slots have space for the {@link ItemStack}
 	 */
 	public boolean fits(ItemStack item, int... slots) {
-		for (int slot: slots) {
-			ItemStack stack = getItemInSlot(slot);
-			
-			if (stack == null || stack.getType().equals(Material.AIR)) return true;
-			else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
-				return true;
-			}
-		}
-		
-		return false;
+		return InvUtils.fits(toInventory(), item, slots);
 	}
 
 	@Override
