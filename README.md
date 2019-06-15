@@ -1,6 +1,8 @@
 # CS-CoreLib2
 This is an updated (LITE) Version of CS-CoreLib. Instead of being a dependency, it should be shaded instead.
 
+[Javadocs](https://javadoc.jitpack.io/com/github/TheBusyBiscuit/CS-CoreLib2/latest/javadoc/index.html)
+
 # Integrating CS-CoreLib2 into your own Plugin
 This part presupposes that you have [Maven](https://maven.apache.org/download.cgi) installed and know how to handle your pom.xml
 
