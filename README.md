@@ -171,6 +171,7 @@ IMPORTANT: Some Packages also require other packages, check the Wiki for more In
 <include>**/thebusybiscuit/cscorelib2/database/**</include>
 <include>**/thebusybiscuit/cscorelib2/reflection/**</include>
 <include>**/thebusybiscuit/cscorelib2/protection/**</include>
+<include>**/thebusybiscuit/cscorelib2/math/**</include>
 <include>**/thebusybiscuit/cscorelib2/inventory/**</include>
 <include>**/thebusybiscuit/cscorelib2/item/**</include>
 <include>**/thebusybiscuit/cscorelib2/skull/**</include>
