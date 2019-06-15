@@ -1,5 +1,7 @@
 package io.github.thebusybiscuit.cscorelib2.inventory;
 
+import java.util.stream.IntStream;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -71,11 +73,15 @@ public final class InvUtils {
 	 * This method checks if an Item can fit into the specified slots.
 	 * Note that this also checks {@link ItemStack#getAmount()}
 	 * 
+	 * If you do not specify any Slots, all Slots of the Inventory will be checked.
+	 * 
 	 * @param item		The Item that shall be tested for
 	 * @param slots		The Slots that shall be iterated over
 	 * @return			Whether the slots have space for the {@link ItemStack}
 	 */
 	public static boolean fits(Inventory inv, ItemStack item, int... slots) {
+		if (slots.length == 0) slots = IntStream.range(0, inv.getSize()).toArray();
+		
 		for (int slot: slots) {
 			ItemStack stack = inv.getItem(slot);
 			
