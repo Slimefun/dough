@@ -162,7 +162,6 @@ public class ReflectionUtils {
 	/**
 	 * Returns a Class inside a Class
 	 *
-	 * @param  path The Package in which the Class can be found in
 	 * @param  name The Name of the Class your Inner class is located in
 	 * @param  subname The Name of the inner Class you are looking for
 	 * @return      The Class in your specified Class
@@ -174,7 +173,6 @@ public class ReflectionUtils {
 	/**
 	 * Returns an NMS Class via Reflection
 	 *
-	 * @param  path The Types of the Package you are targeting
 	 * @param  name The Name of the Class you are looking for
 	 * @return      The Class in that Package
 	 */

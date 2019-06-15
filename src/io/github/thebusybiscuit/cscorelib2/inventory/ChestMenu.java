@@ -103,7 +103,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	
 	/**
 	 * This method checks whether an Instance of {@link ItemStack} is forbidden to be inserted.
-	 * @see ChestMenu#prevent(Predicate)
+	 * @see ChestMenu#preventItems(Predicate)
 	 * 
 	 * @param item The {@link ItemStack} to be checked.
 	 * @return Whether this type of Item was prevented.
@@ -218,9 +218,9 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * @param  handler The MenuClickHandler for that Slot
 	 * @return      The ChestMenu Instance
 	 */ 
-	public ChestMenu addItem(int slot, ItemStack item, MenuClickHandler clickHandler) {
+	public ChestMenu addItem(int slot, ItemStack item, MenuClickHandler handler) {
 		addItem(slot, item);
-		addMenuClickHandler(slot, clickHandler);
+		addMenuClickHandler(slot, handler);
 		return this;
 	}
 	
@@ -266,8 +266,8 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * Executes a certain Action upon opening
 	 * this Menu
 	 *
-	 * @param  handler The {@link MenuOpeningHandler}
-	 * @return      The ChestMenu Instance
+	 * @param  handler	The Action that shall be run
+	 * @return      	The ChestMenu Instance
 	 */ 
 	public ChestMenu addMenuOpeningHandler(Consumer<Player> handler) {
 		this.menuOpeningHandler = handler;
@@ -278,8 +278,8 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * Executes a certain Action upon closing
 	 * this Menu
 	 *
-	 * @param  handler The {@link MenuCloseHandler}
-	 * @return      The ChestMenu Instance
+	 * @param  handler 	The Action that shall be run
+	 * @return      	The ChestMenu Instance
 	 */ 
 	public ChestMenu addMenuCloseHandler(Consumer<Player> handler) {
 		this.menuClosingHandler = handler;

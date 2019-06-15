@@ -16,7 +16,7 @@ public final class ItemUtils {
 	 * 
 	 * @param a	{@link ItemStack} One
 	 * @param b {@link ItemStack} Two
-	 * @return
+	 * @return	Whether the two instances of {@link ItemStack} are similiar and can be stacked.
 	 */
 	public static boolean canStack(ItemStack a, ItemStack b) {
 		if (a == null || b == null) return false;
