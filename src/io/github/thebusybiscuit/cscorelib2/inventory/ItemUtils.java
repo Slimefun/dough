@@ -20,10 +20,7 @@ public final class ItemUtils {
 		try {
 			copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
 			getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
-			
-			if (ReflectionUtils.isVersion("v1_13_", "v1_14_")) {
-				toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
-			}
+			toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
 		}
 		catch(Exception x) {
 			x.printStackTrace();
@@ -42,22 +39,14 @@ public final class ItemUtils {
 		if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
 			return item.getItemMeta().getDisplayName();
 		}
-
-		String name = item.getType().toString();
+		
 		try {
 			Object instance = copy.invoke(null, item);
-			
-			if (toString == null) {
-				name = (String) getName.invoke(instance);
-			}
-			else {
-				name = (String) toString.invoke(getName.invoke(instance));
-			}
+			return (String) toString.invoke(getName.invoke(instance));
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "ERROR";
 		}
-		
-		return name;
 	}
 	
 	/**
