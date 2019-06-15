@@ -30,7 +30,15 @@ public final class ItemUtils {
 		}
 	}
 	
-	public static String formatItemName(ItemStack item) {
+	/**
+	 * This method returns a human-readable version of this item's name.
+	 * If the specified {@link ItemStack} has a Custom Display Name, it will return that.
+	 * Otherwise it will return the english name of it's {@link Material}
+	 * 
+	 * @param item	The Item to format
+	 * @return		The formatted Item Name
+	 */
+	public static String getFormattedItemName(ItemStack item) {
 		if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
 			return item.getItemMeta().getDisplayName();
 		}
