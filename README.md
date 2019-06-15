@@ -163,6 +163,8 @@ Your pom.xml should now look like this:
 This Library contains the following Packages:
 See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Info on what each Package does.
 
+IMPORTANT: Some Packages also require other packages, check the Wiki for more Info.
+
 ```xml
 <include>**/thebusybiscuit/cscorelib2/config/**</include>
 <include>**/thebusybiscuit/cscorelib2/updater/**</include>
@@ -170,4 +172,6 @@ See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Inf
 <include>**/thebusybiscuit/cscorelib2/reflection/**</include>
 <include>**/thebusybiscuit/cscorelib2/protection/**</include>
 <include>**/thebusybiscuit/cscorelib2/inventory/**</include>
+<include>**/thebusybiscuit/cscorelib2/item/**</include>
+<include>**/thebusybiscuit/cscorelib2/skull/**</include>
 ```
