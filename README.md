@@ -169,4 +169,5 @@ See our [Wiki](https://github.com/TheBusyBiscuit/CS-CoreLib2/wiki/) for more Inf
 <include>**/thebusybiscuit/cscorelib2/database/**</include>
 <include>**/thebusybiscuit/cscorelib2/reflection/**</include>
 <include>**/thebusybiscuit/cscorelib2/protection/**</include>
+<include>**/thebusybiscuit/cscorelib2/inventory/**</include>
 ```
