@@ -35,6 +35,7 @@ public class Config {
 	 * @param  plugin The Instance of the Plugin, the config.yml is referring to
 	 */
 	public Config(Plugin plugin) {
+		plugin.saveDefaultConfig();
 		this.file = new File("plugins/" + plugin.getName().replace(" ", "_") + "/config.yml");
 		this.config = YamlConfiguration.loadConfiguration(this.file);
 		config.options().copyDefaults(true);
