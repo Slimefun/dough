@@ -61,7 +61,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * @param  dirtyRunnable A {@link Runnable} that is run when the Inventory was modified
 	 */ 
 	public ChestMenu(Plugin plugin, String title, Runnable dirtyRunnable) {
-		if (listener != null) listener = new ChestMenuListener(plugin);
+		if (listener == null) listener = new ChestMenuListener(plugin);
 		
 		this.plugin = plugin;
 		this.title = ChatColor.translateAlternateColorCodes('&', title);
