@@ -66,24 +66,34 @@ public final class ItemUtils {
 		if (a.hasItemMeta()) {
 			ItemMeta aMeta = a.getItemMeta(), bMeta = b.getItemMeta();
 			
+			// Item Damage
 			if (aMeta instanceof Damageable != bMeta instanceof Damageable) return false;
 			if (aMeta instanceof Damageable) {
 				if (((Damageable) aMeta).getDamage() != ((Damageable) bMeta).getDamage()) return false;
 			}
-
+			
+			// Leather Armor Color
 			if (aMeta instanceof LeatherArmorMeta != bMeta instanceof LeatherArmorMeta) return false;
 			if (aMeta instanceof LeatherArmorMeta) {
 				if (!((LeatherArmorMeta) aMeta).getColor().equals(((LeatherArmorMeta) bMeta).getColor())) return false;
 			}
 			
-			if (aMeta.getCustomModelData() != bMeta.getCustomModelData()) return false;
+			// Custom Model Data
+			if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData()) return false;
+			if (aMeta.hasCustomModelData()) {
+				if (aMeta.getCustomModelData() != bMeta.getCustomModelData()) return false;
+			}
+			
+			// Enchantments
 			if (!aMeta.getEnchants().equals(bMeta.getEnchants())) return false;
 			
+			// Display Name
 			if (aMeta.hasDisplayName() != bMeta.hasDisplayName()) return false;
 			if (aMeta.hasDisplayName()) {
 				if (!aMeta.getDisplayName().equals(bMeta.getDisplayName())) return false;
 			}
 
+			// Lore
 			if (aMeta.hasLore() != bMeta.hasLore()) return false;
 			if (aMeta.hasLore()) {
 				if (aMeta.getLore().size() != bMeta.getLore().size()) return false;
