@@ -77,7 +77,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		this.menuClosingHandler = (p) -> {};
 		this.playerclick = (p, slot, item, cursor, action) -> isPlayerInventoryClickable();
 	}
-	
+
 	/**
 	 * Creates a new ChestMenu with a specified Title
 	 * 

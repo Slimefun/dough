@@ -116,7 +116,7 @@ public class GitHubBuildsUpdater implements Updater {
 			    }
 				
 			    remoteVersion = String.valueOf(obj.get("last_successful").getAsInt());
-			    download = new URL(api_url + getRepository() + "/" + getRepository().split("/")[0] + "-" + remoteVersion + ".jar");
+			    download = new URL(api_url + getRepository() + "/" + getRepository().split("/")[1] + "-" + remoteVersion + ".jar");
 			    
 			    return true;
 			} catch (IOException e) {
