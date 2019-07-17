@@ -72,13 +72,16 @@ public class BukkitUpdater implements Updater {
 	        
 	        	return false;
 		};
-		
+	}
+	
+	@Override
+	public void start() {
 		// Checking if current Version is a dev-build
 		for (String dev: development_builds) {
 			if (localVersion.contains(dev)) {
 				System.err.println(" ");
 				System.err.println("################## - DEVELOPMENT BUILD - ##################");
-                System.err.println("You appear to be using an experimental build of " + plugin.getName());
+				System.err.println("You appear to be using an experimental build of " + plugin.getName());
 				System.err.println("Version " + localVersion);
 				System.err.println(" ");
 				System.err.println("Auto-Updates have been disabled. Use at your own risk!");
@@ -86,19 +89,16 @@ public class BukkitUpdater implements Updater {
 				return;
 			}
 		}
-
+		
 		localVersion = localVersion.toLowerCase();
 		
 		// Deleting all unwanted characters
-        for (char blocked: blacklist) {
+		for (char blocked: blacklist) {
 			localVersion = localVersion.replace(String.valueOf(blocked), "");
-        }
+		}
 		
 		prepareUpdateFolder();
-	}
-	
-	@Override
-	public void start() {
+			
 		try {
 			this.url = new URL(api_url + id);
 			
