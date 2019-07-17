@@ -93,6 +93,8 @@ public class BukkitUpdater implements Updater {
         for (char blocked: blacklist) {
 			localVersion = localVersion.replace(String.valueOf(blocked), "");
         }
+		
+		prepareUpdateFolder();
 	}
 	
 	@Override

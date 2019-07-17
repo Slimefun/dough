@@ -51,6 +51,8 @@ public class GitHubBuildsUpdater implements Updater {
 		this.predicate = (local, remote) -> {
 			return Integer.parseInt(remote) > Integer.parseInt(local);
 		};
+		
+		prepareUpdateFolder();
 	}
 	
 	private String extractBuild(String version) {
