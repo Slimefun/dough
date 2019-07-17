@@ -45,6 +45,7 @@ Add the following to your ```<builds>``` section:
         <relocation>
           <pattern>io.github.thebusybiscuit.cscorelib2</pattern>
           <shadedPattern>YOUR.PACKAGE.NAME.HERE.cscorelib2</shadedPattern>
+        </relocation>
       </relocations>
       <filters>
       <!-- This will become important in Step 4 -->  
