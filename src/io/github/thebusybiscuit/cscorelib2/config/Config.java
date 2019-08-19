@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.config;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
@@ -428,7 +430,8 @@ public class Config {
 	 * @return      All Sub-Paths of the specified Path
 	 */ 
 	public Set<String> getKeys(String path) {
-		return config.getConfigurationSection(path).getKeys(false);
+		ConfigurationSection section = config.getConfigurationSection(path);
+		return section == null ? new HashSet<>(): section.getKeys(false);
 	}
 	
 	/**
