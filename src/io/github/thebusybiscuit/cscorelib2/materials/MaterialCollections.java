@@ -10,7 +10,7 @@ import lombok.Getter;
 
 /**
  * This utility class can be used to get {@link Material} Arrays of some Material groups.
- * Mainly seperated by the class {@link Tag}
+ * Mainly separated by the class {@link Tag}
  * 
  * @author TheBusyBiscuit
  *
