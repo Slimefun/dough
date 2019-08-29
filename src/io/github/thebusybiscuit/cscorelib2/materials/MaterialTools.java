@@ -1,17 +1,17 @@
 package io.github.thebusybiscuit.cscorelib2.materials;
 
-import lombok.Getter;
-import org.bukkit.Material;
-import org.bukkit.Tag;
-
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Material;
+import org.bukkit.Tag;
+
+import lombok.Getter;
+
 /**
  * This utility class can be used to get {@link Material} Arrays that a tool is best at.
- * Mainly separated by the class {@link Tag}
  *
- * @author TheBusyBiscuit
+ * @author LinoxGH/ajan_12
  *
  */
 public final class MaterialTools {
