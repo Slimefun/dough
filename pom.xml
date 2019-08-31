@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.thebusybiscuit</groupId>
     <artifactId>CSCoreLib2</artifactId>
-    <version>0.3.7</version>
+    <version>0.3.9</version>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -99,14 +99,14 @@
             <version>1.14.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.8</version>
-			<scope>provided</scope>
-		</dependency>
+	<dependency>
+            <groupId>org.projectlombok</groupId>
+	    <artifactId>lombok</artifactId>
+	    <version>1.18.8</version>
+            <scope>provided</scope>
+        </dependency>
 		
-		<!-- Protection Plugins -->
+	<!-- Protection Plugins -->
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
