@@ -24,7 +24,7 @@ public class PreciousStonesProtectionModule implements ProtectionModule {
 		
         switch (action) {
 			case PVP:
-				return api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
+				return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
 			case BREAK_BLOCK:
 				return api.canBreak((Player) p, l);
 			case ACCESS_INVENTORIES:
