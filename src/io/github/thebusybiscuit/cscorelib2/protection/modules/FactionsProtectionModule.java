@@ -21,7 +21,7 @@ public class FactionsProtectionModule implements ProtectionModule {
 		if (faction == null || faction.getId().equals("none")) return true;
 		if (!(p instanceof Player)) return false;
 		
-		MPlayer mp = MPlayer.get((Player) p);
+		MPlayer mp = MPlayer.get(p);
 		return faction.getId().equals(mp.getFaction().getId());
 	}
 

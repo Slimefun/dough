@@ -27,6 +27,8 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
 		switch (action) {
 			case ACCESS_INVENTORIES:
 				return claim.allowContainers((Player) p) == null;
+			case PVP:
+				return claim.siegeData.attacker == null;
 			case BREAK_BLOCK:
 				return claim.allowBreak((Player) p, l.getBlock().getType()) == null;
 			case PLACE_BLOCK:

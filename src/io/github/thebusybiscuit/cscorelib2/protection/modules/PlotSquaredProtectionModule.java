@@ -31,6 +31,8 @@ public class PlotSquaredProtectionModule implements ProtectionModule {
 		switch (action) {
 			case ACCESS_INVENTORIES:
 				return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_INTERACT_UNOWNED);
+			case PVP:
+				return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.FLAG_PVP);
 			case BREAK_BLOCK:
 			case PLACE_BLOCK:
 			default:

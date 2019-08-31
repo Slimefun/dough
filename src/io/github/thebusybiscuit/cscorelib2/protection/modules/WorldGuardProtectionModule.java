@@ -30,12 +30,14 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 
 	private StateFlag convert(Action action) {
 		switch(action) {
+			case PVP:
+				return Flags.PVP;
+			case ACCESS_INVENTORIES:
+				return Flags.USE;
 			case BREAK_BLOCK:
 				return Flags.BLOCK_BREAK;
 			case PLACE_BLOCK:
 				return Flags.BLOCK_PLACE;
-			case ACCESS_INVENTORIES:
-				return Flags.USE;
 			default:
 				return Flags.BUILD;
 		}

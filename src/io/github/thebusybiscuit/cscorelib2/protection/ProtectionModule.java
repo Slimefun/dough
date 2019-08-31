@@ -12,7 +12,8 @@ public interface ProtectionModule {
 		
 		BREAK_BLOCK,
 		PLACE_BLOCK,
-		ACCESS_INVENTORIES
+		ACCESS_INVENTORIES,
+		PVP
 		
 	}
 

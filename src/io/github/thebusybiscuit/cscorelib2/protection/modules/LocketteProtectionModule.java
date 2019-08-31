@@ -18,7 +18,8 @@ public class LocketteProtectionModule implements ProtectionModule{
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
 		Block b = l.getBlock();
-		if(Lockette.isProtected(b)) {
+		if (action == Action.PVP) return true;
+		if (Lockette.isProtected(b)) {
 			if (b.getState() instanceof Sign) {
 				return !Lockette.isOwner((Sign) b.getState(), p);
 			}
