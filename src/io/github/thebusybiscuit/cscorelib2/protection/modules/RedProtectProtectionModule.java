@@ -29,6 +29,8 @@ public class RedProtectProtectionModule implements ProtectionModule {
         switch (action) {
 			case ACCESS_INVENTORIES:
 				return region.canChest(player);
+            case PVP:
+                return region.canPVP(player, player);
 			case BREAK_BLOCK:
 			case PLACE_BLOCK:
 			default:

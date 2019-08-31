@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import org.bukkit.World;
+import org.bukkit.WorldType;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.api.user.User;
@@ -25,13 +27,22 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
 		Optional<Island> island = manager.getIslandAt(l);
-        return island.map(value -> value.isAllowed(User.getInstance(p), convert(action))).orElse(false);
+        return island.map(value -> value.isAllowed(User.getInstance(p), convert(action, l.getWorld()))).orElse(false);
 	}
 	
-	private Flag convert(Action action) {
+	private Flag convert(Action action, World world) {
 		switch (action) {
 		case ACCESS_INVENTORIES:
 			return Flags.CONTAINER;
+		case PVP:
+			if (world != null) {
+				if (world.getEnvironment() == World.Environment.NETHER) {
+					return Flags.PVP_NETHER;
+				} else if (world.getEnvironment() == World.Environment.THE_END) {
+					return Flags.PVP_END;
+				}
+			}
+			return Flags.PVP_OVERWORLD;
 		case BREAK_BLOCK:
 			return Flags.BREAK_BLOCKS;
 		case PLACE_BLOCK:

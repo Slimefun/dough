@@ -26,10 +26,11 @@ public class TownyProtectionModule implements ProtectionModule {
 	
 	private ActionType convert(Action action) {
 		switch (action) {
+			case ACCESS_INVENTORIES:
+			case PVP:
+				return ActionType.ITEM_USE;
 			case BREAK_BLOCK:
 				return ActionType.DESTROY;
-			case ACCESS_INVENTORIES:
-				return ActionType.ITEM_USE;
 			case PLACE_BLOCK:
 			default:
 				return ActionType.BUILD;

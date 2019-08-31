@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
+import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -22,6 +23,8 @@ public class PreciousStonesProtectionModule implements ProtectionModule {
 		if (!(p instanceof Player)) return false;
 		
         switch (action) {
+			case PVP:
+				return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
 			case BREAK_BLOCK:
 				return api.canBreak((Player) p, l);
 			case ACCESS_INVENTORIES:
