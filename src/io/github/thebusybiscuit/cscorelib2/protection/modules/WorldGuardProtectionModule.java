@@ -4,13 +4,17 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+
+import java.util.Set;
 
 public class WorldGuardProtectionModule implements ProtectionModule {
 
@@ -25,6 +29,12 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
 		com.sk89q.worldedit.util.Location loc = BukkitAdapter.adapt(l);
+		com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(l.getWorld());
+		BlockVector3 vector3 = BlockVector3.at(l.getX(), l.getY(), l.getZ());
+
+		Set<ProtectedRegion> regions = manager.get(world).getApplicableRegions(vector3).getRegions();
+		if (regions.isEmpty()) return true;
+
 		return manager.createQuery().testState(loc, worldguard.wrapOfflinePlayer(p), convert(action));
 	}
 
