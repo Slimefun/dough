@@ -54,14 +54,14 @@ public final class InvUtils {
 		ItemStack item = inv.getItem(slot);
 		
 		if (item != null && !item.getType().equals(Material.AIR)) {
-			if (item.getType().name().endsWith("_BUCKET")) {
+			if (item.getType().name().endsWith("_BUCKET") && replaceConsumables) {
 				inv.setItem(slot, new ItemStack(Material.BUCKET));
 			}
-			else if (item.getType().equals(Material.POTION)) {
+			else if (item.getType().equals(Material.POTION) && replaceConsumables) {
 				inv.setItem(slot, new ItemStack(Material.GLASS_BOTTLE));
 			}
 			else {
-				if (item.getAmount() <= amount) item = null;
+				if (item.getAmount() <= amount) item.setAmount(0);
 				else item.setAmount(item.getAmount() - amount);
 				
 				inv.setItem(slot, item);
