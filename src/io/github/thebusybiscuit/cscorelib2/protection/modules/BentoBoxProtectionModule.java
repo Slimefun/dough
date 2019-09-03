@@ -4,10 +4,9 @@ import java.util.Optional;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
-import org.bukkit.World;
-import org.bukkit.WorldType;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.api.user.User;
@@ -38,7 +37,8 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 			if (world != null) {
 				if (world.getEnvironment() == World.Environment.NETHER) {
 					return Flags.PVP_NETHER;
-				} else if (world.getEnvironment() == World.Environment.THE_END) {
+				} 
+				else if (world.getEnvironment() == World.Environment.THE_END) {
 					return Flags.PVP_END;
 				}
 			}

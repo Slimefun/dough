@@ -31,10 +31,12 @@ public class ProtectionManager {
 			registerModule(new WorldGuardProtectionModule());
 		}
 		if (server.getPluginManager().isPluginEnabled("Factions")) {
-			if (server.getPluginManager().getPlugin("Factions") instanceof com.massivecraft.factions.P)
+			if (server.getPluginManager().getPlugin("Factions") instanceof com.massivecraft.factions.P) {
 				registerModule(new FactionsUUIDProtectionModule());
-			else
+			}
+			else {
 				registerModule(new FactionsProtectionModule());
+			}
 		}
 		if (server.getPluginManager().isPluginEnabled("Towny")) {
 			registerModule(new TownyProtectionModule());
@@ -54,12 +56,6 @@ public class ProtectionManager {
 		if (server.getPluginManager().isPluginEnabled("Lockette")) {
 			registerModule(new LocketteProtectionModule());
 		}
-		if(server.getPluginManager().isPluginEnabled("ProtectionStones")) {
-            loadModuleMSG("ProtectionStones");
-		}
-		if (server.getPluginManager().isPluginEnabled("uSkyblock")) {
-			loadModuleMSG("uSkyblock");
-		}
 		if(server.getPluginManager().isPluginEnabled("PlotSquared")) {
 			registerModule(new PlotSquaredProtectionModule());
 		}
@@ -68,6 +64,19 @@ public class ProtectionManager {
 		}
 		if (server.getPluginManager().isPluginEnabled("BentoBox")) {
 			registerModule(new BentoBoxProtectionModule());
+		}
+		
+		/*
+		 * The following Plugins work by utilising one of the above listed
+		 * Plugins in the background.
+		 * We do not need a module for them, but let us make the server owner
+		 * aware that this compatibility exists.
+		 */
+		if(server.getPluginManager().isPluginEnabled("ProtectionStones")) {
+            loadModuleMSG("ProtectionStones");
+		}
+		if (server.getPluginManager().isPluginEnabled("uSkyblock")) {
+			loadModuleMSG("uSkyblock");
 		}
 	}
 
