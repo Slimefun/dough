@@ -10,6 +10,7 @@ import org.bukkit.Server;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule.Action;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.ASkyBlockProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BentoBoxProtectionModule;
+import io.github.thebusybiscuit.cscorelib2.protection.modules.BlockLockerProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.FactionsProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.FactionsUUIDProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.GriefPreventionProtectionModule;
@@ -64,6 +65,9 @@ public class ProtectionManager {
 		}
 		if (server.getPluginManager().isPluginEnabled("BentoBox")) {
 			registerModule(new BentoBoxProtectionModule());
+		}
+		if (server.getPluginManager().isPluginEnabled("BlockLocker")) {
+			registerModule(new BlockLockerProtectionModule());
 		}
 		
 		/*
