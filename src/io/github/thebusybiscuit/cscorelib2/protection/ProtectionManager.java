@@ -94,10 +94,16 @@ public class ProtectionManager {
 	}
 
 	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull Action action) {
-		for (ProtectionModule module: modules) {
-			if (!module.hasPermission(p, l, action)) {
-				return false;
+		try {
+			for (ProtectionModule module: modules) {
+				if (!module.hasPermission(p, l, action)) {
+					return false;
+				}
 			}
+		}
+		catch(Exception x) {
+			x.printStackTrace();
+			return false;
 		}
 
 		return true;
