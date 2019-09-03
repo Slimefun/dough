@@ -28,7 +28,8 @@ public final class MaterialCollections {
 		allPlanks, 
 		allWools, 
 		allCarpets,
-		allFishItems
+		allFishItems,
+		allOres
 	;
 		
 	static {
@@ -40,6 +41,7 @@ public final class MaterialCollections {
 		Set<Material> carpets = new HashSet<>();
 		
 		Set<Material> fishes = new HashSet<>();
+		Set<Material> ores = new HashSet<>();
 			
 		for (Material mat: Material.values()) {
 			if (Tag.LEAVES.isTagged(mat)) leaves.add(mat);
@@ -50,6 +52,7 @@ public final class MaterialCollections {
 			if (Tag.CARPETS.isTagged(mat)) carpets.add(mat);
 			
 			if (Tag.ITEMS_FISHES.isTagged(mat)) fishes.add(mat);
+			if (mat.toString().endsWith("_ORE")) ores.add(mat);
 		}
 			
 		allLeaves = leaves.toArray(new Material[leaves.size()]);
@@ -60,6 +63,7 @@ public final class MaterialCollections {
 		allCarpets = leaves.toArray(new Material[carpets.size()]);
 		
 		allFishItems = fishes.toArray(new Material[fishes.size()]);
+		allOres = ores.toArray(new Material[ores.size()]);
 	}
 
 	@Getter
