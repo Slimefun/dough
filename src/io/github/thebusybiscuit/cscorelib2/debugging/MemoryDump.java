@@ -10,14 +10,24 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import lombok.Getter;
+import lombok.NonNull;
+
 public class MemoryDump {
 	
+	@Getter
 	private String namespace;
-	private Map<String, Integer> heatmap = new HashMap<>();
-	private Set<Integer> hashes = new HashSet<>();
 	
-	public MemoryDump(String file, String namespace, Object... objects) throws FileNotFoundException, IllegalArgumentException, IllegalAccessException {
+	@Getter
+	private final Map<String, Integer> heatmap = new HashMap<>();
+	private final Set<Integer> hashes = new HashSet<>();
+	
+	public MemoryDump(@NonNull String file, @NonNull String namespace, Object... objects) throws FileNotFoundException, IllegalArgumentException, IllegalAccessException {
 		this.namespace = namespace;
+		
+		if (objects.length == 0) {
+			throw new IllegalArgumentException("You need to provide at least one Object!");
+		}
 		
 		try (PrintStream stream = new PrintStream(file)) {
 			for (Object obj: objects) {
@@ -31,15 +41,19 @@ public class MemoryDump {
 				stream.println(entry.getValue() + "x " + entry.getKey());
 			});
 		}
+		finally {
+			// No need to keep those in memory...
+			hashes.clear();
+		}
 	}
 
-	private void dump(PrintStream stream, String prefix, String name, Object obj) throws IllegalArgumentException, IllegalAccessException {
+	private void dump(@NonNull PrintStream stream, @NonNull String prefix, @NonNull String name, Object obj) throws IllegalArgumentException, IllegalAccessException {
 		if (obj == null) {
 			stream.println(prefix + "null");
 		}
 		else if (hashes.add(obj.hashCode())) {
 			try {
-				heatmap.merge(obj.getClass().getName(), 1, (a, b) -> a + b);
+				heatmap.merge(obj.getClass().getName(), 1, Integer::sum);
 				stream.println(prefix + name + ": [" + obj.hashCode() + "] " + obj.getClass().getName() + " : " + obj.toString());
 				
 				if (obj instanceof Collection) {
