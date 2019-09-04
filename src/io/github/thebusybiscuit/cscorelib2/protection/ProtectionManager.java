@@ -32,11 +32,11 @@ public class ProtectionManager {
 			registerModule(new WorldGuardProtectionModule());
 		}
 		if (server.getPluginManager().isPluginEnabled("Factions")) {
-			if (server.getPluginManager().getPlugin("Factions") instanceof com.massivecraft.factions.P) {
-				registerModule(new FactionsUUIDProtectionModule());
+			if (server.getPluginManager().getPlugin("Factions").getDescription().getDepend().contains("MassiveCore")) {
+				registerModule(new FactionsProtectionModule());
 			}
 			else {
-				registerModule(new FactionsProtectionModule());
+				registerModule(new FactionsUUIDProtectionModule());
 			}
 		}
 		if (server.getPluginManager().isPluginEnabled("Towny")) {
@@ -90,7 +90,12 @@ public class ProtectionManager {
 	}
 
 	public void registerModule(ProtectionModule module) {
-		registerModule(module.getName(), module);
+		try {
+			registerModule(module.getName(), module);
+		}
+		catch(Exception x) {
+			x.printStackTrace();
+		}
 	}
 
 	protected void loadModuleMSG(String module) {
