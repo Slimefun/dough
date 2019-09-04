@@ -280,6 +280,7 @@ public class Config {
 		try {
 			this.file.createNewFile();
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

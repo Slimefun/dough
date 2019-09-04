@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -17,7 +18,7 @@ import lombok.NonNull;
 
 public class Localization {
 	
-	private static final Function<String, String> unicodes = (str) -> {
+	private static final UnaryOperator<String> unicodes = str -> {
 		if (str == null) return null;
 		
 		StringBuilder builder = new StringBuilder();

@@ -11,7 +11,10 @@ import io.github.thebusybiscuit.cscorelib2.config.Config;
 
 public abstract class AuthenticatedSQLDatabase<T extends AuthenticatedSQLDatabase<T>> extends SQLDatabase<T>{
 	
-	protected String host, user, password, database;
+	protected String host;
+	protected String user;
+	protected String password;
+	protected String database;
 	protected int port;
 	
 	public AuthenticatedSQLDatabase(Plugin plugin, DatabaseLoader<T> callback) {
