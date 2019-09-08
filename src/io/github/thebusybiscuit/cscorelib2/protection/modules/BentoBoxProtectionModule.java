@@ -26,7 +26,8 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
 		Optional<Island> island = manager.getIslandAt(l);
-        return island.map(value -> value.isAllowed(User.getInstance(p), convert(action, l.getWorld()))).orElse(false);
+		Flag flag = convert(action, l.getWorld());
+		return island.map(value -> value.isAllowed(User.getInstance(p), flag)).orElse(flag.isSetForWorld(l.getWorld()));
 	}
 	
 	private Flag convert(Action action, World world) {
