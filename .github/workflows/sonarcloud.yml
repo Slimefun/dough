@@ -1,6 +1,8 @@
 name: SonarCloud Scanner
 
-on: [push]
+on:
+  push:
+  - master
 
 jobs:
   build:
