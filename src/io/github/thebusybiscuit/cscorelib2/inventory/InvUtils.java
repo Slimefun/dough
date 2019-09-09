@@ -8,6 +8,11 @@ import org.bukkit.inventory.ItemStack;
 
 public final class InvUtils {
 	
+	/**
+	 * This field represents a static and final instance of {@link MenuClickHandler} that prevents clicks.
+	 */
+	public static final MenuClickHandler EMPTY_CLICK = (p, slot, item, cursor, action) -> false;
+	
 	private InvUtils() {}
 	
 	/**
@@ -53,11 +58,11 @@ public final class InvUtils {
 	public static void consumeItem(Inventory inv, int slot, int amount, boolean replaceConsumables) {
 		ItemStack item = inv.getItem(slot);
 		
-		if (item != null && !item.getType().equals(Material.AIR)) {
+		if (item != null && item.getType() != Material.AIR) {
 			if (item.getType().name().endsWith("_BUCKET") && replaceConsumables) {
 				inv.setItem(slot, new ItemStack(Material.BUCKET));
 			}
-			else if (item.getType().equals(Material.POTION) && replaceConsumables) {
+			else if (item.getType() == Material.POTION && replaceConsumables) {
 				inv.setItem(slot, new ItemStack(Material.GLASS_BOTTLE));
 			}
 			else {
@@ -85,7 +90,7 @@ public final class InvUtils {
 		for (int slot: slots) {
 			ItemStack stack = inv.getItem(slot);
 			
-			if (stack == null || stack.getType().equals(Material.AIR)) return true;
+			if (stack == null || stack.getType() == Material.AIR) return true;
 			else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
 				return true;
 			}

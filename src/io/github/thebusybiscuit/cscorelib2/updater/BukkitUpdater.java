@@ -197,8 +197,7 @@ public class BukkitUpdater implements Updater {
 	    	HttpURLConnection connection = null;
 	    	
 	        while (true) {
-	        	URL url = new URL(location);
-	        	connection = (HttpURLConnection) url.openConnection();
+	        	connection = (HttpURLConnection) new URL(location).openConnection();
 
 	        	connection.setInstanceFollowRedirects(false);
 	            connection.setConnectTimeout(5000);

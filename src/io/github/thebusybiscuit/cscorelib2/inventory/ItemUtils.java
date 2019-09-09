@@ -14,7 +14,9 @@ public final class ItemUtils {
 	
 	private ItemUtils() {}
 	
-	private static Method copy, getName, toString;
+	private static Method copy;
+	private static Method getName;
+	private static Method toString;
 	
 	static {
 		try {
@@ -35,7 +37,7 @@ public final class ItemUtils {
 	 * @param item	The Item to format
 	 * @return		The formatted Item Name
 	 */
-	public static String getFormattedItemName(ItemStack item) {
+	public static String getItemName(ItemStack item) {
 		if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
 			return item.getItemMeta().getDisplayName();
 		}
@@ -60,11 +62,12 @@ public final class ItemUtils {
 	public static boolean canStack(ItemStack a, ItemStack b) {
 		if (a == null || b == null) return false;
 		
-		if (!a.getType().equals(b.getType())) return false;
+		if (a.getType() != b.getType()) return false;
 		if (a.hasItemMeta() != b.hasItemMeta()) return false;
 		
 		if (a.hasItemMeta()) {
-			ItemMeta aMeta = a.getItemMeta(), bMeta = b.getItemMeta();
+			ItemMeta aMeta = a.getItemMeta();
+			ItemMeta bMeta = b.getItemMeta();
 			
 			// Item Damage
 			if (aMeta instanceof Damageable != bMeta instanceof Damageable) return false;

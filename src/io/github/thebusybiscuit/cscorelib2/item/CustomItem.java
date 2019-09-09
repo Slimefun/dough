@@ -28,7 +28,7 @@ public class CustomItem extends ItemStack {
 		}
 		
 		if (lore.length > 0) {
-			List<String> lines = new ArrayList<String>();
+			List<String> lines = new ArrayList<>();
 			for (String line: lore) {
 				lines.add(ChatColor.translateAlternateColorCodes('&', line));
 			}

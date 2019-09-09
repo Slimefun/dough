@@ -63,7 +63,7 @@ public class Localization {
 	 * @param  plugin The Plugin this Localization is made for 
 	 */ 
 	public Localization(@NonNull Plugin plugin) {
-		this.file = new File("plugins/" + plugin.getDescription().getName().replace(" ", "_") + "/messages.yml");
+		this.file = new File("plugins/" + plugin.getDescription().getName().replace(" ", "_"), "messages.yml");
 		this.config = new Config(file);
 	}
 	
@@ -74,7 +74,7 @@ public class Localization {
 	 * @param  name The Name of the file you want to use
 	 */ 
 	public Localization(@NonNull Plugin plugin, @NonNull String name) {
-		this.file = new File("plugins/" + plugin.getDescription().getName().replace(" ", "_") + "/" + name);
+		this.file = new File("plugins/" + plugin.getDescription().getName().replace(" ", "_"), name);
 		this.config = new Config(file);
 	}
 	

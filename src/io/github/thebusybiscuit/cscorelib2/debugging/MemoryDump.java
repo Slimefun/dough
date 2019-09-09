@@ -62,9 +62,7 @@ public class MemoryDump {
 						((Collection<?>) obj).iterator().forEachRemaining(item -> {
 							try {
 								dump(stream, prefix + " ", String.valueOf(integer.incrementAndGet()), item);
-							} catch (IllegalArgumentException e) {
-								e.printStackTrace();
-							} catch (IllegalAccessException e) {
+							} catch (IllegalArgumentException | IllegalAccessException e) {
 								e.printStackTrace();
 							}
 						});
@@ -75,9 +73,7 @@ public class MemoryDump {
 						((Map<?,?>) obj).entrySet().forEach(entry -> {
 							try {
 								dump(stream, prefix + " ", entry.getKey() + "", entry.getValue());
-							} catch (IllegalArgumentException e) {
-								e.printStackTrace();
-							} catch (IllegalAccessException e) {
+							} catch (IllegalArgumentException | IllegalAccessException e) {
 								e.printStackTrace();
 							}
 						});

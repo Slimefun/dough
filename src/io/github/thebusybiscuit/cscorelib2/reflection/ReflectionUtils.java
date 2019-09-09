@@ -10,8 +10,10 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 
-public class ReflectionUtils {
+public final class ReflectionUtils {
 
+	private ReflectionUtils() {}
+	
 	private static final Map<Class<?>, Class<?>> conversion = new HashMap<>();
 	private static String currentVersion;
 

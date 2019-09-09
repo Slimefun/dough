@@ -28,7 +28,7 @@ public class Config {
 	@Getter
 	private File file;
 	
-	protected FileConfiguration config;
+	protected FileConfiguration fileConfig;
 	
 	/**
 	 * Creates a new Config Object for the config.yml File of
@@ -39,14 +39,14 @@ public class Config {
 	public Config(Plugin plugin) {
 		plugin.saveDefaultConfig();
 		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), "config.yml");
-		this.config = YamlConfiguration.loadConfiguration(this.file);
-		config.options().copyDefaults(true);
+		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
+		fileConfig.options().copyDefaults(true);
 	}
 	
 	public Config(Plugin plugin, String name) {
 		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), name);
-		this.config = YamlConfiguration.loadConfiguration(this.file);
-		config.options().copyDefaults(true);
+		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
+		fileConfig.options().copyDefaults(true);
 	}
 	
 	/**
@@ -56,8 +56,8 @@ public class Config {
 	 */
 	public Config(File file) {
 		this.file = file;
-		this.config = YamlConfiguration.loadConfiguration(this.file);
-		config.options().copyDefaults(true);
+		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
+		fileConfig.options().copyDefaults(true);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class Config {
 	 */
 	public Config(File file, FileConfiguration config) {
 		this.file = file;
-		this.config = config;
+		this.fileConfig = config;
 		config.options().copyDefaults(true);
 	}
 	
@@ -80,8 +80,8 @@ public class Config {
 	 */
 	public Config(String path) {
 		this.file = new File(path);
-		this.config = YamlConfiguration.loadConfiguration(this.file);
-		config.options().copyDefaults(true);
+		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
+		fileConfig.options().copyDefaults(true);
 	}
 	
 	/**
@@ -90,11 +90,11 @@ public class Config {
 	 * @return      The converted FileConfiguration Object
 	 */ 
 	public FileConfiguration getConfiguration() {
-		return this.config;
+		return this.fileConfig;
 	}
 	
 	protected void store(String path, Object value) {
-		this.config.set(path, value);
+		this.fileConfig.set(path, value);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class Config {
 	 */ 
 	public void save() {
 		try {
-			config.save(file);
+			fileConfig.save(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -162,7 +162,7 @@ public class Config {
 	 */ 
 	public void save(File file) {
 		try {
-			config.save(file);
+			fileConfig.save(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -200,7 +200,7 @@ public class Config {
 	 * @return      True/false
 	 */ 
 	public boolean contains(String path) {
-		return config.contains(path);
+		return fileConfig.contains(path);
 	}
 	
 	/**
@@ -210,7 +210,7 @@ public class Config {
 	 * @return      The Value at that Path
 	 */ 
 	public Object getValue(String path) {
-		return config.get(path);
+		return fileConfig.get(path);
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class Config {
 	 * @return      The ItemStack at that Path
 	 */ 
 	public ItemStack getItem(String path) {
-		return config.getItemStack(path);
+		return fileConfig.getItemStack(path);
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public class Config {
 	 * @return      The String at that Path
 	 */ 
 	public String getString(String path) {
-		return config.getString(path);
+		return fileConfig.getString(path);
 	}
 	
 	/**
@@ -240,7 +240,7 @@ public class Config {
 	 * @return      The Integer at that Path
 	 */ 
 	public int getInt(String path) {
-		return config.getInt(path);
+		return fileConfig.getInt(path);
 	}
 	
 	/**
@@ -250,7 +250,7 @@ public class Config {
 	 * @return      The Boolean at that Path
 	 */ 
 	public boolean getBoolean(String path) {
-		return config.getBoolean(path);
+		return fileConfig.getBoolean(path);
 	}
 	
 	/**
@@ -260,7 +260,7 @@ public class Config {
 	 * @return      The StringList at that Path
 	 */ 
 	public List<String> getStringList(String path) {
-		return config.getStringList(path);
+		return fileConfig.getStringList(path);
 	}
 	
 	/**
@@ -270,7 +270,7 @@ public class Config {
 	 * @return      The IntegerList at that Path
 	 */ 
 	public List<Integer> getIntList(String path) {
-		return config.getIntegerList(path);
+		return fileConfig.getIntegerList(path);
 	}
 	
 	/**
@@ -362,7 +362,7 @@ public class Config {
 	 * @return      The Double at that Path
 	 */ 
 	public Double getDouble(String path) {
-		return config.getDouble(path);
+		return fileConfig.getDouble(path);
 	}
 	
 	/**
@@ -422,7 +422,7 @@ public class Config {
 	 * @return      All Paths in this Config
 	 */ 
 	public Set<String> getKeys() {
-		return config.getKeys(false);
+		return fileConfig.getKeys(false);
 	}
 	
 	/**
@@ -432,7 +432,7 @@ public class Config {
 	 * @return      All Sub-Paths of the specified Path
 	 */ 
 	public Set<String> getKeys(String path) {
-		ConfigurationSection section = config.getConfigurationSection(path);
+		ConfigurationSection section = fileConfig.getConfigurationSection(path);
 		return section == null ? new HashSet<>(): section.getKeys(false);
 	}
 	
@@ -440,6 +440,6 @@ public class Config {
 	 * Reloads the Configuration File
 	 */ 
 	public void reload() {
-		this.config = YamlConfiguration.loadConfiguration(this.file);
+		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
 	}
 }

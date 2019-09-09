@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 public final class DoubleHandler {
 	
-	private DoubleHandler() {};
+	private DoubleHandler() {}
 	
 	/**
 	 * This method returns a very fancy representation of Doubles.

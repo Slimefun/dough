@@ -25,9 +25,15 @@ public final class SkullItem {
 	
 	private SkullItem() {}
 	
-	private static Method  property, insert_property;
-	private static Constructor<?> profile_constructor, property_constructor;
-	private static Class<?> profile_class, property_class, map_class;
+	private static Method  property;
+	private static Method insert_property;
+	
+	private static Constructor<?> profile_constructor;
+	private static Constructor<?> property_constructor;
+	
+	private static Class<?> profile_class;
+	private static Class<?> property_class;
+	private static Class<?> map_class;
 	
 	static {
 		try {

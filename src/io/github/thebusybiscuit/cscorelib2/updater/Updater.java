@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 public interface Updater {
 	
 	String getLocalVersion();
-	
 	void start();
 	
 	default void prepareUpdateFolder() {

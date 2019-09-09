@@ -33,7 +33,10 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	protected Plugin plugin;
 
 	@Getter
-	protected Consumer<Player> menuOpeningHandler, menuClosingHandler;
+	protected Consumer<Player> menuOpeningHandler;
+	
+	@Getter
+	protected Consumer<Player> menuClosingHandler;
 
 	@Getter
 	protected String title;
@@ -432,7 +435,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	public void consumeItem(int slot, int amount, boolean replaceConsumables) {
 		ItemStack item = getItemInSlot(slot);
 		
-		if (item != null && !item.getType().equals(Material.AIR)) {
+		if (item != null && item.getType() != Material.AIR) {
 			InvUtils.consumeItem(toInventory(), slot, amount, replaceConsumables);
 			
 			markDirty();
@@ -451,7 +454,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		for (int slot: slots) {
 			ItemStack stack = getItemInSlot(slot);
 			
-			if (stack == null || stack.getType().equals(Material.AIR)) {
+			if (stack == null || stack.getType() == Material.AIR) {
 				toInventory().setItem(slot, item);
 				markDirty();
 				return true;

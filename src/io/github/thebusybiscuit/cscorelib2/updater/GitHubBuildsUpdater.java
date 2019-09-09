@@ -24,7 +24,8 @@ public class GitHubBuildsUpdater implements Updater {
 	private static final String api_url = "https://thebusybiscuit.github.io/builds/";
 	
 	private Plugin plugin;
-	private URL url, download;
+	private URL versionsURL;
+	private URL downloadURL;
 	private Thread thread;
 	private File file;
 	
@@ -66,7 +67,7 @@ public class GitHubBuildsUpdater implements Updater {
 	@Override
 	public void start() {
 		try {
-			this.url = new URL(api_url + getRepository() + "/builds.json");
+			this.versionsURL = new URL(api_url + getRepository() + "/builds.json");
 			
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
 				thread = new Thread(new UpdaterTask());
@@ -98,7 +99,7 @@ public class GitHubBuildsUpdater implements Updater {
 		
 		private boolean connect() {
 			try {
-			    final URLConnection connection = url.openConnection();
+			    final URLConnection connection = versionsURL.openConnection();
 			    connection.setConnectTimeout(timeout);
 			    connection.addRequestProperty("User-Agent", "Auto Updater (by TheBusyBiscuit)");
 			    connection.setDoOutput(true);
@@ -119,7 +120,7 @@ public class GitHubBuildsUpdater implements Updater {
 			    }
 				
 			    remoteVersion = String.valueOf(obj.get("last_successful").getAsInt());
-			    download = new URL(api_url + getRepository() + "/" + getRepository().split("/")[1] + "-" + remoteVersion + ".jar");
+			    downloadURL = new URL(api_url + getRepository() + "/" + getRepository().split("/")[1] + "-" + remoteVersion + ".jar");
 			    
 			    return true;
 			} catch (IOException e) {
@@ -159,9 +160,9 @@ public class GitHubBuildsUpdater implements Updater {
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
 				BufferedInputStream input = null;
 				FileOutputStream output = null;
-				System.out.println(download.toString());
+				System.out.println(downloadURL.toString());
 				try {
-				    input = new BufferedInputStream(download.openStream());
+				    input = new BufferedInputStream(downloadURL.openStream());
 				    output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()));
 
 				    final byte[] data = new byte[1024];
