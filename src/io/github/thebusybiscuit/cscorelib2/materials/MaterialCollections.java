@@ -58,16 +58,16 @@ public final class MaterialCollections {
 			if (mat.toString().endsWith("_HEAD") || mat.toString().endsWith("_SKULL")) heads.add(mat);
 		}
 			
-		allLeaves = leaves.toArray(new Material[0]);
-		allSaplings = saplings.toArray(new Material[0]);
-		allLogs = logs.toArray(new Material[0]);
-		allPlanks = planks.toArray(new Material[0]);
-		allWools = wools.toArray(new Material[0]);
-		allCarpets = carpets.toArray(new Material[0]);
+		allLeaves = leaves.toArray(new Material[leaves.size()]);
+		allSaplings = saplings.toArray(new Material[saplings.size()]);
+		allLogs = logs.toArray(new Material[logs.size()]);
+		allPlanks = planks.toArray(new Material[planks.size()]);
+		allWools = wools.toArray(new Material[wools.size()]);
+		allCarpets = carpets.toArray(new Material[carpets.size()]);
 		
-		allFishItems = fishes.toArray(new Material[0]);
-		allOres = ores.toArray(new Material[0]);
-		allHeads = heads.toArray(new Material[0]);
+		allFishItems = fishes.toArray(new Material[fishes.size()]);
+		allOres = ores.toArray(new Material[ores.size()]);
+		allHeads = heads.toArray(new Material[heads.size()]);
 	}
 
 	@Getter
