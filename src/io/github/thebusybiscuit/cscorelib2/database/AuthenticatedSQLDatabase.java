@@ -68,8 +68,7 @@ public abstract class AuthenticatedSQLDatabase<T extends AuthenticatedSQLDatabas
 		
 		System.out.println("[Slimefun5] Attempting to connect to Database \"" + this.database + "\"");
 		
-		try {
-			Connection connection = DriverManager.getConnection(getIP(), this.user, this.password);
+		try (Connection connection = DriverManager.getConnection(getIP(), this.user, this.password)) {
 			System.out.println("> Connection Result: SUCCESSFUL");
 			
 			callback.onLoad((T) this, connection);

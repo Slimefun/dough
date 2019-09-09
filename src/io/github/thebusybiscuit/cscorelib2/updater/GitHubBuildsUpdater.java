@@ -112,6 +112,7 @@ public class GitHubBuildsUpdater implements Updater {
 					    thread.join();
 				    } catch (InterruptedException x) {
 					    x.printStackTrace();
+					    Thread.currentThread().interrupt();
 				    }
 				    
 				    return false;
@@ -127,8 +128,10 @@ public class GitHubBuildsUpdater implements Updater {
 					thread.join();
 				} catch (InterruptedException x) {
 					x.printStackTrace();
+				    Thread.currentThread().interrupt();
 				}
-			    	return false;
+				
+			    return false;
 			}
 	    }
 		
@@ -143,6 +146,7 @@ public class GitHubBuildsUpdater implements Updater {
 					thread.join();
 				} catch (InterruptedException x) {
 					x.printStackTrace();
+				    Thread.currentThread().interrupt();
 				}
 				return;
 			}
@@ -188,6 +192,7 @@ public class GitHubBuildsUpdater implements Updater {
 					    thread.join();
 				    } catch (InterruptedException x) {
 					    x.printStackTrace();
+					    Thread.currentThread().interrupt();
 				    }
 				}
 			});

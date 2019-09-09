@@ -26,9 +26,9 @@ public interface Database {
 	String getTable(String table);
 
 	default ResultSet query(String query) throws SQLException {
-		Statement statement = getConnection().createStatement();
-		
-		return statement.executeQuery(query);
+		try (Statement statement = getConnection().createStatement()) {
+			return statement.executeQuery(query);
+		}
 	}
 	
 	@FunctionalInterface

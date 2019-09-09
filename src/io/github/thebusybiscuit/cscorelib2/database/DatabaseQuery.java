@@ -27,6 +27,7 @@ public class DatabaseQuery {
 				if (task.isCancelled()) return;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 
 			database.update(query);
@@ -42,6 +43,7 @@ public class DatabaseQuery {
 				if (task.isCancelled()) return;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 			
 			try {
@@ -65,6 +67,7 @@ public class DatabaseQuery {
 				if (task.isCancelled()) return;
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 			
 			callback.run();

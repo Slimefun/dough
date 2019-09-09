@@ -146,6 +146,7 @@ public class BukkitUpdater implements Updater {
 					    thread.join();
 				    } catch (InterruptedException x) {
 					    x.printStackTrace();
+					    Thread.currentThread().interrupt();
 				    }
 				    
 				    return false;
@@ -168,6 +169,7 @@ public class BukkitUpdater implements Updater {
 					thread.join();
 				} catch (InterruptedException x) {
 					x.printStackTrace();
+				    Thread.currentThread().interrupt();
 				}
 			    	return false;
 			}
@@ -184,6 +186,7 @@ public class BukkitUpdater implements Updater {
 					thread.join();
 				} catch (InterruptedException x) {
 					x.printStackTrace();
+				    Thread.currentThread().interrupt();
 				}
 				return;
 			}
@@ -201,15 +204,15 @@ public class BukkitUpdater implements Updater {
 	            connection.setConnectTimeout(5000);
 	            connection.addRequestProperty("User-Agent", "Auto Updater (by mrCookieSlime)");
 
-	            switch (connection.getResponseCode()) {
-	                case HttpURLConnection.HTTP_MOVED_PERM:
-	               	case HttpURLConnection.HTTP_MOVED_TEMP:
-	                    	String loc = connection.getHeaderField("Location");
-	                    	location = new URL(new URL(location), loc).toExternalForm();
-	                    	continue;
+	            int code = connection.getResponseCode();
+	            
+	            if (code != HttpURLConnection.HTTP_MOVED_PERM && code != HttpURLConnection.HTTP_MOVED_TEMP) {
+	            	break;
 	            }
-			
-	            break;
+	            else {
+	            	String loc = connection.getHeaderField("Location");
+                	location = new URL(new URL(location), loc).toExternalForm();
+	            }
 	        }
 	        
 	        return new URL(connection.getURL().toString().replaceAll(" ", "%20"));
@@ -232,6 +235,7 @@ public class BukkitUpdater implements Updater {
 				    while ((read = input.read(data, 0, 1024)) != -1) {
 				    	output.write(data, 0, read);
 				    }
+				    
 				} catch (Exception ex) {
 					System.err.println(" ");
 					System.err.println("#################### - ERROR - ####################");
@@ -251,10 +255,12 @@ public class BukkitUpdater implements Updater {
 				    } catch (IOException e) {
 				    	e.printStackTrace();
 				    }
+				    
 				    try {
 					    thread.join();
 				    } catch (InterruptedException x) {
 					    x.printStackTrace();
+					    Thread.currentThread().interrupt();
 				    }
 				}
 			});

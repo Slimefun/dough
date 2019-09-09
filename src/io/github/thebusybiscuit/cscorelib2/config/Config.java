@@ -38,13 +38,13 @@ public class Config {
 	 */
 	public Config(Plugin plugin) {
 		plugin.saveDefaultConfig();
-		this.file = new File("plugins/" + plugin.getName().replace(" ", "_") + "/config.yml");
+		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), "config.yml");
 		this.config = YamlConfiguration.loadConfiguration(this.file);
 		config.options().copyDefaults(true);
 	}
 	
 	public Config(Plugin plugin, String name) {
-		this.file = new File("plugins/" + plugin.getName().replace(" ", "_") + "/" + name);
+		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), name);
 		this.config = YamlConfiguration.loadConfiguration(this.file);
 		config.options().copyDefaults(true);
 	}
@@ -276,11 +276,12 @@ public class Config {
 	/**
 	 * Recreates the File of this Config
 	 */ 
-	public void createFile() {
+	public boolean createFile() {
 		try {
-			this.file.createNewFile();
+			return this.file.createNewFile();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	

@@ -46,8 +46,7 @@ public abstract class LocalSQLDatabase<T extends LocalSQLDatabase<T>> extends SQ
 		
 		System.out.println("[Slimefun - Database] Attempting to connect to local Database \"" + this.name + "\"");
 		
-		try {
-			Connection connection = DriverManager.getConnection(getIP());
+		try (Connection connection = DriverManager.getConnection(getIP())) {
 			System.out.println("> Connection Result: SUCCESSFUL");
 			
 			callback.onLoad((T) this, connection);
