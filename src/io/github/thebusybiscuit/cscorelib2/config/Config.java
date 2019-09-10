@@ -275,6 +275,8 @@ public class Config {
 	
 	/**
 	 * Recreates the File of this Config
+	 *
+	 * @return Returns if the file was successfully created
 	 */ 
 	public boolean createFile() {
 		try {
@@ -403,6 +405,7 @@ public class Config {
 	 * Gets the Contents of an Inventory at the specified Path
 	 *
 	 * @param  path The path in the Config File
+	 * @param title The title of the inventory, this can accept &amp; for color codes.
 	 * @return      The generated Inventory
 	 */ 
 	public Inventory getInventory(String path, String title) {

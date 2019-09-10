@@ -67,7 +67,7 @@ public final class ReflectionUtils {
 	 * @param  field The name of the Field you are looking for
 	 * @return      The found Field
 	 *
-	 * @throws Exception
+	 * @throws Exception If there's an issue getting a field
 	 */
 	public static Field getField(Class<?> c, String field) throws Exception {
 		return c.getDeclaredField(field);
@@ -76,10 +76,12 @@ public final class ReflectionUtils {
 	/**
 	 * Modifies a Field in an Object
 	 *
+	 * @param <T> The type of the specified field
 	 * @param  object The Object containing the Field
 	 * @param  c The Class in which we are looking for this field
 	 * @param  field The Name of that Field
 	 * @param  value The Value for that Field
+	 * @throws Exception If there was an issue setting a field value
 	 */
 	public static <T> void setFieldValue(T object, Class<?> c, String field, Object value) throws Exception {
 		Field f = getField(c, field);
@@ -90,9 +92,11 @@ public final class ReflectionUtils {
 	/**
 	 * Modifies a Field in an Object
 	 *
+	 * @param <T> The type of the specified field
 	 * @param  object The Object containing the Field
 	 * @param  field The Name of that Field
 	 * @param  value The Value for that Field
+	 * @throws Exception If there was an issue setting a field value
 	 */
 	public static <T> void setFieldValue(T object, String field, Object value) throws Exception {
 		Field f = getField(object.getClass(), field);
@@ -105,6 +109,7 @@ public final class ReflectionUtils {
 	 *
 	 * @param  object The Object containing the Field
 	 * @param  field The Name of that Field
+	 * @throws Exception If an issue occurred while getting the field value
 	 * @return      The Value of a Field
 	 */
 	public static Object getFieldValue(Object object, String field) throws Exception {
@@ -166,6 +171,7 @@ public final class ReflectionUtils {
 	 *
 	 * @param  name The Name of the Class your Inner class is located in
 	 * @param  subname The Name of the inner Class you are looking for
+	 * @throws Exception If there was an issue getting the specified inner class.
 	 * @return      The Class in your specified Class
 	 */
 	public static Class<?> getInnerNMSClass(String name, String subname) throws Exception {
@@ -176,6 +182,7 @@ public final class ReflectionUtils {
 	 * Returns an NMS Class via Reflection
 	 *
 	 * @param  name The Name of the Class you are looking for
+	 * @throws Exception If there was an issue getting the specified class
 	 * @return      The Class in that Package
 	 */
 	public static Class<?> getNMSClass(String name) throws Exception {
@@ -187,6 +194,7 @@ public final class ReflectionUtils {
 	 *
 	 * @param  name The Name of the Class your Inner class is located in
 	 * @param  subname The Name of the inner Class you are looking for
+	 * @throws Exception If there was an issue getting the specified inner class.
 	 * @return      The Class in your specified Class
 	 */
 	public static Class<?> getInnerOBCClass(String name, String subname) throws Exception {
@@ -197,6 +205,7 @@ public final class ReflectionUtils {
 	 * Returns an OBC Class via Reflection
 	 *
 	 * @param  name The Name of the Class you are looking for
+	 * @throws Exception If there was an issue getting the specified class.
 	 * @return      The Class in that Package
 	 */
 	public static Class<?> getOBCClass(String name) throws Exception {

@@ -114,6 +114,7 @@ public class Localization {
 	 *
 	 * @param  key The Key of those Message
 	 * @param  message The Message which this key will refer to by default
+	 * @return The message set
 	 */ 
 	public String setDefaultMessage(String key, String message) {
 		String msg = getMessage(message);
