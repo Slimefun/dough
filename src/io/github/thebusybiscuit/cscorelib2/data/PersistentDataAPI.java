@@ -431,7 +431,7 @@ public class PersistentDataAPI {
      *            The default value to use if no key is found
      * @return The byte array associated with this key or the default value if it doesn't exist
      */
-    public static byte[] getByteArray(PersistentDataHolder holder, NamespacedKey key, byte[] defaultVal) {
+    public static byte[] getByteArray(PersistentDataHolder holder, NamespacedKey key, byte... defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.BYTE_ARRAY, defaultVal);
     }
 
@@ -459,7 +459,7 @@ public class PersistentDataAPI {
      *            The default value to use if no key is found
      * @return The byte associated with this key or the default value if it doesn't exist
      */
-    public static int[] getIntArray(PersistentDataHolder holder, NamespacedKey key, int[] defaultVal) {
+    public static int[] getIntArray(PersistentDataHolder holder, NamespacedKey key, int... defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.INTEGER_ARRAY, defaultVal);
     }
 
@@ -487,7 +487,7 @@ public class PersistentDataAPI {
      *            The default value to use if no key is found
      * @return The long array associated with this key or the default value if it doesn't exist
      */
-    public static long[] getLongArray(PersistentDataHolder holder, NamespacedKey key, long[] defaultVal) {
+    public static long[] getLongArray(PersistentDataHolder holder, NamespacedKey key, long... defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.LONG_ARRAY, defaultVal);
     }
 
