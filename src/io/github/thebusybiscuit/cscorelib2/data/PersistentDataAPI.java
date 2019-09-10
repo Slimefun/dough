@@ -41,15 +41,15 @@ public class PersistentDataAPI {
         holder.getPersistentDataContainer().set(key, PersistentDataType.STRING, value);
     }
 
-    public static void setByteArray(PersistentDataHolder holder, NamespacedKey key, byte[] value) {
+    public static void setByteArray(PersistentDataHolder holder, NamespacedKey key, byte... value) {
         holder.getPersistentDataContainer().set(key, PersistentDataType.BYTE_ARRAY, value);
     }
 
-    public static void setIntArray(PersistentDataHolder holder, NamespacedKey key, int[] value) {
+    public static void setIntArray(PersistentDataHolder holder, NamespacedKey key, int... value) {
         holder.getPersistentDataContainer().set(key, PersistentDataType.INTEGER_ARRAY, value);
     }
 
-    public static void setLongArray(PersistentDataHolder holder, NamespacedKey key, long[] value) {
+    public static void setLongArray(PersistentDataHolder holder, NamespacedKey key, long... value) {
         holder.getPersistentDataContainer().set(key, PersistentDataType.LONG_ARRAY, value);
     }
 
