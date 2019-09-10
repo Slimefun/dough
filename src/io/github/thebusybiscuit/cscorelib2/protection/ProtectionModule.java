@@ -5,8 +5,9 @@ import org.bukkit.OfflinePlayer;
 
 public interface ProtectionModule {
 	
-	public String getName();
-	public boolean hasPermission(OfflinePlayer p, Location l, Action action);
+	void load();
+	String getName();
+	boolean hasPermission(OfflinePlayer p, Location l, Action action);
 	
 	public static enum Action {
 		

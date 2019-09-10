@@ -6,9 +6,17 @@ import org.bukkit.entity.Player;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.DataStore;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
 public class GriefPreventionProtectionModule implements ProtectionModule {
+	
+	private DataStore dataStore;
+	
+	@Override
+	public void load() {
+		dataStore = GriefPrevention.instance.dataStore;
+	}
 
 	@Override
 	public String getName() {
@@ -17,7 +25,7 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
-		Claim claim = GriefPrevention.instance.dataStore.getClaimAt(l, true, null);
+		Claim claim = dataStore.getClaimAt(l, true, null);
 		
 		if (claim == null) return true;
 		if (p.getUniqueId().equals(claim.ownerID)) return true;

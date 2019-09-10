@@ -13,7 +13,12 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class FactionsProtectionModule implements ProtectionModule {
 
-	private BoardColl board = BoardColl.get();
+	private BoardColl board;
+	
+	@Override
+	public void load() {
+		board = BoardColl.get();
+	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {

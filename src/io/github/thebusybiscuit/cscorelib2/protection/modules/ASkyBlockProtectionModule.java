@@ -12,7 +12,12 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class ASkyBlockProtectionModule implements ProtectionModule {
 	
-	private ASkyBlockAPI api = ASkyBlockAPI.getInstance();
+	private ASkyBlockAPI api;
+	
+	@Override
+	public void load() {
+		api = ASkyBlockAPI.getInstance();
+	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {

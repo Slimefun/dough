@@ -11,7 +11,12 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class RedProtectProtectionModule implements ProtectionModule {
 
-	private RedProtectAPI api = RedProtect.get().getAPI();
+	private RedProtectAPI api;
+	
+	@Override
+	public void load() {
+		api = RedProtect.get().getAPI();
+	}
 
     @Override
     public String getName() {

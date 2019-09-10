@@ -21,7 +21,12 @@ import world.bentobox.bentobox.managers.IslandsManager;
  */
 public class BentoBoxProtectionModule implements ProtectionModule {
 	
-	private IslandsManager manager = BentoBox.getInstance().getIslands();
+	private IslandsManager manager;
+	
+	@Override
+	public void load() {
+		manager = BentoBox.getInstance().getIslands();
+	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {

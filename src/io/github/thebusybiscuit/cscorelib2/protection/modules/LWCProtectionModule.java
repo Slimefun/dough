@@ -10,7 +10,12 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class LWCProtectionModule implements ProtectionModule {
 
-	private LWC lwc = LWC.getInstance();
+	private LWC lwc;
+	
+	@Override
+	public void load() {
+		lwc = LWC.getInstance();
+	}
 	
     @Override
     public String getName() {
@@ -23,6 +28,6 @@ public class LWCProtectionModule implements ProtectionModule {
         if (!lwc.isProtectable(l.getBlock())) return true;
     	if (lwc.getProtectionCache().getProtection(l.getBlock()) == null) return true;
 
-        return p instanceof Player && LWC.getInstance().canAccessProtection((Player) p, l.getBlock());
+        return p instanceof Player && lwc.canAccessProtection((Player) p, l.getBlock());
     }
 }

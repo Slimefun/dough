@@ -11,9 +11,13 @@ import com.github.intellectualsites.plotsquared.plot.util.Permissions;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
-
 public class PlotSquaredProtectionModule implements ProtectionModule {
 
+	@Override
+	public void load() {
+		// We don't need to load any APIs, everything is static
+	}
+	
 	@Override
 	public String getName() {
 		return "PlotSquared";

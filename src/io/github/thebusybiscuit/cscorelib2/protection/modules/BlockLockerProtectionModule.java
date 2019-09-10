@@ -14,7 +14,12 @@ import nl.rutgerkok.blocklocker.protection.Protection;
 
 public class BlockLockerProtectionModule implements ProtectionModule {
 	
-	private BlockLockerPlugin plugin = BlockLockerAPI.getPlugin();
+	private BlockLockerPlugin plugin;
+	
+	@Override
+	public void load() {
+		plugin = BlockLockerAPI.getPlugin();
+	}
 
 	@Override
 	public String getName() {

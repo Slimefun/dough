@@ -1,6 +1,5 @@
 package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
-import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -8,10 +7,16 @@ import org.bukkit.entity.Player;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import net.sacredlabyrinth.Phaed.PreciousStones.api.IApi;
+import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
 
 public class PreciousStonesProtectionModule implements ProtectionModule {
 
-	private IApi api = PreciousStones.API();
+	private IApi api;
+	
+	@Override
+	public void load() {
+		api = PreciousStones.API();
+	}
 
     @Override
     public String getName() {

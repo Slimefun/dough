@@ -2,6 +2,9 @@ package io.github.thebusybiscuit.cscorelib2.protection;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -23,11 +26,17 @@ import io.github.thebusybiscuit.cscorelib2.protection.modules.TownyProtectionMod
 import io.github.thebusybiscuit.cscorelib2.protection.modules.WorldGuardProtectionModule;
 import lombok.NonNull;
 
-public class ProtectionManager {
+public final class ProtectionManager {
 	
-	private final Set<ProtectionModule> modules = new HashSet<>();
-
+	private final Set<ProtectionModule> cscorelibProtectionModules = new HashSet<>();
+	private final Logger logger;
+	
 	public ProtectionManager(Server server) {
+		logger = getLogger(server);
+		
+		logger.log(Level.INFO, "Loading Protection Modules...");
+		logger.log(Level.INFO, "This may happen more than once.");
+		
 		if (server.getPluginManager().isPluginEnabled("WorldGuard") && server.getPluginManager().isPluginEnabled("WorldEdit")) {
 			registerModule(new WorldGuardProtectionModule());
 		}
@@ -76,6 +85,7 @@ public class ProtectionManager {
 		 * We do not need a module for them, but let us make the server owner
 		 * aware that this compatibility exists.
 		 */
+		
 		if(server.getPluginManager().isPluginEnabled("ProtectionStones")) {
             loadModuleMSG("ProtectionStones");
 		}
@@ -84,35 +94,52 @@ public class ProtectionManager {
 		}
 	}
 
+	private Logger getLogger(Server server) {
+		Logger logger = new Logger("CS-CoreLib2", null) {
+			
+			@Override
+			public void log(@NonNull LogRecord logRecord) {
+				logRecord.setMessage("[CS-CoreLib2 - Protection]" + logRecord.getMessage());
+			}
+			
+		};
+		
+		logger.setParent(server.getLogger());
+		logger.setLevel(Level.ALL);
+		
+		return logger;
+	}
+
 	public void registerModule(String name, ProtectionModule module) {
-		this.modules.add(module);
-		this.loadModuleMSG(name);
+		cscorelibProtectionModules.add(module);
+		loadModuleMSG(name);
 	}
 
 	public void registerModule(ProtectionModule module) {
 		try {
+			module.load();
 			registerModule(module.getName(), module);
 		}
 		catch(Exception x) {
-			x.printStackTrace();
+			logger.log(Level.SEVERE, "An Error occured while registering the Protection Module: \"" + module.getName() + "\"", x);
 		}
 	}
 
 	protected void loadModuleMSG(String module) {
-		System.out.println("[CS-CoreLib - Protection] Loaded Protection Module \"" + module + "\"");
+		logger.log(Level.INFO, "Loaded Protection Module \"" + module + "\"");
 	}
 
 	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull Action action) {
-		try {
-			for (ProtectionModule module: modules) {
+		for (ProtectionModule module: cscorelibProtectionModules) {
+			try {
 				if (!module.hasPermission(p, l, action)) {
 					return false;
 				}
 			}
-		}
-		catch(Exception x) {
-			x.printStackTrace();
-			return false;
+			catch(Exception x) {
+				logger.log(Level.SEVERE, "An Error occured while querying the Protection Module: \"" + module.getName() + "\"", x);
+				return false;
+			}
 		}
 
 		return true;

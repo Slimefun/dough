@@ -20,9 +20,16 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class WorldGuardProtectionModule implements ProtectionModule {
 
-	private WorldGuardPlugin worldguard = WorldGuardPlugin.inst();
-	private WorldGuardPlatform platform = WorldGuard.getInstance().getPlatform();
-	private RegionContainer container = platform.getRegionContainer();
+	private WorldGuardPlugin worldguard;
+	private WorldGuardPlatform platform;
+	private RegionContainer container;
+	
+	@Override
+	public void load() {
+		worldguard = WorldGuardPlugin.inst();
+		platform = WorldGuard.getInstance().getPlatform();
+		container = platform.getRegionContainer();
+	}
 
 	@Override
 	public String getName() {

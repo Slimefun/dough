@@ -11,6 +11,11 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 public class LocketteProtectionModule implements ProtectionModule{
 
 	@Override
+	public void load() {
+		// We don't need to load any APIs, everything is static
+	}
+	
+	@Override
 	public String getName() {
 		return "Lockette";
 	}
