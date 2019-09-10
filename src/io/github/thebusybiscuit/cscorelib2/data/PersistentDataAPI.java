@@ -229,6 +229,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The byte associated with this key or the default value if it doesn't exist
      */
     public static byte getByte(PersistentDataHolder holder, NamespacedKey key, byte defaultVal) {
@@ -255,6 +257,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The short associated with this key or the default value if it doesn't exist
      */
     public static short getShort(PersistentDataHolder holder, NamespacedKey key, short defaultVal) {
@@ -281,6 +285,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The integer associated with this key or the default value if it doesn't exist
      */
     public static int getInt(PersistentDataHolder holder, NamespacedKey key, int defaultVal) {
@@ -307,6 +313,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The long associated with this key or the default value if it doesn't exist
      */
     public static long getLong(PersistentDataHolder holder, NamespacedKey key, long defaultVal) {
@@ -333,6 +341,10 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The float associated with this key or the default value if it doesn't exist
      */
     public static float getFloat(PersistentDataHolder holder, NamespacedKey key, float defaultVal) {
@@ -359,6 +371,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The double associated with this key or the default value if it doesn't exist
      */
     public static double getDouble(PersistentDataHolder holder, NamespacedKey key, double defaultVal) {
@@ -385,6 +399,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The String associated with this key or the default value if it doesn't exist
      */
     public static String getString(PersistentDataHolder holder, NamespacedKey key, String defaultVal) {
@@ -411,6 +427,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The byte array associated with this key or the default value if it doesn't exist
      */
     public static byte[] getByteArray(PersistentDataHolder holder, NamespacedKey key, byte[] defaultVal) {
@@ -437,6 +455,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The byte associated with this key or the default value if it doesn't exist
      */
     public static int[] getIntArray(PersistentDataHolder holder, NamespacedKey key, int[] defaultVal) {
@@ -463,6 +483,8 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The long array associated with this key or the default value if it doesn't exist
      */
     public static long[] getLongArray(PersistentDataHolder holder, NamespacedKey key, long[] defaultVal) {
@@ -489,9 +511,11 @@ public class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
      * @return The byte associated with this key or the default value if it doesn't exist
      */
-    public static PersistentDataContainer getByteArray(PersistentDataHolder holder, NamespacedKey key,
+    public static PersistentDataContainer getContainer(PersistentDataHolder holder, NamespacedKey key,
                                                        PersistentDataContainer defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.TAG_CONTAINER, defaultVal);
     }
