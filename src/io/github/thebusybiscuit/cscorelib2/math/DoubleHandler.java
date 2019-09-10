@@ -8,10 +8,10 @@ public final class DoubleHandler {
 	
 	/**
 	 * This method returns a very fancy representation of Doubles.
-	 * 
-	 * 1000 		-> 1K
-	 * 32000		-> 32K
-	 * 232 000 000	-> 2.32M
+	 *
+	 * {@code 1000 		-> 1K}
+	 * {@code 32000		-&gt; 32K}
+	 * {@code 232 000 000	-&gt; 2.32M}
 	 * (and so on)
 	 * 
 	 * @param d	The double that should be formatted

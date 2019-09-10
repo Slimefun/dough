@@ -47,8 +47,8 @@ public final class InvUtils {
 	 * if you specify a bigger amount than present, it will simply set the Item to null.
 	 * 
 	 * If replaceConsumables is true, the following things will not be replaced with 'null':
-	 * Buckets -> new ItemStack(Material.BUCKET)
-	 * Potions -> new ItemStack(Material.GLASS_BOTTLE)
+	 * {@code Buckets -> new ItemStack(Material.BUCKET)}
+	 * {@code Potions -> new ItemStack(Material.GLASS_BOTTLE)}
 	 * 
 	 * @param inv					The Inventory to check
 	 * @param slot					The Slot in which to remove the Item
@@ -79,7 +79,8 @@ public final class InvUtils {
 	 * Note that this also checks {@link ItemStack#getAmount()}
 	 * 
 	 * If you do not specify any Slots, all Slots of the Inventory will be checked.
-	 * 
+	 *
+	 * @param inv		The inventory to check
 	 * @param item		The Item that shall be tested for
 	 * @param slots		The Slots that shall be iterated over
 	 * @return			Whether the slots have space for the {@link ItemStack}

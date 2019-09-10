@@ -60,6 +60,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * Creates a new ChestMenu with the specified
 	 * Title and a {@link Runnable} for dirty-marking
 	 *
+	 * @param  plugin The referencing plugin
 	 * @param  title The title of the Menu
 	 * @param  dirtyRunnable A {@link Runnable} that is run when the Inventory was modified
 	 */ 
@@ -83,7 +84,8 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 
 	/**
 	 * Creates a new ChestMenu with a specified Title
-	 * 
+	 *
+	 * @param plugin The referencing plugin
 	 * @param title The title of this Menu
 	 */
 	public ChestMenu(Plugin plugin, String title) {
@@ -121,7 +123,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * This method forbids Items that pass the Test from Insertion into this Inventory.
 	 * If the Predicate returns true, the Item cannot be inserted.
 	 * 
-	 * @param predicate A Predicate<ItemStack>
+	 * @param predicate An {@link ItemStack} {@link Predicate}
 	 */
 	public void preventItems(Predicate<ItemStack> predicate) {
 		this.predicate = predicate;
@@ -171,7 +173,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * clickable while viewing this Menu
 	 *
 	 * @return      Whether the empty menu slots are clickable
-	 */ 
+	 */
 	public boolean areEmptySlotsClickable() {
 		return emptyClickable;
 	}
@@ -313,6 +315,8 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	
 	/**
 	 * Resets this ChestMenu to a Point BEFORE the User interacted with it
+	 *
+	 * @param update Update current inv
 	 */ 
 	public void reset(boolean update) {
 		if (update) inv.clear();
@@ -425,8 +429,8 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * if you specify a bigger amount than present, it will simply set the Item to null.
 	 * 
 	 * If replaceConsumables is true, the following things will not be replaced with 'null':
-	 * Buckets -> new ItemStack(Material.BUCKET)
-	 * Potions -> new ItemStack(Material.GLASS_BOTTLE)
+	 * {@code Buckets -> new ItemStack(Material.BUCKET)}
+	 * {@code Potions -> new ItemStack(Material.GLASS_BOTTLE)}
 	 * 
 	 * @param slot					The Slot in which to remove the Item
 	 * @param amount				How many Items should be removed

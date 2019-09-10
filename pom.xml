@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.thebusybiscuit</groupId>
     <artifactId>CSCoreLib2</artifactId>
-    <version>0.4.2</version>
+    <version>0.5</version>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
