@@ -5,9 +5,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
-public class PersistentDataAPI {
+public final class PersistentDataAPI {
 
     private PersistentDataAPI() {
+    	// This is a utility class, we don't want any instances.
     }
 
     /////////////////////////////////////
