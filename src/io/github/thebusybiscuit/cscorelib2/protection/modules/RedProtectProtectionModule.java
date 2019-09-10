@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
 import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 import br.net.fabiozumbi12.RedProtect.Bukkit.API.RedProtectAPI;
+import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class RedProtectProtectionModule implements ProtectionModule {
@@ -24,7 +25,7 @@ public class RedProtectProtectionModule implements ProtectionModule {
     }
 	
     @Override
-    public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
+    public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
     	Region region = api.getRegion(l);
         
         if (region == null) return true;

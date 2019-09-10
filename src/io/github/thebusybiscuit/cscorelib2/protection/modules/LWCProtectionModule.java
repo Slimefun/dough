@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import com.griefcraft.lwc.LWC;
 
+import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class LWCProtectionModule implements ProtectionModule {
@@ -23,8 +24,8 @@ public class LWCProtectionModule implements ProtectionModule {
     }
     
     @Override
-    public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
-        if (action == Action.PVP) return true;
+    public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
+        if (!action.isBlockAction()) return true;
         if (!lwc.isProtectable(l.getBlock())) return true;
     	if (lwc.getProtectionCache().getProtection(l.getBlock()) == null) return true;
 

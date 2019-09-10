@@ -10,7 +10,6 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 
-import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule.Action;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.ASkyBlockProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BentoBoxProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BlockLockerProtectionModule;
@@ -129,7 +128,7 @@ public final class ProtectionManager {
 		logger.log(Level.INFO, "Loaded Protection Module \"" + module + "\"");
 	}
 
-	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull Action action) {
+	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull ProtectableAction action) {
 		for (ProtectionModule module: cscorelibProtectionModules) {
 			try {
 				if (!module.hasPermission(p, l, action)) {

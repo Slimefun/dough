@@ -26,25 +26,25 @@ public final class SkullItem {
 	private SkullItem() {}
 	
 	private static Method  property;
-	private static Method insert_property;
+	private static Method insertProperty;
 	
-	private static Constructor<?> profile_constructor;
-	private static Constructor<?> property_constructor;
+	private static Constructor<?> profileConstructor;
+	private static Constructor<?> propertyConstructor;
 	
-	private static Class<?> profile_class;
-	private static Class<?> property_class;
-	private static Class<?> map_class;
+	private static Class<?> profileClass;
+	private static Class<?> propertyClass;
+	private static Class<?> mapClass;
 	
 	static {
 		try {
-			profile_class = Class.forName("com.mojang.authlib.GameProfile");
-			property_class = Class.forName("com.mojang.authlib.properties.Property");
-			map_class = Class.forName("com.mojang.authlib.properties.PropertyMap");
+			profileClass = Class.forName("com.mojang.authlib.GameProfile");
+			propertyClass = Class.forName("com.mojang.authlib.properties.Property");
+			mapClass = Class.forName("com.mojang.authlib.properties.PropertyMap");
 			
-			profile_constructor = ReflectionUtils.getConstructor(profile_class, UUID.class, String.class);
-			property = ReflectionUtils.getMethod(profile_class, "getProperties");
-			property_constructor = ReflectionUtils.getConstructor(property_class, String.class, String.class);
-			insert_property = ReflectionUtils.getMethod(map_class, "put", String.class, property_class);
+			profileConstructor = ReflectionUtils.getConstructor(profileClass, UUID.class, String.class);
+			property = ReflectionUtils.getMethod(profileClass, "getProperties");
+			propertyConstructor = ReflectionUtils.getConstructor(propertyClass, String.class, String.class);
+			insertProperty = ReflectionUtils.getMethod(mapClass, "put", String.class, propertyClass);
 		}  catch (Exception e) {
 			System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
 			e.printStackTrace();
@@ -52,9 +52,9 @@ public final class SkullItem {
 	}
 	
 	private static Object createProfile(UUID uuid, String texture) throws Exception {
-		Object profile = profile_constructor.newInstance(uuid, "CS-CoreLib");
+		Object profile = profileConstructor.newInstance(uuid, "CS-CoreLib");
 		Object properties = property.invoke(profile);
-		insert_property.invoke(properties, "textures", property_constructor.newInstance("textures", texture));
+		insertProperty.invoke(properties, "textures", propertyConstructor.newInstance("textures", texture));
 		return profile;
 	}
 	

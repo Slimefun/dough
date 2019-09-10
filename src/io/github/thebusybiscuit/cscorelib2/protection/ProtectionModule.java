@@ -7,15 +7,6 @@ public interface ProtectionModule {
 	
 	void load();
 	String getName();
-	boolean hasPermission(OfflinePlayer p, Location l, Action action);
-	
-	public static enum Action {
-		
-		BREAK_BLOCK,
-		PLACE_BLOCK,
-		ACCESS_INVENTORIES,
-		PVP
-		
-	}
+	boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action);
 
 }

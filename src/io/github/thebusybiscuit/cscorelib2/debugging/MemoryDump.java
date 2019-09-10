@@ -22,7 +22,7 @@ public class MemoryDump {
 	private final Map<String, Integer> heatmap = new HashMap<>();
 	private final Set<Integer> hashes = new HashSet<>();
 	
-	public MemoryDump(@NonNull String file, @NonNull String namespace, Object... objects) throws FileNotFoundException, IllegalArgumentException, IllegalAccessException {
+	public MemoryDump(@NonNull String file, @NonNull String namespace, Object... objects) throws FileNotFoundException {
 		this.namespace = namespace;
 		
 		if (objects.length == 0) {
@@ -47,7 +47,7 @@ public class MemoryDump {
 		}
 	}
 
-	private void dump(@NonNull PrintStream stream, @NonNull String prefix, @NonNull String name, Object obj) throws IllegalArgumentException, IllegalAccessException {
+	private void dump(@NonNull PrintStream stream, @NonNull String prefix, @NonNull String name, Object obj) {
 		if (obj == null) {
 			stream.println(prefix + "null");
 		}
@@ -60,29 +60,25 @@ public class MemoryDump {
 					if (!((Collection<?>) obj).isEmpty()) {
 						AtomicInteger integer = new AtomicInteger(0);
 						((Collection<?>) obj).iterator().forEachRemaining(item -> {
-							try {
-								dump(stream, prefix + " ", String.valueOf(integer.incrementAndGet()), item);
-							} catch (IllegalArgumentException | IllegalAccessException e) {
-								e.printStackTrace();
-							}
+							dump(stream, prefix + " ", String.valueOf(integer.incrementAndGet()), item);
 						});
 					}
 				}
 				else if (obj instanceof Map) {
 					if (!((Map<?, ?>) obj).isEmpty()) {
 						((Map<?,?>) obj).entrySet().forEach(entry -> {
-							try {
-								dump(stream, prefix + " ", entry.getKey() + "", entry.getValue());
-							} catch (IllegalArgumentException | IllegalAccessException e) {
-								e.printStackTrace();
-							}
+							dump(stream, prefix + " ", entry.getKey() + "", entry.getValue());
 						});
 					}
 				}
 				else if (obj.getClass().getName().startsWith(namespace)) {
 					for (Field field: obj.getClass().getDeclaredFields()) {
 						field.setAccessible(true);
-						dump(stream, prefix + "  ", field.getName(), field.get(obj));
+						try {
+							dump(stream, prefix + "  ", field.getName(), field.get(obj));
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}

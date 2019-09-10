@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 
+import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class TownyProtectionModule implements ProtectionModule {
@@ -22,14 +23,14 @@ public class TownyProtectionModule implements ProtectionModule {
 	}
 
 	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
+	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
 		if (!(p instanceof Player)) return false;
 		
 		Player player = (Player) p;
 		return PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), convert(action));
 	}
 	
-	private ActionType convert(Action action) {
+	private ActionType convert(ProtectableAction action) {
 		switch (action) {
 			case ACCESS_INVENTORIES:
 			case PVP:

@@ -5,6 +5,7 @@ import org.bukkit.OfflinePlayer;
 
 import com.google.common.base.Optional;
 
+import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 import nl.rutgerkok.blocklocker.BlockLockerAPI;
 import nl.rutgerkok.blocklocker.BlockLockerPlugin;
@@ -27,7 +28,9 @@ public class BlockLockerProtectionModule implements ProtectionModule {
 	}
 	
 	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
+	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
+		if (!action.isBlockAction()) return true;
+		
 		Optional<Protection> protection = plugin.getProtectionFinder().findProtection(l.getBlock());
 		
 		if (protection.isPresent()) {

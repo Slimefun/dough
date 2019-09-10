@@ -8,6 +8,7 @@ import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 
+import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class FactionsUUIDProtectionModule implements ProtectionModule {
@@ -20,7 +21,7 @@ public class FactionsUUIDProtectionModule implements ProtectionModule {
 	}
 	
 	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
+	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
 		Faction faction = Board.getInstance().getFactionAt(new FLocation(l));
 		if (faction == null || faction.getId().equals("0")) return true;
 		

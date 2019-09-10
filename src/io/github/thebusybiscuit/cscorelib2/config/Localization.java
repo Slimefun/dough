@@ -3,7 +3,6 @@ package io.github.thebusybiscuit.cscorelib2.config;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -162,12 +161,12 @@ public class Localization {
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getMessage(key)));
 	}
 	
-	public void sendMessage(CommandSender sender, String key, boolean addPrefix, Function<String, String> function) {
+	public void sendMessage(CommandSender sender, String key, boolean addPrefix, UnaryOperator<String> function) {
 		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + function.apply(getMessage(key))));
 	}
 	
-	public void sendMessages(CommandSender sender, String key, boolean addPrefix, Function<String, String> function) {
+	public void sendMessages(CommandSender sender, String key, boolean addPrefix, UnaryOperator<String> function) {
 		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
 		
 		for (String translation: getMessages(key)) {
@@ -205,12 +204,12 @@ public class Localization {
 		}
 	}
 	
-	public void broadcastMessage(String key, boolean addPrefix, Function<String, String> function) {
+	public void broadcastMessage(String key, boolean addPrefix, UnaryOperator<String> function) {
 		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
 		Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + function.apply(getMessage(key))));
 	}
 	
-	public void broadcastMessages(String key, boolean addPrefix, Function<String, String> function) {
+	public void broadcastMessages(String key, boolean addPrefix, UnaryOperator<String> function) {
 		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
 		
 		for (String translation: getMessages(key)) {

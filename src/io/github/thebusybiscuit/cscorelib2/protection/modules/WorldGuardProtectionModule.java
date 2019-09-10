@@ -16,6 +16,7 @@ import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 
+import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class WorldGuardProtectionModule implements ProtectionModule {
@@ -37,7 +38,7 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 	}
 	
 	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
+	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
 		com.sk89q.worldedit.util.Location loc = BukkitAdapter.adapt(l);
 		com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(l.getWorld());
 		LocalPlayer player = worldguard.wrapOfflinePlayer(p);
@@ -48,7 +49,7 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 		}
 		*/
 		
-		if (action == Action.PVP) {
+		if (!action.isBlockAction()) {
 			Set<ProtectedRegion> regions = container.get(world).getApplicableRegions(BlockVector3.at(l.getX(), l.getY(), l.getZ())).getRegions();
 			
 			if (regions.isEmpty()) {
@@ -63,7 +64,7 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 		}
 	}
 
-	private StateFlag convert(Action action) {
+	private StateFlag convert(ProtectableAction action) {
 		switch(action) {
 			case PVP:
 				return Flags.PVP;

@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 
+import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.flags.Flag;
@@ -29,13 +30,13 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 	}
 	
 	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, Action action) {
+	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
 		Optional<Island> island = manager.getIslandAt(l);
 		Flag flag = convert(action, l.getWorld());
 		return island.map(value -> value.isAllowed(User.getInstance(p), flag)).orElse(flag.isSetForWorld(l.getWorld()));
 	}
 	
-	private Flag convert(Action action, World world) {
+	private Flag convert(ProtectableAction action, World world) {
 		switch (action) {
 		case ACCESS_INVENTORIES:
 			return Flags.CONTAINER;
