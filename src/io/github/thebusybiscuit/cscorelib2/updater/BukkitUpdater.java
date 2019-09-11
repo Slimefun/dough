@@ -136,7 +136,7 @@ public class BukkitUpdater implements Updater {
 			    connection.setConnectTimeout(timeout);
 			    connection.addRequestProperty("User-Agent", "Auto Updater (by TheBusyBiscuit)");
 			    connection.setDoOutput(true);
-
+			    
 			    final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			    final JsonArray array = (JsonArray) new JsonParser().parse(reader.readLine());
 			    if (array.size() == 0) {
@@ -178,7 +178,6 @@ public class BukkitUpdater implements Updater {
 		private void check() {
 			if (predicate.hasUpdate(localVersion, remoteVersion)) {
 				install();
-				return;
 			}
 			else {
 				System.out.println("[CS-CoreLib - Updater] " + plugin.getName() + " is up to date!");
@@ -188,7 +187,6 @@ public class BukkitUpdater implements Updater {
 					x.printStackTrace();
 				    Thread.currentThread().interrupt();
 				}
-				return;
 			}
 		}
 		
@@ -214,7 +212,7 @@ public class BukkitUpdater implements Updater {
 	            }
 	        }
 	        
-	        return new URL(connection.getURL().toString().replaceAll(" ", "%20"));
+	        return new URL(connection.getURL().toString().replace(" ", "%20"));
 	    }
 
 		private void install() {
@@ -225,6 +223,7 @@ public class BukkitUpdater implements Updater {
 				BufferedInputStream input = null;
 				FileOutputStream output = null;
 				System.out.println(download.toString());
+				
 				try {
 				    input = new BufferedInputStream(download.openStream());
 				    output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()));

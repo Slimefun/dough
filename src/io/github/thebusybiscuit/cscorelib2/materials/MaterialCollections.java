@@ -21,17 +21,23 @@ public final class MaterialCollections {
 	private MaterialCollections() {}
 
 	@Getter
-	private static final Material[] 
-		allLeaves, 
-		allSaplings, 
-		allLogs, 
-		allPlanks, 
-		allWools, 
-		allCarpets,
-		allFishItems,
-		allOres,
-		allHeads
-	;
+	private static final Material[] allLeaves;
+	@Getter
+	private static final Material[] allSaplings;
+	@Getter
+	private static final Material[] allLogs;
+	@Getter
+	private static final Material[] allPlanks; 
+	@Getter
+	private static final Material[] allWools;
+	@Getter
+	private static final Material[] allCarpets;
+	@Getter
+	private static final Material[] allFishItems;
+	@Getter
+	private static final Material[] allOres;
+	@Getter
+	private static final Material[] allHeads;
 		
 	static {
 		Set<Material> leaves = new HashSet<>();

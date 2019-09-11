@@ -77,8 +77,8 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		this.timeout = -1;
 		this.dirtyRunnable = dirtyRunnable;
 		
-		this.menuOpeningHandler = (p) -> {};
-		this.menuClosingHandler = (p) -> {};
+		this.menuOpeningHandler = p -> {};
+		this.menuClosingHandler = p -> {};
 		this.playerclick = (p, slot, item, cursor, action) -> isPlayerInventoryClickable();
 	}
 
@@ -405,7 +405,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	}
 	
 	protected static int formToLine(int i) {
-		return (int) Math.ceil(i / 9f);
+		return (int) Math.ceil(i / 9F);
 	}
 
 	/**

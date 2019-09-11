@@ -218,7 +218,10 @@ public final class ReflectionUtils {
 	 * @return      The formatted Server Version
 	 */
 	public static String getVersion() {
-		if (currentVersion == null) currentVersion = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf(".") + 1);
+		if (currentVersion == null) {
+			currentVersion = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
+		}
+		
 		return currentVersion;
 	}
 	

@@ -49,9 +49,7 @@ public class GitHubBuildsUpdater implements Updater {
 		
 		localVersion = extractBuild(plugin.getDescription().getVersion());
 		
-		this.predicate = (local, remote) -> {
-			return Integer.parseInt(remote) > Integer.parseInt(local);
-		};
+		this.predicate = (local, remote) -> Integer.parseInt(remote) > Integer.parseInt(local);
 		
 		prepareUpdateFolder();
 	}
@@ -139,7 +137,6 @@ public class GitHubBuildsUpdater implements Updater {
 		private void check() {
 			if (predicate.hasUpdate(localVersion, remoteVersion)) {
 				install();
-				return;
 			}
 			else {
 				System.out.println("[CS-CoreLib - Updater] " + plugin.getName() + " is up to date!");
@@ -149,7 +146,6 @@ public class GitHubBuildsUpdater implements Updater {
 					x.printStackTrace();
 				    Thread.currentThread().interrupt();
 				}
-				return;
 			}
 		}
 

@@ -20,19 +20,19 @@ public final class DoubleHandler {
 	public static String getFancyDouble(double d) {
 		DecimalFormat format = new DecimalFormat("##.##");
 		
-		double d2 = d / 1000000000000000d;
+		double d2 = d / 1000000000000000D;
 		if (d2 > 1.0) return format.format(d2).replace(",", ".") + "Q";
 		
-		d2 = d / 1000000000000d;
+		d2 = d / 1000000000000D;
 		if (d2 > 1.0) return format.format(d2).replace(",", ".") + "T";
 		
-		d2 = d / 1000000000d;
+		d2 = d / 1000000000D;
 		if (d2 > 1.0) return format.format(d2).replace(",", ".") + "B";
 		
-		d2 = d / 1000000d;
+		d2 = d / 1000000D;
 		if (d2 > 1.0) return format.format(d2).replace(",", ".") + "M";
 		
-		d2 = d / 1000d;
+		d2 = d / 1000D;
 		if (d2 > 1.0) return format.format(d2).replace(",", ".") + "K";
 		
 		return format.format(d).replace(",", ".");

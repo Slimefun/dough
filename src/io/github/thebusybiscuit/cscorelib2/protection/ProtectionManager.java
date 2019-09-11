@@ -94,7 +94,7 @@ public final class ProtectionManager {
 	}
 
 	private Logger getLogger(Server server) {
-		Logger logger = new Logger("CS-CoreLib2", null) {
+		Logger customLogger = new Logger("CS-CoreLib2", null) {
 			
 			@Override
 			public void log(@NonNull LogRecord logRecord) {
@@ -103,10 +103,10 @@ public final class ProtectionManager {
 			
 		};
 		
-		logger.setParent(server.getLogger());
-		logger.setLevel(Level.ALL);
+		customLogger.setParent(server.getLogger());
+		customLogger.setLevel(Level.ALL);
 		
-		return logger;
+		return customLogger;
 	}
 
 	public void registerModule(String name, ProtectionModule module) {
@@ -124,8 +124,8 @@ public final class ProtectionManager {
 		}
 	}
 
-	protected void loadModuleMSG(String module) {
-		logger.log(Level.INFO, "Loaded Protection Module \"" + module + "\"");
+	private void loadModuleMSG(String module) {
+		logger.log(Level.INFO, "Loaded Protection Module \"{0}\"", module);
 	}
 
 	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull ProtectableAction action) {

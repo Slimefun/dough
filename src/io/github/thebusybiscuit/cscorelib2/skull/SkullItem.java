@@ -143,15 +143,18 @@ public final class SkullItem {
 	 */
 	public static ItemStack fromName(String name) throws IOException {
 		@Cleanup
-		InputStreamReader profile_reader = null, session_reader = null;
+		InputStreamReader profileReader = null;
+		
+		@Cleanup
+		InputStreamReader sessionReader = null;
 		
 		URL profile = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-		profile_reader = new InputStreamReader(profile.openStream());
-		String uuid = new JsonParser().parse(profile_reader).getAsJsonObject().get("id").getAsString();
+		profileReader = new InputStreamReader(profile.openStream());
+		String uuid = new JsonParser().parse(profileReader).getAsJsonObject().get("id").getAsString();
 		
 		URL session = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
-        session_reader = new InputStreamReader(session.openStream());
-        JsonArray properties = new JsonParser().parse(session_reader).getAsJsonObject().get("properties").getAsJsonArray();
+        sessionReader = new InputStreamReader(session.openStream());
+        JsonArray properties = new JsonParser().parse(sessionReader).getAsJsonObject().get("properties").getAsJsonArray();
         
         for (JsonElement el: properties) {
         	if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals("textures")) {
