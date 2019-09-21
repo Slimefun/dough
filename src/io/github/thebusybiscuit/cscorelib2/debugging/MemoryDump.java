@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -16,14 +17,18 @@ import lombok.NonNull;
 public class MemoryDump {
 	
 	@Getter
-	private String namespace;
+	Predicate<String> namespaces;
 	
 	@Getter
 	private final Map<String, Integer> heatmap = new HashMap<>();
 	private final Set<Integer> hashes = new HashSet<>();
 	
 	public MemoryDump(@NonNull String file, @NonNull String namespace, Object... objects) throws FileNotFoundException {
-		this.namespace = namespace;
+		this(file, str -> str.startsWith(namespace), objects);
+	}
+	
+	public MemoryDump(@NonNull String file, @NonNull Predicate<String> includeNamespaces, Object... objects) throws FileNotFoundException {
+		namespaces = includeNamespaces;
 		
 		if (objects.length == 0) {
 			throw new IllegalArgumentException("You need to provide at least one Object!");
@@ -71,7 +76,7 @@ public class MemoryDump {
 						});
 					}
 				}
-				else if (obj.getClass().getName().startsWith(namespace)) {
+				else if (namespaces.test(obj.getClass().getName())) {
 					for (Field field: obj.getClass().getDeclaredFields()) {
 						field.setAccessible(true);
 						try {

@@ -2,6 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,23 +20,32 @@ public class CustomItem extends ItemStack {
 		super(type);
 	}
 	
-	public CustomItem(ItemStack item, String name, String... lore) {
+	public CustomItem(ItemStack item, Consumer<ItemMeta> meta) {
 		super(item);
 		ItemMeta im = getItemMeta();
-		
-		if (name != null) {
-			im.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-		}
-		
-		if (lore.length > 0) {
-			List<String> lines = new ArrayList<>();
-			for (String line: lore) {
-				lines.add(ChatColor.translateAlternateColorCodes('&', line));
-			}
-			im.setLore(lines);
-		}
-		
+		meta.accept(im);
 		setItemMeta(im);
+	}
+	
+	public CustomItem(Material type, Consumer<ItemMeta> meta) {
+		this(new ItemStack(type), meta);
+		
+	}
+	
+	public CustomItem(ItemStack item, String name, String... lore) {
+		this(item, im -> {
+			if (name != null) {
+				im.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+			}
+			
+			if (lore.length > 0) {
+				List<String> lines = new ArrayList<>();
+				for (String line: lore) {
+					lines.add(ChatColor.translateAlternateColorCodes('&', line));
+				}
+				im.setLore(lines);
+			}
+		});
 	}
 	
 	public CustomItem addFlags(ItemFlag... flags) {
