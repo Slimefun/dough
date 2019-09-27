@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.cscorelib2.materials;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,10 @@ public final class MaterialCollections {
 	
 	// This is a pure Utility class, we do not want any instantiation to happen!
 	private MaterialCollections() {}
+	
+	public static boolean contains(Material type, Material[] collection) {
+		return Arrays.stream(collection).anyMatch(material -> material == type);
+	}
 
 	@Getter
 	private static final Material[] allLeaves;

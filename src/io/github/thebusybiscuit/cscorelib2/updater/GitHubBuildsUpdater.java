@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -85,12 +86,8 @@ public class GitHubBuildsUpdater implements Updater {
 					check();
 				} 
 				catch(NumberFormatException x) {
-					System.err.println(" ");
-		        	System.err.println("#################### - ERROR - ####################");
-					System.err.println("Could not auto-update " + plugin.getName());
-					System.err.println("Unrecognized Version: \"" + localVersion + "\"");
-					System.err.println("#################### - ERROR - ####################");
-					System.err.println(" ");
+					plugin.getLogger().log(Level.SEVERE, "Could not auto-update " + plugin.getName());
+					plugin.getLogger().log(Level.SEVERE, "Unrecognized Version: \"" + localVersion + "\"");
 				}
 			}
 		}
@@ -110,7 +107,7 @@ public class GitHubBuildsUpdater implements Updater {
 				    try {
 					    thread.join();
 				    } catch (InterruptedException x) {
-					    x.printStackTrace();
+					    plugin.getLogger().log(Level.SEVERE, "The Auto-Updater Thread was interrupted", x);
 					    Thread.currentThread().interrupt();
 				    }
 				    
@@ -122,11 +119,12 @@ public class GitHubBuildsUpdater implements Updater {
 			    
 			    return true;
 			} catch (IOException e) {
-				System.err.println("[CS-CoreLib - Updater] Could not connect to github.io for Plugin \"" + plugin.getName() + "\", is it down?");
+				plugin.getLogger().log(Level.WARNING, "Could not connect to github.io for Plugin \"" + plugin.getName() + "\", is it down? (" + e.getMessage() + ")");
+				
 				try {
 					thread.join();
 				} catch (InterruptedException x) {
-					x.printStackTrace();
+					plugin.getLogger().log(Level.SEVERE, "The Auto-Updater Thread was interrupted", x);
 				    Thread.currentThread().interrupt();
 				}
 				
@@ -139,24 +137,25 @@ public class GitHubBuildsUpdater implements Updater {
 				install();
 			}
 			else {
-				System.out.println("[CS-CoreLib - Updater] " + plugin.getName() + " is up to date!");
+				plugin.getLogger().log(Level.INFO, plugin.getName() + " is up to date!");
+				
 				try {
 					thread.join();
 				} catch (InterruptedException x) {
-					x.printStackTrace();
+					plugin.getLogger().log(Level.SEVERE, "The Auto-Updater Thread was interrupted", x);
 				    Thread.currentThread().interrupt();
 				}
 			}
 		}
 
 		private void install() {
-			System.out.println("[CS-CoreLib - Updater] " + plugin.getName() + " is outdated!");
-			System.out.println("[CS-CoreLib - Updater] Downloading " + plugin.getName() + " v" + remoteVersion);
+			plugin.getLogger().log(Level.INFO, plugin.getName() + " is outdated!");
+			plugin.getLogger().log(Level.INFO, "Downloading " + plugin.getName() + " v" + remoteVersion);
 			
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
 				BufferedInputStream input = null;
 				FileOutputStream output = null;
-				System.out.println(downloadURL.toString());
+				
 				try {
 				    input = new BufferedInputStream(downloadURL.openStream());
 				    output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()));
@@ -166,29 +165,25 @@ public class GitHubBuildsUpdater implements Updater {
 				    while ((read = input.read(data, 0, 1024)) != -1) {
 				    	output.write(data, 0, read);
 				    }
-				} catch (Exception ex) {
-					System.err.println(" ");
-					System.err.println("#################### - ERROR - ####################");
-					System.err.println("Could not auto-update " + plugin.getName());
-					System.err.println("#################### - ERROR - ####################");
-					System.err.println(" ");
-					ex.printStackTrace();
+				} catch (Exception x) {
+					plugin.getLogger().log(Level.SEVERE, "Could not auto-update " + plugin.getName(), x);
 				} finally {
 				    try {
 						if (input != null) input.close();
 						if (output != null) output.close();
-						System.err.println(" ");
-						System.err.println("#################### - UPDATE - ####################");
-						System.err.println(plugin.getName() + " was successfully updated (" + localVersion + " -> " + remoteVersion + ")");
-						System.err.println("Please restart your Server in order to use the new Version");
-						System.err.println(" ");
+						plugin.getLogger().log(Level.INFO, " ");
+						plugin.getLogger().log(Level.INFO, "#################### - UPDATE - ####################");
+						plugin.getLogger().log(Level.INFO, plugin.getName() + " was successfully updated (" + localVersion + " -> " + remoteVersion + ")");
+						plugin.getLogger().log(Level.INFO, "Please restart your Server in order to use the new Version");
+						plugin.getLogger().log(Level.INFO, " ");
 				    } catch (IOException e) {
-				    	e.printStackTrace();
+				    	plugin.getLogger().log(Level.SEVERE, "An Error occured while auto-updating \"" + plugin.getName() + "\"", e);
 				    }
+				    
 				    try {
 					    thread.join();
 				    } catch (InterruptedException x) {
-					    x.printStackTrace();
+				    	plugin.getLogger().log(Level.SEVERE, "The Auto-Updater Thread was interrupted", x);
 					    Thread.currentThread().interrupt();
 				    }
 				}
