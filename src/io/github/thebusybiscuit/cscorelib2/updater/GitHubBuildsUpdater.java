@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 public class GitHubBuildsUpdater implements Updater {
@@ -29,6 +30,7 @@ public class GitHubBuildsUpdater implements Updater {
 	private URL downloadURL;
 	private Thread thread;
 	private File file;
+	private String prefix;
 	
 	@Getter
 	private String repository;
@@ -43,10 +45,15 @@ public class GitHubBuildsUpdater implements Updater {
 	@Setter
 	protected UpdateCheck predicate;
 	
-	public GitHubBuildsUpdater(Plugin plugin, File file, String repo) {
+	public GitHubBuildsUpdater(@NonNull Plugin plugin, @NonNull File file, @NonNull String repo) {
+		this(plugin, file, repo, "DEV - ");
+	}
+	
+	public GitHubBuildsUpdater(@NonNull Plugin plugin, @NonNull File file, @NonNull String repo, @NonNull String prefix) {
 		this.plugin = plugin;
 		this.file = file;
 		this.repository = repo;
+		this.prefix = prefix;
 		
 		localVersion = extractBuild(plugin.getDescription().getVersion());
 		
@@ -56,8 +63,8 @@ public class GitHubBuildsUpdater implements Updater {
 	}
 	
 	private String extractBuild(String version) {
-		if (version.startsWith("DEV - ")) {
-			return version.substring("DEV - ".length()).split(" ")[0];
+		if (version.startsWith(prefix)) {
+			return version.substring(prefix.length()).split(" ")[0];
 		}
 		
 		throw new IllegalArgumentException("Not a valid Development-Build Version: " + version);
