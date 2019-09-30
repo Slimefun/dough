@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.inventory;
 import java.lang.reflect.Method;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -108,6 +109,36 @@ public final class ItemUtils {
 		}
 		
 		return true;
+	}
+	
+	public static void damageItem(ItemStack item, boolean ignoreEnchantments) {
+		damageItem(item, 1, ignoreEnchantments);
+	}
+	
+	public static void damageItem(ItemStack item, int damage, boolean ignoreEnchantments) {
+		if (item != null && item.getType() != Material.AIR && item.getAmount() > 0) {
+			int remove = damage;
+			
+			if (!ignoreEnchantments && item.getEnchantments().containsKey(Enchantment.DURABILITY)) {
+				int level = item.getEnchantmentLevel(Enchantment.DURABILITY);
+				for (int i = 0; i < damage; i++) {
+					if (Math.random() * 100 <= (60 + Math.floorDiv(40, (level + 1)))) {
+						remove--;
+					}
+				}
+			}
+			
+			ItemMeta meta = item.getItemMeta();
+			Damageable damageable = (Damageable) meta;
+			
+			if (damageable.getDamage() + remove > item.getType().getMaxDurability()) {
+				item.setAmount(0);
+			}
+			else {
+				damageable.setDamage(damageable.getDamage() + remove);
+				item.setItemMeta(meta);
+			}
+		}
 	}
 
 }
