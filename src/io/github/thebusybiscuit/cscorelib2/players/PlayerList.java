@@ -28,4 +28,8 @@ public final class PlayerList {
 				.collect(Collectors.toSet());
 	}
 	
+	public static boolean isOnline(String name) {
+		return findByName(name).isPresent();
+	}
+	
 }
