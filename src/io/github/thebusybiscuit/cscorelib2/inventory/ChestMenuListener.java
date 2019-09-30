@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
-public final class ChestMenuListener implements Listener {
+class ChestMenuListener implements Listener {
 	
 	protected Map<UUID, ChestMenu> menus;
 	
