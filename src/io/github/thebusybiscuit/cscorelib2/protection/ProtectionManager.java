@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.block.Block;
 
 import io.github.thebusybiscuit.cscorelib2.protection.modules.ASkyBlockProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BentoBoxProtectionModule;
@@ -126,6 +127,10 @@ public final class ProtectionManager {
 
 	private void loadModuleMSG(String module) {
 		logger.log(Level.INFO, "Loaded Protection Module \"{0}\"", module);
+	}
+	
+	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Block b, @NonNull ProtectableAction action) {
+		return hasPermission(p, b.getLocation(), action);
 	}
 
 	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull ProtectableAction action) {
