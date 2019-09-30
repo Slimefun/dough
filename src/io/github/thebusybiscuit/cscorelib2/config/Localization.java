@@ -147,6 +147,21 @@ public class Localization {
 	}
 	
 	/**
+	 * Returns the Strings referring to the specified Key
+	 *
+	 * @param  key The Key of those Messages
+	 * @return      The Array of messages this key is referring to
+	 */ 
+	public String[] getMessagesArray(String key) {
+		if (!allowUnicodes) {
+			List<String> list = config.getStringList(key);
+			return list.toArray(new String[list.size()]);
+		}
+		
+		return config.getStringList(key).stream().map(unicodes).toArray(String[]::new);
+	}
+	
+	/**
 	 * Returns the String referring to the specified Key
 	 *
 	 * @param  key The Key of those Messages
