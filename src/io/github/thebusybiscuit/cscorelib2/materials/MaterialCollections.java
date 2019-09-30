@@ -161,4 +161,22 @@ public final class MaterialCollections {
             Material.BLACK_GLAZED_TERRACOTTA
     };
 
+	@Getter
+	private static final Material[] allUnbreakableBlocks = {
+            Material.BEDROCK,
+            Material.BARRIER,
+            
+            Material.NETHER_PORTAL,
+            Material.END_PORTAL,
+            Material.END_PORTAL_FRAME,
+            Material.END_GATEWAY,
+            
+            Material.COMMAND_BLOCK,
+            Material.CHAIN_COMMAND_BLOCK,
+            Material.REPEATING_COMMAND_BLOCK,
+            
+            Material.STRUCTURE_BLOCK,
+            Material.STRUCTURE_VOID
+    };
+
 }
