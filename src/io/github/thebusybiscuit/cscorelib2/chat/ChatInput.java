@@ -7,17 +7,19 @@ import java.util.function.Predicate;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import lombok.NonNull;
+
 public final class ChatInput {
 	
 	private static ChatInputListener listener;
 
 	private ChatInput() {}
 	
-	public static void waitForPlayer(Plugin plugin, Player p, Consumer<String> handler) {
+	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Consumer<String> handler) {
 		waitForPlayer(plugin, p, s -> true, handler);
 	}
 	
-	public static void waitForPlayer(Plugin plugin, Player p, Predicate<String> predicate, Consumer<String> handler) {
+	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull Consumer<String> handler) {
 		if (listener == null) listener = new ChatInputListener(plugin);
 		listener.handlers.put(p.getUniqueId(), new IChatInput() {
 			
@@ -34,11 +36,11 @@ public final class ChatInput {
 		});
 	}
 	
-	public static void waitForPlayer(Plugin plugin, Player p, BiConsumer<Player, String> handler) {
+	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull BiConsumer<Player, String> handler) {
 		waitForPlayer(plugin, p, s -> true, handler);
 	}
 	
-	public static void waitForPlayer(Plugin plugin, Player p, Predicate<String> predicate, BiConsumer<Player, String> handler) {
+	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull BiConsumer<Player, String> handler) {
 		if (listener == null) listener = new ChatInputListener(plugin);
 		listener.handlers.put(p.getUniqueId(), new IChatInput() {
 			
