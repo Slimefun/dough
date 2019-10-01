@@ -3,6 +3,8 @@ package io.github.thebusybiscuit.cscorelib2.inventory;
 import java.util.stream.IntStream;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,6 +37,20 @@ public final class InvUtils {
 	 */
 	public static void consumeItem(Inventory inv, int slot, boolean replaceConsumables) {
 		consumeItem(inv, slot, 1, replaceConsumables);
+	}
+	
+	/**
+	 * This Method will consume the Item in the specified Hand
+	 * for the specified Player
+	 * 
+	 * @param p						The Player who is consuming the Item
+	 * @param hand 					The Hand from which to remove the item
+	 * @param replaceConsumables 	Whether Consumable Items should be replaced with their "empty" version, see {@link InvUtils#consumeItem(Inventory, int, int, boolean)}
+	 */
+	public static void consumeItem(Player p, EquipmentSlot hand, boolean replaceConsumables) {
+		int slot = p.getInventory().getHeldItemSlot();
+		if (hand == EquipmentSlot.OFF_HAND) slot = 40;
+		consumeItem(p.getInventory(), slot, 1, replaceConsumables);
 	}
 	
 	/**
