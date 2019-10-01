@@ -163,7 +163,7 @@ public final class ItemUtils {
 	
 	/**
 	 * This Method will consume the Item in the specified slot.
-	 * See {@link InvUtils#consumeItem(Inventory, int, int, boolean)} for further details.
+	 * See {@link ItemUtils#consumeItem(ItemStack, int, boolean)} for further details.
 	 * 
 	 * @param inv					The Inventory to check
 	 * @param slot 					The Slot in which the Item should be consumed
