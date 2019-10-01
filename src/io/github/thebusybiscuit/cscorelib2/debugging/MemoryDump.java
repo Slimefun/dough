@@ -17,7 +17,7 @@ import lombok.NonNull;
 public class MemoryDump {
 	
 	@Getter
-	Predicate<String> namespaces;
+	private Predicate<String> namespaces;
 	
 	@Getter
 	private final Map<String, Integer> heatmap = new HashMap<>();

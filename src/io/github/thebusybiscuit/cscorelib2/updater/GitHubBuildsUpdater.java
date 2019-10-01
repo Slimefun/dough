@@ -109,7 +109,7 @@ public class GitHubBuildsUpdater implements Updater {
 			    final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			    final JsonObject obj = (JsonObject) new JsonParser().parse(reader.readLine());
 			    if (obj == null) {
-			    	plugin.getLogger().log(Level.SEVERE, "The Auto-Updater could not connect to github.io, is it down?");
+			    	plugin.getLogger().log(Level.WARNING, "The Auto-Updater could not connect to github.io, is it down?");
 				    
 				    try {
 					    thread.join();
@@ -126,7 +126,7 @@ public class GitHubBuildsUpdater implements Updater {
 			    
 			    return true;
 			} catch (IOException e) {
-				plugin.getLogger().log(Level.WARNING, "Could not connect to github.io for Plugin \"" + plugin.getName() + "\", is it down? (" + e.getMessage() + ")");
+				plugin.getLogger().log(Level.WARNING, "Could not connect to github.io, is it down?", e);
 				
 				try {
 					thread.join();
