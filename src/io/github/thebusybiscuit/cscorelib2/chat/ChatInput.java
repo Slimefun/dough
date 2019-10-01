@@ -15,10 +15,29 @@ public final class ChatInput {
 
 	private ChatInput() {}
 	
+	/**
+	 * This method waits for the Player to write something in chat.
+	 * Afterwards the given callback will be invoked.
+	 * 
+	 * @param plugin	The Plugin performing this action
+	 * @param p			The Player that we are waiting for
+	 * @param handler	A callback to invoke when the Player has entered some text
+	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Consumer<String> handler) {
 		waitForPlayer(plugin, p, s -> true, handler);
 	}
 	
+	/**
+	 * This method waits for the Player to write something in chat.
+	 * Afterwards the given callback will be invoked.
+	 * With the predicate you can filter out unwanted inputs.
+	 * Like commands for example.
+	 * 
+	 * @param plugin	The Plugin performing this action
+	 * @param p			The Player that we are waiting for
+	 * @param predicate	A Filter for the messages the Player types in
+	 * @param handler	A callback to invoke when the Player has entered some text
+	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull Consumer<String> handler) {
 		if (listener == null) listener = new ChatInputListener(plugin);
 		listener.handlers.put(p.getUniqueId(), new IChatInput() {
@@ -36,10 +55,29 @@ public final class ChatInput {
 		});
 	}
 	
+	/**
+	 * This method waits for the Player to write something in chat.
+	 * Afterwards the given callback will be invoked.
+	 * 
+	 * @param plugin	The Plugin performing this action
+	 * @param p			The Player that we are waiting for
+	 * @param handler	A callback to invoke when the Player has entered some text
+	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull BiConsumer<Player, String> handler) {
 		waitForPlayer(plugin, p, s -> true, handler);
 	}
 	
+	/**
+	 * This method waits for the Player to write something in chat.
+	 * Afterwards the given callback will be invoked.
+	 * With the predicate you can filter out unwanted inputs.
+	 * Like commands for example.
+	 * 
+	 * @param plugin	The Plugin performing this action
+	 * @param p			The Player that we are waiting for
+	 * @param predicate	A Filter for the messages the Player types in
+	 * @param handler	A callback to invoke when the Player has entered some text
+	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull BiConsumer<Player, String> handler) {
 		if (listener == null) listener = new ChatInputListener(plugin);
 		listener.handlers.put(p.getUniqueId(), new IChatInput() {

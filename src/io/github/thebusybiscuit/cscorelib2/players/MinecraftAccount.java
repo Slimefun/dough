@@ -24,6 +24,18 @@ public final class MinecraftAccount {
 	
 	private MinecraftAccount() {}
 	
+	/**
+	 * This method returns an Optional for a Player's UUID.
+	 * The Player has to have a Minecraft account but doesn't have to have ever
+	 * played on the current server.
+	 * This will perform a blocking web request, so it should never
+	 * be run on the main thread.
+	 * If there is no Player with the given name, the Optional will be empty.
+	 * 
+	 * @param name						The Name of the Player
+	 * @return							An Optional describing the UUID of the Player
+	 * @throws TooManyRequestsException	If too many requests were sent to the Server
+	 */
 	public static Optional<UUID> getUUID(@NonNull String name) throws TooManyRequestsException {
 		try {
 			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
@@ -54,6 +66,20 @@ public final class MinecraftAccount {
 		}
 	}
 	
+	/**
+	 * This method returns an Optional for a Player's Skin.
+	 * The Player has to have a Minecraft account but doesn't have to have ever
+	 * played on the current server.
+	 * This will perform a blocking web request, so it should never
+	 * be run on the main thread.
+	 * If there is no Player with the given UUID, the Optional will be empty.
+	 * 
+	 * The Skin Texture will be a Base64-Representation of the Skin's URL.
+	 * 
+	 * @param uuid						The UUID of the Player
+	 * @return							An Optional describing the Skin Texture of the Player
+	 * @throws TooManyRequestsException	If too many requests were sent to the Server
+	 */
 	public static Optional<String> getSkin(@NonNull UUID uuid) throws TooManyRequestsException {
         try {
         	URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString().replace("-", "") + "?unsigned=false");
