@@ -43,6 +43,8 @@ public final class MaterialCollections {
 	private static final Material[] allOres;
 	@Getter
 	private static final Material[] allHeads;
+	@Getter
+	private static final Material[] allFilledBuckets;
 		
 	static {
 		Set<Material> leaves = new HashSet<>();
@@ -55,8 +57,11 @@ public final class MaterialCollections {
 		Set<Material> fishes = new HashSet<>();
 		Set<Material> ores = new HashSet<>();
 		Set<Material> heads = new HashSet<>();
+		Set<Material> buckets = new HashSet<>();
 			
 		for (Material mat: Material.values()) {
+			if (mat.name().startsWith("LEGACY_")) continue;
+			
 			if (Tag.LEAVES.isTagged(mat)) leaves.add(mat);
 			if (Tag.SAPLINGS.isTagged(mat)) saplings.add(mat);
 			if (Tag.LOGS.isTagged(mat)) logs.add(mat);
@@ -65,8 +70,9 @@ public final class MaterialCollections {
 			if (Tag.CARPETS.isTagged(mat)) carpets.add(mat);
 			
 			if (Tag.ITEMS_FISHES.isTagged(mat)) fishes.add(mat);
-			if (mat.toString().endsWith("_ORE")) ores.add(mat);
-			if (mat.toString().endsWith("_HEAD") || mat.toString().endsWith("_SKULL")) heads.add(mat);
+			if (mat.name().endsWith("_ORE")) ores.add(mat);
+			if (mat.name().endsWith("_HEAD") || mat.name().endsWith("_SKULL")) heads.add(mat);
+			if (mat.name().endsWith("_BUCKET")) buckets.add(mat);
 		}
 			
 		allLeaves = leaves.toArray(new Material[leaves.size()]);
@@ -79,6 +85,7 @@ public final class MaterialCollections {
 		allFishItems = fishes.toArray(new Material[fishes.size()]);
 		allOres = ores.toArray(new Material[ores.size()]);
 		allHeads = heads.toArray(new Material[heads.size()]);
+		allFilledBuckets = buckets.toArray(new Material[buckets.size()]);
 	}
 
 	@Getter

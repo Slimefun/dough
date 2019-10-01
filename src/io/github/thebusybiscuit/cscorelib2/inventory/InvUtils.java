@@ -8,6 +8,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.thebusybiscuit.cscorelib2.materials.MaterialCollections;
+
 public final class InvUtils {
 	
 	/**
@@ -75,7 +77,7 @@ public final class InvUtils {
 		ItemStack item = inv.getItem(slot);
 		
 		if (item != null && item.getType() != Material.AIR) {
-			if (item.getType().name().endsWith("_BUCKET") && replaceConsumables) {
+			if (MaterialCollections.contains(item.getType(), MaterialCollections.getAllFilledBuckets()) && replaceConsumables) {
 				inv.setItem(slot, new ItemStack(Material.BUCKET));
 			}
 			else if (item.getType() == Material.POTION && replaceConsumables) {
