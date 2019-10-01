@@ -164,8 +164,7 @@ public final class ItemUtils {
 	 * This Method will consume the Item in the specified slot.
 	 * See {@link ItemUtils#consumeItem(ItemStack, int, boolean)} for further details.
 	 * 
-	 * @param inv					The Inventory to check
-	 * @param slot 					The Slot in which the Item should be consumed
+	 * @param item 					The item to be consumed
 	 * @param replaceConsumables 	Whether Consumable Items should be replaced with their "empty" version, see {@link ItemUtils#consumeItem(ItemStack, int, boolean)}
 	 */
 	public static void consumeItem(@NonNull ItemStack item, boolean replaceConsumables) {
@@ -184,9 +183,8 @@ public final class ItemUtils {
 	 * If replaceConsumables is true, the following things will not be replaced with 'null':
 	 * {@code Buckets -> new ItemStack(Material.BUCKET)}
 	 * {@code Potions -> new ItemStack(Material.GLASS_BOTTLE)}
-	 * 
-	 * @param inv					The Inventory to check
-	 * @param slot					The Slot in which to remove the Item
+	 *
+	 * @param item 					The item to be consumed
 	 * @param amount				How many Items should be removed
 	 * @param replaceConsumables	Whether Items should be replaced with their "empty" version
 	 */
