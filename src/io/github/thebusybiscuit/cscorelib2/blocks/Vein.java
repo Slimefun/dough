@@ -47,7 +47,7 @@ public final class Vein {
 		
 		for (BlockFace face: faces) {
 			Block next = anchor.getRelative(face);
-			if (!list.contains(next.getLocation()) && predicate.test(next)) {
+			if (!list.contains(next) && predicate.test(next)) {
 				list.add(next);
 				expand(next, list, limit, predicate);
 			}

@@ -80,7 +80,7 @@ public class GitHubBuildsUpdater implements Updater {
 				thread.start();
 			});
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			plugin.getLogger().log(Level.SEVERE, "Auto-Updater URL is malformed", e);
 		}
 	}
 	
@@ -109,7 +109,7 @@ public class GitHubBuildsUpdater implements Updater {
 			    final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			    final JsonObject obj = (JsonObject) new JsonParser().parse(reader.readLine());
 			    if (obj == null) {
-				    System.err.println("[CS-CoreLib - Updater] Could not connect to github.io for Plugin \"" + plugin.getName() + "\", is it down?");
+			    	plugin.getLogger().log(Level.SEVERE, "The Auto-Updater could not connect to github.io, is it down?");
 				    
 				    try {
 					    thread.join();
