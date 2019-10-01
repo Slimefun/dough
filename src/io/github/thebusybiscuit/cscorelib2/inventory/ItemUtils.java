@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -167,7 +166,7 @@ public final class ItemUtils {
 	 * 
 	 * @param inv					The Inventory to check
 	 * @param slot 					The Slot in which the Item should be consumed
-	 * @param replaceConsumables 	Whether Consumable Items should be replaced with their "empty" version, see {@link InvUtils#consumeItem(Inventory, int, int, boolean)}
+	 * @param replaceConsumables 	Whether Consumable Items should be replaced with their "empty" version, see {@link ItemUtils#consumeItem(ItemStack, int, boolean)}
 	 */
 	public static void consumeItem(@NonNull ItemStack item, boolean replaceConsumables) {
 		consumeItem(item, 1, replaceConsumables);
