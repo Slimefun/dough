@@ -440,7 +440,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		ItemStack item = getItemInSlot(slot);
 		
 		if (item != null && item.getType() != Material.AIR) {
-			InvUtils.consumeItem(toInventory(), slot, amount, replaceConsumables);
+			ItemUtils.consumeItem(item, amount, replaceConsumables);
 			
 			markDirty();
 		}

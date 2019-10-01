@@ -4,12 +4,15 @@ import java.lang.reflect.Method;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import io.github.thebusybiscuit.cscorelib2.materials.MaterialCollections;
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
+import lombok.NonNull;
 
 public final class ItemUtils {
 	
@@ -39,6 +42,8 @@ public final class ItemUtils {
 	 * @return		The formatted Item Name
 	 */
 	public static String getItemName(ItemStack item) {
+		if (item == null) return "null";
+		
 		if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
 			return item.getItemMeta().getDisplayName();
 		}
@@ -111,11 +116,11 @@ public final class ItemUtils {
 		return true;
 	}
 	
-	public static void damageItem(ItemStack item, boolean ignoreEnchantments) {
+	public static void damageItem(@NonNull ItemStack item, boolean ignoreEnchantments) {
 		damageItem(item, 1, ignoreEnchantments);
 	}
 	
-	public static void damageItem(ItemStack item, int damage, boolean ignoreEnchantments) {
+	public static void damageItem(@NonNull ItemStack item, int damage, boolean ignoreEnchantments) {
 		if (item != null && item.getType() != Material.AIR && item.getAmount() > 0) {
 			int remove = damage;
 			
@@ -137,6 +142,55 @@ public final class ItemUtils {
 			else {
 				damageable.setDamage(damageable.getDamage() + remove);
 				item.setItemMeta(meta);
+			}
+		}
+	}
+	
+	/**
+	 * This Method will consume the Item in the specified slot.
+	 * See {@link InvUtils#consumeItem(Inventory, int, int, boolean)} for further details.
+	 * 
+	 * @param inv					The Inventory to check
+	 * @param slot 					The Slot in which the Item should be consumed
+	 * @param replaceConsumables 	Whether Consumable Items should be replaced with their "empty" version, see {@link InvUtils#consumeItem(Inventory, int, int, boolean)}
+	 */
+	public static void consumeItem(@NonNull ItemStack item, boolean replaceConsumables) {
+		consumeItem(item, 1, replaceConsumables);
+	}
+	
+	/**
+	 * This Method consumes a specified amount of items from the
+	 * specified slot.
+	 * 
+	 * The items will be removed from the slot, if the slot does not hold enough items,
+	 * it will be replaced with null.
+	 * Note that this does not check whether there are enough Items present,
+	 * if you specify a bigger amount than present, it will simply set the Item to null.
+	 * 
+	 * If replaceConsumables is true, the following things will not be replaced with 'null':
+	 * {@code Buckets -> new ItemStack(Material.BUCKET)}
+	 * {@code Potions -> new ItemStack(Material.GLASS_BOTTLE)}
+	 * 
+	 * @param inv					The Inventory to check
+	 * @param slot					The Slot in which to remove the Item
+	 * @param amount				How many Items should be removed
+	 * @param replaceConsumables	Whether Items should be replaced with their "empty" version
+	 */
+	public static void consumeItem(@NonNull ItemStack item, int amount, boolean replaceConsumables) {
+		if (item.getType() != Material.AIR && item.getAmount() > 0) {
+			if (MaterialCollections.contains(item.getType(), MaterialCollections.getAllFilledBuckets()) && replaceConsumables) {
+				item.setType(Material.BUCKET);
+				item.setAmount(1);
+			}
+			else if (item.getType() == Material.POTION && replaceConsumables) {
+				item.setType(Material.GLASS_BOTTLE);
+				item.setAmount(1);
+			}
+			else if (item.getAmount() <= amount) {
+				item.setAmount(0);
+			}
+			else {
+				item.setAmount(item.getAmount() - amount);
 			}
 		}
 	}
