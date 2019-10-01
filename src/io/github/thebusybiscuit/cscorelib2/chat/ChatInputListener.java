@@ -13,6 +13,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 
 class ChatInputListener implements Listener {
@@ -24,6 +25,13 @@ class ChatInputListener implements Listener {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		
 		handlers = new HashMap<>();
+	}
+	
+	@EventHandler
+	public void onDisable(PluginDisableEvent e) {
+		if (e.getPlugin() == plugin) {
+			ChatInput.listener = null;
+		}
 	}
 	
 	@EventHandler(priority=EventPriority.LOWEST)

@@ -24,7 +24,7 @@ import lombok.Setter;
 
 public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	
-	private static ChestMenuListener listener;
+	protected static ChestMenuListener listener;
 	
 	@Getter
 	protected boolean playerInventoryClickable;
