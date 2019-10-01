@@ -164,7 +164,7 @@ public final class ItemUtils {
 	 * This Method will consume the Item in the specified slot.
 	 * See {@link ItemUtils#consumeItem(ItemStack, int, boolean)} for further details.
 	 * 
-	 * @param item					The Item to consume
+	 * @param item 					The Item to consume
 	 * @param replaceConsumables 	Whether Consumable Items should be replaced with their "empty" version, see {@link ItemUtils#consumeItem(ItemStack, int, boolean)}
 	 */
 	public static void consumeItem(@NonNull ItemStack item, boolean replaceConsumables) {

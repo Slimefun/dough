@@ -32,6 +32,8 @@ public final class MaterialCollections {
 	@Getter
 	private static final Material[] allLogs;
 	@Getter
+	private static final Material[] allWood;
+	@Getter
 	private static final Material[] allPlanks; 
 	@Getter
 	private static final Material[] allWools;
@@ -50,6 +52,7 @@ public final class MaterialCollections {
 		Set<Material> leaves = new HashSet<>();
 		Set<Material> saplings = new HashSet<>();
 		Set<Material> logs = new HashSet<>();
+		Set<Material> wood = new HashSet<>();
 		Set<Material> planks = new HashSet<>();
 		Set<Material> wools = new HashSet<>();
 		Set<Material> carpets = new HashSet<>();
@@ -65,6 +68,7 @@ public final class MaterialCollections {
 			if (Tag.LEAVES.isTagged(mat)) leaves.add(mat);
 			if (Tag.SAPLINGS.isTagged(mat)) saplings.add(mat);
 			if (Tag.LOGS.isTagged(mat)) logs.add(mat);
+			if (mat.name().endsWith("_WOOD")) wood.add(mat);
 			if (Tag.PLANKS.isTagged(mat)) planks.add(mat);
 			if (Tag.WOOL.isTagged(mat)) wools.add(mat);
 			if (Tag.CARPETS.isTagged(mat)) carpets.add(mat);
@@ -75,17 +79,18 @@ public final class MaterialCollections {
 			if (mat.name().endsWith("_BUCKET")) buckets.add(mat);
 		}
 			
-		allLeaves = leaves.toArray(new Material[leaves.size()]);
-		allSaplings = saplings.toArray(new Material[saplings.size()]);
-		allLogs = logs.toArray(new Material[logs.size()]);
-		allPlanks = planks.toArray(new Material[planks.size()]);
-		allWools = wools.toArray(new Material[wools.size()]);
-		allCarpets = carpets.toArray(new Material[carpets.size()]);
+		allLeaves = leaves.toArray(new Material[0]);
+		allSaplings = saplings.toArray(new Material[0]);
+		allLogs = logs.toArray(new Material[0]);
+		allWood = wood.toArray(new Material[0]);
+		allPlanks = planks.toArray(new Material[0]);
+		allWools = wools.toArray(new Material[0]);
+		allCarpets = carpets.toArray(new Material[0]);
 		
-		allFishItems = fishes.toArray(new Material[fishes.size()]);
-		allOres = ores.toArray(new Material[ores.size()]);
-		allHeads = heads.toArray(new Material[heads.size()]);
-		allFilledBuckets = buckets.toArray(new Material[buckets.size()]);
+		allFishItems = fishes.toArray(new Material[0]);
+		allOres = ores.toArray(new Material[0]);
+		allHeads = heads.toArray(new Material[0]);
+		allFilledBuckets = buckets.toArray(new Material[0]);
 	}
 
 	@Getter
