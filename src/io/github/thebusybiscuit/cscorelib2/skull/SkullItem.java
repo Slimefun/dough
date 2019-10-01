@@ -20,6 +20,7 @@ import com.google.gson.JsonParser;
 
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.Cleanup;
+import lombok.NonNull;
 
 public final class SkullItem {
 	
@@ -51,7 +52,7 @@ public final class SkullItem {
 		}
 	}
 	
-	private static Object createProfile(UUID uuid, String texture) throws Exception {
+	private static Object createProfile(@NonNull UUID uuid, @NonNull String texture) throws Exception {
 		Object profile = profileConstructor.newInstance(uuid, "CS-CoreLib");
 		Object properties = property.invoke(profile);
 		insertProperty.invoke(properties, "textures", propertyConstructor.newInstance("textures", texture));
@@ -64,7 +65,7 @@ public final class SkullItem {
 	 * @param player	The Owner of your Head
 	 * @return			A new Head Item for the specified Player
 	 */
-	public static ItemStack fromPlayer(OfflinePlayer player) {
+	public static ItemStack fromPlayer(@NonNull OfflinePlayer player) {
 		ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 		SkullMeta meta = (SkullMeta) item.getItemMeta();
 		meta.setOwningPlayer(player);
@@ -83,7 +84,7 @@ public final class SkullItem {
 	 * @param texture	The Base64 representation of your Texture
 	 * @return			A new Player Head with the Texture you specified
 	 */
-	public static ItemStack fromBase64(UUID uuid, String texture) {
+	public static ItemStack fromBase64(@NonNull UUID uuid, @NonNull String texture) {
 		try {
 			Object profile = createProfile(uuid, texture);
 			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
@@ -111,7 +112,7 @@ public final class SkullItem {
 	 * @param texture	The texture for your Player
 	 * @return			A new Player Head with the Texture you specified
 	 */
-	public static ItemStack fromTextureID(UUID uuid, String texture) {
+	public static ItemStack fromTextureID(@NonNull UUID uuid, @NonNull String texture) {
 		return fromURL(uuid, "http://textures.minecraft.net/texture/" + texture);
 	}
 	
@@ -128,7 +129,7 @@ public final class SkullItem {
 	 * @param url	The URL to your Texture
 	 * @return		A new Player Head with the Texture you specified
 	 */
-	public static ItemStack fromURL(UUID uuid, String url) {
+	public static ItemStack fromURL(@NonNull UUID uuid, @NonNull String url) {
 		return fromBase64(uuid, Base64.getEncoder().encodeToString(("{textures:{SKIN:{url:\"" + url + "\"}}}").getBytes()));
 	}
 	
@@ -141,7 +142,7 @@ public final class SkullItem {
 	 * @return				A new Player Head with the Texture of that Player
 	 * @throws IOException	This method makes a Web Request, if that fails, it will result in an {@link IOException}
 	 */
-	public static ItemStack fromName(String name) throws IOException {
+	public static ItemStack fromName(@NonNull String name) throws IOException {
 		@Cleanup
 		InputStreamReader profileReader = null;
 		

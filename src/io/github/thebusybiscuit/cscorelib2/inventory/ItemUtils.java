@@ -116,10 +116,25 @@ public final class ItemUtils {
 		return true;
 	}
 	
+	/**
+	 * This method damages the specified Item by 1.
+	 * If ignoredEnchantments is set to false, it will factor in the "Unbreaking" Enchantment.
+	 * 
+	 * @param item					The Item to damage
+	 * @param ignoreEnchantments	Whether the Unbreaking Enchantment should be ignored
+	 */
 	public static void damageItem(@NonNull ItemStack item, boolean ignoreEnchantments) {
 		damageItem(item, 1, ignoreEnchantments);
 	}
 	
+	/**
+	 * This method damages the specified Item by the given amount.
+	 * If ignoredEnchantments is set to false, it will factor in the "Unbreaking" Enchantment.
+	 * 
+	 * @param item					The Item to damage
+	 * @param damage				The amount of damage to apply
+	 * @param ignoreEnchantments	Whether the Unbreaking Enchantment should be ignored
+	 */
 	public static void damageItem(@NonNull ItemStack item, int damage, boolean ignoreEnchantments) {
 		if (item != null && item.getType() != Material.AIR && item.getAmount() > 0) {
 			int remove = damage;
