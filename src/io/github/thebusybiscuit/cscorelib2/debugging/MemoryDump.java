@@ -42,9 +42,9 @@ public class MemoryDump {
 			stream.println();
 			stream.println();
 			stream.println("---- Heatmap ----");
-			heatmap.entrySet().stream().sorted((a, b) -> Integer.compare(b.getValue(), a.getValue())).forEach(entry -> {
-				stream.println(entry.getValue() + "x " + entry.getKey());
-			});
+			heatmap.entrySet().stream().sorted((a, b) -> Integer.compare(b.getValue(), a.getValue())).forEach(entry ->
+				stream.println(entry.getValue() + "x " + entry.getKey())
+			);
 		}
 		finally {
 			// No need to keep those in memory...
@@ -64,16 +64,16 @@ public class MemoryDump {
 				if (obj instanceof Collection) {
 					if (!((Collection<?>) obj).isEmpty()) {
 						AtomicInteger integer = new AtomicInteger(0);
-						((Collection<?>) obj).iterator().forEachRemaining(item -> {
-							dump(stream, prefix + " ", String.valueOf(integer.incrementAndGet()), item);
-						});
+						((Collection<?>) obj).iterator().forEachRemaining(item ->
+							dump(stream, prefix + " ", String.valueOf(integer.incrementAndGet()), item)
+						);
 					}
 				}
 				else if (obj instanceof Map) {
 					if (!((Map<?, ?>) obj).isEmpty()) {
-						((Map<?,?>) obj).entrySet().forEach(entry -> {
-							dump(stream, prefix + " ", entry.getKey() + "", entry.getValue());
-						});
+						((Map<?,?>) obj).entrySet().forEach(entry ->
+							dump(stream, prefix + " ", entry.getKey() + "", entry.getValue())
+						);
 					}
 				}
 				else if (namespaces.test(obj.getClass().getName())) {

@@ -23,7 +23,7 @@ import lombok.Setter;
 
 public class GitHubBuildsUpdater implements Updater {
 	
-	private static final String api_url = "https://thebusybiscuit.github.io/builds/";
+	private static final String API_URL = "https://thebusybiscuit.github.io/builds/";
 	
 	private Plugin plugin;
 	private URL versionsURL;
@@ -73,7 +73,7 @@ public class GitHubBuildsUpdater implements Updater {
 	@Override
 	public void start() {
 		try {
-			this.versionsURL = new URL(api_url + getRepository() + "/builds.json");
+			this.versionsURL = new URL(API_URL + getRepository() + "/builds.json");
 			
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
 				thread = new Thread(new UpdaterTask());
@@ -122,7 +122,7 @@ public class GitHubBuildsUpdater implements Updater {
 			    }
 				
 			    remoteVersion = String.valueOf(obj.get("last_successful").getAsInt());
-			    downloadURL = new URL(api_url + getRepository() + "/" + getRepository().split("/")[1] + "-" + remoteVersion + ".jar");
+			    downloadURL = new URL(API_URL + getRepository() + "/" + getRepository().split("/")[1] + "-" + remoteVersion + ".jar");
 			    
 			    return true;
 			} catch (IOException e) {

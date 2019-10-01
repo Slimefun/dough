@@ -24,9 +24,9 @@ import lombok.Setter;
 
 public class BukkitUpdater implements Updater {
 	
-	private static final String api_url = "https://api.curseforge.com/servermods/files?projectIds=";
-	private static final char[] blacklist = "abcdefghijklmnopqrstuvwxyz-+_ ()[]{}".toCharArray();
-	private static final String[] development_builds = {"DEV", "EXPERIMENTAL", "BETA", "ALPHA", "UNFINISHED"};
+	private static final String API_URL = "https://api.curseforge.com/servermods/files?projectIds=";
+	private static final char[] BLACKLIST = "abcdefghijklmnopqrstuvwxyz-+_ ()[]{}".toCharArray();
+	private static final String[] DEV_KEYWORDS = {"DEV", "EXPERIMENTAL", "BETA", "ALPHA", "UNFINISHED"};
 	
 	private Plugin plugin;
 	private int id;
@@ -78,7 +78,7 @@ public class BukkitUpdater implements Updater {
 	@Override
 	public void start() {
 		// Checking if current Version is a dev-build
-		for (String dev: development_builds) {
+		for (String dev: DEV_KEYWORDS) {
 			if (localVersion.contains(dev)) {
 				plugin.getLogger().log(Level.WARNING, " ");
 				plugin.getLogger().log(Level.WARNING, "################## - DEVELOPMENT BUILD - ##################");
@@ -94,14 +94,14 @@ public class BukkitUpdater implements Updater {
 		localVersion = localVersion.toLowerCase();
 		
 		// Deleting all unwanted characters
-		for (char blocked: blacklist) {
+		for (char blocked: BLACKLIST) {
 			localVersion = localVersion.replace(String.valueOf(blocked), "");
 		}
 		
 		prepareUpdateFolder();
 			
 		try {
-			this.url = new URL(api_url + id);
+			this.url = new URL(API_URL + id);
 			
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
 				thread = new Thread(new UpdaterTask());
@@ -155,7 +155,7 @@ public class BukkitUpdater implements Updater {
 			    remoteVersion = latest.getAsJsonObject().get("name").getAsString();
 			    remoteVersion = remoteVersion.toLowerCase();
 
-			    for (char blocked: blacklist) {
+			    for (char blocked: BLACKLIST) {
 			    	remoteVersion = remoteVersion.replace(String.valueOf(blocked), "");
 			    }
 

@@ -37,16 +37,13 @@ public final class MinecraftAccount {
 	 * @throws TooManyRequestsException	If too many requests were sent to the Server
 	 */
 	public static Optional<UUID> getUUID(@NonNull String name) throws TooManyRequestsException {
-		try {
-			URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-			
-			try (InputStreamReader reader = new InputStreamReader(url.openStream())) {
+		Optional<URL> url = getURL("https://api.mojang.com/users/profiles/minecraft/" + name);
+		
+		if (url.isPresent()) {
+			try (InputStreamReader reader = new InputStreamReader(url.get().openStream())) {
 				JsonElement element = JSON_PARSER.parse(reader);
-				
-				if (element instanceof JsonNull) {
-					return Optional.empty();
-				}
-				else {
+
+				if (!(element instanceof JsonNull)) {
 					JsonObject obj = element.getAsJsonObject();
 					
 					if (obj.has("error") && obj.get("error").getAsString().equals("TooManyRequestsException")) {
@@ -58,12 +55,10 @@ public final class MinecraftAccount {
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
-				return Optional.empty();
 			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-			return Optional.empty();
 		}
+		
+		return Optional.empty();
 	}
 	
 	/**
@@ -81,16 +76,13 @@ public final class MinecraftAccount {
 	 * @throws TooManyRequestsException	If too many requests were sent to the Server
 	 */
 	public static Optional<String> getSkin(@NonNull UUID uuid) throws TooManyRequestsException {
-        try {
-        	URL url = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString().replace("-", "") + "?unsigned=false");
-            
-			try (InputStreamReader reader = new InputStreamReader(url.openStream())) {
+		Optional<URL> url = getURL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString().replace("-", "") + "?unsigned=false");
+        
+		if (url.isPresent()) {
+			try (InputStreamReader reader = new InputStreamReader(url.get().openStream())) {
 				JsonElement element = JSON_PARSER.parse(reader);
 				
-				if (element instanceof JsonNull) {
-					return Optional.empty();
-				}
-				else {
+				if (!(element instanceof JsonNull)) {
 					JsonObject obj = element.getAsJsonObject();
 					
 					if (obj.has("error") && obj.get("error").getAsString().equals("TooManyRequestsException")) {
@@ -104,13 +96,18 @@ public final class MinecraftAccount {
 			        		return Optional.ofNullable(el.getAsJsonObject().get("value").getAsString());
 			        	}
 			        }
-					
-					return Optional.empty();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
-				return Optional.empty();
 			}
+		}
+		
+		return Optional.empty();
+	}
+	
+	private static Optional<URL> getURL(String url) {
+		try {
+			return Optional.ofNullable(new URL(url));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return Optional.empty();
@@ -121,7 +118,7 @@ public final class MinecraftAccount {
 	public static class TooManyRequestsException extends Exception {
 
 		private static final long serialVersionUID = -7137562700404366948L;
-		private final URL url;
+		private final Optional<URL> url;
 
 		@Override
 		public String getMessage() {
