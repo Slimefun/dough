@@ -21,8 +21,7 @@ public final class MaterialTools {
     // This is a pure Utility class, we do not want any instantiation to happen!
     private MaterialTools() {}
 
-    @Getter
-    private static final Material[] shovelItems;
+    @Getter private static final MaterialCollection breakableByShovel;
 
     static {
         Set<Material> shovel = new HashSet<>();
@@ -35,7 +34,7 @@ public final class MaterialTools {
             if (Tag.DIRT_LIKE.isTagged(mat) || Tag.SAND.isTagged(mat)) shovel.add(mat);
         }
 
-        shovelItems = shovel.toArray(new Material[0]);
+        breakableByShovel = new MaterialCollection(shovel);
     }
 
 }

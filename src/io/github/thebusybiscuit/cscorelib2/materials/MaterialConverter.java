@@ -14,28 +14,28 @@ public final class MaterialConverter {
 	
 	public static Optional<Material> getSaplingFromLog(@NonNull Material log) {
 		return convert(log, 
-			type -> MaterialCollections.contains(type, MaterialCollections.getAllLogs()),
+			MaterialCollections.getAllLogs()::contains,
 			type -> type.substring(0, type.lastIndexOf('_')).replace("STRIPPED_", "") + "_SAPLING"
 		);
 	}
 	
 	public static Optional<Material> getPlanksFromLog(@NonNull Material log) {
 		return convert(log, 
-			type -> MaterialCollections.contains(type, MaterialCollections.getAllLogs()),
+			MaterialCollections.getAllLogs()::contains,
 			type -> type.substring(0, type.lastIndexOf('_')).replace("STRIPPED_", "") + "_PLANKS"
 		);
 	}
 	
 	public static Optional<Material> getGlassFromPane(@NonNull Material pane) {
 		return convert(pane, 
-			type -> MaterialCollections.contains(type, MaterialCollections.getAllStainedGlassPaneColors()),
+			MaterialCollections.getAllStainedGlassPaneColors()::contains,
 			type -> type.substring(0, type.length() - "_PANE".length())
 		);
 	}
 	
 	public static Optional<Material> getPaneFromGlass(@NonNull Material glass) {
 		return convert(glass, 
-			type -> MaterialCollections.contains(type, MaterialCollections.getAllStainedGlassColors()),
+			MaterialCollections.getAllStainedGlassColors()::contains,
 			type -> type + "_PANE"
 		);
 	}

@@ -190,7 +190,7 @@ public final class ItemUtils {
 	 */
 	public static void consumeItem(@NonNull ItemStack item, int amount, boolean replaceConsumables) {
 		if (item.getType() != Material.AIR && item.getAmount() > 0) {
-			if (MaterialCollections.contains(item.getType(), MaterialCollections.getAllFilledBuckets()) && replaceConsumables) {
+			if (MaterialCollections.getAllFilledBuckets().contains(item.getType()) && replaceConsumables) {
 				item.setType(Material.BUCKET);
 				item.setAmount(1);
 			}

@@ -1,6 +1,5 @@
 package io.github.thebusybiscuit.cscorelib2.materials;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,39 +19,22 @@ public final class MaterialCollections {
 	
 	// This is a pure Utility class, we do not want any instantiation to happen!
 	private MaterialCollections() {}
-	
-	public static boolean contains(Material type, Material[] collection) {
-		return Arrays.stream(collection).anyMatch(material -> material == type);
-	}
 
-	@Getter
-	private static final Material[] allLeaves;
-	@Getter
-	private static final Material[] allSaplings;
-	@Getter
-	private static final Material[] allLogs;
-	@Getter
-	private static final Material[] allWood;
-	@Getter
-	private static final Material[] allPlanks; 
-	@Getter
-	private static final Material[] allWools;
-	@Getter
-	private static final Material[] allCarpets;
-	@Getter
-	private static final Material[] allFishItems;
-	@Getter
-	private static final Material[] allOres;
-	@Getter
-	private static final Material[] allHeads;
-	@Getter
-	private static final Material[] allFilledBuckets;
+	@Getter private static final MaterialCollection allLeaves;
+	@Getter private static final MaterialCollection allSaplings;
+	@Getter private static final MaterialCollection allLogs;
+	@Getter private static final MaterialCollection allPlanks; 
+	@Getter private static final MaterialCollection allWools;
+	@Getter private static final MaterialCollection allCarpets;
+	@Getter private static final MaterialCollection allFishItems;
+	@Getter private static final MaterialCollection allOres;
+	@Getter private static final MaterialCollection allHeads;
+	@Getter private static final MaterialCollection allFilledBuckets;
 		
 	static {
 		Set<Material> leaves = new HashSet<>();
 		Set<Material> saplings = new HashSet<>();
 		Set<Material> logs = new HashSet<>();
-		Set<Material> wood = new HashSet<>();
 		Set<Material> planks = new HashSet<>();
 		Set<Material> wools = new HashSet<>();
 		Set<Material> carpets = new HashSet<>();
@@ -68,7 +50,6 @@ public final class MaterialCollections {
 			if (Tag.LEAVES.isTagged(mat)) leaves.add(mat);
 			if (Tag.SAPLINGS.isTagged(mat)) saplings.add(mat);
 			if (Tag.LOGS.isTagged(mat)) logs.add(mat);
-			if (mat.name().endsWith("_WOOD")) wood.add(mat);
 			if (Tag.PLANKS.isTagged(mat)) planks.add(mat);
 			if (Tag.WOOL.isTagged(mat)) wools.add(mat);
 			if (Tag.CARPETS.isTagged(mat)) carpets.add(mat);
@@ -79,22 +60,21 @@ public final class MaterialCollections {
 			if (mat.name().endsWith("_BUCKET")) buckets.add(mat);
 		}
 			
-		allLeaves = leaves.toArray(new Material[0]);
-		allSaplings = saplings.toArray(new Material[0]);
-		allLogs = logs.toArray(new Material[0]);
-		allWood = wood.toArray(new Material[0]);
-		allPlanks = planks.toArray(new Material[0]);
-		allWools = wools.toArray(new Material[0]);
-		allCarpets = carpets.toArray(new Material[0]);
+		allLeaves = new MaterialCollection(leaves);
+		allSaplings = new MaterialCollection(saplings);
+		allLogs = new MaterialCollection(logs);
+		allPlanks = new MaterialCollection(planks);
+		allWools = new MaterialCollection(wools);
+		allCarpets = new MaterialCollection(carpets);
 		
-		allFishItems = fishes.toArray(new Material[0]);
-		allOres = ores.toArray(new Material[0]);
-		allHeads = heads.toArray(new Material[0]);
-		allFilledBuckets = buckets.toArray(new Material[0]);
+		allFishItems = new MaterialCollection(fishes);
+		allOres = new MaterialCollection(ores);
+		allHeads = new MaterialCollection(heads);
+		allFilledBuckets = new MaterialCollection(buckets);
 	}
 
 	@Getter
-	private static final Material[] allStainedGlassColors = {
+	private static final MaterialCollection allStainedGlassColors = new MaterialCollection(
             Material.WHITE_STAINED_GLASS,
             Material.ORANGE_STAINED_GLASS,
             Material.MAGENTA_STAINED_GLASS,
@@ -111,10 +91,10 @@ public final class MaterialCollections {
             Material.GREEN_STAINED_GLASS,
             Material.RED_STAINED_GLASS,
             Material.BLACK_STAINED_GLASS
-    };
+    );
 
 	@Getter
-	private static final Material[] allStainedGlassPaneColors = {
+	private static final MaterialCollection allStainedGlassPaneColors = new MaterialCollection(
             Material.WHITE_STAINED_GLASS_PANE,
             Material.ORANGE_STAINED_GLASS_PANE,
             Material.MAGENTA_STAINED_GLASS_PANE,
@@ -131,10 +111,10 @@ public final class MaterialCollections {
             Material.GREEN_STAINED_GLASS_PANE,
             Material.RED_STAINED_GLASS_PANE,
             Material.BLACK_STAINED_GLASS_PANE
-    };
+    );
 
 	@Getter
-	private static final Material[] allTerracottaColors = {
+	private static final MaterialCollection allTerracottaColors = new MaterialCollection(
             Material.WHITE_TERRACOTTA,
             Material.ORANGE_TERRACOTTA,
             Material.MAGENTA_TERRACOTTA,
@@ -151,10 +131,10 @@ public final class MaterialCollections {
             Material.GREEN_TERRACOTTA,
             Material.RED_TERRACOTTA,
             Material.BLACK_TERRACOTTA
-    };
+    );
 
 	@Getter
-	private static final Material[] allGlazedTerracottaColors = {
+	private static final MaterialCollection allGlazedTerracottaColors = new MaterialCollection(
             Material.WHITE_GLAZED_TERRACOTTA,
             Material.ORANGE_GLAZED_TERRACOTTA,
             Material.MAGENTA_GLAZED_TERRACOTTA,
@@ -171,10 +151,10 @@ public final class MaterialCollections {
             Material.GREEN_GLAZED_TERRACOTTA,
             Material.RED_GLAZED_TERRACOTTA,
             Material.BLACK_GLAZED_TERRACOTTA
-    };
+    );
 
 	@Getter
-	private static final Material[] allUnbreakableBlocks = {
+	private static final MaterialCollection allUnbreakableBlocks = new MaterialCollection(
             Material.BEDROCK,
             Material.BARRIER,
             
@@ -189,6 +169,6 @@ public final class MaterialCollections {
             
             Material.STRUCTURE_BLOCK,
             Material.STRUCTURE_VOID
-    };
+    );
 
 }
