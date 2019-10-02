@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import org.bukkit.Material;
@@ -19,7 +18,7 @@ import lombok.NonNull;
  * @author TheBusyBiscuit
  *
  */
-public class MaterialCollection {
+public class MaterialCollection implements Iterable<Material> {
 	
 	@Getter
 	private final Material[] asArray;
@@ -72,12 +71,9 @@ public class MaterialCollection {
 		return materials.stream().allMatch(this::contains);
 	}
 	
+	@Override
 	public Iterator<Material> iterator() {
 		return stream().iterator();
-	}
-	
-	public void forEach(@NonNull Consumer<Material> consumer) {
-		stream().forEach(consumer);
 	}
 
 }
