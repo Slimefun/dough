@@ -22,9 +22,10 @@ class ChatInputListener implements Listener {
 	protected Map<UUID, IChatInput> handlers;
 	
 	protected ChatInputListener(Plugin plugin) {
+		this.plugin = plugin;
+		this.handlers = new HashMap<>();
+
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
-		
-		handlers = new HashMap<>();
 	}
 	
 	@EventHandler
