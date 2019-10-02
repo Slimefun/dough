@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import io.github.thebusybiscuit.cscorelib2.materials.MaterialCollection;
+
 public final class Vein {
 	
 	private static final BlockFace[] faces = new BlockFace[] {BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST};
@@ -24,6 +26,22 @@ public final class Vein {
 	 */
 	public static List<Block> find(Block b, int limit) {
 		return find(b, limit, block -> block.getType() == b.getType());
+	}
+	
+	/**
+	 * This method gives you a List of all Blocks
+	 * that are directly or indirectly connected to the given Block
+	 * and pass the given Predicate.
+	 * 
+	 * @param b			The Block to start with
+	 * @param limit		The max amount of Blocks to expand into
+	 * @param materials	A MaterialCollection describing what Blocks are allowed
+	 * @return			A List of all Blocks
+	 */
+	public static List<Block> find(Block b, int limit, MaterialCollection materials) {
+		List<Block> list = new LinkedList<>();
+		expand(b, list, limit, block -> materials.contains(block.getType()));
+		return list;
 	}
 	
 	/**

@@ -10,7 +10,15 @@ import java.util.stream.Stream;
 import org.bukkit.Material;
 
 import lombok.Getter;
+import lombok.NonNull;
 
+/**
+ * A read-only collection of {@link Material}.
+ * Internally represented by an Array of {@link Material}.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public class MaterialCollection {
 	
 	@Getter
@@ -24,11 +32,14 @@ public class MaterialCollection {
 		this(Arrays.stream(materials));
 	}
 	
-	public MaterialCollection(Stream<Material> stream) {
-		this.asArray = stream.distinct().toArray(Material[]::new);
+	public MaterialCollection(@NonNull Stream<Material> stream) {
+		this.asArray = stream
+				.distinct()
+				.filter(m -> m != null)
+				.toArray(Material[]::new);
 	}
 	
-	public MaterialCollection merge(MaterialCollection collection) {
+	public MaterialCollection merge(@NonNull MaterialCollection collection) {
 		return new MaterialCollection(Stream.concat(stream(), collection.stream()));
 	}
 	
@@ -45,10 +56,11 @@ public class MaterialCollection {
 	}
 
 	public boolean contains(Material type) {
+		if (type == null) return false;
 		return stream().anyMatch(material -> material == type);
 	}
 	
-	public boolean containsAll(Collection<Material> materials) {
+	public boolean containsAll(@NonNull Collection<Material> materials) {
 		return materials.stream().allMatch(this::contains);
 	}
 	
@@ -56,7 +68,7 @@ public class MaterialCollection {
 		return stream().iterator();
 	}
 	
-	public void forEach(Consumer<Material> consumer) {
+	public void forEach(@NonNull Consumer<Material> consumer) {
 		stream().forEach(consumer);
 	}
 
