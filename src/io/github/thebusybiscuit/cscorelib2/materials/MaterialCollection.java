@@ -54,6 +54,10 @@ public class MaterialCollection {
 	public boolean isEmpty() {
 		return asArray.length == 0;
 	}
+	
+	public Material get(int index) {
+		return asArray[index];
+	}
 
 	public boolean contains(Material type) {
 		if (type == null) return false;
@@ -61,6 +65,10 @@ public class MaterialCollection {
 	}
 	
 	public boolean containsAll(@NonNull Collection<Material> materials) {
+		return materials.stream().allMatch(this::contains);
+	}
+	
+	public boolean containsAll(@NonNull MaterialCollection materials) {
 		return materials.stream().allMatch(this::contains);
 	}
 	
