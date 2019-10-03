@@ -5,10 +5,12 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Optional;
+
 public final class PersistentDataAPI {
 
     private PersistentDataAPI() {
-    	// This is a utility class, we don't want any instances.
+        // This is a utility class, we don't want any instances.
     }
 
     /////////////////////////////////////
@@ -224,6 +226,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getByte(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<Byte> getOptionalByte(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.of(getByte(holder, key));
+    }
+
+    /**
      * Get a byte value in a {@link PersistentDataContainer} or the default value passed if no key exists.
      *
      * @param holder
@@ -239,6 +248,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getByte(PersistentDataHolder, NamespacedKey, byte)
+     */
+    public static Optional<Byte> getOptionalByte(PersistentDataHolder holder, NamespacedKey key, byte defaultVal) {
+        return Optional.of(getByte(holder, key, defaultVal));
+    }
+
+    /**
      * Get a short value in a {@link PersistentDataContainer}, if the key doesn't exist it returns -1.
      *
      * @param holder
@@ -249,6 +265,13 @@ public final class PersistentDataAPI {
      */
     public static short getShort(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.SHORT, (short) -1);
+    }
+
+    /**
+     * @see #getShort(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<Short> getOptionalShort(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.of(getShort(holder, key));
     }
 
     /**
@@ -267,6 +290,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getShort(PersistentDataHolder, NamespacedKey, short)
+     */
+    public static Optional<Short> getOptionalShort(PersistentDataHolder holder, NamespacedKey key, short defaultVal) {
+        return Optional.of(getShort(holder, key, defaultVal));
+    }
+
+    /**
      * Get an integer value in a {@link PersistentDataContainer}, if the key doesn't exist it returns -1.
      *
      * @param holder
@@ -277,6 +307,13 @@ public final class PersistentDataAPI {
      */
     public static int getInt(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.INTEGER, -1);
+    }
+
+    /**
+     * @see #getShort(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<Integer> getOptionalInt(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.of(getInt(holder, key));
     }
 
     /**
@@ -295,6 +332,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getInt(PersistentDataHolder, NamespacedKey, int)
+     */
+    public static Optional<Integer> getOptionalInt(PersistentDataHolder holder, NamespacedKey key, int defaultVal) {
+        return Optional.of(getInt(holder, key, defaultVal));
+    }
+
+    /**
      * Get a long value in a {@link PersistentDataContainer}, if the key doesn't exist it returns -1.
      *
      * @param holder
@@ -305,6 +349,13 @@ public final class PersistentDataAPI {
      */
     public static long getLong(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.LONG, (long) -1);
+    }
+
+    /**
+     * @see #getLong(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<Long> getOptionalLong(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.of(getLong(holder, key));
     }
 
     /**
@@ -323,6 +374,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getLong(PersistentDataHolder, NamespacedKey, long)
+     */
+    public static Optional<Long> getOptionalLong(PersistentDataHolder holder, NamespacedKey key, long defaultVal) {
+        return Optional.of(getLong(holder, key, defaultVal));
+    }
+
+    /**
      * Get a float value in a {@link PersistentDataContainer}, if the key doesn't exist it returns -1.
      *
      * @param holder
@@ -333,6 +391,13 @@ public final class PersistentDataAPI {
      */
     public static float getFloat(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.FLOAT, (float) -1);
+    }
+
+    /**
+     * @see #getFloat(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<Float> getOptionalFloat(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.of(getFloat(holder, key));
     }
 
     /**
@@ -353,6 +418,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getFloat(PersistentDataHolder, NamespacedKey, float)
+     */
+    public static Optional<Float> getOptionalFloat(PersistentDataHolder holder, NamespacedKey key, float defaultVal) {
+        return Optional.of(getFloat(holder, key, defaultVal));
+    }
+
+    /**
      * Get a double value in a {@link PersistentDataContainer}, if the key doesn't exist it returns -1.
      *
      * @param holder
@@ -363,6 +435,13 @@ public final class PersistentDataAPI {
      */
     public static double getDouble(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.DOUBLE, (double) -1);
+    }
+
+    /**
+     * @see #getDouble(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<Double> getOptionalDouble(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getDouble(holder, key));
     }
 
     /**
@@ -381,6 +460,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getDouble(PersistentDataHolder, NamespacedKey, double)
+     */
+    public static Optional<Double> getOptionalDouble(PersistentDataHolder holder, NamespacedKey key, double defaultVal) {
+        return Optional.of(getDouble(holder, key, defaultVal));
+    }
+
+    /**
      * Get a String value in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
      *
      * @param holder
@@ -391,6 +477,13 @@ public final class PersistentDataAPI {
      */
     public static String getString(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().get(key, PersistentDataType.STRING);
+    }
+
+    /**
+     * @see #getString(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<String> getOptionalString(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getString(holder, key));
     }
 
     /**
@@ -409,6 +502,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getString(PersistentDataHolder, NamespacedKey, String)
+     */
+    public static Optional<String> getOptionalString(PersistentDataHolder holder, NamespacedKey key, String defaultVal) {
+        return Optional.of(getString(holder, key, defaultVal));
+    }
+
+    /**
      * Get a byte array in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
      *
      * @param holder
@@ -419,6 +519,13 @@ public final class PersistentDataAPI {
      */
     public static byte[] getByteArray(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().get(key, PersistentDataType.BYTE_ARRAY);
+    }
+
+    /**
+     * @see #getByteArray(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<byte[]> getOptionalByteArray(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getByteArray(holder, key));
     }
 
     /**
@@ -437,6 +544,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getByteArray(PersistentDataHolder, NamespacedKey, byte...)
+     */
+    public static Optional<byte[]> getOptionalByteArray(PersistentDataHolder holder, NamespacedKey key, byte... defaultVal) {
+        return Optional.of(getByteArray(holder, key, defaultVal));
+    }
+
+    /**
      * Get a integer array in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
      *
      * @param holder
@@ -447,6 +561,13 @@ public final class PersistentDataAPI {
      */
     public static int[] getIntArray(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().get(key, PersistentDataType.INTEGER_ARRAY);
+    }
+
+    /**
+     * @see #getIntArray(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<int[]> getOptionalIntArray(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getIntArray(holder, key));
     }
 
     /**
@@ -465,6 +586,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getIntArray(PersistentDataHolder, NamespacedKey, int...)
+     */
+    public static Optional<int[]> getOptionalIntArray(PersistentDataHolder holder, NamespacedKey key, int... defaultVal) {
+        return Optional.of(getIntArray(holder, key, defaultVal));
+    }
+
+    /**
      * Get a long array in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
      *
      * @param holder
@@ -475,6 +603,13 @@ public final class PersistentDataAPI {
      */
     public static long[] getLongArray(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().get(key, PersistentDataType.LONG_ARRAY);
+    }
+
+    /**
+     * @see #getLongArray(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<long[]> getOptionalLongArray(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getLongArray(holder, key));
     }
 
     /**
@@ -493,6 +628,13 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * @see #getLongArray(PersistentDataHolder, NamespacedKey, long...)
+     */
+    public static Optional<long[]> getOptionalLongArray(PersistentDataHolder holder, NamespacedKey key, long... defaultVal) {
+        return Optional.of(getLongArray(holder, key, defaultVal));
+    }
+
+    /**
      * Get a nested {@link PersistentDataContainer}, if the key doesn't exist it returns null.
      *
      * @param holder
@@ -503,6 +645,13 @@ public final class PersistentDataAPI {
      */
     public static PersistentDataContainer getContainer(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().get(key, PersistentDataType.TAG_CONTAINER);
+    }
+
+    /**
+     * @see #getContainer(PersistentDataHolder, NamespacedKey)
+     */
+    public static Optional<PersistentDataContainer> getOptionalContainer(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getContainer(holder, key));
     }
 
     /**
@@ -519,5 +668,13 @@ public final class PersistentDataAPI {
     public static PersistentDataContainer getContainer(PersistentDataHolder holder, NamespacedKey key,
                                                        PersistentDataContainer defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.TAG_CONTAINER, defaultVal);
+    }
+
+    /**
+     * @see #getContainer(PersistentDataHolder, NamespacedKey, PersistentDataContainer defaultVal)
+     */
+    public static Optional<PersistentDataContainer> getOptionalContainer(PersistentDataHolder holder, NamespacedKey key,
+                                                                         PersistentDataContainer defaultVal) {
+        return Optional.of(getContainer(holder, key, defaultVal));
     }
 }
