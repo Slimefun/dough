@@ -37,7 +37,7 @@ public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>> {
 	 * The Map implementation is up to you, you can pass in the constructor
 	 * of any class that implements the Map interface.
 	 * 
-	 * <code>OptionalMap<String, String> map = new OptionalMap<>(HashMap::new);</code>
+	 * <code>OptionalMap&gt;String, String&lt; map = new OptionalMap&gt;&lt;(HashMap::new);</code>
 	 * @param constructor	A Constructor reference to an existing Map implementation
 	 */
 	public OptionalMap(@NonNull Supplier<? extends Map<K, V>> constructor) {
