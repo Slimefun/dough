@@ -23,8 +23,7 @@ public final class MaterialCollections {
 	@Getter private static final MaterialCollection allLeaves;
 	@Getter private static final MaterialCollection allSaplings;
 	@Getter private static final MaterialCollection allLogs;
-	@Getter private static final MaterialCollection allPlanks; 
-	@Getter private static final MaterialCollection allWools;
+	@Getter private static final MaterialCollection allPlanks;
 	@Getter private static final MaterialCollection allCarpets;
 	@Getter private static final MaterialCollection allFishItems;
 	@Getter private static final MaterialCollection allOres;
@@ -37,7 +36,6 @@ public final class MaterialCollections {
 		Set<Material> saplings = new HashSet<>();
 		Set<Material> logs = new HashSet<>();
 		Set<Material> planks = new HashSet<>();
-		Set<Material> wools = new HashSet<>();
 		Set<Material> carpets = new HashSet<>();
 		
 		Set<Material> fishes = new HashSet<>();
@@ -53,7 +51,6 @@ public final class MaterialCollections {
 			if (Tag.SAPLINGS.isTagged(mat)) saplings.add(mat);
 			if (Tag.LOGS.isTagged(mat)) logs.add(mat);
 			if (Tag.PLANKS.isTagged(mat)) planks.add(mat);
-			if (Tag.WOOL.isTagged(mat)) wools.add(mat);
 			if (Tag.CARPETS.isTagged(mat)) carpets.add(mat);
 			
 			if (Tag.ITEMS_FISHES.isTagged(mat)) fishes.add(mat);
@@ -67,7 +64,6 @@ public final class MaterialCollections {
 		allSaplings = new MaterialCollection(saplings);
 		allLogs = new MaterialCollection(logs);
 		allPlanks = new MaterialCollection(planks);
-		allWools = new MaterialCollection(wools);
 		allCarpets = new MaterialCollection(carpets);
 		
 		allFishItems = new MaterialCollection(fishes);
@@ -76,6 +72,26 @@ public final class MaterialCollections {
 		allFilledBuckets = new MaterialCollection(buckets);
 		allPressurePlates = new MaterialCollection(plates);
 	}
+
+	@Getter
+	private static final MaterialCollection allWoolColors = new MaterialCollection(
+            Material.WHITE_WOOL,
+            Material.ORANGE_WOOL,
+            Material.MAGENTA_WOOL,
+            Material.LIGHT_BLUE_WOOL,
+            Material.YELLOW_WOOL,
+            Material.LIME_WOOL,
+            Material.PINK_WOOL,
+            Material.GRAY_WOOL,
+            Material.LIGHT_GRAY_WOOL,
+            Material.CYAN_WOOL,
+            Material.PURPLE_WOOL,
+            Material.BLUE_WOOL,
+            Material.BROWN_WOOL,
+            Material.GREEN_WOOL,
+            Material.RED_WOOL,
+            Material.BLACK_WOOL
+    );
 
 	@Getter
 	private static final MaterialCollection allStainedGlassColors = new MaterialCollection(
