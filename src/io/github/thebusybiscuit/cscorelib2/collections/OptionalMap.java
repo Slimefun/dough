@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -89,6 +90,14 @@ public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>> {
 	
 	public boolean containsValue(V value) {
 		return internalMap.containsValue(value);
+	}
+	
+	public void ifPresent(K key, Consumer<? super V> consumer) {
+		get(key).ifPresent(consumer);
+	}
+	
+	public void ifAbsent(K key, Consumer<Void> consumer) {
+		if (!containsKey(key)) consumer.accept(null);
 	}
 	
 	public Optional<V> put(K key, V value) {
