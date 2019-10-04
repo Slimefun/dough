@@ -30,6 +30,7 @@ public final class MaterialCollections {
 	@Getter private static final MaterialCollection allOres;
 	@Getter private static final MaterialCollection allHeads;
 	@Getter private static final MaterialCollection allFilledBuckets;
+	@Getter private static final MaterialCollection allPressurePlates;
 		
 	static {
 		Set<Material> leaves = new HashSet<>();
@@ -43,6 +44,7 @@ public final class MaterialCollections {
 		Set<Material> ores = new HashSet<>();
 		Set<Material> heads = new HashSet<>();
 		Set<Material> buckets = new HashSet<>();
+		Set<Material> plates = new HashSet<>();
 			
 		for (Material mat: Material.values()) {
 			if (mat.name().startsWith("LEGACY_")) continue;
@@ -58,6 +60,7 @@ public final class MaterialCollections {
 			if (mat.name().endsWith("_ORE")) ores.add(mat);
 			if (mat.name().endsWith("_HEAD") || mat.name().endsWith("_SKULL")) heads.add(mat);
 			if (mat.name().endsWith("_BUCKET")) buckets.add(mat);
+			if (mat.name().endsWith("_PRESSURE_PLATE")) plates.add(mat);
 		}
 			
 		allLeaves = new MaterialCollection(leaves);
@@ -71,6 +74,7 @@ public final class MaterialCollections {
 		allOres = new MaterialCollection(ores);
 		allHeads = new MaterialCollection(heads);
 		allFilledBuckets = new MaterialCollection(buckets);
+		allPressurePlates = new MaterialCollection(plates);
 	}
 
 	@Getter
