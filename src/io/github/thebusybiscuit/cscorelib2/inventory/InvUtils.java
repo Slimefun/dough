@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.cscorelib2.inventory;
 
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import org.bukkit.Material;
@@ -47,6 +48,35 @@ public final class InvUtils {
 			if (stack == null || stack.getType() == Material.AIR) return true;
 			else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
 				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * This method removes a given amount of items from a given {@link Inventory} 
+	 * if they pass the given {@link Predicate}
+	 * 
+	 * @param inv					The {@link Inventory} from which to remove the item
+	 * @param amount				The amount of items that should be removed
+	 * @param replaceConsumables	Whether to replace consumables, e.g. turn potions into glass bottles etc...
+	 * @param predicate				The Predicate that tests the item
+	 * @return						Whether the operation was successful
+	 */
+	public static boolean removeItem(@NonNull Inventory inv, int amount, boolean replaceConsumables, @NonNull Predicate<ItemStack> predicate) {
+		int removed = 0;
+		for (int slot = 0; slot < inv.getSize(); slot++) {
+			ItemStack item = inv.getItem(slot);
+			if (item != null && predicate.test(item)) {
+				if (item.getAmount() + removed >= amount) {
+					ItemUtils.consumeItem(item, amount - removed, replaceConsumables);
+					return true;
+				}
+				else if (item.getAmount() > 0) {
+					removed += item.getAmount();
+					ItemUtils.consumeItem(item, item.getAmount(), replaceConsumables);
+				}
 			}
 		}
 		
