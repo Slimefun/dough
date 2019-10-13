@@ -16,6 +16,10 @@ public class OptionalPair<P, S> {
 		this.secondValue = Optional.ofNullable(b);
 	}
 	
+	public OptionalPair(Pair<P, S> pair) {
+		this(pair.getFirstValue(), pair.getSecondValue());
+	}
+	
 	public OptionalPair(Map.Entry<P, S> mapEntry) {
 		this(mapEntry.getKey(), mapEntry.getValue());
 	}

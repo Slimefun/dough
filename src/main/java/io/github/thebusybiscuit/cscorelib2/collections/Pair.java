@@ -18,5 +18,9 @@ public class Pair<P, S> {
 	public Pair(Map.Entry<P, S> mapEntry) {
 		this(mapEntry.getKey(), mapEntry.getValue());
 	}
+	
+	public Pair(OptionalPair<P, S> pair) {
+		this(pair.getFirstValue().orElse(null), pair.getSecondValue().orElse(null));
+	}
 
 }
