@@ -22,16 +22,8 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>worldedit-worldguard-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
-        </repository>
-        <repository>
-            <id>plotsquared-ci</id>
-            <url>http://ci.athion.net/job/PlotSquared-Releases/ws/mvn/</url>
-        </repository>
-        <repository>
-            <id>redprotect-repo</id>
-            <url>https://raw.github.com/FabioZumbi12/RedProtect/mvn-repo/</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io/</url>
         </repository>
         <repository>
             <id>bintray-tastybento-maven-repo</id>
@@ -39,21 +31,29 @@
             <url>http://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
         <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io/</url>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
+        <repository>
+            <id>redprotect-repo</id>
+            <url>https://raw.github.com/FabioZumbi12/RedProtect/mvn-repo/</url>
+        </repository>
+        <repository>
+            <id>plotsquared-ci</id>
+            <url>http://ci.athion.net/job/PlotSquared-Releases/ws/mvn/</url>
         </repository>
         <repository>
             <id>FactionsUUID-repo</id>
             <url>https://ci.ender.zone/job/FactionsUUID/122/maven-repository/repository</url>
         </repository>
         <repository>
-            <id>CodeMC</id>
-            <url>https://repo.codemc.org/repository/maven-public</url>
-        </repository>
-        <repository>
 			<id>rutger-repo</id>
 			<url>http://www.rutgerkok.nl/repo</url>
 		</repository>
+        <repository>
+            <id>worldedit-worldguard-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
+        </repository>
     </repositories>
     <build>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
