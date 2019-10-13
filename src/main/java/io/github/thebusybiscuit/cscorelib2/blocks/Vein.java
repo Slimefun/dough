@@ -62,11 +62,11 @@ public final class Vein {
 
 	private static void expand(Block anchor, List<Block> list, int limit, Predicate<Block> predicate) {
 		if (list.size() >= limit) return;
+		list.add(anchor);
 		
 		for (BlockFace face: faces) {
 			Block next = anchor.getRelative(face);
 			if (!list.contains(next) && predicate.test(next)) {
-				list.add(next);
 				expand(next, list, limit, predicate);
 			}
 		}
