@@ -1,6 +1,6 @@
 package io.github.thebusybiscuit.cscorelib2.scheduling;
 
-import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -13,7 +13,7 @@ import lombok.NonNull;
  * Tasks are added into a Queue and then run sequentially via {@link TaskQueue#execute(Plugin)}
  * You can provide a delay between the individual tasks via the ticks argument in {@link TaskQueue#thenRun(int, Runnable)}
  * If you need to access the index of your current task (whether it is the first, last or xth task) you can use
- * the methods with {@link Consumer} as an argument, otherwise just use the ones with {@link Runnable}
+ * the methods with {@link IntConsumer} as an argument, otherwise just use the ones with {@link Runnable}
  * 
  * @author TheBusyBiscuit
  *
@@ -23,12 +23,12 @@ public class TaskQueue {
 	@Data
 	private class Node {
 		
-		private final Consumer<Integer> runnable;
+		private final IntConsumer runnable;
 		private final boolean asynchronously;
 		private int delay = 0;
 		private Node nextNode;
 		
-		public Node(@NonNull Consumer<Integer> consumer, boolean async) {
+		public Node(@NonNull IntConsumer consumer, boolean async) {
 			this.runnable = consumer;
 			this.asynchronously = async;
 		}
@@ -89,7 +89,7 @@ public class TaskQueue {
 	 * @param consumer	The callback to run
 	 * @return			The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRun(@NonNull Consumer<Integer> consumer) {
+	public TaskQueue thenRun(@NonNull IntConsumer consumer) {
 		return append(new Node(consumer, false));
 	}
 
@@ -105,12 +105,12 @@ public class TaskQueue {
 	
 	/**
 	 * This method will schedule the given Task with no delay and <strong>asynchronously</strong>.
-	 * Use the {@link Integer} parameter in your {@link Consumer} to determine the task's index.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
 	 * @param consumer	The callback to run
 	 * @return			The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRunAsynchronously(@NonNull Consumer<Integer> consumer) {
+	public TaskQueue thenRunAsynchronously(@NonNull IntConsumer consumer) {
 		return append(new Node(consumer, true));
 	}
 
@@ -126,13 +126,13 @@ public class TaskQueue {
 
 	/**
 	 * This method will schedule the given Task with the given delay and <strong>synchronously</strong>.
-	 * Use the {@link Integer} parameter in your {@link Consumer} to determine the task's index.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
 	 * @param ticks		The time to wait before running this task after the previous one.
 	 * @param consumer	The callback to run
 	 * @return			The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRun(int ticks, @NonNull Consumer<Integer> consumer) {
+	public TaskQueue thenRun(int ticks, @NonNull IntConsumer consumer) {
 		if (ticks < 1) {
 			throw new IllegalArgumentException("thenAfter() must be given a time that is greater than zero!");
 		}
@@ -149,19 +149,19 @@ public class TaskQueue {
 	 * @param runnable	The callback to run
 	 * @return			The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRun(int ticks,@NonNull Runnable runnable) {
+	public TaskQueue thenRun(int ticks, @NonNull Runnable runnable) {
 		return thenRun(ticks, i -> runnable.run());
 	}
 	
 	/**
 	 * This method will schedule the given Task with the given delay and <strong>asynchronously</strong>.
-	 * Use the {@link Integer} parameter in your {@link Consumer} to determine the task's index.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
 	 * @param ticks		The time to wait before running this task after the previous one.
 	 * @param consumer	The callback to run
 	 * @return			The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRunAsynchronously(int ticks, @NonNull Consumer<Integer> consumer) {
+	public TaskQueue thenRunAsynchronously(int ticks, @NonNull IntConsumer consumer) {
 		if (ticks < 1) {
 			throw new IllegalArgumentException("thenAfter() must be given a time that is greater than zero!");
 		}
@@ -185,13 +185,13 @@ public class TaskQueue {
 	/**
 	 * This method will schedule the given Task with no delay and <strong>synchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
-	 * Use the {@link Integer} parameter in your {@link Consumer} to determine the task's index.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
 	 * @param iterations	The amount of times to repeat this task
 	 * @param consumer		The callback to run
 	 * @return				The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRepeat(int iterations, @NonNull Consumer<Integer> consumer) {
+	public TaskQueue thenRepeat(int iterations, @NonNull IntConsumer consumer) {
 		for (int i = 0; i < iterations; i++) {
 			append(new Node(consumer, false));
 		}
@@ -214,13 +214,13 @@ public class TaskQueue {
 	/**
 	 * This method will schedule the given Task with no delay and <strong>asynchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
-	 * Use the {@link Integer} parameter in your {@link Consumer} to determine the task's index.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
 	 * @param iterations	The amount of times to repeat this task
 	 * @param consumer		The callback to run
 	 * @return				The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRepeatAsynchronously(int iterations, @NonNull Consumer<Integer> consumer) {
+	public TaskQueue thenRepeatAsynchronously(int iterations, @NonNull IntConsumer consumer) {
 		for (int i = 0; i < iterations; i++) {
 			append(new Node(consumer, true));
 		}
