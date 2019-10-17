@@ -32,6 +32,12 @@ public class TaskQueue {
 			this.runnable = consumer;
 			this.asynchronously = async;
 		}
+		
+		public Node(@NonNull IntConsumer consumer, int delay, boolean async) {
+			this.runnable = consumer;
+			this.delay = delay;
+			this.asynchronously = async;
+		}
 
 		public boolean hasNextNode() {
 			return nextNode != null;
@@ -137,9 +143,7 @@ public class TaskQueue {
 			throw new IllegalArgumentException("thenAfter() must be given a time that is greater than zero!");
 		}
 		
-		Node node = new Node(consumer, false);
-		node.setDelay(ticks);
-		return append(node);
+		return append(new Node(consumer, ticks, false));
 	}
 	
 	/**
@@ -166,9 +170,7 @@ public class TaskQueue {
 			throw new IllegalArgumentException("thenAfter() must be given a time that is greater than zero!");
 		}
 		
-		Node node = new Node(consumer, true);
-		node.setDelay(ticks);
-		return append(node);
+		return append(new Node(consumer, ticks, true));
 	}
 
 	/**
@@ -238,6 +240,68 @@ public class TaskQueue {
 	 */
 	public TaskQueue thenRepeatAsynchronously(int iterations, @NonNull Runnable runnable) {
 		return thenRepeatAsynchronously(iterations, i -> runnable.run());
+	}
+
+	/**
+	 * This method will schedule the given Task with no delay and <strong>synchronously</strong>.
+	 * The task will be repeated for the given amount of iterations.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
+	 * 
+	 * @param delay			The delay between executions (including the start delay)
+	 * @param iterations	The amount of times to repeat this task
+	 * @param consumer		The callback to run
+	 * @return				The current instance of {@link TaskQueue}
+	 */
+	public TaskQueue thenRepeatEvery(int delay, int iterations, @NonNull IntConsumer consumer) {
+		for (int i = 0; i < iterations; i++) {
+			append(new Node(consumer, delay, false));
+		}
+		
+		return this;
+	}
+	
+	/**
+	 * This method will schedule the given Task with no delay and <strong>synchronously</strong>.
+	 * The task will be repeated for the given amount of iterations.
+	 * 
+	 * @param delay			The delay between executions (including the start delay)
+	 * @param iterations	The amount of times to repeat this task
+	 * @param runnable		The callback to run
+	 * @return				The current instance of {@link TaskQueue}
+	 */
+	public TaskQueue thenRepeatEvery(int delay, int iterations, @NonNull Runnable runnable) {
+		return thenRepeatEvery(delay, iterations, i -> runnable.run());
+	}
+	
+	/**
+	 * This method will schedule the given Task with no delay and <strong>asynchronously</strong>.
+	 * The task will be repeated for the given amount of iterations.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
+	 * 
+	 * @param delay			The delay between executions (including the start delay)
+	 * @param iterations	The amount of times to repeat this task
+	 * @param consumer		The callback to run
+	 * @return				The current instance of {@link TaskQueue}
+	 */
+	public TaskQueue thenRepeatEveryAsynchronously(int delay, int iterations, @NonNull IntConsumer consumer) {
+		for (int i = 0; i < iterations; i++) {
+			append(new Node(consumer, delay, true));
+		}
+		
+		return this;
+	}
+	
+	/**
+	 * This method will schedule the given Task with no delay and <strong>asynchronously</strong>.
+	 * The task will be repeated for the given amount of iterations.
+	 * 
+	 * @param delay			The delay between executions (including the start delay)
+	 * @param iterations	The amount of times to repeat this task
+	 * @param runnable		The callback to run
+	 * @return				The current instance of {@link TaskQueue}
+	 */
+	public TaskQueue thenRepeatEveryAsynchronously(int delay, int iterations, @NonNull Runnable runnable) {
+		return thenRepeatEveryAsynchronously(delay, iterations, i -> runnable.run());
 	}
 
 	/**
