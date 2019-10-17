@@ -243,7 +243,7 @@ public class TaskQueue {
 	}
 
 	/**
-	 * This method will schedule the given Task with no delay and <strong>synchronously</strong>.
+	 * This method will schedule the given Task with the given delay and <strong>synchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
 	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
@@ -261,7 +261,7 @@ public class TaskQueue {
 	}
 	
 	/**
-	 * This method will schedule the given Task with no delay and <strong>synchronously</strong>.
+	 * This method will schedule the given Task with the given delay and <strong>synchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
 	 * 
 	 * @param delay			The delay between executions (including the start delay)
@@ -274,7 +274,7 @@ public class TaskQueue {
 	}
 	
 	/**
-	 * This method will schedule the given Task with no delay and <strong>asynchronously</strong>.
+	 * This method will schedule the given Task with the given delay and <strong>asynchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
 	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
@@ -292,7 +292,7 @@ public class TaskQueue {
 	}
 	
 	/**
-	 * This method will schedule the given Task with no delay and <strong>asynchronously</strong>.
+	 * This method will schedule the given Task with the given delay and <strong>asynchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
 	 * 
 	 * @param delay			The delay between executions (including the start delay)
