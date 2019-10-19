@@ -55,7 +55,7 @@ public class MinecraftRecipe<T extends Recipe> {
 	
 	public static final MinecraftRecipe<CookingRecipe<?>> ALL_SMELTING = new MinecraftRecipe<>(CookingRecipe.class, recipe -> recipe.length == 1, 
 		recipe -> new RecipeChoice[] {recipe.getInputChoice()}, (input, stream) ->
-		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CookingRecipe::getResult)
+		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(recipe -> recipe.getResult())
 	);
 	
 	public static final MinecraftRecipe<FurnaceRecipe> FURNACE = new MinecraftRecipe<>(FurnaceRecipe.class, recipe -> recipe.length == 1, 
