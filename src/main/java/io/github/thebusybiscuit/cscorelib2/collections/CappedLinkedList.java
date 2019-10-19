@@ -11,7 +11,7 @@ public class CappedLinkedList<T> implements Iterable<T> {
 	@Getter
 	private int size;
 	
-	private LinkedList<T> list;
+	private final LinkedList<T> list;
 	
 	public CappedLinkedList(int size) {
 		this.size = size;
@@ -26,6 +26,16 @@ public class CappedLinkedList<T> implements Iterable<T> {
 		list.add(obj);
 		
 		if (list.size() > size) {
+			list.removeFirst();
+		}
+	}
+	
+	public void setSize(int size) {
+		if (size < 1) throw new IllegalArgumentException("A CappedLinkedList must have a size of at least 1");
+		
+		this.size = size;
+		
+		while (size() > size) {
 			list.removeFirst();
 		}
 	}
