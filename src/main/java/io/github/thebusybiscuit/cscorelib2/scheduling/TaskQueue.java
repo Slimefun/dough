@@ -282,7 +282,7 @@ public class TaskQueue {
 	 * The task will be repeated for the given amount of iterations.
 	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
-	 * @param delay			The delay between executions (including the start delay)
+	 * @param ticks			The delay between executions (including the start delay)
 	 * @param iterations	The amount of times to repeat this task
 	 * @param consumer		The callback to run
 	 * @return				The current instance of {@link TaskQueue}
