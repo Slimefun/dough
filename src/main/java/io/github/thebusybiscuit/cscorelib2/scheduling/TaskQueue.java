@@ -90,7 +90,7 @@ public class TaskQueue {
 	
 	/**
 	 * This method will schedule the given Task with no delay and <strong>synchronously</strong>.
-	 * Use the {@link Integer} parameter in your {@link Consumer} to determine the task's index.
+	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
 	 * @param consumer	The callback to run
 	 * @return			The current instance of {@link TaskQueue}
@@ -247,7 +247,7 @@ public class TaskQueue {
 	 * The task will be repeated for the given amount of iterations.
 	 * Use the {@link Integer} parameter in your {@link IntConsumer} to determine the task's index.
 	 * 
-	 * @param delay			The delay between executions (including the start delay)
+	 * @param ticks			The delay between executions (including the start delay)
 	 * @param iterations	The amount of times to repeat this task
 	 * @param consumer		The callback to run
 	 * @return				The current instance of {@link TaskQueue}
@@ -268,13 +268,13 @@ public class TaskQueue {
 	 * This method will schedule the given Task with the given delay and <strong>synchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
 	 * 
-	 * @param delay			The delay between executions (including the start delay)
+	 * @param ticks			The delay between executions (including the start delay)
 	 * @param iterations	The amount of times to repeat this task
 	 * @param runnable		The callback to run
 	 * @return				The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRepeatEvery(int delay, int iterations, @NonNull Runnable runnable) {
-		return thenRepeatEvery(delay, iterations, i -> runnable.run());
+	public TaskQueue thenRepeatEvery(int ticks, int iterations, @NonNull Runnable runnable) {
+		return thenRepeatEvery(ticks, iterations, i -> runnable.run());
 	}
 	
 	/**
@@ -303,35 +303,71 @@ public class TaskQueue {
 	 * This method will schedule the given Task with the given delay and <strong>asynchronously</strong>.
 	 * The task will be repeated for the given amount of iterations.
 	 * 
-	 * @param delay			The delay between executions (including the start delay)
+	 * @param ticks			The delay between executions (including the start delay)
 	 * @param iterations	The amount of times to repeat this task
 	 * @param runnable		The callback to run
 	 * @return				The current instance of {@link TaskQueue}
 	 */
-	public TaskQueue thenRepeatEveryAsynchronously(int delay, int iterations, @NonNull Runnable runnable) {
-		return thenRepeatEveryAsynchronously(delay, iterations, i -> runnable.run());
+	public TaskQueue thenRepeatEveryAsynchronously(int ticks, int iterations, @NonNull Runnable runnable) {
+		return thenRepeatEveryAsynchronously(ticks, iterations, i -> runnable.run());
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with no delay and <strong>synchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param consumer	The callback to run
+	 */
 	public void thenLoop(@NonNull IntConsumer consumer) {
 		Node node = new Node(consumer, false);
 		node.setNextNode(node);
 		append(node);
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with no delay and <strong>synchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param runnable	The callback to run
+	 */
 	public void thenLoop(@NonNull Runnable runnable) {
 		thenLoop(i -> runnable.run());
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with no delay and <strong>asynchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param consumer	The callback to run
+	 */
 	public void thenLoopAsynchronously(@NonNull IntConsumer consumer) {
 		Node node = new Node(consumer, true);
 		node.setNextNode(node);
 		append(node);
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with no delay and <strong>asynchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param runnable	The callback to run
+	 */
 	public void thenLoopAsynchronously(@NonNull Runnable runnable) {
 		thenLoopAsynchronously(i -> runnable.run());
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with the given delay and <strong>synchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param ticks		The delay between executions (including the start delay)
+	 * @param consumer	The callback to run
+	 */
 	public void thenLoopEvery(int ticks, @NonNull IntConsumer consumer) {
 		if (ticks < 1) {
 			throw new IllegalArgumentException("thenLoopEvery() must be given a time that is greater than zero!");
@@ -342,10 +378,26 @@ public class TaskQueue {
 		append(node);
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with the given delay and <strong>synchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param ticks		The delay between executions (including the start delay)
+	 * @param runnable	The callback to run
+	 */
 	public void thenLoopEvery(int ticks, @NonNull Runnable runnable) {
 		thenLoopEvery(ticks, i -> runnable.run());
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with the given delay and <strong>asynchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param ticks		The delay between executions (including the start delay)
+	 * @param consumer	The callback to run
+	 */
 	public void thenLoopEveryAsynchronously(int ticks, @NonNull IntConsumer consumer) {
 		if (ticks < 1) {
 			throw new IllegalArgumentException("thenLoopEveryAsynchronously() must be given a time that is greater than zero!");
@@ -356,6 +408,14 @@ public class TaskQueue {
 		append(node);
 	}
 	
+	/**
+	 * This method will make the task run the given callback until eternity.
+	 * The task will be run with the given delay and <strong>asynchronously</strong>.
+	 * Do not add other tasks after calling this method.
+	 * 
+	 * @param ticks		The delay between executions (including the start delay)
+	 * @param runnable	The callback to run
+	 */
 	public void thenLoopEveryAsynchronously(int ticks, @NonNull Runnable runnable) {
 		thenLoopEveryAsynchronously(ticks, i -> runnable.run());
 	}
@@ -364,8 +424,8 @@ public class TaskQueue {
 	 * This method will make the Queue just do nothing for the given amount of ticks.
 	 * You should not really be using this method but it exists.
 	 * 
-	 * @param ticks
-	 * @return
+	 * @param ticks		The amount of ticks to wait for
+	 * @return			The current instance of {@link TaskQueue}
 	 */
 	public TaskQueue thenWait(int ticks) {
 		Node node = new Node(i -> {}, false);

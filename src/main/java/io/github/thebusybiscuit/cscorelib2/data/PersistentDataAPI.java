@@ -325,7 +325,7 @@ public final class PersistentDataAPI {
      * This method returns an {@link Optional} describing the {@link Integer} found under the given key.
      * An empty {@link Optional} will be returned if no value has been found.
      * 
-     * @see PersistentDataAPI#getInteger(PersistentDataHolder, NamespacedKey)
+     * @see PersistentDataAPI#getInt(PersistentDataHolder, NamespacedKey)
      * 
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
