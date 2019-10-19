@@ -57,6 +57,17 @@ public class TimingsCollection {
 		else return streamIntervals().average().getAsDouble();
 	}
 	
+	/**
+	 * This method will give you the maximum interval between the recorded
+	 * timestamps.
+	 * 
+	 * @return	The maximum interval between the stored timestamps
+	 */
+	public long maxInterval() {
+		if (list.size() > 1) return 0;
+		else return streamIntervals().max().getAsLong();
+	}
+	
 	public long[] getIntervalsAsArray() {
 		if (list.size() > 1) return new long[0];
 		else return streamIntervals().toArray();
@@ -75,6 +86,18 @@ public class TimingsCollection {
 	public double average() {
 		if (list.isEmpty()) return 0;
 		else return stream().average().getAsDouble();
+	}
+	
+	/**
+	 * 
+	 * If you are not storing timestamps but instead store the intervals themselves,
+	 * then use this method to get the maximum of all stored values.
+	 * 
+	 * @return	The maximum of all stored values
+	 */
+	public long max() {
+		if (list.isEmpty()) return 0;
+		else return stream().max().getAsLong();
 	}
 	
 	public LongStream stream() {
