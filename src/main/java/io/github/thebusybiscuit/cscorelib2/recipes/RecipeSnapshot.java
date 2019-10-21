@@ -81,7 +81,7 @@ public class RecipeSnapshot {
 	
 	@NotNull
 	public Set<Recipe> getRecipesFor(@NotNull ItemStack item) {
-		return getRecipes(recipe -> recipe.getResult().getType() == type);
+		return getRecipes(recipe -> recipe.getResult().isSimilar(item));
 	}
 
 }
