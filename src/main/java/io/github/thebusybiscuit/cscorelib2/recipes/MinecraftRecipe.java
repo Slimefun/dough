@@ -28,8 +28,22 @@ public class MinecraftRecipe<T extends Recipe> {
 			return null;
 		}, (input, stream) -> 
 		stream.filter(recipe -> {
-			// TODO: Implement SHAPED_CRAFTING Recipe (Output Function)
-			return false;
+			int i = 0;
+			
+			for (String row: recipe.getShape()) {
+				for (char key: row.toCharArray()) {
+					if (i > input.length) return false;
+					
+					RecipeChoice choice = recipe.getChoiceMap().get(key);
+					if (choice != null && !choice.test(input[i])) {
+						return false;
+					}
+					
+					i++;
+				}
+			}
+			
+			return true;
 		}).findAny().map(ShapedRecipe::getResult)
 	);
 	
@@ -39,8 +53,10 @@ public class MinecraftRecipe<T extends Recipe> {
 			for (RecipeChoice ingredient: recipe.getChoiceList()) {
 				boolean found = false;
 				
-				for (ItemStack item: input) {
-					if (ingredient.test(item)) {
+				ItemStack[] inputs = input.clone();
+				for (int i = 0; i < inputs.length; i++) {
+					if (inputs[i] != null && ingredient.test(inputs[i])) {
+						inputs[i] = null;
 						found = true;
 						break;
 					}
