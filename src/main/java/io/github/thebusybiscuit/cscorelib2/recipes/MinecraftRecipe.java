@@ -1,5 +1,7 @@
 package io.github.thebusybiscuit.cscorelib2.recipes;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -24,8 +26,15 @@ public class MinecraftRecipe<T extends Recipe> {
 	
 	public static final MinecraftRecipe<ShapedRecipe> SHAPED_CRAFTING = new MinecraftRecipe<>(ShapedRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, 
 		recipe -> {
-			// TODO: Implement SHAPED_CRAFTING Recipe (Input Function)
-			return null;
+			List<RecipeChoice> choices = new LinkedList<>();
+			
+			for (String row: recipe.getShape()) {
+				for (char key: row.toCharArray()) {
+					choices.add(recipe.getChoiceMap().get(key));
+				}
+			}
+			
+			return choices.toArray(new RecipeChoice[0]);
 		}, (input, stream) -> 
 		stream.filter(recipe -> {
 			int i = 0;
