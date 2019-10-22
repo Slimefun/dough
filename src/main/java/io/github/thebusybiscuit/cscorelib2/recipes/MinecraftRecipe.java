@@ -1,8 +1,10 @@
 package io.github.thebusybiscuit.cscorelib2.recipes;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -21,8 +23,11 @@ import org.bukkit.inventory.SmokingRecipe;
 import org.bukkit.inventory.StonecuttingRecipe;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 public class MinecraftRecipe<T extends Recipe> {
+	
+	private static final Set<MinecraftRecipe<?>> recipeTypes = new HashSet<>();
 	
 	public static final MinecraftRecipe<ShapedRecipe> SHAPED_CRAFTING = new MinecraftRecipe<>(ShapedRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, 
 		recipe -> {
@@ -115,6 +120,8 @@ public class MinecraftRecipe<T extends Recipe> {
 		this.predicate = predicate;
 		this.inputFunction = inputFunction;
 		this.outputFunction = outputFunction;
+		
+		recipeTypes.add(this);
 	}
 	
 	protected boolean validate(ItemStack[] inputs) {
@@ -127,6 +134,15 @@ public class MinecraftRecipe<T extends Recipe> {
 
 	protected Optional<ItemStack> getOutput(Stream<T> stream, ItemStack[] inputs) {
 		return outputFunction.apply(inputs, stream);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Recipe> Optional<MinecraftRecipe<? super T>> of(@NonNull T recipe) {
+		Class<?> recipeClass = recipe.getClass();
+		
+		return recipeTypes.stream()
+				.filter(type -> recipeClass.isAssignableFrom(type.getRecipeClass()))
+				.findAny().map(type -> (MinecraftRecipe<? super T>) type);
 	}
 
 }
