@@ -27,7 +27,7 @@ public class WeightedNode<T> {
 			compared = ((WeightedNode<?>) obj).getObject();
 		}
 		
-		return object.getClass().isInstance(compared) && compared.hashCode() == hashCode();
+		return obj != null && object.getClass().isInstance(compared) && compared.hashCode() == hashCode();
 	}
 	
 }
