@@ -2,6 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.collections;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -18,6 +19,10 @@ public class RandomizedSet<T> implements Iterable<T> {
 	
 	private int size = 0;
 	private float totalWeights = 0F;
+	
+	public RandomizedSet() {
+		this(LinkedHashSet<WeightedNode<T>>::new);
+	}
 	
 	public RandomizedSet(@NonNull Supplier<Set<WeightedNode<T>>> constructor) {
 		internalSet = constructor.get();
@@ -87,6 +92,23 @@ public class RandomizedSet<T> implements Iterable<T> {
 		else {
 			return false;
 		}
+	}
+	
+	public void setWeight(@NonNull T obj, float weight) {
+		if (weight <= 0F) throw new IllegalArgumentException("A Weight may never be less than or equal to zero!");
+		
+		for (WeightedNode<T> node: internalSet) {
+			if (node.equals(obj)) {
+				size--;
+				totalWeights -= node.getWeight();
+				totalWeights += weight;
+				
+				node.setWeight(weight);
+				return;
+			}
+		}
+		
+		throw new IllegalStateException("The specified Object is not contained in this Set");
 	}
 	
 	public boolean remove(@NonNull T obj) {

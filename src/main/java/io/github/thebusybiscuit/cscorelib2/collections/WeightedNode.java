@@ -22,7 +22,12 @@ public class WeightedNode<T> {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return object.getClass().isInstance(obj) && obj.hashCode() == hashCode();
+		Object compared = obj;
+		if (obj instanceof WeightedNode) {
+			compared = ((WeightedNode<?>) obj).getObject();
+		}
+		
+		return object.getClass().isInstance(compared) && compared.hashCode() == hashCode();
 	}
 	
 }
