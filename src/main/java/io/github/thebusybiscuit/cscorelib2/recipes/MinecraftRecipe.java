@@ -145,4 +145,8 @@ public class MinecraftRecipe<T extends Recipe> {
 				.findAny().map(type -> (MinecraftRecipe<? super T>) type);
 	}
 
+	public static Stream<MinecraftRecipe<?>> stream() {
+		return recipeTypes.stream();
+	}
+
 }
