@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 import org.bukkit.plugin.Plugin;
 
@@ -14,6 +15,7 @@ public interface Database {
 	boolean isConnected();
 	
 	Plugin getPlugin();
+	Logger getLogger();
 	String getType();
 	
 	void update(String query);

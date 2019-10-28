@@ -19,7 +19,7 @@ public class SQLLiteDatabase extends LocalSQLDatabase<SQLLiteDatabase> {
 
 	@Override
 	public String getIP() {
-		return "jdbc:sqlite:" + new File("plugins/" + plugin.getName() + "/" + this.name + ".db").getAbsolutePath();
+		return "jdbc:sqlite:" + new File("plugins/" + plugin.getName(), this.name + ".db").getAbsolutePath();
 	}
 
 	@Override

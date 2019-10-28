@@ -19,7 +19,7 @@ public class H2Database extends LocalSQLDatabase<H2Database> {
 
 	@Override
 	public String getIP() {
-		return "jdbc:h2:" + new File("plugins/" + plugin.getName() + "/" + this.name + ".db").getAbsolutePath();
+		return "jdbc:h2:" + new File("plugins/" + plugin.getName(), this.name + ".db").getAbsolutePath();
 	}
 	
 	@Override

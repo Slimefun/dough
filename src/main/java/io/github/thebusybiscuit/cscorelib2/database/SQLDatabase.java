@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bukkit.plugin.Plugin;
 
@@ -26,6 +28,10 @@ public abstract class SQLDatabase<T extends SQLDatabase<T>> implements Database 
 	
 	protected SQLDatabase(Plugin plugin) {
 		this.plugin = plugin;
+	}
+	
+	public Logger getLogger() {
+		return plugin.getLogger();
 	}
 	
 	@Override
@@ -52,7 +58,7 @@ public abstract class SQLDatabase<T extends SQLDatabase<T>> implements Database 
 			}
 			else return false;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			getLogger().log(Level.SEVERE, "An Exeption occured while connecting to a Database", e);
 			return false;
 		}
 	}
@@ -61,8 +67,8 @@ public abstract class SQLDatabase<T extends SQLDatabase<T>> implements Database 
 		try {
 			if (set != null) set.close();
 			if (statement != null) statement.close();
-		} catch(Exception x) {
-			x.printStackTrace();
+		} catch(Exception e) {
+			getLogger().log(Level.SEVERE, "An Exeption occured while closing a Database Connection", e);
 		}
 	}
 	
@@ -80,8 +86,7 @@ public abstract class SQLDatabase<T extends SQLDatabase<T>> implements Database 
 			statement = getConnection().prepareStatement(query);
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println(query);
-			e.printStackTrace();
+			getLogger().log(Level.SEVERE, "An Exeption occured while sending an update-query: " + query, e);
 		} finally {
 			closeResources(null, statement);
 		}

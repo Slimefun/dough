@@ -193,7 +193,6 @@ public class Localization {
 	
 	public void sendMessage(CommandSender sender, String key) {
 		String prefix = config.contains("prefix") ? getMessage("prefix"): "";
-		
 		String message = ChatColor.translateAlternateColorCodes('&', prefix + getMessage(key));
 		
 		if (sender instanceof Player) {

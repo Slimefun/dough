@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 
 import org.bukkit.scheduler.BukkitTask;
 
@@ -26,7 +27,7 @@ public class DatabaseQuery {
 				
 				if (task.isCancelled()) return;
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				database.getLogger().log(Level.SEVERE, "A Database Query Thread was interrupted (execute)", e);
 				Thread.currentThread().interrupt();
 			}
 
@@ -42,7 +43,7 @@ public class DatabaseQuery {
 				
 				if (task.isCancelled()) return;
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				database.getLogger().log(Level.SEVERE, "A Database Query Thread was interrupted (execute)", e);
 				Thread.currentThread().interrupt();
 			}
 			
@@ -53,8 +54,7 @@ public class DatabaseQuery {
 				set.close();
 				finished = true;
 			} catch (SQLException e) {
-				System.out.println(query);
-				e.printStackTrace();
+				database.getLogger().log(Level.SEVERE, "An Exception occured while executing a Database Query: " + query, e);
 			}
 		});
 	}
@@ -66,7 +66,7 @@ public class DatabaseQuery {
 				
 				if (task.isCancelled()) return;
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				database.getLogger().log(Level.SEVERE, "A Database Query Thread was interrupted (forEach)", e);
 				Thread.currentThread().interrupt();
 			}
 			
@@ -82,8 +82,7 @@ public class DatabaseQuery {
 				
 				finished = true;
 			} catch (SQLException e) {
-				System.out.println(query);
-				e.printStackTrace();
+				database.getLogger().log(Level.SEVERE, "An Exception occured while executing a Database Query: " + query, e);
 			}
 		});
 	}
