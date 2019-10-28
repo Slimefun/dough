@@ -69,7 +69,7 @@ public final class ReflectionUtils {
 	 *
 	 * @throws Exception If there's an issue getting a field
 	 */
-	public static Field getField(Class<?> c, String field) throws Exception {
+	public static Field getField(Class<?> c, String field) throws NoSuchFieldException {
 		return c.getDeclaredField(field);
 	}
 
@@ -83,7 +83,7 @@ public final class ReflectionUtils {
 	 * @param  value The Value for that Field
 	 * @throws Exception If there was an issue setting a field value
 	 */
-	public static <T> void setFieldValue(T object, Class<?> c, String field, Object value) throws Exception {
+	public static <T> void setFieldValue(T object, Class<?> c, String field, Object value) throws NoSuchFieldException, IllegalAccessException {
 		Field f = getField(c, field);
 		f.setAccessible(true);
 		f.set(object, value);
@@ -98,7 +98,7 @@ public final class ReflectionUtils {
 	 * @param  value The Value for that Field
 	 * @throws Exception If there was an issue setting a field value
 	 */
-	public static <T> void setFieldValue(T object, String field, Object value) throws Exception {
+	public static <T> void setFieldValue(T object, String field, Object value) throws NoSuchFieldException, IllegalAccessException {
 		Field f = getField(object.getClass(), field);
 		f.setAccessible(true);
 		f.set(object, value);
@@ -112,7 +112,7 @@ public final class ReflectionUtils {
 	 * @throws Exception If an issue occurred while getting the field value
 	 * @return      The Value of a Field
 	 */
-	public static Object getFieldValue(Object object, String field) throws Exception {
+	public static Object getFieldValue(Object object, String field) throws NoSuchFieldException, IllegalAccessException {
 	    Field f = getField(object.getClass(), field);
 	    f.setAccessible(true);
 	    return f.get(object);
@@ -157,11 +157,15 @@ public final class ReflectionUtils {
 	 * @param  paramTypes The Parameters for that Constructor
 	 * @return      The Constructor for that Class
 	 */
-	public static Constructor<?> getConstructor(Class<?> c, Class<?>... paramTypes) {
+	@SuppressWarnings("unchecked")
+	public static <T> Constructor<T> getConstructor(Class<T> c, Class<?>... paramTypes) {
 	    Class<?>[] t = toPrimitiveTypeArray(paramTypes);
-	    for (Constructor<?> con : c.getConstructors()) {
-	    	Class<?>[] types = toPrimitiveTypeArray(con.getParameterTypes());
-	    	if (equalsTypeArray(types, t)) return con;
+	    for (Constructor<?> constructor : c.getConstructors()) {
+	    	Class<?>[] types = toPrimitiveTypeArray(constructor.getParameterTypes());
+	    	
+	    	if (equalsTypeArray(types, t)) {
+	    		return (Constructor<T>) constructor;
+	    	}
 	    }
 	    return null;
 	}
@@ -174,7 +178,7 @@ public final class ReflectionUtils {
 	 * @throws Exception If there was an issue getting the specified inner class.
 	 * @return      The Class in your specified Class
 	 */
-	public static Class<?> getInnerNMSClass(String name, String subname) throws Exception {
+	public static Class<?> getInnerNMSClass(String name, String subname) throws ClassNotFoundException {
 		return getNMSClass(name + "$" + subname);
 	}
 
@@ -185,7 +189,7 @@ public final class ReflectionUtils {
 	 * @throws Exception If there was an issue getting the specified class
 	 * @return      The Class in that Package
 	 */
-	public static Class<?> getNMSClass(String name) throws Exception {
+	public static Class<?> getNMSClass(String name) throws ClassNotFoundException {
 	    return Class.forName(new StringBuilder().append("net.minecraft.server.").append(getVersion()).append(".").append(name).toString());
 	}
 
@@ -197,7 +201,7 @@ public final class ReflectionUtils {
 	 * @throws Exception If there was an issue getting the specified inner class.
 	 * @return      The Class in your specified Class
 	 */
-	public static Class<?> getInnerOBCClass(String name, String subname) throws Exception {
+	public static Class<?> getInnerOBCClass(String name, String subname) throws ClassNotFoundException {
 		return getOBCClass(name + "$" + subname);
 	}
 
@@ -208,7 +212,7 @@ public final class ReflectionUtils {
 	 * @throws Exception If there was an issue getting the specified class.
 	 * @return      The Class in that Package
 	 */
-	public static Class<?> getOBCClass(String name) throws Exception {
+	public static Class<?> getOBCClass(String name) throws ClassNotFoundException {
 	    return Class.forName(new StringBuilder().append("org.bukkit.craftbukkit.").append(getVersion()).append(".").append(name).toString());
 	}
 
@@ -257,7 +261,7 @@ public final class ReflectionUtils {
 	 * @param  c The Enum you are targeting
 	 * @return      An ArrayList of all Enum Constants in that Enum
 	 */
-	public static List<?> getEnumConstants(Class<?> c) {
+	public static <T> List<T> getEnumConstants(Class<T> c) {
 		return Arrays.asList(c.getEnumConstants());
 	}
 
@@ -268,8 +272,8 @@ public final class ReflectionUtils {
 	 * @param  name The Name of the Constant you are targeting
 	 * @return      The found Enum Constant
 	 */
-	public static Object getEnumConstant(Class<?> c, String name) {
-		for (Object o: c.getEnumConstants()) {
+	public static <T> T getEnumConstant(Class<T> c, String name) {
+		for (T o: c.getEnumConstants()) {
 			if (o.toString().equals(name)) return o;
 		}
 		return null;
