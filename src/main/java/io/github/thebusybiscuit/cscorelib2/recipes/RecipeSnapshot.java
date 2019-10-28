@@ -62,6 +62,7 @@ public class RecipeSnapshot {
 	 * This method will return a {@link Set} of Recipes of the given Type
 	 * contained in this {@link RecipeSnapshot}.
 	 * 
+	 * @param <T>			The Type of recipeClass
 	 * @param recipeClass	A child-class of {@link Recipe}.
 	 * @return				A {@link Set} of Recipes of the given Type.
 	 */
@@ -73,6 +74,7 @@ public class RecipeSnapshot {
 	 * This method will return a {@link Stream} of Recipes of the given Type
 	 * contained in this {@link RecipeSnapshot}.
 	 * 
+	 * @param <T>			The Type of recipeClass
 	 * @param recipeClass	A child-class of {@link Recipe}.
 	 * @return				A {@link Stream} of Recipes of the given Type.
 	 */
@@ -87,6 +89,7 @@ public class RecipeSnapshot {
 	 * This method will return an Array of {@link RecipeChoice} representing
 	 * the given Recipe's input choices.
 	 * 
+	 * @param <T>			The Type of recipe
 	 * @param recipeType	The Type of the given Recipe
 	 * @param recipe		The Recipe to get the inputs from
 	 * @return				The Inputs for the given Recipe
@@ -103,6 +106,7 @@ public class RecipeSnapshot {
 	 * the given Recipe's Recipe Type.
 	 * It is advised to prefer the usage of {@link RecipeSnapshot#getRecipeInput(MinecraftRecipe, Recipe)}.
 	 * 
+	 * @param <T>			The Type of recipe
 	 * @param recipe		The Recipe to get the inputs from
 	 * @return				The Inputs for the given Recipe
 	 */
@@ -123,6 +127,7 @@ public class RecipeSnapshot {
 	 * 
 	 * If no matching recipe was found, an empty {@link Optional} will be returned.
 	 * 
+	 * @param <T>			The Type of recipe
 	 * @param recipeType	The Recipe Type you are looking for
 	 * @param inputs		The Inputs to the Recipe you are looking for
 	 * @return				An {@link Optional} describing the output of the Recipe matching your type and inputs
