@@ -10,6 +10,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.BlastingRecipe;
 import org.bukkit.inventory.CampfireRecipe;
 import org.bukkit.inventory.CookingRecipe;
@@ -29,7 +30,7 @@ public class MinecraftRecipe<T extends Recipe> {
 	
 	private static final Set<MinecraftRecipe<?>> recipeTypes = new HashSet<>();
 	
-	public static final MinecraftRecipe<ShapedRecipe> SHAPED_CRAFTING = new MinecraftRecipe<>(ShapedRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, 
+	public static final MinecraftRecipe<ShapedRecipe> SHAPED_CRAFTING = new MinecraftRecipe<>(Material.CRAFTING_TABLE, ShapedRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, 
 		recipe -> {
 			List<RecipeChoice> choices = new LinkedList<>();
 			
@@ -61,7 +62,7 @@ public class MinecraftRecipe<T extends Recipe> {
 		}).findAny().map(ShapedRecipe::getResult)
 	);
 	
-	public static final MinecraftRecipe<ShapelessRecipe> SHAPELESS_CRAFTING = new MinecraftRecipe<>(ShapelessRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10,
+	public static final MinecraftRecipe<ShapelessRecipe> SHAPELESS_CRAFTING = new MinecraftRecipe<>(Material.CRAFTING_TABLE, ShapelessRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10,
 		recipe -> recipe.getChoiceList().toArray(new RecipeChoice[0]), 
 		(input, stream) -> stream.filter(recipe -> {
 			for (RecipeChoice ingredient: recipe.getChoiceList()) {
@@ -83,30 +84,33 @@ public class MinecraftRecipe<T extends Recipe> {
 		}).findAny().map(ShapelessRecipe::getResult)
 	);
 	
-	public static final MinecraftRecipe<FurnaceRecipe> FURNACE = new MinecraftRecipe<>(FurnaceRecipe.class, recipe -> recipe.length == 1, 
+	public static final MinecraftRecipe<FurnaceRecipe> FURNACE = new MinecraftRecipe<>(Material.FURNACE, FurnaceRecipe.class, recipe -> recipe.length == 1, 
 		recipe -> new RecipeChoice[] {recipe.getInputChoice()}, (input, stream) ->
 		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CookingRecipe::getResult)
 	);
 	
-	public static final MinecraftRecipe<BlastingRecipe> BLAST_FURNACE = new MinecraftRecipe<>(BlastingRecipe.class, recipe -> recipe.length == 1, 
+	public static final MinecraftRecipe<BlastingRecipe> BLAST_FURNACE = new MinecraftRecipe<>(Material.BLAST_FURNACE, BlastingRecipe.class, recipe -> recipe.length == 1, 
 		recipe -> new RecipeChoice[] {recipe.getInputChoice()}, (input, stream) ->
 		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CookingRecipe::getResult)
 	);
 	
-	public static final MinecraftRecipe<SmokingRecipe> SMOKER = new MinecraftRecipe<>(SmokingRecipe.class, recipe -> recipe.length == 1, 
+	public static final MinecraftRecipe<SmokingRecipe> SMOKER = new MinecraftRecipe<>(Material.SMOKER, SmokingRecipe.class, recipe -> recipe.length == 1, 
 		recipe -> new RecipeChoice[] {recipe.getInputChoice()}, (input, stream) ->
 		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CookingRecipe::getResult)
 	);
 	
-	public static final MinecraftRecipe<CampfireRecipe> CAMPFIRE = new MinecraftRecipe<>(CampfireRecipe.class, recipe -> recipe.length == 1, 
+	public static final MinecraftRecipe<CampfireRecipe> CAMPFIRE = new MinecraftRecipe<>(Material.CAMPFIRE, CampfireRecipe.class, recipe -> recipe.length == 1, 
 		recipe -> new RecipeChoice[] {recipe.getInputChoice()}, (input, stream) ->
 		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CookingRecipe::getResult)
 	);
 	
-	public static final MinecraftRecipe<StonecuttingRecipe> STONECUTTER = new MinecraftRecipe<>(StonecuttingRecipe.class, recipe -> recipe.length == 1, 
+	public static final MinecraftRecipe<StonecuttingRecipe> STONECUTTER = new MinecraftRecipe<>(Material.STONECUTTER, StonecuttingRecipe.class, recipe -> recipe.length == 1, 
 		recipe -> new RecipeChoice[] {recipe.getInputChoice()}, (input, stream) ->
 		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(StonecuttingRecipe::getResult)
 	);
+	
+	@Getter
+	private final Material machine;
 
 	@Getter
 	private final Class<T> recipeClass;
@@ -115,7 +119,8 @@ public class MinecraftRecipe<T extends Recipe> {
 	private final Function<T, RecipeChoice[]> inputFunction;
 	private final BiFunction<ItemStack[], Stream<T>, Optional<ItemStack>> outputFunction;
 
-	private MinecraftRecipe(Class<T> recipeClass, Predicate<ItemStack[]> predicate, Function<T, RecipeChoice[]> inputFunction, BiFunction<ItemStack[], Stream<T>, Optional<ItemStack>> outputFunction) {
+	private MinecraftRecipe(Material machine, Class<T> recipeClass, Predicate<ItemStack[]> predicate, Function<T, RecipeChoice[]> inputFunction, BiFunction<ItemStack[], Stream<T>, Optional<ItemStack>> outputFunction) {
+		this.machine = machine;
 		this.recipeClass = recipeClass;
 		this.predicate = predicate;
 		this.inputFunction = inputFunction;
