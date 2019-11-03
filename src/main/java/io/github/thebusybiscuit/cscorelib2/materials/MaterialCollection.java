@@ -3,7 +3,6 @@ package io.github.thebusybiscuit.cscorelib2.materials;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import org.bukkit.Material;
@@ -23,7 +22,7 @@ public class MaterialCollection implements Iterable<Material> {
 	@Getter
 	private final Material[] asArray;
 	
-	public MaterialCollection(Set<Material> materials) {
+	public MaterialCollection(Collection<Material> materials) {
 		this(materials.stream());
 	}
 	
