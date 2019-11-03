@@ -133,11 +133,11 @@ public class MinecraftRecipe<T extends Recipe> {
 		return predicate.test(inputs);
 	}
 	
-	protected RecipeChoice[] getInputs(T recipe) {
+	public RecipeChoice[] getInputs(T recipe) {
 		return inputFunction.apply(recipe);
 	}
 
-	protected Optional<ItemStack> getOutput(Stream<T> stream, ItemStack[] inputs) {
+	public Optional<ItemStack> getOutput(Stream<T> stream, ItemStack[] inputs) {
 		return outputFunction.apply(inputs, stream);
 	}
 
@@ -146,7 +146,7 @@ public class MinecraftRecipe<T extends Recipe> {
 		Class<?> recipeClass = recipe.getClass();
 		
 		return recipeTypes.stream()
-				.filter(type -> recipeClass.isAssignableFrom(type.getRecipeClass()))
+				.filter(type -> type.getRecipeClass().isAssignableFrom(recipeClass))
 				.findAny().map(type -> (MinecraftRecipe<? super T>) type);
 	}
 
