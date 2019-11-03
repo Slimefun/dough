@@ -104,7 +104,7 @@ public class TimingsCollection {
 		return list.stream().mapToLong(i -> i);
 	}
 	
-	private class IntervalMapper implements LongUnaryOperator {
+	private static class IntervalMapper implements LongUnaryOperator {
 
 		private long last = 0;
 		

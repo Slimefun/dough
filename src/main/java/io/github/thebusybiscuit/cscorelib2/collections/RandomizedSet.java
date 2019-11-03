@@ -324,6 +324,16 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 		return map;
 	}
 	
+	/**
+	 * This method will provide an infinite {@link Stream} of elements, randomly
+	 * drawn from this {@link RandomizedSet}.
+	 * 
+	 * @return	An infinite unordered Stream of random elements from this Set
+	 */
+	public Stream<T> randomInfiniteStream() {
+		return Stream.generate(this::getRandom);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownServiceException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -20,6 +21,7 @@ import lombok.NonNull;
 public final class MinecraftAccount {
 	
 	private static final Pattern UUID_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
+	private static final String ERROR_TOKEN = "error";
 	private static final JsonParser JSON_PARSER = new JsonParser();
 	
 	private MinecraftAccount() {}
@@ -46,8 +48,15 @@ public final class MinecraftAccount {
 				if (!(element instanceof JsonNull)) {
 					JsonObject obj = element.getAsJsonObject();
 					
-					if (obj.has("error") && obj.get("error").getAsString().equals("TooManyRequestsException")) {
-						throw new TooManyRequestsException(url);
+					if (obj.has(ERROR_TOKEN)) {
+						String error = obj.get(ERROR_TOKEN).getAsString();
+						
+						if (error.equals("TooManyRequestsException")) {
+							throw new TooManyRequestsException(url.orElse(null));
+						}
+						else {
+							throw new UnknownServiceException(error);
+						}
 					}
 					
 					String id = obj.get("id").getAsString();
@@ -85,8 +94,15 @@ public final class MinecraftAccount {
 				if (!(element instanceof JsonNull)) {
 					JsonObject obj = element.getAsJsonObject();
 					
-					if (obj.has("error") && obj.get("error").getAsString().equals("TooManyRequestsException")) {
-						throw new TooManyRequestsException(url);
+					if (obj.has(ERROR_TOKEN)) {
+						String error = obj.get(ERROR_TOKEN).getAsString();
+						
+						if (error.equals("TooManyRequestsException")) {
+							throw new TooManyRequestsException(url.orElse(null));
+						}
+						else {
+							throw new UnknownServiceException(error);
+						}
 					}
 					
 					JsonArray properties = obj.get("properties").getAsJsonArray();
@@ -118,11 +134,11 @@ public final class MinecraftAccount {
 	public static class TooManyRequestsException extends Exception {
 
 		private static final long serialVersionUID = -7137562700404366948L;
-		private final Optional<URL> url;
+		private final URL url;
 
 		@Override
 		public String getMessage() {
-			return "Sent too many Requests to the Server! URL: " + url.toString();
+			return "Sent too many Requests to the Server! URL: " + url;
 		}
 	}
 	

@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.materials;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.bukkit.Material;
@@ -33,7 +34,7 @@ public class MaterialCollection implements Iterable<Material> {
 	public MaterialCollection(@NonNull Stream<Material> stream) {
 		this.asArray = stream
 				.distinct()
-				.filter(m -> m != null)
+				.filter(Objects::nonNull)
 				.toArray(Material[]::new);
 	}
 	
