@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 import lombok.Getter;
 
-public class CappedLinkedList<T> implements Iterable<T> {
+public class CappedLinkedList<T> implements Iterable<T>, Streamable<T> {
 
 	@Getter
 	private int size;
@@ -52,7 +52,8 @@ public class CappedLinkedList<T> implements Iterable<T> {
 	public Iterator<T> iterator() {
 		return list.iterator();
 	}
-	
+
+	@Override
 	public Stream<T> stream() {
 		return list.stream();
 	}

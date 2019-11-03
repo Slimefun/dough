@@ -30,7 +30,7 @@ import lombok.NonNull;
  *
  * @param <T>	The Type of Element that is stored in this Set
  */
-public class RandomizedSet<T> implements Iterable<T> {
+public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 	
 	private final Set<WeightedNode<T>> internalSet;
 	
@@ -217,6 +217,7 @@ public class RandomizedSet<T> implements Iterable<T> {
 	 * 
 	 * @return	A Stream of elements from this Set
 	 */
+	@Override
 	public Stream<T> stream() {
 		return StreamSupport.stream(spliterator(), false);
 	}

@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.stream.Stream;
 
 import lombok.Getter;
 import lombok.NonNull;
 
-public class LoopIterator<T> implements Iterator<T> {
+public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
 	
 	private final Queue<T> queue;
 	private final boolean hasNext;
@@ -42,6 +43,11 @@ public class LoopIterator<T> implements Iterator<T> {
 		
 		index++;
 		return iterator.next();
+	}
+
+	@Override
+	public Stream<T> stream() {
+		return Stream.generate(this::next);
 	}
 
 }

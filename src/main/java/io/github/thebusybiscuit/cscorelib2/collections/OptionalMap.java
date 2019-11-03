@@ -28,7 +28,7 @@ import lombok.NonNull;
  * @param <K>	The type of keys for this Map
  * @param <V>	The Type of values for this Maps
  */
-public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>> {
+public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>>, Streamable<Entry<K, V>> {
 	
 	@Getter
 	private Map<K, V> internalMap;
@@ -170,7 +170,8 @@ public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>> {
 	public Iterator<Entry<K, V>> iterator() {
 		return entrySet().iterator();
 	}
-	
+
+	@Override
 	public Stream<Entry<K, V>> stream() {
 		return StreamSupport.stream(spliterator(), false);
 	}
