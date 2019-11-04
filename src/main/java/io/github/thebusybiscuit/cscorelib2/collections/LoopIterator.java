@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import lombok.Getter;
@@ -12,13 +13,25 @@ import lombok.NonNull;
 
 public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
 	
-	private final List<T> list;
-	private final int size;
+	private List<T> list;
+	private int size;
 	
 	@Getter
 	private int index = 0;
 	
 	public LoopIterator(@NonNull Collection<T> collection) {
+		init(collection);
+	}
+	
+	public LoopIterator(@NonNull Streamable<T> streamable) {
+		if (streamable instanceof LoopIterator) {
+			throw new IllegalArgumentException("Cannot loop-iterate over a LoopIterator");
+		}
+		
+		init(streamable.stream().collect(Collectors.toList()));
+	}
+	
+	private void init(Collection<T> collection) {
 		size = collection.size();
 		
 		if (size > 0) {
