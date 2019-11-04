@@ -11,6 +11,20 @@ import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.NonNull;
 
+/**
+ * This is an infite implementation of {@link Iterator}.
+ * When you pass a {@link Collection} or {@link Streamable} to the constructor,
+ * this instance will represent an {@link Iterator} which will iterate over the given
+ * {@link Collection}, when the end of the {@link Collection} is reached, it will start again at the beginning.
+ * This will create an infinite Stream of elements.
+ * 
+ * Note that this {@link LoopIterator} will create a copy of the given {@link Collection}
+ * and not operate on the original.
+ * 
+ * @author TheBusyBiscuit
+ *
+ * @param <T>	The Type of element stored in the given {@link Collection}
+ */
 public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
 	
 	private List<T> list;
@@ -19,10 +33,20 @@ public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
 	@Getter
 	private int index = 0;
 	
+	/**
+	 * This will create a new instance of {@link LoopIterator} that operates on a copy of the given {@link Collection}
+	 * 
+	 * @param collection	The collection to create a {@link LoopIterator} of
+	 */
 	public LoopIterator(@NonNull Collection<T> collection) {
 		init(collection);
 	}
 	
+	/**
+	 * This will create a new instance of {@link LoopIterator} that will operate on the elements of the given {@link Streamable}
+	 * 
+	 * @param streamable	The streamable to create a {@link LoopIterator} of
+	 */
 	public LoopIterator(@NonNull Streamable<T> streamable) {
 		if (streamable instanceof LoopIterator) {
 			throw new IllegalArgumentException("Cannot loop-iterate over a LoopIterator");
