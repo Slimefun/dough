@@ -11,6 +11,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.block.Block;
 
+import io.github.thebusybiscuit.cscorelib2.protection.loggers.CoreProtectLogger;
+import io.github.thebusybiscuit.cscorelib2.protection.loggers.LogBlockLogger;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.ASkyBlockProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BentoBoxProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BlockLockerProtectionModule;
@@ -28,7 +30,8 @@ import lombok.NonNull;
 
 public final class ProtectionManager {
 	
-	private final Set<ProtectionModule> cscorelibProtectionModules = new HashSet<>();
+	private final Set<ProtectionModule> protectionModules = new HashSet<>();
+	private final Set<ProtectionLogger> protectionLoggers = new HashSet<>();
 	private final Logger logger;
 	
 	public ProtectionManager(Server server) {
@@ -80,6 +83,17 @@ public final class ProtectionManager {
 		}
 		
 		/*
+		 * The following Plugins are logging plugins, not protection plugins
+		 */
+
+		if (server.getPluginManager().isPluginEnabled("CoreProtect")) {
+			registerLogger(new CoreProtectLogger());
+		}
+		if (server.getPluginManager().isPluginEnabled("LogBlock")) {
+			registerLogger(new LogBlockLogger());
+		}
+		
+		/*
 		 * The following Plugins work by utilising one of the above listed
 		 * Plugins in the background.
 		 * We do not need a module for them, but let us make the server owner
@@ -111,7 +125,12 @@ public final class ProtectionManager {
 	}
 
 	public void registerModule(String name, ProtectionModule module) {
-		cscorelibProtectionModules.add(module);
+		protectionModules.add(module);
+		loadModuleMSG(name);
+	}
+
+	public void registerLogger(String name, ProtectionLogger module) {
+		protectionLoggers.add(module);
 		loadModuleMSG(name);
 	}
 
@@ -119,6 +138,16 @@ public final class ProtectionManager {
 		try {
 			module.load();
 			registerModule(module.getName(), module);
+		}
+		catch(Exception x) {
+			logger.log(Level.SEVERE, "An Error occured while registering the Protection Module: \"" + module.getName() + "\"", x);
+		}
+	}
+
+	public void registerLogger(ProtectionLogger module) {
+		try {
+			module.load();
+			registerLogger(module.getName(), module);
 		}
 		catch(Exception x) {
 			logger.log(Level.SEVERE, "An Error occured while registering the Protection Module: \"" + module.getName() + "\"", x);
@@ -134,7 +163,7 @@ public final class ProtectionManager {
 	}
 
 	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull ProtectableAction action) {
-		for (ProtectionModule module: cscorelibProtectionModules) {
+		for (ProtectionModule module: protectionModules) {
 			try {
 				if (!module.hasPermission(p, l, action)) {
 					return false;
@@ -147,6 +176,17 @@ public final class ProtectionManager {
 		}
 
 		return true;
+	}
+	
+	public void logAction(@NonNull OfflinePlayer p, @NonNull Block b, @NonNull ProtectableAction action) {
+		for (ProtectionLogger module: protectionLoggers) {
+			try {
+				module.logAction(p, b, action);
+			}
+			catch(Exception x) {
+				logger.log(Level.SEVERE, "An Error occured while logging for the Protection Module: \"" + module.getName() + "\"", x);
+			}
+		}
 	}
 
 }
