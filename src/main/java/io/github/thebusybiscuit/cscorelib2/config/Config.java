@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,8 +23,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
+import lombok.NonNull;
 
-public class Config {
+public class Config implements PluginConfig {
 	
 	@Getter
 	private File file;
@@ -36,14 +38,14 @@ public class Config {
 	 *
 	 * @param  plugin The Instance of the Plugin, the config.yml is referring to
 	 */
-	public Config(Plugin plugin) {
+	public Config(@NonNull Plugin plugin) {
 		plugin.saveDefaultConfig();
 		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), "config.yml");
 		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
 		fileConfig.options().copyDefaults(true);
 	}
 	
-	public Config(Plugin plugin, String name) {
+	public Config(@NonNull Plugin plugin, @NonNull String name) {
 		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), name);
 		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
 		fileConfig.options().copyDefaults(true);
@@ -54,7 +56,7 @@ public class Config {
 	 *
 	 * @param  file The File for which the Config object is created for
 	 */
-	public Config(File file) {
+	public Config(@NonNull File file) {
 		this.file = file;
 		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
 		fileConfig.options().copyDefaults(true);
@@ -66,7 +68,7 @@ public class Config {
 	 * @param  file The File to save to
 	 * @param  config The FileConfiguration
 	 */
-	public Config(File file, FileConfiguration config) {
+	public Config(@NonNull File file, @NonNull FileConfiguration config) {
 		this.file = file;
 		this.fileConfig = config;
 		config.options().copyDefaults(true);
@@ -78,7 +80,7 @@ public class Config {
 	 *
 	 * @param  path The Path of the File which the Config object is created for
 	 */
-	public Config(String path) {
+	public Config(@NonNull String path) {
 		this.file = new File(path);
 		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
 		fileConfig.options().copyDefaults(true);
@@ -89,11 +91,12 @@ public class Config {
 	 *
 	 * @return      The converted FileConfiguration Object
 	 */ 
+	@Override
 	public FileConfiguration getConfiguration() {
 		return this.fileConfig;
 	}
 	
-	protected void store(String path, Object value) {
+	protected void store(@NonNull String path, Object value) {
 		this.fileConfig.set(path, value);
 	}
 	
@@ -103,7 +106,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @param  value The Value for that Path
 	 */
-	public void setValue(String path, Object value) {
+	@Override
+	public void setValue(@NonNull String path, Object value) {
 		if (value == null) {
 			this.store(path, value);
 		}
@@ -147,6 +151,7 @@ public class Config {
 	/**
 	 * Saves the Config Object to its File
 	 */ 
+	@Override
 	public void save() {
 		try {
 			fileConfig.save(file);
@@ -160,7 +165,8 @@ public class Config {
 	 * 
 	 * @param  file The File you are saving this Config to
 	 */ 
-	public void save(File file) {
+	@Override
+	public void save(@NonNull File file) {
 		try {
 			fileConfig.save(file);
 		} catch (IOException e) {
@@ -176,12 +182,14 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @param  value The Value for that Path
 	 */
-	public void setDefaultValue(String path, Object value) {
+	@Override
+	public void setDefaultValue(@NonNull String path, Object value) {
 		if (!contains(path)) setValue(path, value);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T> T getOrSetDefault(String path, T value) {
+	@Override
+	public <T> T getOrSetDefault(@NonNull String path, T value) {
 		Object val = getValue(path);
 		
 		if (value.getClass().isInstance(val)) {
@@ -199,7 +207,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      True/false
 	 */ 
-	public boolean contains(String path) {
+	@Override
+	public boolean contains(@NonNull String path) {
 		return fileConfig.contains(path);
 	}
 	
@@ -209,9 +218,17 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Value at that Path
 	 */ 
-	public Object getValue(String path) {
+	@Override
+	public Object getValue(@NonNull String path) {
 		return fileConfig.get(path);
 	}
+	
+	@Override
+	public <T> Optional<T> getValueAs(@NonNull Class<T> c, @NonNull String path) {
+		Object obj = getValue(path);
+		return c.isInstance(obj) ? Optional.of(c.cast(obj)): Optional.empty();
+	}
+	
 	
 	/**
 	 * Returns the ItemStack at the specified Path
@@ -219,7 +236,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The ItemStack at that Path
 	 */ 
-	public ItemStack getItem(String path) {
+	@Override
+	public ItemStack getItem(@NonNull String path) {
 		return fileConfig.getItemStack(path);
 	}
 	
@@ -229,7 +247,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The String at that Path
 	 */ 
-	public String getString(String path) {
+	@Override
+	public String getString(@NonNull String path) {
 		return fileConfig.getString(path);
 	}
 	
@@ -239,7 +258,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Integer at that Path
 	 */ 
-	public int getInt(String path) {
+	@Override
+	public int getInt(@NonNull String path) {
 		return fileConfig.getInt(path);
 	}
 	
@@ -249,7 +269,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Boolean at that Path
 	 */ 
-	public boolean getBoolean(String path) {
+	@Override
+	public boolean getBoolean(@NonNull String path) {
 		return fileConfig.getBoolean(path);
 	}
 	
@@ -259,7 +280,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The StringList at that Path
 	 */ 
-	public List<String> getStringList(String path) {
+	@Override
+	public List<String> getStringList(@NonNull String path) {
 		return fileConfig.getStringList(path);
 	}
 	
@@ -269,7 +291,7 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The IntegerList at that Path
 	 */ 
-	public List<Integer> getIntList(String path) {
+	public List<Integer> getIntList(@NonNull String path) {
 		return fileConfig.getIntegerList(path);
 	}
 	
@@ -293,7 +315,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Float at that Path
 	 */ 
-	public Float getFloat(String path) {
+	@Override
+	public float getFloat(@NonNull String path) {
 		return Float.valueOf(String.valueOf(getValue(path)));
 	}
 	
@@ -303,7 +326,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Long at that Path
 	 */ 
-	public Long getLong(String path) {
+	@Override
+	public long getLong(@NonNull String path) {
 		return Long.valueOf(String.valueOf(getValue(path)));
 	}
 
@@ -313,7 +337,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Sound at that Path
 	 */ 
-	public Sound getSound(String path) {
+	@Override
+	public Sound getSound(@NonNull String path) {
 		return Sound.valueOf(getString(path));
 	}
 	
@@ -323,7 +348,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Date at that Path
 	 */ 
-	public Date getDate(String path) {
+	@Override
+	public Date getDate(@NonNull String path) {
 		return new Date(getLong(path));
 	}
 	
@@ -333,7 +359,7 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Chunk at that Path
 	 */ 
-	public Chunk getChunk(String path) {
+	public Chunk getChunk(@NonNull String path) {
 		return Bukkit.getWorld(getString(path + ".world")).getChunkAt(getInt(path + ".x"), getInt(path + ".z"));
 	}
 	
@@ -343,7 +369,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The UUID at that Path
 	 */ 
-	public UUID getUUID(String path) {
+	@Override
+	public UUID getUUID(@NonNull String path) {
 		return UUID.fromString(getString(path));
 	}
 	
@@ -353,7 +380,7 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The World at that Path
 	 */ 
-	public World getWorld(String path) {
+	public World getWorld(@NonNull String path) {
 		return Bukkit.getWorld(getString(path));
 	}
 	
@@ -363,7 +390,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Double at that Path
 	 */ 
-	public Double getDouble(String path) {
+	@Override
+	public double getDouble(@NonNull String path) {
 		return fileConfig.getDouble(path);
 	}
 	
@@ -373,7 +401,7 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      The Location at that Path
 	 */ 
-	public Location getLocation(String path) {
+	public Location getLocation(@NonNull String path) {
 		return new Location(
 				Bukkit.getWorld(
 				getString(path + ".world")),
@@ -393,7 +421,7 @@ public class Config {
 	 * @param  title The Title of the Inventory
 	 * @return      The generated Inventory
 	 */ 
-	public Inventory getInventory(String path, int size, String title) {
+	public Inventory getInventory(@NonNull String path, int size, @NonNull String title) {
 		Inventory inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', title));
 		for (int i = 0; i < size; i++) {
 			inventory.setItem(i, getItem(path + "." + i));
@@ -408,7 +436,7 @@ public class Config {
 	 * @param title The title of the inventory, this can accept &amp; for color codes.
 	 * @return      The generated Inventory
 	 */ 
-	public Inventory getInventory(String path, String title) {
+	public Inventory getInventory(@NonNull String path, @NonNull String title) {
 		int size = getInt(path + ".size");
 		Inventory inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', title));
 		
@@ -424,6 +452,7 @@ public class Config {
 	 *
 	 * @return      All Paths in this Config
 	 */ 
+	@Override
 	public Set<String> getKeys() {
 		return fileConfig.getKeys(false);
 	}
@@ -434,7 +463,8 @@ public class Config {
 	 * @param  path The path in the Config File
 	 * @return      All Sub-Paths of the specified Path
 	 */ 
-	public Set<String> getKeys(String path) {
+	@Override
+	public Set<String> getKeys(@NonNull String path) {
 		ConfigurationSection section = fileConfig.getConfigurationSection(path);
 		return section == null ? new HashSet<>(): section.getKeys(false);
 	}
@@ -442,6 +472,7 @@ public class Config {
 	/**
 	 * Reloads the Configuration File
 	 */ 
+	@Override
 	public void reload() {
 		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
 	}
