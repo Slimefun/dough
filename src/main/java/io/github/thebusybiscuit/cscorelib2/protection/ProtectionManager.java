@@ -114,10 +114,10 @@ public final class ProtectionManager {
 			@Override
 			public void log(@NonNull LogRecord logRecord) {
 				logRecord.setMessage("[CS-CoreLib2 - Protection]" + logRecord.getMessage());
+				super.log(logRecord);
 			}
 			
 		};
-		
 		customLogger.setParent(server.getLogger());
 		customLogger.setLevel(Level.ALL);
 		
