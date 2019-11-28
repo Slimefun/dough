@@ -1,17 +1,16 @@
 package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
+import java.util.Optional;
+
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
-import com.google.common.base.Optional;
-
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
-import nl.rutgerkok.blocklocker.BlockLockerAPI;
+import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import nl.rutgerkok.blocklocker.BlockLockerPlugin;
 import nl.rutgerkok.blocklocker.profile.Profile;
 import nl.rutgerkok.blocklocker.protection.Protection;
-
 
 public class BlockLockerProtectionModule implements ProtectionModule {
 	
@@ -19,7 +18,7 @@ public class BlockLockerProtectionModule implements ProtectionModule {
 	
 	@Override
 	public void load() {
-		plugin = BlockLockerAPI.getPlugin();
+		plugin = BlockLockerAPIv2.getPlugin();
 	}
 
 	@Override
