@@ -31,7 +31,7 @@ public final class ChatColors {
 		StringBuilder builder = new StringBuilder(text.length() * 3);
 		
 		for (char c: text.toCharArray()) {
-			builder.append(c + colors[i % colors.length].toString());
+			builder.append(colors[i % colors.length].toString() + c);
 			i++;
 		}
 		
