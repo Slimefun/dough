@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.Getter;
@@ -29,6 +31,14 @@ public class ImmutableItemMeta {
 	
 	private final Set<ItemFlag> itemFlags;
 	private final Map<Enchantment, Integer> enchants;
+	
+	public ImmutableItemMeta(Supplier<ItemMeta> supplier) {
+		this(supplier.get());
+	}
+	
+	public ImmutableItemMeta(ItemStack item) {
+		this(item.getItemMeta());
+	}
 	
 	public ImmutableItemMeta(@NonNull ItemMeta meta) {
 		this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()): Optional.empty();
