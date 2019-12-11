@@ -11,7 +11,15 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-public interface PluginConfig {
+/**
+ * An interface used for {@link Config}.
+ * Might become useful if we ever allow other formats than YAML.
+ * And yes, it is an interface but called "abstract".
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
+public interface AbstractConfig {
 	
 	File getFile();
 	FileConfiguration getConfiguration();

@@ -23,6 +23,7 @@ public final class MinecraftAccount {
 	private static final Pattern UUID_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
 	private static final String ERROR_TOKEN = "error";
 	private static final JsonParser JSON_PARSER = new JsonParser();
+	private static final Pattern NAME_PATTERN = Pattern.compile("[\\w_]+");
 	
 	private MinecraftAccount() {}
 	
@@ -39,6 +40,10 @@ public final class MinecraftAccount {
 	 * @throws TooManyRequestsException	If too many requests were sent to the Server
 	 */
 	public static Optional<UUID> getUUID(@NonNull String name) throws TooManyRequestsException {
+		if (NAME_PATTERN.matcher(name).matches()) {
+			throw new IllegalArgumentException("\"" + name + "\" is not a valid Minecraft Username!");
+		}
+		
 		Optional<URL> url = getURL("https://api.mojang.com/users/profiles/minecraft/" + name);
 		
 		if (url.isPresent()) {

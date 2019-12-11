@@ -25,7 +25,7 @@ import org.bukkit.plugin.Plugin;
 import lombok.Getter;
 import lombok.NonNull;
 
-public class Config implements PluginConfig {
+public class Config implements AbstractConfig {
 	
 	@Getter
 	private File file;

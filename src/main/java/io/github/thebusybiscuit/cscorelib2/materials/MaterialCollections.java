@@ -44,7 +44,7 @@ public final class MaterialCollections {
 		Set<Material> buckets = new HashSet<>();
 		Set<Material> plates = new HashSet<>();
 			
-		for (Material mat: Material.values()) {
+		for (Material mat : Material.values()) {
 			if (mat.name().startsWith("LEGACY_")) continue;
 			
 			if (Tag.LEAVES.isTagged(mat)) leaves.add(mat);

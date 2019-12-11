@@ -24,6 +24,8 @@ import lombok.NonNull;
 
 public final class SkullItem {
 	
+	private static final String PROPERTY_KEY = "textures";
+	
 	private SkullItem() {}
 	
 	private static Method  property;
@@ -35,6 +37,7 @@ public final class SkullItem {
 	private static Class<?> profileClass;
 	private static Class<?> propertyClass;
 	private static Class<?> mapClass;
+	
 	
 	static {
 		try {
@@ -55,7 +58,7 @@ public final class SkullItem {
 	private static Object createProfile(@NonNull UUID uuid, @NonNull String texture) throws Exception {
 		Object profile = profileConstructor.newInstance(uuid, "CS-CoreLib");
 		Object properties = property.invoke(profile);
-		insertProperty.invoke(properties, "textures", propertyConstructor.newInstance("textures", texture));
+		insertProperty.invoke(properties, PROPERTY_KEY, propertyConstructor.newInstance(PROPERTY_KEY, texture));
 		return profile;
 	}
 	
@@ -98,6 +101,17 @@ public final class SkullItem {
 			return new ItemStack(Material.PLAYER_HEAD);
 		}
 	}
+	
+	/**
+	 * This will call {@link SkullItem#fromBase64(UUID, String)} and use an instance of {@link UUID}
+	 * that was generated from the provided texture using {@link String#getBytes()}
+	 * 
+	 * @param texture	The Base64 representation of your Texture
+	 * @return			A new Player Head with the Texture you specified
+	 */
+	public static ItemStack fromBase64(@NonNull String texture) {
+		return fromBase64(UUID.nameUUIDFromBytes(texture.getBytes()), texture);
+	}
 
 	/**
 	 * This Method will return a Custom Player Head with the Texture specified.
@@ -117,6 +131,17 @@ public final class SkullItem {
 	}
 	
 	/**
+	 * This will call {@link SkullItem#fromTextureID(UUID, String)} and use an instance of {@link UUID}
+	 * that was generated from the provided texture using {@link String#getBytes()}
+	 * 
+	 * @param texture	The texture for your Player
+	 * @return			A new Player Head with the Texture you specified
+	 */
+	public static ItemStack fromTextureID(@NonNull String texture) {
+		return fromTextureID(UUID.nameUUIDFromBytes(texture.getBytes()), texture);
+	}
+	
+	/**
 	 * This Method will return a Custom Player Head with the Texture
 	 * found in the URL.
 	 * Note that it should be a minecraft.net URL, otherwise this may not work.
@@ -131,6 +156,17 @@ public final class SkullItem {
 	 */
 	public static ItemStack fromURL(@NonNull UUID uuid, @NonNull String url) {
 		return fromBase64(uuid, Base64.getEncoder().encodeToString(("{textures:{SKIN:{url:\"" + url + "\"}}}").getBytes()));
+	}
+	
+	/**
+	 * This will call {@link SkullItem#fromURL(UUID, String)} and use an instance of {@link UUID}
+	 * that was generated from the provided texture using {@link String#getBytes()}
+	 * 
+	 * @param url	The URL to your Texture
+	 * @return			A new Player Head with the Texture you specified
+	 */
+	public static ItemStack fromURL(@NonNull String url) {
+		return fromURL(UUID.nameUUIDFromBytes(url.getBytes()), url);
 	}
 	
 	/**
@@ -157,8 +193,8 @@ public final class SkullItem {
         sessionReader = new InputStreamReader(session.openStream());
         JsonArray properties = new JsonParser().parse(sessionReader).getAsJsonObject().get("properties").getAsJsonArray();
         
-        for (JsonElement el: properties) {
-        	if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals("textures")) {
+        for (JsonElement el : properties) {
+        	if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals(PROPERTY_KEY)) {
 				return fromBase64(UUID.fromString(uuid), el.getAsJsonObject().get("value").getAsString());
         	}
         }
