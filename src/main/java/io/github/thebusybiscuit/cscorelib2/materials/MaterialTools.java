@@ -29,7 +29,7 @@ public final class MaterialTools {
         	Material.SNOW, Material.SNOW_BLOCK, Material.FARMLAND, 
         	Material.SOUL_SAND, Material.CLAY, Material.GRAVEL, 
         	Material.GRASS_PATH, Material.DIRT, Material.COARSE_DIRT,
-        	Material.GRASS_BLOCK
+        	Material.GRASS_BLOCK, Material.MYCELIUM
         ));
 
         for (Material mat : Material.values()) {
