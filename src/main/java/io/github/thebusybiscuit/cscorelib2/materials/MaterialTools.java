@@ -26,12 +26,14 @@ public final class MaterialTools {
     static {
         Set<Material> shovel = new HashSet<>();
         shovel.addAll(Arrays.asList(
-        	Material.SNOW, Material.SNOW_BLOCK, Material.FARMLAND, Material.SOUL_SAND, 
-        	Material.CLAY, Material.GRAVEL, Material.GRASS_PATH
+        	Material.SNOW, Material.SNOW_BLOCK, Material.FARMLAND, 
+        	Material.SOUL_SAND, Material.CLAY, Material.GRAVEL, 
+        	Material.GRASS_PATH, Material.DIRT, Material.COARSE_DIRT,
+        	Material.GRASS_BLOCK
         ));
 
-        for (Material mat: Material.values()) {
-            if (Tag.DIRT_LIKE.isTagged(mat) || Tag.SAND.isTagged(mat)) shovel.add(mat);
+        for (Material mat : Material.values()) {
+            if (Tag.SAND.isTagged(mat)) shovel.add(mat);
         }
 
         breakableByShovel = new MaterialCollection(shovel);
