@@ -40,7 +40,7 @@ public final class MinecraftAccount {
 	 * @throws TooManyRequestsException	If too many requests were sent to the Server
 	 */
 	public static Optional<UUID> getUUID(@NonNull String name) throws TooManyRequestsException {
-		if (NAME_PATTERN.matcher(name).matches()) {
+		if (!NAME_PATTERN.matcher(name).matches()) {
 			throw new IllegalArgumentException("\"" + name + "\" is not a valid Minecraft Username!");
 		}
 		
