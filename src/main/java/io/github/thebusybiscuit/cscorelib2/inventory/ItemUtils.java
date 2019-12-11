@@ -135,7 +135,7 @@ public final class ItemUtils {
 	 * @param ignoreEnchantments	Whether the Unbreaking Enchantment should be ignored
 	 */
 	public static void damageItem(@NonNull ItemStack item, int damage, boolean ignoreEnchantments) {
-		if (item != null && item.getType() != Material.AIR && item.getAmount() > 0) {
+		if (item.getType() != Material.AIR && item.getAmount() > 0) {
 			int remove = damage;
 			
 			if (!ignoreEnchantments && item.getEnchantments().containsKey(Enchantment.DURABILITY)) {

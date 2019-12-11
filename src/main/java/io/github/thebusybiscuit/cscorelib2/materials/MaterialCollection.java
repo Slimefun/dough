@@ -60,7 +60,12 @@ public class MaterialCollection implements Iterable<Material> {
 
 	public boolean contains(Material type) {
 		if (type == null) return false;
-		return stream().anyMatch(material -> material == type);
+		
+		for (Material m : asArray) {
+			if (m == type) return true;
+		}
+		
+		return false;
 	}
 	
 	public boolean containsAll(@NonNull Collection<Material> materials) {
