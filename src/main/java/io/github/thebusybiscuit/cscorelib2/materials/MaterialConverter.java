@@ -19,6 +19,13 @@ public final class MaterialConverter {
 		);
 	}
 	
+	public static Optional<Material> getSaplingFromLeaves(@NonNull Material leaves) {
+		return convert(leaves, 
+			MaterialCollections.getAllLeaves()::contains,
+			type -> type.replace("_LEAVES", "_SAPLING")
+		);
+	}
+	
 	public static Optional<Material> getPlanksFromLog(@NonNull Material log) {
 		return convert(log, 
 			MaterialCollections.getAllLogs()::contains,
