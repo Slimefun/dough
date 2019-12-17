@@ -163,7 +163,7 @@ public final class ProtectionManager {
 	}
 
 	public boolean hasPermission(@NonNull OfflinePlayer p, @NonNull Location l, @NonNull ProtectableAction action) {
-		for (ProtectionModule module: protectionModules) {
+		for (ProtectionModule module : protectionModules) {
 			try {
 				if (!module.hasPermission(p, l, action)) {
 					return false;
@@ -179,7 +179,7 @@ public final class ProtectionManager {
 	}
 	
 	public void logAction(@NonNull OfflinePlayer p, @NonNull Block b, @NonNull ProtectableAction action) {
-		for (ProtectionLogger module: protectionLoggers) {
+		for (ProtectionLogger module : protectionLoggers) {
 			try {
 				module.logAction(p, b, action);
 			}

@@ -112,7 +112,7 @@ public final class MinecraftAccount {
 					
 					JsonArray properties = obj.get("properties").getAsJsonArray();
 					
-					for (JsonElement el: properties) {
+					for (JsonElement el : properties) {
 			        	if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals("textures")) {
 			        		return Optional.ofNullable(el.getAsJsonObject().get("value").getAsString());
 			        	}

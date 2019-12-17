@@ -43,7 +43,8 @@ public class CustomItem extends ItemStack {
 			
 			if (lore.length > 0) {
 				List<String> lines = new ArrayList<>();
-				for (String line: lore) {
+				
+				for (String line : lore) {
 					lines.add(ChatColor.translateAlternateColorCodes('&', line));
 				}
 				im.setLore(lines);
@@ -59,7 +60,8 @@ public class CustomItem extends ItemStack {
 			
 			if (lore.length > 0) {
 				List<String> lines = new ArrayList<>();
-				for (String line: lore) {
+				
+				for (String line : lore) {
 					lines.add(ChatColor.translateAlternateColorCodes('&', line));
 				}
 				im.setLore(lines);

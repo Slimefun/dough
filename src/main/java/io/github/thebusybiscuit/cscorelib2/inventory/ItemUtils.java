@@ -140,6 +140,7 @@ public final class ItemUtils {
 			
 			if (!ignoreEnchantments && item.getEnchantments().containsKey(Enchantment.DURABILITY)) {
 				int level = item.getEnchantmentLevel(Enchantment.DURABILITY);
+				
 				for (int i = 0; i < damage; i++) {
 					if (Math.random() * 100 <= (60 + Math.floorDiv(40, (level + 1)))) {
 						remove--;
