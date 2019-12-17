@@ -34,8 +34,8 @@ public class MinecraftRecipe<T extends Recipe> {
 		recipe -> {
 			List<RecipeChoice> choices = new LinkedList<>();
 			
-			for (String row: recipe.getShape()) {
-				for (char key: row.toCharArray()) {
+			for (String row : recipe.getShape()) {
+				for (char key : row.toCharArray()) {
 					choices.add(recipe.getChoiceMap().get(key));
 				}
 			}
@@ -45,8 +45,8 @@ public class MinecraftRecipe<T extends Recipe> {
 		stream.filter(recipe -> {
 			int i = 0;
 			
-			for (String row: recipe.getShape()) {
-				for (char key: row.toCharArray()) {
+			for (String row : recipe.getShape()) {
+				for (char key : row.toCharArray()) {
 					if (i > input.length) return false;
 					
 					RecipeChoice choice = recipe.getChoiceMap().get(key);
@@ -65,7 +65,7 @@ public class MinecraftRecipe<T extends Recipe> {
 	public static final MinecraftRecipe<ShapelessRecipe> SHAPELESS_CRAFTING = new MinecraftRecipe<>(Material.CRAFTING_TABLE, ShapelessRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10,
 		recipe -> recipe.getChoiceList().toArray(new RecipeChoice[0]), 
 		(input, stream) -> stream.filter(recipe -> {
-			for (RecipeChoice ingredient: recipe.getChoiceList()) {
+			for (RecipeChoice ingredient : recipe.getChoiceList()) {
 				boolean found = false;
 				
 				ItemStack[] inputs = input.clone();

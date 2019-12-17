@@ -163,7 +163,7 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 	public void setWeight(@NonNull T obj, float weight) {
 		if (weight <= 0F) throw new IllegalArgumentException("A Weight may never be less than or equal to zero!");
 		
-		for (WeightedNode<T> node: internalSet) {
+		for (WeightedNode<T> node : internalSet) {
 			if (node.equals(obj)) {
 				size--;
 				totalWeights -= node.getWeight();
@@ -317,7 +317,7 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 	public Map<T, Float> toMap() {
 		Map<T, Float> map = new HashMap<>();
 		
-		for (WeightedNode<T> node: internalSet) {
+		for (WeightedNode<T> node : internalSet) {
 			map.put(node.getObject(), node.getWeight() / totalWeights);
 		}
 		
@@ -339,7 +339,7 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 		StringBuilder builder = new StringBuilder();
 		
 		boolean first = true;
-		for (WeightedNode<T> node: internalSet) {
+		for (WeightedNode<T> node : internalSet) {
 			if (!first) {
 				builder.append(", ");
 			}

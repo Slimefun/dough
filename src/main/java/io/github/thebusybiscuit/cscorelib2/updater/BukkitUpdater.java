@@ -83,7 +83,7 @@ public class BukkitUpdater implements Updater {
 				plugin.getLogger().log(Level.WARNING, " ");
 				plugin.getLogger().log(Level.WARNING, "################## - DEVELOPMENT BUILD - ##################");
 				plugin.getLogger().log(Level.WARNING, "You appear to be using an experimental build of " + plugin.getName());
-				plugin.getLogger().log(Level.WARNING, "Version " + localVersion);
+				plugin.getLogger().log(Level.WARNING, "Version {0}", localVersion);
 				plugin.getLogger().log(Level.WARNING, " ");
 				plugin.getLogger().log(Level.WARNING, "Auto-Updates have been disabled. Use at your own risk!");
 				plugin.getLogger().log(Level.WARNING, " ");
@@ -222,7 +222,6 @@ public class BukkitUpdater implements Updater {
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
 				BufferedInputStream input = null;
 				FileOutputStream output = null;
-				System.out.println(download.toString());
 				
 				try {
 				    input = new BufferedInputStream(download.openStream());
@@ -240,6 +239,7 @@ public class BukkitUpdater implements Updater {
 				    try {
 						if (input != null) input.close();
 						if (output != null) output.close();
+						
 						plugin.getLogger().log(Level.INFO, " ");
 						plugin.getLogger().log(Level.INFO, "#################### - UPDATE - ####################");
 						plugin.getLogger().log(Level.INFO, plugin.getName() + " was successfully updated (" + localVersion + " -> " + remoteVersion + ")");
