@@ -52,17 +52,6 @@ public class Config implements AbstractConfig {
 	}
 	
 	/**
-	 * Creates a new Config Object for the specified File
-	 *
-	 * @param  file The File for which the Config object is created for
-	 */
-	public Config(@NonNull File file) {
-		this.file = file;
-		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
-		fileConfig.options().copyDefaults(true);
-	}
-	
-	/**
 	 * Creates a new Config Object for the specified File and FileConfiguration
 	 *
 	 * @param  file The File to save to
@@ -75,15 +64,22 @@ public class Config implements AbstractConfig {
 	}
 	
 	/**
+	 * Creates a new Config Object for the specified File
+	 *
+	 * @param  file The File for which the Config object is created for
+	 */
+	public Config(@NonNull File file) {
+		this(file, YamlConfiguration.loadConfiguration(file));
+	}
+	
+	/**
 	 * Creates a new Config Object for the File with in
 	 * the specified Location
 	 *
 	 * @param  path The Path of the File which the Config object is created for
 	 */
 	public Config(@NonNull String path) {
-		this.file = new File(path);
-		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
-		fileConfig.options().copyDefaults(true);
+		this(new File(path));
 	}
 	
 	/**

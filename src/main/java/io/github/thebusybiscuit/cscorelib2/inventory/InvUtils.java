@@ -42,7 +42,7 @@ public final class InvUtils {
 	public static boolean fits(@NonNull Inventory inv, @NonNull ItemStack item, int... slots) {
 		if (slots.length == 0) slots = IntStream.range(0, inv.getSize()).toArray();
 		
-		for (int slot: slots) {
+		for (int slot : slots) {
 			ItemStack stack = inv.getItem(slot);
 			
 			if (stack == null || stack.getType() == Material.AIR) return true;
@@ -68,6 +68,7 @@ public final class InvUtils {
 		int removed = 0;
 		for (int slot = 0; slot < inv.getSize(); slot++) {
 			ItemStack item = inv.getItem(slot);
+			
 			if (item != null && predicate.test(item)) {
 				if (item.getAmount() + removed >= amount) {
 					ItemUtils.consumeItem(item, amount - removed, replaceConsumables);

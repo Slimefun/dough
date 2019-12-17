@@ -40,13 +40,16 @@ public interface AbstractConfig {
 	
 	ItemStack getItem(String path);
 	String getString(String path);
+	
 	int getInt(String path);
 	double getDouble(String path);
 	float getFloat(String path);
 	long getLong(String path);
 	boolean getBoolean(String path);
+	
 	List<String> getStringList(String path);
 	List<Integer> getIntList(String path);
+	
 	Sound getSound(String path);
 	Date getDate(String path);
 	UUID getUUID(String path);

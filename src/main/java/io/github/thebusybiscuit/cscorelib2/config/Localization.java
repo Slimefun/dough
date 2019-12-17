@@ -17,38 +17,6 @@ import lombok.NonNull;
 
 public class Localization {
 	
-	private static final UnaryOperator<String> unicodes = str -> {
-		if (str == null) return null;
-		
-		StringBuilder builder = new StringBuilder();
-		char[] chars = str.toCharArray();
-		
-		for (int i = 0; i < chars.length; i++) {
-			if (chars[i] == '[' && i + 1 < chars.length && chars[i + 1] == 'u') {
-				i += 2;
-				
-				String unicode = "";
-				int j;
-				
-				for (j = 0; j < 6 && i < chars.length; j++) {
-					if (chars[i] == ']') {
-						unicode = String.valueOf((char) Integer.parseInt(unicode, 16));
-						break;
-					}
-					unicode += chars[i];
-					i++;
-				}
-				
-				builder.append(unicode);
-			}
-			else {
-				builder.append(chars[i]);
-			}
-		}
-		
-		return builder.toString();
-	};
-	
 	private File file;
 	
 	@Getter
@@ -120,7 +88,7 @@ public class Localization {
 		
 		if (msg == null) {
 			config.setValue(key, message);
-			return allowUnicodes ? unicodes.apply(message): message;
+			return allowUnicodes ? translateUnicodes(message): message;
 		}
 		
 		return msg;
@@ -143,7 +111,7 @@ public class Localization {
 	 */ 
 	public List<String> getMessages(String key) {
 		if (!allowUnicodes) return config.getStringList(key);
-		return config.getStringList(key).stream().map(unicodes).collect(Collectors.toList());
+		return config.getStringList(key).stream().map(Localization::translateUnicodes).collect(Collectors.toList());
 	}
 	
 	/**
@@ -158,7 +126,7 @@ public class Localization {
 			return list.toArray(new String[list.size()]);
 		}
 		
-		return config.getStringList(key).stream().map(unicodes).toArray(String[]::new);
+		return config.getStringList(key).stream().map(Localization::translateUnicodes).toArray(String[]::new);
 	}
 	
 	/**
@@ -168,7 +136,7 @@ public class Localization {
 	 * @return      The Message this key is referring to
 	 */ 
 	public String getMessage(String key) {
-		return allowUnicodes ? unicodes.apply(config.getString(key)): config.getString(key);
+		return allowUnicodes ? translateUnicodes(config.getString(key)): config.getString(key);
 	}
 	
 	public void sendMessage(CommandSender sender, String key, boolean addPrefix) {
@@ -258,6 +226,42 @@ public class Localization {
 	 */ 
 	public void save() {
 		config.save();
+	}
+	
+	private static String translateUnicodes(String str) {
+		if (str == null) return null;
+		
+		StringBuilder builder = new StringBuilder();
+		char[] chars = str.toCharArray();
+		int i = 0;
+		
+		while (i < chars.length) {
+			if (chars[i] == '[' && i + 1 < chars.length && chars[i + 1] == 'u') {
+				i += 2;
+				
+				CharSequence unicode = new StringBuilder();
+				int j;
+				
+				for (j = 0; j < 6 && i < chars.length; j++, i++) {
+					if (chars[i] == ']') {
+						unicode = String.valueOf((char) Integer.parseInt(unicode.toString(), 16));
+						break;
+					}
+					else {
+						((StringBuilder) unicode).append(chars[i]);
+					}
+				}
+				
+				builder.append(unicode);
+			}
+			else {
+				builder.append(chars[i]);
+			}
+			
+			i++;
+		}
+		
+		return builder.toString();
 	}
 
 }

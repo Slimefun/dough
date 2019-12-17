@@ -40,6 +40,7 @@ public final class ChatInput {
 	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull Consumer<String> handler) {
 		if (listener == null) listener = new ChatInputListener(plugin);
+		
 		listener.handlers.put(p.getUniqueId(), new IChatInput() {
 			
 			@Override
@@ -80,6 +81,7 @@ public final class ChatInput {
 	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull BiConsumer<Player, String> handler) {
 		if (listener == null) listener = new ChatInputListener(plugin);
+		
 		listener.handlers.put(p.getUniqueId(), new IChatInput() {
 			
 			@Override

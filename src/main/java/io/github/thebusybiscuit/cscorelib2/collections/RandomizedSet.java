@@ -66,6 +66,15 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 	}
 	
 	/**
+	 * This method returns the sum of all the weights in this set.
+	 * 
+	 * @return	The sum of all the individual weights from the elements included in this Set.
+	 */
+	public float sumWeights() {
+		return totalWeights;
+	}
+	
+	/**
 	 * This method returns whether this Set is empty.
 	 * 
 	 * @return	Whether this Set is empty
@@ -81,7 +90,7 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 	 * @return		Whether the given element is contained in this Set
 	 */
 	public boolean contains(@NonNull T obj) {
-		for (WeightedNode<T> node: internalSet) {
+		for (WeightedNode<T> node : internalSet) {
 			if (node.equals(obj)) return true;
 		}
 		

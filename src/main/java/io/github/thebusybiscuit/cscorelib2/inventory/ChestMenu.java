@@ -455,7 +455,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * @return			Whether it was successful
 	 */
 	public boolean pushItem(ItemStack item, int... slots) {
-		for (int slot: slots) {
+		for (int slot : slots) {
 			ItemStack stack = getItemInSlot(slot);
 			
 			if (stack == null || stack.getType() == Material.AIR) {
@@ -472,6 +472,12 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		}
 		
 		return false;
+	}
+	
+	public void pushItems(ItemStack[] items, int... slots) {
+		for (ItemStack item : items) {
+			pushItem(item, slots);
+		}
 	}
 	
 	/**
@@ -509,15 +515,13 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	}
 	
 	protected void runTimeout() {
-		if (timeout >= 0) {
-			if (toInventory().getViewers().size() <= 1) {
-				deprecationTask = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-					this.close();
-					deprecationRunnable.run();
-					
-					deprecationTask = null;
-				}, timeout);
-			}
+		if (timeout >= 0 && toInventory().getViewers().size() <= 1) {
+			deprecationTask = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+				this.close();
+				deprecationRunnable.run();
+				
+				deprecationTask = null;
+			}, timeout);
 		}
 	}
 

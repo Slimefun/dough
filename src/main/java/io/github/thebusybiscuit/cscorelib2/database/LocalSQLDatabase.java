@@ -8,9 +8,12 @@ import java.util.logging.Level;
 
 import org.bukkit.plugin.Plugin;
 
+import lombok.Getter;
+
 public abstract class LocalSQLDatabase<T extends LocalSQLDatabase<T>> extends SQLDatabase<T> {
 
-	protected String name;
+	@Getter
+	protected final String name;
 	
 	public LocalSQLDatabase(Plugin plugin, String name, DatabaseLoader<T> callback) {
 		super(plugin);

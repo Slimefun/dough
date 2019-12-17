@@ -64,8 +64,9 @@ public final class Vein {
 		if (list.size() >= limit) return;
 		list.add(anchor);
 		
-		for (BlockFace face: faces) {
+		for (BlockFace face : faces) {
 			Block next = anchor.getRelative(face);
+			
 			if (!list.contains(next) && predicate.test(next)) {
 				expand(next, list, limit, predicate);
 			}

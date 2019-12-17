@@ -47,11 +47,8 @@ public class DatabaseQuery {
 				Thread.currentThread().interrupt();
 			}
 			
-			try {
-				ResultSet set = database.query(query);
-
+			try (ResultSet set = database.query(query)) {
 				func.accept(set);
-				set.close();
 				finished = true;
 			} catch (SQLException e) {
 				database.getLogger().log(Level.SEVERE, "An Exception occured while executing a Database Query: " + query, e);
@@ -72,13 +69,11 @@ public class DatabaseQuery {
 			
 			callback.run();
 			
-			try {
-				ResultSet set = database.query(query);
+			try (ResultSet set = database.query(query)) {
 				
 				while (set.next()) {
 					func.accept(set);
 				}
-				set.close();
 				
 				finished = true;
 			} catch (SQLException e) {

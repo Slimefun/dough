@@ -53,6 +53,7 @@ class ChatInputListener implements Listener {
 	public void onComamnd(PlayerCommandPreprocessEvent e) {
 		Player p = e.getPlayer();
 		IChatInput handler = handlers.get(p.getUniqueId());
+		
 		if (handler != null && handler.test(e.getMessage())) {
 			handlers.remove(p.getUniqueId());
 			handler.onChat(p, e.getMessage());
