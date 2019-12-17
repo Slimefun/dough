@@ -8,6 +8,13 @@ import org.bukkit.Material;
 
 import lombok.NonNull;
 
+/**
+ * This is a static utility class that contains some methods for converting similar materials.
+ * You can use it to get the Sapling from a Leaves {@link Material} or Planks from their Logs and much more.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public final class MaterialConverter {
 
 	private MaterialConverter() {}
