@@ -705,4 +705,16 @@ public final class PersistentDataAPI {
     public static PersistentDataContainer getContainer(PersistentDataHolder holder, NamespacedKey key, PersistentDataContainer defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.TAG_CONTAINER, defaultVal);
     }
+    
+    /**
+     * This removes the data stored with the given key on the given data holder
+     * 
+     * @param holder
+     *            The {@link PersistentDataHolder} to remove the data from
+     * @param key
+     *            The key of the data to remove
+     */
+    public static void remove(PersistentDataHolder holder, NamespacedKey key) {
+    	holder.getPersistentDataContainer().remove(key);
+    }
 }
