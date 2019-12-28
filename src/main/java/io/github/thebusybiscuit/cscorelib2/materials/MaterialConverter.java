@@ -40,6 +40,13 @@ public final class MaterialConverter {
 		);
 	}
 	
+	public static Optional<Material> getStrippedFromLog(@NonNull Material log) {
+		return convert(log, 
+			type -> MaterialCollections.getAllLogs().contains(type) && !type.name().startsWith("STRIPPED_"),
+			type -> "STRIPPED_" + type
+		);
+	}
+	
 	public static Optional<Material> getGlassFromPane(@NonNull Material pane) {
 		return convert(pane, 
 			MaterialCollections.getAllStainedGlassPaneColors()::contains,
