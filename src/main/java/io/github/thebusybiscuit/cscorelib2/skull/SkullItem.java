@@ -2,8 +2,6 @@ package io.github.thebusybiscuit.cscorelib2.skull;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Base64;
 import java.util.UUID;
@@ -24,43 +22,7 @@ import lombok.NonNull;
 
 public final class SkullItem {
 	
-	private static final String PROPERTY_KEY = "textures";
-	
 	private SkullItem() {}
-	
-	private static Method  property;
-	private static Method insertProperty;
-	
-	private static Constructor<?> profileConstructor;
-	private static Constructor<?> propertyConstructor;
-	
-	private static Class<?> profileClass;
-	private static Class<?> propertyClass;
-	private static Class<?> mapClass;
-	
-	
-	static {
-		try {
-			profileClass = Class.forName("com.mojang.authlib.GameProfile");
-			propertyClass = Class.forName("com.mojang.authlib.properties.Property");
-			mapClass = Class.forName("com.mojang.authlib.properties.PropertyMap");
-			
-			profileConstructor = ReflectionUtils.getConstructor(profileClass, UUID.class, String.class);
-			property = ReflectionUtils.getMethod(profileClass, "getProperties");
-			propertyConstructor = ReflectionUtils.getConstructor(propertyClass, String.class, String.class);
-			insertProperty = ReflectionUtils.getMethod(mapClass, "put", String.class, propertyClass);
-		}  catch (Exception e) {
-			System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
-			e.printStackTrace();
-		}
-	}
-	
-	private static Object createProfile(@NonNull UUID uuid, @NonNull String texture) throws Exception {
-		Object profile = profileConstructor.newInstance(uuid, "CS-CoreLib");
-		Object properties = property.invoke(profile);
-		insertProperty.invoke(properties, PROPERTY_KEY, propertyConstructor.newInstance(PROPERTY_KEY, texture));
-		return profile;
-	}
 	
 	/**
 	 * This Method will simply return the Head of the specified Player
@@ -89,7 +51,7 @@ public final class SkullItem {
 	 */
 	public static ItemStack fromBase64(@NonNull UUID uuid, @NonNull String texture) {
 		try {
-			Object profile = createProfile(uuid, texture);
+			Object profile = FakeProfile.createProfile(uuid, texture);
 			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 			
 			ItemMeta im = item.getItemMeta();
@@ -194,7 +156,7 @@ public final class SkullItem {
         JsonArray properties = new JsonParser().parse(sessionReader).getAsJsonObject().get("properties").getAsJsonArray();
         
         for (JsonElement el : properties) {
-        	if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals(PROPERTY_KEY)) {
+        	if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals(FakeProfile.PROPERTY_KEY)) {
 				return fromBase64(UUID.fromString(uuid), el.getAsJsonObject().get("value").getAsString());
         	}
         }
