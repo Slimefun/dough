@@ -7,6 +7,9 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 /**
  * This is a utility class that allows you to modify data for any Objects
  * that implement {@link PersistentDataHolder}.
@@ -70,6 +73,14 @@ public final class PersistentDataAPI {
     
     public static void setBoolean(PersistentDataHolder holder, NamespacedKey key, boolean value) {
     	setByte(holder, key, value ? ((byte) 1): ((byte) 0));
+    }
+    
+    public static void setJsonObject(PersistentDataHolder holder, NamespacedKey key, JsonObject value) {
+        holder.getPersistentDataContainer().set(key, PersistentJsonDataType.JSON_OBJECT, value);
+    }
+    
+    public static void setJsonArray(PersistentDataHolder holder, NamespacedKey key, JsonArray value) {
+        holder.getPersistentDataContainer().set(key, PersistentJsonDataType.JSON_ARRAY, value);
     }
 
     /////////////////////////////////////
@@ -238,6 +249,34 @@ public final class PersistentDataAPI {
         }
         
         return false;
+    }
+
+    /**
+     * Checks if the specified {@link PersistentDataHolder} has a {@link PersistentDataContainer} with the specified
+     * key.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to check
+     * @param key
+     *            The key to check for
+     * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
+     */
+    public static boolean hasJsonObject(PersistentDataHolder holder, NamespacedKey key) {
+        return holder.getPersistentDataContainer().has(key, PersistentJsonDataType.JSON_OBJECT);
+    }
+
+    /**
+     * Checks if the specified {@link PersistentDataHolder} has a {@link PersistentDataContainer} with the specified
+     * key.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to check
+     * @param key
+     *            The key to check for
+     * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
+     */
+    public static boolean hasJsonArray(PersistentDataHolder holder, NamespacedKey key) {
+        return holder.getPersistentDataContainer().has(key, PersistentJsonDataType.JSON_ARRAY);
     }
 
     /////////////////////////////////////
@@ -759,6 +798,94 @@ public final class PersistentDataAPI {
      */
     public static PersistentDataContainer getContainer(PersistentDataHolder holder, NamespacedKey key, PersistentDataContainer defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.TAG_CONTAINER, defaultVal);
+    }
+
+    /**
+     * Get a {@link JsonObject} in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return The long array associated with this key or null if it doesn't exist
+     */
+    public static JsonObject getJsonObject(PersistentDataHolder holder, NamespacedKey key) {
+        return holder.getPersistentDataContainer().get(key, PersistentJsonDataType.JSON_OBJECT);
+    }
+
+    /**
+     * This method returns an {@link Optional} describing the {@link JsonObject} found under the given key.
+     * An empty {@link Optional} will be returned if no value has been found.
+     * 
+     * @see PersistentDataAPI#get{@link JsonObject}(PersistentDataHolder, NamespacedKey)
+     * 
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return An Optional describing the result
+     */
+    public static Optional<JsonObject> getOptionalJsonObject(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getJsonObject(holder, key));
+    }
+
+    /**
+     * Get a {@link JsonObject} in a {@link PersistentDataContainer} or the default value passed if no key exists.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
+     * @return The long array associated with this key or the default value if it doesn't exist
+     */
+    public static JsonObject getJsonObject(PersistentDataHolder holder, NamespacedKey key, JsonObject defaultVal) {
+        return holder.getPersistentDataContainer().getOrDefault(key, PersistentJsonDataType.JSON_OBJECT, defaultVal);
+    }
+
+    /**
+     * Get a {@link JsonArray} in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return The long array associated with this key or null if it doesn't exist
+     */
+    public static JsonArray getJsonArray(PersistentDataHolder holder, NamespacedKey key) {
+        return holder.getPersistentDataContainer().get(key, PersistentJsonDataType.JSON_ARRAY);
+    }
+
+    /**
+     * This method returns an {@link Optional} describing the {@link JsonArray} found under the given key.
+     * An empty {@link Optional} will be returned if no value has been found.
+     * 
+     * @see PersistentDataAPI#get{@link JsonObject}(PersistentDataHolder, NamespacedKey)
+     * 
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return An Optional describing the result
+     */
+    public static Optional<JsonArray> getOptionalJsonArray(PersistentDataHolder holder, NamespacedKey key) {
+        return Optional.ofNullable(getJsonArray(holder, key));
+    }
+
+    /**
+     * Get a {@link JsonArray} in a {@link PersistentDataContainer} or the default value passed if no key exists.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
+     * @return The long array associated with this key or the default value if it doesn't exist
+     */
+    public static JsonArray getJsonArray(PersistentDataHolder holder, NamespacedKey key, JsonArray defaultVal) {
+        return holder.getPersistentDataContainer().getOrDefault(key, PersistentJsonDataType.JSON_ARRAY, defaultVal);
     }
     
     /**
