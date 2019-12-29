@@ -67,6 +67,10 @@ public final class PersistentDataAPI {
     public static void setContainer(PersistentDataHolder holder, NamespacedKey key, PersistentDataContainer value) {
         holder.getPersistentDataContainer().set(key, PersistentDataType.TAG_CONTAINER, value);
     }
+    
+    public static void setBoolean(PersistentDataHolder holder, NamespacedKey key, boolean value) {
+    	setByte(holder, key, value ? ((byte) 1): ((byte) 0));
+    }
 
     /////////////////////////////////////
     // Has
@@ -216,6 +220,26 @@ public final class PersistentDataAPI {
         return holder.getPersistentDataContainer().has(key, PersistentDataType.TAG_CONTAINER);
     }
 
+    /**
+     * Checks if the specified {@link PersistentDataHolder} has a {@link PersistentDataContainer} with the specified
+     * key.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to check
+     * @param key
+     *            The key to check for
+     * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
+     */
+    public static boolean hasBoolean(PersistentDataHolder holder, NamespacedKey key) {
+        if (holder.getPersistentDataContainer().has(key, PersistentDataType.BYTE)) {
+        	byte value = getByte(holder, key);
+        	
+        	return value == 0 || value == 1;
+        }
+        
+        return false;
+    }
+
     /////////////////////////////////////
     // Getters
     /////////////////////////////////////
@@ -262,6 +286,37 @@ public final class PersistentDataAPI {
      */
     public static byte getByte(PersistentDataHolder holder, NamespacedKey key, byte defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentDataType.BYTE, defaultVal);
+    }
+
+    /**
+     * This method returns an {@link Optional} describing the {@link Byte} found under the given key.
+     * An empty {@link Optional} will be returned if no value has been found.
+     * 
+     * @see PersistentDataAPI#getByte(PersistentDataHolder, NamespacedKey)
+     * 
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return An Optional describing the result
+     */
+    public static Optional<Boolean> getOptionalBoolean(PersistentDataHolder holder, NamespacedKey key) {
+    	return !hasBoolean(holder, key) ? Optional.empty(): Optional.of(getBoolean(holder, key));
+    }
+
+    /**
+     * Get a byte value in a {@link PersistentDataContainer} or the default value passed if no key exists.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
+     * @return The byte associated with this key or the default value if it doesn't exist
+     */
+    public static boolean getBoolean(PersistentDataHolder holder, NamespacedKey key) {
+        return getOptionalBoolean(holder, key).orElse(false);
     }
 
     /**
