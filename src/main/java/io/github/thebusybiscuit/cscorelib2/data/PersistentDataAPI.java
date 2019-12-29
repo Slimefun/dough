@@ -1,6 +1,9 @@
 package io.github.thebusybiscuit.cscorelib2.data;
 
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -427,8 +430,8 @@ public final class PersistentDataAPI {
      *            The key of the data to retrieve
      * @return An Optional describing the result
      */
-    public static Optional<Integer> getOptionalInt(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasInt(holder, key) ? Optional.empty(): Optional.of(getInt(holder, key));
+    public static OptionalInt getOptionalInt(PersistentDataHolder holder, NamespacedKey key) {
+        return !hasInt(holder, key) ? OptionalInt.empty(): OptionalInt.of(getInt(holder, key));
     }
 
     /**
@@ -471,8 +474,8 @@ public final class PersistentDataAPI {
      *            The key of the data to retrieve
      * @return An Optional describing the result
      */
-    public static Optional<Long> getOptionalLong(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasLong(holder, key) ? Optional.empty(): Optional.of(getLong(holder, key));
+    public static OptionalLong getOptionalLong(PersistentDataHolder holder, NamespacedKey key) {
+        return !hasLong(holder, key) ? OptionalLong.empty(): OptionalLong.of(getLong(holder, key));
     }
 
     /**
@@ -561,8 +564,8 @@ public final class PersistentDataAPI {
      *            The key of the data to retrieve
      * @return An Optional describing the result
      */
-    public static Optional<Double> getOptionalDouble(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasDouble(holder, key) ? Optional.empty(): Optional.of(getDouble(holder, key));
+    public static OptionalDouble getOptionalDouble(PersistentDataHolder holder, NamespacedKey key) {
+        return !hasDouble(holder, key) ? OptionalDouble.empty(): OptionalDouble.of(getDouble(holder, key));
     }
 
     /**
