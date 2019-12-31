@@ -26,6 +26,7 @@ import io.github.thebusybiscuit.cscorelib2.protection.modules.PreciousStonesProt
 import io.github.thebusybiscuit.cscorelib2.protection.modules.RedProtectProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.TownyProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.WorldGuardProtectionModule;
+import io.github.thebusybiscuit.cscorelib2.protection.modules.LandsProtectionModule;
 import lombok.NonNull;
 
 public final class ProtectionManager {
@@ -80,6 +81,9 @@ public final class ProtectionManager {
 		}
 		if (server.getPluginManager().isPluginEnabled("BlockLocker")) {
 			registerModule(new BlockLockerProtectionModule());
+		}
+		if(server.getPluginManager().isPluginEnabled("Lands")){
+			registerModule(new LandsProtectionModule());
 		}
 		
 		/*
