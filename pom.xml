@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.thebusybiscuit</groupId>
     <artifactId>CSCoreLib2</artifactId>
     <version>0.8</version>
-    
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <repositories>
         <repository>
             <id>papermc</id>
@@ -51,9 +52,9 @@
             <url>https://ci.ender.zone/job/FactionsUUID/122/maven-repository/repository</url>
         </repository>
         <repository>
-			<id>rutger-repo</id>
-			<url>http://www.rutgerkok.nl/repo</url>
-		</repository>
+            <id>rutger-repo</id>
+            <url>http://www.rutgerkok.nl/repo</url>
+        </repository>
         <repository>
             <id>worldedit-worldguard-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
@@ -67,11 +68,11 @@
                 <directory>${project.basedir}/src/test/resources</directory>
             </testResource>
         </testResources>
-        
+
         <finalName>${project.name} v${project.version}</finalName>
-        
+
         <plugins>
-        	<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
@@ -83,7 +84,7 @@
                     </execution>
                 </executions>
             </plugin>
-        	<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.1.1</version>
@@ -98,23 +99,23 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
-    	<!-- Developer Dependencies -->
+        <!-- Developer Dependencies -->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.15-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-	    	<artifactId>lombok</artifactId>
-	    	<version>1.18.10</version>
-	    	<scope>provided</scope>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+            <scope>provided</scope>
         </dependency>
-		
-		<!-- Protection Plugins -->
+
+        <!-- Protection Plugins -->
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-core</artifactId>
@@ -142,15 +143,15 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-    		<version>2.16.3</version>
-    		<scope>provided</scope>
+            <version>2.16.3</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-	    	<groupId>com.github.LogBlock</groupId>
-	    	<artifactId>LogBlock</artifactId>
-	    	<version>d98d46d0c9</version>
-    		<scope>provided</scope>
-		</dependency>
+            <groupId>com.github.LogBlock</groupId>
+            <artifactId>LogBlock</artifactId>
+            <version>d98d46d0c9</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.github.marcelo-mason</groupId>
             <artifactId>SimpleClans</artifactId>
@@ -226,10 +227,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-			<groupId>nl.rutgerkok</groupId>
-			<artifactId>blocklocker</artifactId>
-			<version>1.7</version>
-			<scope>provided</scope>
-		</dependency>
+            <groupId>nl.rutgerkok</groupId>
+            <artifactId>blocklocker</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Angeschossen</groupId>
+            <artifactId>LandsAPI</artifactId>
+            <version>4.3.3.5</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
