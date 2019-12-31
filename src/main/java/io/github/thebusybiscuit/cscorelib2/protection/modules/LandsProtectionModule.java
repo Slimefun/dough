@@ -20,7 +20,7 @@ public class LandsProtectionModule implements ProtectionModule {
 
     @Override
     public String getName() {
-        return "Lands";
+        return "Landss";
     }
 
     @Override
