@@ -13,6 +13,8 @@ import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.lists.Flags;
+import world.bentobox.bentobox.managers.IslandWorldManager;
+
 import world.bentobox.bentobox.managers.IslandsManager;
 
 /**
@@ -23,17 +25,19 @@ import world.bentobox.bentobox.managers.IslandsManager;
 public class BentoBoxProtectionModule implements ProtectionModule {
 	
 	private IslandsManager manager;
+	private IslandWorldManager iwm;
 	
 	@Override
 	public void load() {
 		manager = BentoBox.getInstance().getIslands();
+		iwm = BentoBox.getInstance().getIslands();
 	}
 	
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
 		Optional<Island> island = manager.getIslandAt(l);
 		Flag flag = convert(action, l.getWorld());
-		return island.map(value -> value.isAllowed(User.getInstance(p), flag)).orElse(flag.isSetForWorld(l.getWorld()));
+		return !iwm.inWorld(l) || island.map(value -> value.isAllowed(User.getInstance(p), flag)).orElse(flag.isSetForWorld(l.getWorld()));
 	}
 	
 	private Flag convert(ProtectableAction action, World world) {
