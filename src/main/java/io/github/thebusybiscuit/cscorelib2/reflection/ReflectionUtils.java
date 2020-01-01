@@ -39,6 +39,7 @@ public final class ReflectionUtils {
 		for (Method m : c.getMethods()) {
 			if (m.getName().equals(method)) return m;
 		}
+		
         return null;
 	}
 
@@ -52,11 +53,15 @@ public final class ReflectionUtils {
 	 */
 	public static Method getMethod(Class<?> c, String method, Class<?>... paramTypes) {
 	    Class<?>[] t = toPrimitiveTypeArray(paramTypes);
+	    
 	    for (Method m : c.getMethods()) {
-	      Class<?>[] types = toPrimitiveTypeArray(m.getParameterTypes());
-	      if ((m.getName().equals(method)) && (equalsTypeArray(types, t)))
-	        return m;
+	    	Class<?>[] types = toPrimitiveTypeArray(m.getParameterTypes());
+	    	
+	    	if ((m.getName().equals(method)) && (equalsTypeArray(types, t))) {
+	    		return m;
+	    	}
 	    }
+	    
 	    return null;
 	}
 
@@ -133,11 +138,13 @@ public final class ReflectionUtils {
 	 * @return      An Array of primitive Types
 	 */
 	public static Class<?>[] toPrimitiveTypeArray(Class<?>... classes) {
-		int a = classes != null ? classes.length : 0;
-	    Class<?>[] types = new Class[a];
-	    for (int i = 0; i < a; i++) {
+		int size = classes != null ? classes.length : 0;
+		
+	    Class<?>[] types = new Class[size];
+	    for (int i = 0; i < size; i++) {
 	    	types[i] = conversion.containsKey(classes[i]) ? conversion.get(classes[i]): classes[i];
 	    }
+	    
 	    return types;
 	}
 
@@ -150,23 +157,28 @@ public final class ReflectionUtils {
 	 * @return      An Array of primitive Types
 	 */
 	public static Class<?>[] toPrimitiveTypeArray(Object... objects) {
-	    int a = objects != null ? objects.length : 0;
-	    Class<?>[] types = new Class[a];
-	    for (int i = 0; i < a; i++)
+	    int size = objects != null ? objects.length : 0;
+	    
+	    Class<?>[] types = new Class[size];
+	    for (int i = 0; i < size; i++) {
 	    	types[i] = conversion.containsKey(objects[i].getClass()) ? conversion.get(objects[i].getClass()): objects[i].getClass();
+	    }
+	    
 	    return types;
 	}
 
 	/**
 	 * Returns the Constructor of a Class with the specified Parameters
 	 *
-	 * @param  c The Class containing the Constructor
-	 * @param  paramTypes The Parameters for that Constructor
-	 * @return      The Constructor for that Class
+	 * @param <T>			The Type argument for the class of this constructor
+	 * @param  c 			The Class containing the Constructor
+	 * @param  paramTypes 	The Parameters for that Constructor
+	 * @return      		The Constructor for that Class
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Constructor<T> getConstructor(Class<T> c, Class<?>... paramTypes) {
 	    Class<?>[] t = toPrimitiveTypeArray(paramTypes);
+	    
 	    for (Constructor<?> constructor : c.getConstructors()) {
 	    	Class<?>[] types = toPrimitiveTypeArray(constructor.getParameterTypes());
 	    	
@@ -174,6 +186,7 @@ public final class ReflectionUtils {
 	    		return (Constructor<T>) constructor;
 	    	}
 	    }
+	    
 	    return null;
 	}
 
@@ -247,7 +260,7 @@ public final class ReflectionUtils {
 	public static boolean isVersion(String... prefixes) {
 		String version = getVersion();
 		
-		for (String prefix: prefixes) {
+		for (String prefix : prefixes) {
 			if (version.startsWith(prefix)) return true;
 		}
 		
@@ -262,18 +275,22 @@ public final class ReflectionUtils {
 	 * @return      Whether they equal each other
 	 */
 	private static boolean equalsTypeArray(Class<?>[] a, Class<?>... o) {
-	    if (a.length != o.length)
-	      return false;
-	    for (int i = 0; i < a.length; i++)
-	      if ((!a[i].equals(o[i])) && (!a[i].isAssignableFrom(o[i])))
-	        return false;
+		if (a.length != o.length) return false;
+	    
+		for (int i = 0; i < a.length; i++) {
+	    	if ((!a[i].equals(o[i])) && (!a[i].isAssignableFrom(o[i]))) {
+	    		return false;
+	    	}
+	    }
+		
 	    return true;
 	}
 
 	/**
 	 * Returns all Enum Constants in an Enum
 	 *
-	 * @param  c The Enum you are targeting
+	 * @param <T>	The Type argument of the enum we are querying
+	 * @param c 	The Enum you are targeting
 	 * @return      An ArrayList of all Enum Constants in that Enum
 	 */
 	public static <T> List<T> getEnumConstants(Class<T> c) {
@@ -283,14 +300,16 @@ public final class ReflectionUtils {
 	/**
 	 * Returns a specific Enum Constant in an Enum
 	 *
-	 * @param  c The Enum you are targeting
+	 * @param <T>	The Type argument of the enum we are querying
+	 * @param  c 	The Enum you are targeting
 	 * @param  name The Name of the Constant you are targeting
 	 * @return      The found Enum Constant
 	 */
 	public static <T> T getEnumConstant(Class<T> c, String name) {
-		for (T o: c.getEnumConstants()) {
-			if (o.toString().equals(name)) return o;
+		for (T field : c.getEnumConstants()) {
+			if (field.toString().equals(name)) return field;
 		}
+		
 		return null;
 	}
 }

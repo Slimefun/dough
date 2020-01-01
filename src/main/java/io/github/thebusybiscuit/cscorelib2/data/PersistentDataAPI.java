@@ -353,8 +353,6 @@ public final class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
-     * @param defaultVal
-     *            The default value to use if no key is found
      * @return The byte associated with this key or the default value if it doesn't exist
      */
     public static boolean getBoolean(PersistentDataHolder holder, NamespacedKey key) {
@@ -820,7 +818,7 @@ public final class PersistentDataAPI {
      * This method returns an {@link Optional} describing the {@link JsonObject} found under the given key.
      * An empty {@link Optional} will be returned if no value has been found.
      * 
-     * @see PersistentDataAPI#get{@link JsonObject}(PersistentDataHolder, NamespacedKey)
+     * @see PersistentDataAPI#getJsonObject(PersistentDataHolder, NamespacedKey)
      * 
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
