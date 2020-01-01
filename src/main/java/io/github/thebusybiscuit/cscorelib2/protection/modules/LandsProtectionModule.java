@@ -26,27 +26,26 @@ public class LandsProtectionModule implements ProtectionModule {
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
         LandWorld landWorld = landsIntegration.getLandWorld(l.getWorld().getName());
-        if (landWorld == null) return true;
         if (!(p instanceof Player)) return false;
+        if (landWorld == null) return true;
 
-        RoleSetting roleSetting = RoleSetting.BLOCK_PLACE;
-        switch (action) {
-            case BREAK_BLOCK: {
-                roleSetting = RoleSetting.BLOCK_BREAK;
-                break;
-            }
+        return landWorld.canAction((Player) p, l, convert(action));
+    }
 
-            case PVP: {
-                roleSetting = RoleSetting.ATTACK_PLAYER;
-                break;
-            }
+    private RoleSetting convert(ProtectableAction protectableAction) {
+        switch (protectableAction) {
+            case PLACE_BLOCK:
+                return RoleSetting.BLOCK_PLACE;
 
-            case ACCESS_INVENTORIES: {
-                roleSetting = RoleSetting.INTERACT_CONTAINER;
-                break;
-            }
+            case PVP:
+                return RoleSetting.ATTACK_PLAYER;
+
+
+            case ACCESS_INVENTORIES:
+                return RoleSetting.INTERACT_CONTAINER;
+
+            default:
+                return RoleSetting.BLOCK_BREAK;
         }
-
-        return landWorld.canAction((Player) p, l, roleSetting);
     }
 }

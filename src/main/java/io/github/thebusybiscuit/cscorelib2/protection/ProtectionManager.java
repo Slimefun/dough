@@ -82,7 +82,7 @@ public final class ProtectionManager {
 		if (server.getPluginManager().isPluginEnabled("BlockLocker")) {
 			registerModule(new BlockLockerProtectionModule());
 		}
-		if(server.getPluginManager().isPluginEnabled("Lands")){
+		if (server.getPluginManager().isPluginEnabled("Lands")) {
 			registerModule(new LandsProtectionModule());
 		}
 		
