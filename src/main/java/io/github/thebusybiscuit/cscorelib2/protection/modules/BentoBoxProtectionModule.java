@@ -30,7 +30,7 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 	@Override
 	public void load() {
 		manager = BentoBox.getInstance().getIslands();
-		iwm = BentoBox.getInstance().getIslands();
+		iwm = BentoBox.getInstance().getIWM();
 	}
 	
 	@Override
