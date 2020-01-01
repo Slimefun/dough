@@ -40,7 +40,6 @@ public class LandsProtectionModule implements ProtectionModule {
             case PVP:
                 return RoleSetting.ATTACK_PLAYER;
 
-
             case ACCESS_INVENTORIES:
                 return RoleSetting.INTERACT_CONTAINER;
 
