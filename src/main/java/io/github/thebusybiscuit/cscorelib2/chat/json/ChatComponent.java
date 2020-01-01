@@ -25,6 +25,7 @@ public class ChatComponent {
 			serializerClass = ReflectionUtils.getInnerNMSClass("IChatBaseComponent", "ChatSerializer");
 			serializerMethod = ReflectionUtils.getMethod(serializerClass, "a", JsonElement.class);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
+			System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
 			e.printStackTrace();
 		}
 	}

@@ -28,6 +28,7 @@ public final class ItemUtils {
 			toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
 		}
 		catch(Exception x) {
+			System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
 			x.printStackTrace();
 		}
 	}
