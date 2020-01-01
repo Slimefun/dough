@@ -25,8 +25,8 @@ public class LandsProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        LandWorld landWorld = landsIntegration.getLandWorld(l.getWorld().getName());
         if (!(p instanceof Player)) return false;
+        LandWorld landWorld = landsIntegration.getLandWorld(l.getWorld().getName());
         if (landWorld == null) return true;
 
         return landWorld.canAction((Player) p, l, convert(action));
