@@ -28,12 +28,24 @@ import io.github.thebusybiscuit.cscorelib2.protection.modules.TownyProtectionMod
 import io.github.thebusybiscuit.cscorelib2.protection.modules.WorldGuardProtectionModule;
 import lombok.NonNull;
 
+/**
+ * This Class provides a nifty API for plugins to query popular protection plugins.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public final class ProtectionManager {
 	
 	private final Set<ProtectionModule> protectionModules = new HashSet<>();
 	private final Set<ProtectionLogger> protectionLoggers = new HashSet<>();
 	private final Logger logger;
 	
+	/**
+	 * This creates a new instance of {@link ProtectionManager}, you can see this
+	 * as a "Snapshot" of your plugins too.
+	 * 
+	 * @param server	The Server your plugin is running on.
+	 */
 	public ProtectionManager(Server server) {
 		logger = getLogger(server);
 		
@@ -108,6 +120,12 @@ public final class ProtectionManager {
 		}
 	}
 
+	/**
+	 * This is our custom Logger for this class.
+	 * 
+	 * @param server	The Server this is logging to
+	 * @return			A new instance of {@link Logger}
+	 */
 	private Logger getLogger(Server server) {
 		Logger customLogger = new Logger("CS-CoreLib2", null) {
 			
@@ -118,6 +136,7 @@ public final class ProtectionManager {
 			}
 			
 		};
+		
 		customLogger.setParent(server.getLogger());
 		customLogger.setLevel(Level.ALL);
 		

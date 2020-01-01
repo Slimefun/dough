@@ -862,7 +862,7 @@ public final class PersistentDataAPI {
      * This method returns an {@link Optional} describing the {@link JsonArray} found under the given key.
      * An empty {@link Optional} will be returned if no value has been found.
      * 
-     * @see PersistentDataAPI#get{@link JsonObject}(PersistentDataHolder, NamespacedKey)
+     * @see PersistentDataAPI#getJsonObject(PersistentDataHolder, NamespacedKey)
      * 
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
