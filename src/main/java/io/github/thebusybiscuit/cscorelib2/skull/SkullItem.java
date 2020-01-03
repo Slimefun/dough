@@ -88,7 +88,7 @@ public final class SkullItem {
 	 * @param texture	The texture for your Player
 	 * @return			A new Player Head with the Texture you specified
 	 */
-	public static ItemStack fromTextureID(@NonNull UUID uuid, @NonNull String texture) {
+	public static ItemStack fromHash(@NonNull UUID uuid, @NonNull String texture) {
 		return fromURL(uuid, "http://textures.minecraft.net/texture/" + texture);
 	}
 	
@@ -99,8 +99,8 @@ public final class SkullItem {
 	 * @param texture	The texture for your Player
 	 * @return			A new Player Head with the Texture you specified
 	 */
-	public static ItemStack fromTextureID(@NonNull String texture) {
-		return fromTextureID(UUID.nameUUIDFromBytes(texture.getBytes()), texture);
+	public static ItemStack fromHash(@NonNull String texture) {
+		return fromHash(UUID.nameUUIDFromBytes(texture.getBytes()), texture);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public final class SkullItem {
 	 * @return		A new Player Head with the Texture you specified
 	 */
 	public static ItemStack fromURL(@NonNull UUID uuid, @NonNull String url) {
-		return fromBase64(uuid, Base64.getEncoder().encodeToString(("{textures:{SKIN:{url:\"" + url + "\"}}}").getBytes()));
+		return fromBase64(uuid, Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}").getBytes()));
 	}
 	
 	/**
