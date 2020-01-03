@@ -101,7 +101,7 @@ public class CustomItem extends ItemStack {
 	}
 	
 	public CustomItem(ItemStack item, List<String> list) {
-		this(item, list.get(0), list.subList(1, list.size()).toArray(new String[list.size() - 1]));
+		this(item, list.get(0), list.subList(1, list.size()).toArray(new String[0]));
 	}
 	
 	public CustomItem(Material type, List<String> list) {
