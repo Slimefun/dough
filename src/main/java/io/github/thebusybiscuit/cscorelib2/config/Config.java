@@ -39,7 +39,9 @@ public class Config implements AbstractConfig {
 	 * @param  plugin The Instance of the Plugin, the config.yml is referring to
 	 */
 	public Config(@NonNull Plugin plugin) {
-		plugin.saveDefaultConfig();
+		plugin.reloadConfig();
+		plugin.saveConfig();
+		
 		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), "config.yml");
 		this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
 		fileConfig.options().copyDefaults(true);
