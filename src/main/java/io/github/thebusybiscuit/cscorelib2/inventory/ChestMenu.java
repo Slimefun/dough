@@ -307,7 +307,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		inv = Bukkit.createInventory(null, formToLine(size) * 9, title);
 		
 		int i = 0;
-		for (ItemStack item: items) {
+		for (ItemStack item : items) {
 			this.inv.setItem(i, item);
 			i++;
 		}
@@ -323,7 +323,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		else inv = Bukkit.createInventory(null, formToLine(size) * 9, title);
 
 		int i = 0;
-		for (ItemStack item: items) {
+		for (ItemStack item : items) {
 			this.inv.setItem(i, item);
 			i++;
 		}
@@ -351,7 +351,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		setup();
 		if (deprecationTask != null) deprecationTask.cancel();
 		
-		for (Player p: players) {
+		for (Player p : players) {
 			p.openInventory(this.inv);
 			listener.menus.put(p.getUniqueId(), this);
 			
