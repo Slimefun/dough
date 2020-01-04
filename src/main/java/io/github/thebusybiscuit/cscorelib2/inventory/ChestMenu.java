@@ -30,16 +30,16 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	protected boolean playerInventoryClickable;
 	
 	@Getter
-	protected Plugin plugin;
+	protected final Plugin plugin;
+
+	@Getter
+	protected final String title;
 
 	@Getter
 	protected Consumer<Player> menuOpeningHandler;
 	
 	@Getter
 	protected Consumer<Player> menuClosingHandler;
-
-	@Getter
-	protected String title;
 	
 	protected boolean emptyClickable;
 	protected Inventory inv;
@@ -77,9 +77,9 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		this.timeout = -1;
 		this.dirtyRunnable = dirtyRunnable;
 		
-		this.menuOpeningHandler = p -> {};
-		this.menuClosingHandler = p -> {};
-		this.playerclick = (p, slot, item, cursor, action) -> isPlayerInventoryClickable();
+		menuOpeningHandler = p -> {};
+		menuClosingHandler = p -> {};
+		playerclick = (p, slot, item, cursor, action) -> isPlayerInventoryClickable();
 	}
 
 	/**
@@ -93,17 +93,17 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	}
 	
 	protected ChestMenu(ChestMenu menu) {
-		this.plugin = menu.plugin;
-		this.title = menu.title;
-		this.playerInventoryClickable = menu.playerInventoryClickable;
-		this.emptyClickable = menu.emptyClickable;
-		this.items = menu.items;
-		this.handlers = menu.handlers;
-		this.timeout = menu.timeout;
+		plugin = menu.plugin;
+		title = menu.title;
+		playerInventoryClickable = menu.playerInventoryClickable;
+		emptyClickable = menu.emptyClickable;
+		items = menu.items;
+		handlers = menu.handlers;
+		timeout = menu.timeout;
 		
-		this.menuOpeningHandler = menu.menuOpeningHandler;
-		this.menuClosingHandler = menu.menuClosingHandler;
-		this.playerclick = menu.playerclick;
+		menuOpeningHandler = menu.menuOpeningHandler;
+		menuClosingHandler = menu.menuClosingHandler;
+		playerclick = menu.playerclick;
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 */ 
 	public ChestMenu addItem(int slot, ItemStack item) {
 		if (size > slot) {
-			this.items.set(slot, item);
+			items.set(slot, item);
 			
 			if (inv != null) {
 				inv.setItem(slot, item);
@@ -205,12 +205,13 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		}
 		else {
 			for (int i = 0; i < slot - size; i++) {
-				this.items.add(null);
+				items.add(null);
 			}
-			this.items.add(item);
+			items.add(item);
 			
-			this.size = slot + 1;
+			size = slot + 1;
 		}
+		
 		return this;
 	}
 	
@@ -251,7 +252,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 */ 
 	public ItemStack getItemInSlot(int slot) {
 		setup();
-		return this.inv.getItem(slot);
+		return inv.getItem(slot);
 	}
 	
 	/**
@@ -263,7 +264,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * @return      The ChestMenu Instance
 	 */ 
 	public ChestMenu addMenuClickHandler(int slot, MenuClickHandler handler) {
-		this.handlers.put(slot, handler);
+		handlers.put(slot, handler);
 		return this;
 	}
 	
@@ -275,7 +276,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * @return      	The ChestMenu Instance
 	 */ 
 	public ChestMenu addMenuOpeningHandler(Consumer<Player> handler) {
-		this.menuOpeningHandler = handler;
+		menuOpeningHandler = handler;
 		return this;
 	}
 	
@@ -287,7 +288,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 * @return      	The ChestMenu Instance
 	 */ 
 	public ChestMenu addMenuCloseHandler(Consumer<Player> handler) {
-		this.menuClosingHandler = handler;
+		menuClosingHandler = handler;
 		return this;
 	}
 	
@@ -299,7 +300,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 */ 
 	public ItemStack[] getContents() {
 		setup();
-		return this.inv.getContents();
+		return inv.getContents();
 	}
 	
 	protected void setup() {
@@ -308,7 +309,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 		
 		int i = 0;
 		for (ItemStack item : items) {
-			this.inv.setItem(i, item);
+			inv.setItem(i, item);
 			i++;
 		}
 	}
@@ -324,7 +325,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 
 		int i = 0;
 		for (ItemStack item : items) {
-			this.inv.setItem(i, item);
+			inv.setItem(i, item);
 			i++;
 		}
 	}
@@ -337,7 +338,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 */ 
 	public void replaceExistingItem(int slot, ItemStack item) {
 		setup();
-		this.inv.setItem(slot, item);
+		inv.setItem(slot, item);
 	}
 	
 	/**
@@ -387,7 +388,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	 */ 
 	public Inventory toInventory() {
 		setup();
-		return this.inv;
+		return inv;
 	}
 	
 	/**
@@ -510,14 +511,14 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 	public void setTimeout(int ticks, Runnable runnable) {
 		if (deprecationTask != null) deprecationTask.cancel();
 			
-		this.timeout = ticks;
-		this.deprecationRunnable = runnable;
+		timeout = ticks;
+		deprecationRunnable = runnable;
 	}
 	
 	protected void runTimeout() {
 		if (timeout >= 0 && toInventory().getViewers().size() <= 1) {
 			deprecationTask = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-				this.close();
+				close();
 				deprecationRunnable.run();
 				
 				deprecationTask = null;

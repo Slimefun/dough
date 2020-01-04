@@ -25,22 +25,23 @@ public class GitHubBuildsUpdater implements Updater {
 	
 	private static final String API_URL = "https://thebusybiscuit.github.io/builds/";
 	
-	private Plugin plugin;
+	private final Plugin plugin;
+	private final File file;
+	private final String prefix;
+	
 	private URL versionsURL;
 	private URL downloadURL;
 	private Thread thread;
-	private File file;
-	private String prefix;
 	
 	@Getter
-	private String repository;
+	private final String repository;
 	
 	@Getter
 	private String localVersion;
 	private String remoteVersion;
 	
 	@Setter
-	protected int timeout = 5000;
+	protected int timeout = 10000;
 	
 	@Setter
 	protected UpdateCheck predicate;
@@ -84,7 +85,7 @@ public class GitHubBuildsUpdater implements Updater {
 		}
 	}
 	
-	public class UpdaterTask implements Runnable {
+	private class UpdaterTask implements Runnable {
 
 		@Override
 		public void run() {
@@ -106,8 +107,9 @@ public class GitHubBuildsUpdater implements Updater {
 			    connection.addRequestProperty("User-Agent", "Auto Updater (by TheBusyBiscuit)");
 			    connection.setDoOutput(true);
 
-			    final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			    final JsonObject obj = (JsonObject) new JsonParser().parse(reader.readLine());
+			    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			    JsonObject obj = (JsonObject) new JsonParser().parse(reader.readLine());
+			    
 			    if (obj == null) {
 			    	plugin.getLogger().log(Level.WARNING, "The Auto-Updater could not connect to github.io, is it down?");
 				    
@@ -167,7 +169,7 @@ public class GitHubBuildsUpdater implements Updater {
 				    input = new BufferedInputStream(downloadURL.openStream());
 				    output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()));
 
-				    final byte[] data = new byte[1024];
+				    byte[] data = new byte[1024];
 				    int read;
 				    while ((read = input.read(data, 0, 1024)) != -1) {
 				    	output.write(data, 0, read);

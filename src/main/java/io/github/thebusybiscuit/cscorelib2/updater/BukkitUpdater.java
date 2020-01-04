@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 public class BukkitUpdater implements Updater {
@@ -28,30 +29,31 @@ public class BukkitUpdater implements Updater {
 	private static final char[] BLACKLIST = "abcdefghijklmnopqrstuvwxyz-+_ ()[]{}".toCharArray();
 	private static final String[] DEV_KEYWORDS = {"DEV", "EXPERIMENTAL", "BETA", "ALPHA", "UNFINISHED"};
 	
-	private Plugin plugin;
-	private int id;
+	private final Plugin plugin;
+	private final File file;
+	private final int id;
+	
 	private URL url;
 	private Thread thread;
 	private URL download;
-	private File file;
 	
 	@Getter
 	private String localVersion;
 	private String remoteVersion;
 	
 	@Setter
-	protected int timeout = 5000;
+	protected int timeout = 8000;
 	
 	@Setter
 	protected UpdateCheck predicate;
 	
-	public BukkitUpdater(Plugin plugin, File file, int id) {
+	public BukkitUpdater(@NonNull Plugin plugin, @NonNull File file, int id) {
 		this.plugin = plugin;
 		this.id = id;
 		this.file = file;
 		localVersion = plugin.getDescription().getVersion();
 		
-		this.predicate = (local, remote) -> {
+		predicate = (local, remote) -> {
 			if (local.equals(remote)) return false;
 			
 			String[] localSplit = local.split("\\.");
@@ -71,14 +73,14 @@ public class BukkitUpdater implements Updater {
 	        	}
 	        }
 	        
-	        	return false;
+	        return false;
 		};
 	}
 	
 	@Override
 	public void start() {
 		// Checking if current Version is a dev-build
-		for (String dev: DEV_KEYWORDS) {
+		for (String dev : DEV_KEYWORDS) {
 			if (localVersion.contains(dev)) {
 				plugin.getLogger().log(Level.WARNING, " ");
 				plugin.getLogger().log(Level.WARNING, "################## - DEVELOPMENT BUILD - ##################");
@@ -94,14 +96,14 @@ public class BukkitUpdater implements Updater {
 		localVersion = localVersion.toLowerCase();
 		
 		// Deleting all unwanted characters
-		for (char blocked: BLACKLIST) {
+		for (char blocked : BLACKLIST) {
 			localVersion = localVersion.replace(String.valueOf(blocked), "");
 		}
 		
 		prepareUpdateFolder();
 			
 		try {
-			this.url = new URL(API_URL + id);
+			url = new URL(API_URL + id);
 			
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
 				thread = new Thread(new UpdaterTask());
@@ -112,7 +114,7 @@ public class BukkitUpdater implements Updater {
 		}
 	}
 	
-	public class UpdaterTask implements Runnable {
+	private class UpdaterTask implements Runnable {
 
 		@Override
 		public void run() {
@@ -129,13 +131,14 @@ public class BukkitUpdater implements Updater {
 		
 		private boolean connect() {
 			try {
-			    final URLConnection connection = url.openConnection();
+			    URLConnection connection = url.openConnection();
 			    connection.setConnectTimeout(timeout);
 			    connection.addRequestProperty("User-Agent", "Auto Updater (by TheBusyBiscuit)");
 			    connection.setDoOutput(true);
 			    
-			    final BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			    final JsonArray array = (JsonArray) new JsonParser().parse(reader.readLine());
+			    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			    JsonArray array = (JsonArray) new JsonParser().parse(reader.readLine());
+			    
 			    if (array.size() == 0) {
 			    	plugin.getLogger().log(Level.WARNING, "The Auto-Updater could not connect to dev.bukkit.org, is it down?");
 				    
@@ -155,7 +158,7 @@ public class BukkitUpdater implements Updater {
 			    remoteVersion = latest.getAsJsonObject().get("name").getAsString();
 			    remoteVersion = remoteVersion.toLowerCase();
 
-			    for (char blocked: BLACKLIST) {
+			    for (char blocked : BLACKLIST) {
 			    	remoteVersion = remoteVersion.replace(String.valueOf(blocked), "");
 			    }
 
@@ -227,7 +230,7 @@ public class BukkitUpdater implements Updater {
 				    input = new BufferedInputStream(download.openStream());
 				    output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()));
 
-				    final byte[] data = new byte[1024];
+				    byte[] data = new byte[1024];
 				    int read;
 				    while ((read = input.read(data, 0, 1024)) != -1) {
 				    	output.write(data, 0, read);
