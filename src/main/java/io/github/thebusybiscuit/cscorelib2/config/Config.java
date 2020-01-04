@@ -39,7 +39,7 @@ public class Config implements AbstractConfig {
 	 * @param  plugin The Instance of the Plugin, the config.yml is referring to
 	 */
 	public Config(@NonNull Plugin plugin) {
-		plugin.reloadConfig();
+		plugin.getConfig().options().copyDefaults(true);
 		plugin.saveConfig();
 		
 		this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), "config.yml");

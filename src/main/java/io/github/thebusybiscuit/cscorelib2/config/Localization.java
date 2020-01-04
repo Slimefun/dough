@@ -123,7 +123,7 @@ public class Localization {
 	public String[] getMessagesArray(String key) {
 		if (!allowUnicodes) {
 			List<String> list = config.getStringList(key);
-			return list.toArray(new String[list.size()]);
+			return list.toArray(new String[0]);
 		}
 		
 		return config.getStringList(key).stream().map(Localization::translateUnicodes).toArray(String[]::new);

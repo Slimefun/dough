@@ -35,12 +35,11 @@ public final class PersistentJsonDataType<T extends JsonElement> implements Pers
 		return complex.toString();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public T fromPrimitive(String primitive, PersistentDataAdapterContext context) {
 		JsonElement json = parser.parse(primitive);
 		
-		if (jsonClass.isInstance(json)) return (T) json;
+		if (jsonClass.isInstance(json)) return jsonClass.cast(json);
 		else return null;
 	}
 	

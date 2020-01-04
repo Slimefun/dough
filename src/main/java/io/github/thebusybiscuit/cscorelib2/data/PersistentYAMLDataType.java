@@ -39,6 +39,7 @@ public final class PersistentYAMLDataType implements PersistentDataType<String, 
 			Reader reader = new StringReader(primitive);
 			return YamlConfiguration.loadConfiguration(reader);
 		} catch (IOException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
