@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.cscorelib2.collections;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -53,6 +54,23 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
 	 */
 	public RandomizedSet(@NonNull Supplier<Set<WeightedNode<T>>> constructor) {
 		internalSet = constructor.get();
+	}
+	
+	/**
+	 * This will initialize a new {@link RandomizedSet} with the internal Set
+	 * being a {@link LinkedHashSet}
+	 * 
+	 * It will be populated with elements from the given {@link Collection},
+	 * each element will be given a weight of 1.
+	 * 
+	 * @param collection	A {@link Collection} to pick elements from, each with the weight of 1.
+	 */
+	public RandomizedSet(@NonNull Collection<T> collection) {
+		this();
+		
+		for (T element : collection) {
+			add(element, 1);
+		}
 	}
 	
 	/**

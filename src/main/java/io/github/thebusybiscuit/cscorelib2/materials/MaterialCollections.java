@@ -191,4 +191,11 @@ public final class MaterialCollections {
             Material.STRUCTURE_VOID
     );
 
+	@Getter
+	private static final MaterialCollection allAirBlocks = new MaterialCollection(
+            Material.AIR,
+            Material.CAVE_AIR,
+            Material.VOID_AIR
+    );
+
 }
