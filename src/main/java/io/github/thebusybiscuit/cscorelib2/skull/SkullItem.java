@@ -93,7 +93,7 @@ public final class SkullItem {
 	}
 	
 	/**
-	 * This will call {@link SkullItem#fromTextureID(UUID, String)} and use an instance of {@link UUID}
+	 * This will call {@link SkullItem#fromHash(UUID, String)} and use an instance of {@link UUID}
 	 * that was generated from the provided texture using {@link String#getBytes()}
 	 * 
 	 * @param texture	The texture for your Player
@@ -152,8 +152,8 @@ public final class SkullItem {
 		String uuid = new JsonParser().parse(profileReader).getAsJsonObject().get("id").getAsString();
 		
 		URL session = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
-        sessionReader = new InputStreamReader(session.openStream());
-        JsonArray properties = new JsonParser().parse(sessionReader).getAsJsonObject().get("properties").getAsJsonArray();
+		sessionReader = new InputStreamReader(session.openStream());
+		JsonArray properties = new JsonParser().parse(sessionReader).getAsJsonObject().get("properties").getAsJsonArray();
         
         for (JsonElement el : properties) {
         	if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals(FakeProfile.PROPERTY_KEY)) {
