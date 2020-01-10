@@ -22,7 +22,7 @@ public class Localization {
 	@Getter
 	private Config config;
 	
-	private boolean allowUnicodes = true;
+	protected boolean allowUnicodes = true;
 	
 	/**
 	 * Creates a new Localization Object for the specified Plugin
