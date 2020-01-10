@@ -58,6 +58,15 @@ public class Localization {
 		this.allowUnicodes = allowUnicodes;
 	}
 	
+	public Localization(@NonNull File file) {
+		this.file = file;
+		this.config = new Config(file);
+	}
+	
+	public String getPrefix() {
+		return config.contains("prefix") ? getMessage("prefix"): "";
+	}
+	
 	/**
 	 * Sets the Default Message/s for the specified Key
 	 *
@@ -140,19 +149,19 @@ public class Localization {
 	}
 	
 	public void sendMessage(CommandSender sender, String key, boolean addPrefix) {
-		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = addPrefix ? getPrefix(): "";
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getMessage(key)));
 	}
 	
 	public void sendMessage(CommandSender sender, String key, boolean addPrefix, UnaryOperator<String> function) {
-		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = addPrefix ? getPrefix(): "";
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + function.apply(getMessage(key))));
 	}
 	
 	public void sendMessages(CommandSender sender, String key, boolean addPrefix, UnaryOperator<String> function) {
-		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = addPrefix ? getPrefix(): "";
 		
-		for (String translation: getMessages(key)) {
+		for (String translation : getMessages(key)) {
 			translation = function.apply(translation);
 			
 			sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + translation));
@@ -160,7 +169,7 @@ public class Localization {
 	}
 	
 	public void sendMessage(CommandSender sender, String key) {
-		String prefix = config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = getPrefix();
 		String message = ChatColor.translateAlternateColorCodes('&', prefix + getMessage(key));
 		
 		if (sender instanceof Player) {
@@ -172,9 +181,9 @@ public class Localization {
 	}
 	
 	public void sendMessages(CommandSender sender, String key) {
-		String prefix = config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = getPrefix();
 		
-		for (String translation: getMessages(key)) {
+		for (String translation : getMessages(key)) {
 			String message = ChatColor.translateAlternateColorCodes('&', prefix + translation);
 			
 			if (sender instanceof Player) {
@@ -187,14 +196,14 @@ public class Localization {
 	}
 	
 	public void broadcastMessage(String key, boolean addPrefix, UnaryOperator<String> function) {
-		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = addPrefix ? getPrefix(): "";
 		Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + function.apply(getMessage(key))));
 	}
 	
 	public void broadcastMessages(String key, boolean addPrefix, UnaryOperator<String> function) {
-		String prefix = addPrefix && config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = addPrefix ? getPrefix(): "";
 		
-		for (String translation: getMessages(key)) {
+		for (String translation : getMessages(key)) {
 			translation = function.apply(translation);
 			
 			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + translation));
@@ -202,14 +211,14 @@ public class Localization {
 	}
 	
 	public void broadcastMessage(String key) {
-		String prefix = config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = getPrefix();
 		Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + getMessage(key)));
 	}
 	
 	public void broadcastMessages(String key) {
-		String prefix = config.contains("prefix") ? getMessage("prefix"): "";
+		String prefix = getPrefix();
 		
-		for (String translation: getMessages(key)) {
+		for (String translation : getMessages(key)) {
 			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + translation));
 		}
 	}
