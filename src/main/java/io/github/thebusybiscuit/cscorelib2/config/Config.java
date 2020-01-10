@@ -94,6 +94,12 @@ public class Config implements AbstractConfig {
 		return this.fileConfig;
 	}
 	
+	public void clear() {
+		for (String key : getKeys()) {
+			setValue(key, null);
+		}
+	}
+	
 	protected void store(@NonNull String path, Object value) {
 		this.fileConfig.set(path, value);
 	}
