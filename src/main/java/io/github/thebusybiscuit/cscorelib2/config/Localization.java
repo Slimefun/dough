@@ -237,7 +237,7 @@ public class Localization {
 		config.save();
 	}
 	
-	private static String translateUnicodes(String str) {
+	protected static String translateUnicodes(String str) {
 		if (str == null) return null;
 		
 		StringBuilder builder = new StringBuilder();
