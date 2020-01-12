@@ -79,13 +79,22 @@ public class ChatComponent {
 
 	private Object getPacket() {
 		try {
-			return packetConstructor.newInstance(serializerMethod.invoke(serializerClass, json));
+			return packetConstructor.newInstance(getAsNMSComponent());
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 	
+	public Object getAsNMSComponent() {
+		try {
+			return serializerMethod.invoke(serializerClass, json);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public void send(Player... players) {
 		if (players.length == 0) return;
 		
