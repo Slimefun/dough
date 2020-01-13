@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 import org.bukkit.entity.Player;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -35,6 +36,7 @@ public class ChatComponent {
 	public ChatComponent(@NonNull String text) {
 		json = new JsonObject();
 		json.addProperty("text", text);
+		json.add("extra", new JsonArray());
 	}
 	
 	public void setColor(@NonNull ChatComponentColor color) {
@@ -70,7 +72,7 @@ public class ChatComponent {
 	}
 	
 	public void append(@NonNull ChatComponent component) {
-		json.add("extra", component.asJson());
+		json.get("extra").getAsJsonArray().add(component.asJson());
 	}
 	
 	public JsonObject asJson() {
