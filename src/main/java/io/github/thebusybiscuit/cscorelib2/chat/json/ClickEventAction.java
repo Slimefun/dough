@@ -4,6 +4,11 @@ public enum ClickEventAction {
 	
 	SUGGEST_COMMAND,
 	RUN_COMMAND,
-	OPEN_URL
+	OPEN_URL;
+	
+	@Override
+	public String toString() {
+		return name().toLowerCase();
+	}
 
 }

@@ -10,7 +10,7 @@ public class ClickEvent {
 	
 	public ClickEvent(@NonNull ClickEventAction action, @NonNull String value) {
 		json = new JsonObject();
-		json.addProperty("action", action.name());
+		json.addProperty("action", action.toString());
 		json.addProperty("value", value);
 	}
 	
