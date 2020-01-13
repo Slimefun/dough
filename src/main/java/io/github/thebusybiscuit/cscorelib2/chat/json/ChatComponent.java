@@ -84,6 +84,10 @@ public class ChatComponent {
 		array.add(component.asJson());
 	}
 	
+	public int getAttachments() {
+		return json.has("extra") ? json.get("extra").getAsJsonArray().size(): 0;
+	}
+	
 	public JsonObject asJson() {
 		return json;
 	}
