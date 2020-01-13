@@ -68,6 +68,7 @@ public class CustomBookInterface {
 		pages.add(page);
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ItemStack getItem() {
 		ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
 

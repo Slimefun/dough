@@ -36,7 +36,6 @@ public class ChatComponent {
 	public ChatComponent(@NonNull String text) {
 		json = new JsonObject();
 		json.addProperty("text", text);
-		json.add("extra", new JsonArray());
 	}
 	
 	public void setColor(@NonNull ChatComponentColor color) {
@@ -72,7 +71,17 @@ public class ChatComponent {
 	}
 	
 	public void append(@NonNull ChatComponent component) {
-		json.get("extra").getAsJsonArray().add(component.asJson());
+		JsonArray array;
+		
+		if (json.has("extra")) {
+			array = json.get("extra").getAsJsonArray();
+		}
+		else {
+			array = new JsonArray();
+			json.add("extra", array);
+		}
+		
+		array.add(component.asJson());
 	}
 	
 	public JsonObject asJson() {
