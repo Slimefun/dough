@@ -234,4 +234,12 @@ public final class MaterialCollections {
             Material.VOID_AIR
     );
 
+	@Getter
+	private static final MaterialCollection allIceBlocks = new MaterialCollection(
+            Material.ICE,
+            Material.PACKED_ICE,
+            Material.FROSTED_ICE,
+            Material.BLUE_ICE
+    );
+
 }

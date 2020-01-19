@@ -24,6 +24,7 @@ public interface AbstractConfig {
 	File getFile();
 	FileConfiguration getConfiguration();
 	
+	void clear();
 	void reload();
 	void save();
 	void save(File file);

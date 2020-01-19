@@ -93,7 +93,8 @@ public class Config implements AbstractConfig {
 	public FileConfiguration getConfiguration() {
 		return this.fileConfig;
 	}
-	
+
+	@Override
 	public void clear() {
 		for (String key : getKeys()) {
 			setValue(key, null);
