@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.RecipeChoice.MaterialChoice;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -74,6 +76,14 @@ public class MaterialCollection implements Iterable<Material> {
 	
 	public boolean containsAll(@NonNull MaterialCollection materials) {
 		return materials.stream().allMatch(this::contains);
+	}
+	
+	public boolean containsAll(@NonNull Material... materials) {
+		return Arrays.stream(materials).allMatch(this::contains);
+	}
+	
+	public RecipeChoice getAsRecipeChoice() {
+		return new MaterialChoice(asArray);
 	}
 	
 	@Override
