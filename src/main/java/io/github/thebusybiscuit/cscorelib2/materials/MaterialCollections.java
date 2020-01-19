@@ -24,7 +24,6 @@ public final class MaterialCollections {
 	@Getter private static final MaterialCollection allSaplings;
 	@Getter private static final MaterialCollection allLogs;
 	@Getter private static final MaterialCollection allPlanks;
-	@Getter private static final MaterialCollection allCarpets;
 	@Getter private static final MaterialCollection allFishItems;
 	@Getter private static final MaterialCollection allOres;
 	@Getter private static final MaterialCollection allHeads;
@@ -36,7 +35,6 @@ public final class MaterialCollections {
 		Set<Material> saplings = new HashSet<>();
 		Set<Material> logs = new HashSet<>();
 		Set<Material> planks = new HashSet<>();
-		Set<Material> carpets = new HashSet<>();
 		
 		Set<Material> fishes = new HashSet<>();
 		Set<Material> ores = new HashSet<>();
@@ -51,7 +49,6 @@ public final class MaterialCollections {
 			if (Tag.SAPLINGS.isTagged(mat)) saplings.add(mat);
 			if (Tag.LOGS.isTagged(mat)) logs.add(mat);
 			if (Tag.PLANKS.isTagged(mat)) planks.add(mat);
-			if (Tag.CARPETS.isTagged(mat)) carpets.add(mat);
 			
 			if (Tag.ITEMS_FISHES.isTagged(mat)) fishes.add(mat);
 			if (mat.name().endsWith("_ORE")) ores.add(mat);
@@ -64,7 +61,6 @@ public final class MaterialCollections {
 		allSaplings = new MaterialCollection(saplings);
 		allLogs = new MaterialCollection(logs);
 		allPlanks = new MaterialCollection(planks);
-		allCarpets = new MaterialCollection(carpets);
 		
 		allFishItems = new MaterialCollection(fishes);
 		allOres = new MaterialCollection(ores);
@@ -91,6 +87,26 @@ public final class MaterialCollections {
             Material.GREEN_WOOL,
             Material.RED_WOOL,
             Material.BLACK_WOOL
+    );
+
+	@Getter
+	private static final MaterialCollection allCarpetColors = new MaterialCollection(
+            Material.WHITE_CARPET,
+            Material.ORANGE_CARPET,
+            Material.MAGENTA_CARPET,
+            Material.LIGHT_BLUE_CARPET,
+            Material.YELLOW_CARPET,
+            Material.LIME_CARPET,
+            Material.PINK_CARPET,
+            Material.GRAY_CARPET,
+            Material.LIGHT_GRAY_CARPET,
+            Material.CYAN_CARPET,
+            Material.PURPLE_CARPET,
+            Material.BLUE_CARPET,
+            Material.BROWN_CARPET,
+            Material.GREEN_CARPET,
+            Material.RED_CARPET,
+            Material.BLACK_CARPET
     );
 
 	@Getter
@@ -171,6 +187,26 @@ public final class MaterialCollections {
             Material.GREEN_GLAZED_TERRACOTTA,
             Material.RED_GLAZED_TERRACOTTA,
             Material.BLACK_GLAZED_TERRACOTTA
+    );
+
+	@Getter
+	private static final MaterialCollection allDyeColors = new MaterialCollection(
+            Material.WHITE_DYE,
+            Material.ORANGE_DYE,
+            Material.MAGENTA_DYE,
+            Material.LIGHT_BLUE_DYE,
+            Material.YELLOW_DYE,
+            Material.LIME_DYE,
+            Material.PINK_DYE,
+            Material.GRAY_DYE,
+            Material.LIGHT_GRAY_DYE,
+            Material.CYAN_DYE,
+            Material.PURPLE_DYE,
+            Material.BLUE_DYE,
+            Material.BROWN_DYE,
+            Material.GREEN_DYE,
+            Material.RED_DYE,
+            Material.BLACK_DYE
     );
 
 	@Getter

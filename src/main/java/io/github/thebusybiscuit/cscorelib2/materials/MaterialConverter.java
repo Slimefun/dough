@@ -61,6 +61,34 @@ public final class MaterialConverter {
 		);
 	}
 	
+	public static Optional<Material> getWoolFromDye(@NonNull Material dye) {
+		return convert(dye, 
+			MaterialCollections.getAllDyeColors()::contains,
+			type -> type.replace("_DYE", "_WOOL")
+		);
+	}
+	
+	public static Optional<Material> getCarpetFromDye(@NonNull Material dye) {
+		return convert(dye, 
+			MaterialCollections.getAllDyeColors()::contains,
+			type -> type.replace("_DYE", "_CARPET")
+		);
+	}
+	
+	public static Optional<Material> getStainedGlassFromDye(@NonNull Material dye) {
+		return convert(dye, 
+			MaterialCollections.getAllDyeColors()::contains,
+			type -> type.replace("_DYE", "_STAINED_GLASS")
+		);
+	}
+	
+	public static Optional<Material> getStainedGlassPaneFromDye(@NonNull Material dye) {
+		return convert(dye, 
+			MaterialCollections.getAllDyeColors()::contains,
+			type -> type.replace("_DYE", "_STAINED_GLASS_PANE")
+		);
+	}
+	
 	private static Optional<Material> convert(Material type, Predicate<Material> predicate, UnaryOperator<String> converter) {
 		if (!predicate.test(type)) {
 			return Optional.empty();
