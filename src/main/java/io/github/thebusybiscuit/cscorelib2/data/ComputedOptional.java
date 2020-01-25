@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.cscorelib2.data;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -80,4 +81,9 @@ public final class ComputedOptional<T> {
 		return isPresent() ? this.value: value;
 	}
 
+	public Optional<T> getAsOptional() {
+		if (!isComputed()) throw new IllegalStateException("This Optional has not yet been computed!");
+		
+		return isPresent() ? Optional.of(value): Optional.empty();
+	}
 }
