@@ -17,12 +17,14 @@ import lombok.NonNull;
 public class ChatComponent {
 	
 	private static Constructor<?> packetConstructor;
+	private static Constructor<?> actionbarConstructor;
 	private static Class<?> serializerClass;
 	private static Method serializerMethod;
 	
 	static {
 		try {
 			packetConstructor = ReflectionUtils.getNMSClass("PacketPlayOutChat").getConstructor(ReflectionUtils.getNMSClass("IChatBaseComponent"));
+			actionbarConstructor = ReflectionUtils.getNMSClass("PacketPlayOutChat").getConstructor(ReflectionUtils.getNMSClass("IChatBaseComponent"), byte.class);
 			serializerClass = ReflectionUtils.getInnerNMSClass("IChatBaseComponent", "ChatSerializer");
 			serializerMethod = ReflectionUtils.getMethod(serializerClass, "a", JsonElement.class);
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
@@ -100,6 +102,15 @@ public class ChatComponent {
 			return null;
 		}
 	}
+
+	private Object getActionBarPacket() {
+		try {
+			return actionbarConstructor.newInstance(getAsNMSComponent(), (byte) 2);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public Object getAsNMSComponent() {
 		try {
@@ -110,10 +121,25 @@ public class ChatComponent {
 		}
 	}
 
-	public void send(Player... players) {
+	public void sendMessage(Player... players) {
 		if (players.length == 0) return;
 		
 		Object packet = getPacket();
+		if (packet == null) return;
+		
+		for (Player p : players) {
+			try {
+				Packets.send(p, packet);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void sendActionBar(Player... players) {
+		if (players.length == 0) return;
+		
+		Object packet = getActionBarPacket();
 		if (packet == null) return;
 		
 		for (Player p : players) {

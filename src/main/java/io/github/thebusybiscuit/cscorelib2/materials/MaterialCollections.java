@@ -22,10 +22,18 @@ public final class MaterialCollections {
 
 	@Getter private static final MaterialCollection allLeaves;
 	@Getter private static final MaterialCollection allSaplings;
-	@Getter private static final MaterialCollection allLogs;
-	@Getter private static final MaterialCollection allPlanks;
 	@Getter private static final MaterialCollection allCrops;
 	@Getter private static final MaterialCollection allFishItems;
+	
+	@Getter private static final MaterialCollection allLogs;
+	@Getter private static final MaterialCollection allPlanks;
+	@Getter private static final MaterialCollection allWoodenSlabs;
+	@Getter private static final MaterialCollection allWoodenFences;
+	@Getter private static final MaterialCollection allWoodenDoors;
+	@Getter private static final MaterialCollection allWoodenTrapdoors;
+	@Getter private static final MaterialCollection allWoodenStairs;
+	@Getter private static final MaterialCollection allWoodenButtons;
+	@Getter private static final MaterialCollection allWoodenPressurePlates;
 	
 	@Getter private static final MaterialCollection allOres;
 	@Getter private static final MaterialCollection allHeads;
@@ -53,10 +61,18 @@ public final class MaterialCollections {
 			
 		allLeaves = new MaterialCollection(Tag.LEAVES);
 		allSaplings = new MaterialCollection(Tag.SAPLINGS);
-		allLogs = new MaterialCollection(Tag.LOGS);
-		allPlanks = new MaterialCollection(Tag.PLANKS);
 		allCrops = new MaterialCollection(Tag.CROPS);
 		allFishItems = new MaterialCollection(Tag.ITEMS_FISHES);
+		
+		allLogs = new MaterialCollection(Tag.LOGS);
+		allPlanks = new MaterialCollection(Tag.PLANKS);
+		allWoodenSlabs = new MaterialCollection(Tag.WOODEN_SLABS);
+		allWoodenFences = new MaterialCollection(Tag.WOODEN_FENCES);
+		allWoodenDoors = new MaterialCollection(Tag.WOODEN_DOORS);
+		allWoodenTrapdoors = new MaterialCollection(Tag.WOODEN_TRAPDOORS);
+		allWoodenStairs = new MaterialCollection(Tag.WOODEN_STAIRS);
+		allWoodenButtons = new MaterialCollection(Tag.WOODEN_BUTTONS);
+		allWoodenPressurePlates = new MaterialCollection(Tag.WOODEN_PRESSURE_PLATES);
 		
 		allOres = new MaterialCollection(ores);
 		allHeads = new MaterialCollection(heads);
