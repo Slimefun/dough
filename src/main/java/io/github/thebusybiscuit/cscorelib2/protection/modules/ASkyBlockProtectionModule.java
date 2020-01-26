@@ -26,9 +26,10 @@ public class ASkyBlockProtectionModule implements ProtectionModule {
 		if (island == null) return true;
 		if (p.getUniqueId().equals(island.getOwner())) return true;
 		
-		for (UUID member: island.getMembers()) {
+		for (UUID member : island.getMembers()) {
 			if (p.getUniqueId().equals(member)) return true;
 		}
+		
 		return false;
 	}
 

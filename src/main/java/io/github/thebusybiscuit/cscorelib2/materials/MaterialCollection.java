@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.RecipeChoice.MaterialChoice;
 
@@ -31,6 +32,10 @@ public class MaterialCollection implements Iterable<Material> {
 	
 	public MaterialCollection(Material... materials) {
 		this(Arrays.stream(materials));
+	}
+	
+	public MaterialCollection(Tag<Material> tag) {
+		this(tag.getValues());
 	}
 	
 	public MaterialCollection(@NonNull Stream<Material> stream) {

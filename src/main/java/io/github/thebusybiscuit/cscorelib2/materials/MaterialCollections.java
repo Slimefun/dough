@@ -24,49 +24,45 @@ public final class MaterialCollections {
 	@Getter private static final MaterialCollection allSaplings;
 	@Getter private static final MaterialCollection allLogs;
 	@Getter private static final MaterialCollection allPlanks;
+	@Getter private static final MaterialCollection allCrops;
 	@Getter private static final MaterialCollection allFishItems;
+	
 	@Getter private static final MaterialCollection allOres;
 	@Getter private static final MaterialCollection allHeads;
 	@Getter private static final MaterialCollection allFilledBuckets;
 	@Getter private static final MaterialCollection allPressurePlates;
+	@Getter private static final MaterialCollection allFuelItems;
 		
 	static {
-		Set<Material> leaves = new HashSet<>();
-		Set<Material> saplings = new HashSet<>();
-		Set<Material> logs = new HashSet<>();
-		Set<Material> planks = new HashSet<>();
-		
-		Set<Material> fishes = new HashSet<>();
 		Set<Material> ores = new HashSet<>();
 		Set<Material> heads = new HashSet<>();
 		Set<Material> buckets = new HashSet<>();
 		Set<Material> plates = new HashSet<>();
+		Set<Material> fuel = new HashSet<>();
 			
 		for (Material mat : Material.values()) {
 			if (mat.name().startsWith("LEGACY_")) continue;
 			
-			if (Tag.LEAVES.isTagged(mat)) leaves.add(mat);
-			if (Tag.SAPLINGS.isTagged(mat)) saplings.add(mat);
-			if (Tag.LOGS.isTagged(mat)) logs.add(mat);
-			if (Tag.PLANKS.isTagged(mat)) planks.add(mat);
-			
-			if (Tag.ITEMS_FISHES.isTagged(mat)) fishes.add(mat);
 			if (mat.name().endsWith("_ORE")) ores.add(mat);
 			if (mat.name().endsWith("_HEAD") || mat.name().endsWith("_SKULL")) heads.add(mat);
 			if (mat.name().endsWith("_BUCKET")) buckets.add(mat);
 			if (mat.name().endsWith("_PRESSURE_PLATE")) plates.add(mat);
+			
+			if (mat.isFuel()) fuel.add(mat);
 		}
 			
-		allLeaves = new MaterialCollection(leaves);
-		allSaplings = new MaterialCollection(saplings);
-		allLogs = new MaterialCollection(logs);
-		allPlanks = new MaterialCollection(planks);
+		allLeaves = new MaterialCollection(Tag.LEAVES);
+		allSaplings = new MaterialCollection(Tag.SAPLINGS);
+		allLogs = new MaterialCollection(Tag.LOGS);
+		allPlanks = new MaterialCollection(Tag.PLANKS);
+		allCrops = new MaterialCollection(Tag.CROPS);
+		allFishItems = new MaterialCollection(Tag.ITEMS_FISHES);
 		
-		allFishItems = new MaterialCollection(fishes);
 		allOres = new MaterialCollection(ores);
 		allHeads = new MaterialCollection(heads);
 		allFilledBuckets = new MaterialCollection(buckets);
 		allPressurePlates = new MaterialCollection(plates);
+		allFuelItems = new MaterialCollection(fuel);
 	}
 
 	@Getter
@@ -246,7 +242,7 @@ public final class MaterialCollections {
             Material.BROWN_CONCRETE_POWDER,
             Material.GREEN_CONCRETE_POWDER,
             Material.RED_CONCRETE_POWDER,
-            Material.BLACK_CONCRETE
+            Material.BLACK_CONCRETE_POWDER
     );
 
 	@Getter
@@ -266,7 +262,27 @@ public final class MaterialCollections {
             Material.BROWN_SHULKER_BOX,
             Material.GREEN_SHULKER_BOX,
             Material.RED_SHULKER_BOX,
-            Material.BLACK_CONCRETE
+            Material.BLACK_SHULKER_BOX
+    );
+
+	@Getter
+	private static final MaterialCollection allBedColors = new MaterialCollection(
+            Material.WHITE_BED,
+            Material.ORANGE_BED,
+            Material.MAGENTA_BED,
+            Material.LIGHT_BLUE_BED,
+            Material.YELLOW_BED,
+            Material.LIME_BED,
+            Material.PINK_BED,
+            Material.GRAY_BED,
+            Material.LIGHT_GRAY_BED,
+            Material.CYAN_BED,
+            Material.PURPLE_BED,
+            Material.BLUE_BED,
+            Material.BROWN_BED,
+            Material.GREEN_BED,
+            Material.RED_BED,
+            Material.BLACK_BED
     );
 
 	@Getter
