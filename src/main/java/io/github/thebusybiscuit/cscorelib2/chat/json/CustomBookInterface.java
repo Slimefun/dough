@@ -79,12 +79,12 @@ public class CustomBookInterface {
 		List field = null;
 		try {
 			field = (List) pagesField.get(meta);
+
+			for (ChatComponent page : pages) {
+				field.add(page.getAsNMSComponent());
+			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
-		}
-
-		for (ChatComponent page : pages) {
-			field.add(page.getAsNMSComponent());
 		}
 
 		book.setItemMeta(meta);
