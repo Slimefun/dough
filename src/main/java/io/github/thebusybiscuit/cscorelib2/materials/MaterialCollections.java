@@ -22,7 +22,6 @@ public final class MaterialCollections {
 
 	@Getter private static final MaterialCollection allLeaves;
 	@Getter private static final MaterialCollection allSaplings;
-	@Getter private static final MaterialCollection allCrops;
 	@Getter private static final MaterialCollection allFishItems;
 	
 	@Getter private static final MaterialCollection allLogs;
@@ -61,7 +60,6 @@ public final class MaterialCollections {
 			
 		allLeaves = new MaterialCollection(Tag.LEAVES);
 		allSaplings = new MaterialCollection(Tag.SAPLINGS);
-		allCrops = new MaterialCollection(Tag.CROPS);
 		allFishItems = new MaterialCollection(Tag.ITEMS_FISHES);
 		
 		allLogs = new MaterialCollection(Tag.LOGS);
