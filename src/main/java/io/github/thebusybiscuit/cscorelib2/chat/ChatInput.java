@@ -39,9 +39,7 @@ public final class ChatInput {
 	 * @param handler	A callback to invoke when the Player has entered some text
 	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull Consumer<String> handler) {
-		if (listener == null) listener = new ChatInputListener(plugin);
-		
-		listener.handlers.put(p.getUniqueId(), new IChatInput() {
+		queue(plugin, p, new IChatInput() {
 			
 			@Override
 			public boolean test(String msg) {
@@ -80,9 +78,7 @@ public final class ChatInput {
 	 * @param handler	A callback to invoke when the Player has entered some text
 	 */
 	public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull BiConsumer<Player, String> handler) {
-		if (listener == null) listener = new ChatInputListener(plugin);
-		
-		listener.handlers.put(p.getUniqueId(), new IChatInput() {
+		queue(plugin, p, new IChatInput() {
 			
 			@Override
 			public boolean test(String msg) {
@@ -95,6 +91,11 @@ public final class ChatInput {
 			}
 			
 		});
+	}
+
+	public static void queue(@NonNull Plugin plugin, @NonNull Player p, @NonNull IChatInput callback) {
+		if (listener == null) listener = new ChatInputListener(plugin);
+		listener.addCallback(p.getUniqueId(), callback);
 	}
 	
 }

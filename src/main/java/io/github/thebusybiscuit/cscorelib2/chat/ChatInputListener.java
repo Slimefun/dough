@@ -1,11 +1,15 @@
 package io.github.thebusybiscuit.cscorelib2.chat;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,13 +23,18 @@ import org.bukkit.plugin.Plugin;
 class ChatInputListener implements Listener {
 	
 	private Plugin plugin;
-	protected Map<UUID, IChatInput> handlers;
+	protected Map<UUID, Set<IChatInput>> handlers;
 	
 	protected ChatInputListener(Plugin plugin) {
 		this.plugin = plugin;
 		this.handlers = new HashMap<>();
 
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	}
+	
+	public void addCallback(UUID uuid, IChatInput input) {
+		Set<IChatInput> callbacks = handlers.computeIfAbsent(uuid, id -> new HashSet<>());
+		callbacks.add(input);
 	}
 	
 	@EventHandler
@@ -36,29 +45,38 @@ class ChatInputListener implements Listener {
 	}
 	
 	@EventHandler(priority=EventPriority.LOWEST)
-	public void onChat(final AsyncPlayerChatEvent e) {
-		Player p = e.getPlayer();
-		IChatInput handler = handlers.get(p.getUniqueId());
+	public void onChat(AsyncPlayerChatEvent e) {
 		String msg = e.getMessage().replace(ChatColor.COLOR_CHAR, '&');
-		
-		if (handler != null && handler.test(msg)) {
-			handlers.remove(p.getUniqueId());
-			plugin.getServer().getScheduler().runTask(plugin, () -> handler.onChat(p, msg));
-			
-			e.setCancelled(true);
-		}
+		checkInput(e, e.getPlayer(), msg);
 	}
 	
 	@EventHandler
 	public void onComamnd(PlayerCommandPreprocessEvent e) {
-		Player p = e.getPlayer();
-		IChatInput handler = handlers.get(p.getUniqueId());
+		checkInput(e, e.getPlayer(), e.getMessage());
+	}
+	
+	private void checkInput(Cancellable e, Player p, String msg) {
+		Set<IChatInput> callbacks = handlers.get(p.getUniqueId());
 		
-		if (handler != null && handler.test(e.getMessage())) {
-			handlers.remove(p.getUniqueId());
-			handler.onChat(p, e.getMessage());
+		if (callbacks != null) {
+			Iterator<IChatInput> iterator = callbacks.iterator();
 			
-			e.setCancelled(true);
+			while (iterator.hasNext()) {
+				IChatInput handler = iterator.next();
+				
+				if (handler.isExpired()) {
+					iterator.remove();
+				}
+				else if (handler.test(msg)) {
+					iterator.remove();
+					plugin.getServer().getScheduler().runTask(plugin, () -> handler.onChat(p, msg));
+					
+					e.setCancelled(true);
+					return;
+				}
+			}
+			
+			if (callbacks.isEmpty()) handlers.remove(p.getUniqueId());
 		}
 	}
 	
