@@ -39,7 +39,7 @@ public final class MinecraftAccount {
 	 * @return							An Optional describing the UUID of the Player
 	 * @throws TooManyRequestsException	If too many requests were sent to the Server
 	 */
-	public static Optional<UUID> getUUID(@NonNull String name) throws TooManyRequestsException {
+	public static Optional<UUID> getUUID(@NonNull String name) throws IOException, TooManyRequestsException {
 		if (!NAME_PATTERN.matcher(name).matches()) {
 			throw new IllegalArgumentException("\"" + name + "\" is not a valid Minecraft Username!");
 		}
@@ -67,8 +67,6 @@ public final class MinecraftAccount {
 					String id = obj.get("id").getAsString();
 					return Optional.ofNullable(UUID.fromString(UUID_PATTERN.matcher(id).replaceAll("$1-$2-$3-$4-$5")));
 				}
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 		
