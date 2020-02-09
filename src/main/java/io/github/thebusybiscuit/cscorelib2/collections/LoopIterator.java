@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -81,6 +83,31 @@ public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
 		}
 		
 		return list.get(index++);
+	}
+	
+	/**
+	 * This method loops this {@link LoopIterator} until a matching item has been
+	 * found. It will not loop more than once though.
+	 * 
+	 * @param predicate		The {@link Predicate} to use for this search
+	 * @return				An {@link Optional} describing the result
+	 */
+	public Optional<T> find(@NonNull Predicate<T> predicate) {
+		if (!hasNext()) {
+			return Optional.empty();
+		}
+		
+		int start = index;
+		
+		T current = next();
+		while (index != start || predicate.test(current)) {
+			current = next();
+		}
+		
+		if (predicate.test(current)) {
+			return Optional.of(current);
+		}
+		else return Optional.empty();
 	}
 
 	@Override
