@@ -106,7 +106,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
         
@@ -219,7 +219,7 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.11.0</version>
+            <version>1.11.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -231,7 +231,7 @@
         <dependency>
             <groupId>com.github.Angeschossen</groupId>
             <artifactId>LandsAPI</artifactId>
-            <version>4.5.0.7</version>
+            <version>4.5.2.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
