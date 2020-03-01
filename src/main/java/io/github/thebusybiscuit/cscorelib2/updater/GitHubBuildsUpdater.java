@@ -77,7 +77,7 @@ public class GitHubBuildsUpdater implements Updater {
 			this.versionsURL = new URL(API_URL + getRepository() + "/builds.json");
 			
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
-				thread = new Thread(new UpdaterTask());
+				thread = new Thread(new UpdaterTask(), "Updater Thread");
 				thread.start();
 			});
 		} catch (MalformedURLException e) {

@@ -106,7 +106,7 @@ public class BukkitUpdater implements Updater {
 			url = new URL(API_URL + id);
 			
 			plugin.getServer().getScheduler().runTask(plugin, () -> {
-				thread = new Thread(new UpdaterTask());
+				thread = new Thread(new UpdaterTask(), "Updater Thread");
 				thread.start();
 			});
 		} catch (MalformedURLException e) {
