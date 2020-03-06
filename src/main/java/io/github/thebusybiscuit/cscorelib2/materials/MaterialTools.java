@@ -21,19 +21,30 @@ public final class MaterialTools {
     // This is a pure Utility class, we do not want any instantiation to happen!
     private MaterialTools() {}
 
-    @Getter private static final MaterialCollection breakableByShovel;
+    @Getter
+    private static final MaterialCollection breakableByShovel;
 
     static {
         Set<Material> shovel = new HashSet<>();
+        
         shovel.addAll(Arrays.asList(
-        	Material.SNOW, Material.SNOW_BLOCK, Material.FARMLAND, 
-        	Material.SOUL_SAND, Material.CLAY, Material.GRAVEL, 
-        	Material.GRASS_PATH, Material.DIRT, Material.COARSE_DIRT,
-        	Material.GRASS_BLOCK, Material.MYCELIUM
+            Material.SNOW, 
+            Material.SNOW_BLOCK, 
+            Material.FARMLAND, 
+            Material.SOUL_SAND, 
+            Material.CLAY, 
+            Material.GRAVEL, 
+            Material.GRASS_PATH, 
+            Material.DIRT, 
+            Material.COARSE_DIRT, 
+            Material.GRASS_BLOCK, 
+            Material.MYCELIUM, 
+            Material.PODZOL
         ));
 
         for (Material mat : Material.values()) {
             if (Tag.SAND.isTagged(mat)) shovel.add(mat);
+            if (mat.toString().endsWith("_CONCRETE_POWDER")) shovel.add(mat);
         }
 
         breakableByShovel = new MaterialCollection(shovel);

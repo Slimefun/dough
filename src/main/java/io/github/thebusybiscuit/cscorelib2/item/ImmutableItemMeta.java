@@ -24,28 +24,28 @@ import lombok.NonNull;
  */
 @Getter
 public class ImmutableItemMeta {
-	
-	private final Optional<String> displayName;
-	private final Optional<List<String>> lore;
-	private final Optional<Integer> customModelData;
-	
-	private final Set<ItemFlag> itemFlags;
-	private final Map<Enchantment, Integer> enchants;
-	
-	public ImmutableItemMeta(Supplier<ItemMeta> supplier) {
-		this(supplier.get());
-	}
-	
-	public ImmutableItemMeta(ItemStack item) {
-		this(item.getItemMeta());
-	}
-	
-	public ImmutableItemMeta(@NonNull ItemMeta meta) {
-		this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()): Optional.empty();
-		this.lore = meta.hasLore() ? Optional.of(meta.getLore()): Optional.empty();
-		this.customModelData = meta.hasCustomModelData() ? Optional.of(meta.getCustomModelData()): Optional.empty();
-		
-		this.itemFlags = meta.getItemFlags();
-		this.enchants = meta.getEnchants();
-	}
+
+    private final Optional<String> displayName;
+    private final Optional<List<String>> lore;
+    private final Optional<Integer> customModelData;
+
+    private final Set<ItemFlag> itemFlags;
+    private final Map<Enchantment, Integer> enchants;
+
+    public ImmutableItemMeta(Supplier<ItemMeta> supplier) {
+        this(supplier.get());
+    }
+
+    public ImmutableItemMeta(ItemStack item) {
+        this(item.getItemMeta());
+    }
+
+    public ImmutableItemMeta(@NonNull ItemMeta meta) {
+        this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
+        this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
+        this.customModelData = meta.hasCustomModelData() ? Optional.of(meta.getCustomModelData()) : Optional.empty();
+
+        this.itemFlags = meta.getItemFlags();
+        this.enchants = meta.getEnchants();
+    }
 }
