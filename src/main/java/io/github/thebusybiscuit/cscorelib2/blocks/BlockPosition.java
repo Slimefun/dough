@@ -10,7 +10,7 @@ import java.util.Objects;
 
 /**
  * This is the position of a block in a World. Using this class as opposed to {@link Location} is much better because it
- * has a lower memory footprint and doesn't contain useless data such as yaw and pitch.<br />
+ * has a lower memory footprint and doesn't contain useless data such as yaw and pitch.<br>
  * This is 12 bytes in memory whereas {@link Location} is 36 bytes.
  * (Note, this is not accounting for things like object headers)
  */
@@ -35,7 +35,7 @@ public final class BlockPosition {
 
     /**
      * Gets the {@link World} this block is in. If this {@link World} has been unloaded it will throw
-     * an {@link IllegalStateException}. This should be getting handled properly by yourself! <br />
+     * an {@link IllegalStateException}. This should be getting handled properly by yourself! <br>
      * <b>Note: This is held as a weak reference!</b>
      *
      * @return The {@link World} for this block.
@@ -50,7 +50,7 @@ public final class BlockPosition {
     }
 
     /**
-     * Gets the long position of this block. This is constructed of the x, y and z. <br />
+     * Gets the long position of this block. This is constructed of the x, y and z. <br>
      * This is encoded as follows: {@code ((x & 0x3FFFFFF) << 38) | ((z & 0x3FFFFFF) << 12) | (y & 0xFFF)}
      *
      * @return The position of this block.
