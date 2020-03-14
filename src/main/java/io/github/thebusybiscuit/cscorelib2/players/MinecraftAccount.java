@@ -38,6 +38,7 @@ public final class MinecraftAccount {
      * @param name
      *            The Name of the Player
      * @return An Optional describing the UUID of the Player
+     * @throws IOException thrown if the stream cannot be opened.
      * @throws TooManyRequestsException
      *             If too many requests were sent to the Server
      */
