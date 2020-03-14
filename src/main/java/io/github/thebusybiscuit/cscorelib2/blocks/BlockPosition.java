@@ -1,12 +1,12 @@
 package io.github.thebusybiscuit.cscorelib2.blocks;
 
+import lombok.NonNull;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 
 import java.lang.ref.WeakReference;
-import java.util.Objects;
 
 /**
  * This is the position of a block in a World. Using this class as opposed to {@link Location} is much better because it
@@ -19,16 +19,12 @@ public final class BlockPosition {
     private final WeakReference<World> world;
     private final long position;
 
-    public BlockPosition(World world, long position) {
-        Objects.requireNonNull(world, "World cannot be null!");
-
+    public BlockPosition(@NonNull World world, long position) {
         this.world = new WeakReference<>(world);
         this.position = position;
     }
 
-    public BlockPosition(World world, int x, int y, int z) {
-        Objects.requireNonNull(world, "World cannot be null!");
-
+    public BlockPosition(@NonNull World world, int x, int y, int z) {
         this.world = new WeakReference<>(world);
         this.position = ((long) (x & 0x3FFFFFF) << 38) | ((long) (z & 0x3FFFFFF) << 12) | (long) (y & 0xFFF);
     }
@@ -145,9 +141,9 @@ public final class BlockPosition {
         if (o instanceof BlockPosition) {
             final BlockPosition pos = (BlockPosition) o;
             if (pos.world.get() == null) return false;
-            
+
             return this.getWorld().getUID().equals(pos.getWorld().getUID())
-                    && this.position == pos.position;
+                && this.position == pos.position;
         }
         return false;
     }
@@ -159,11 +155,11 @@ public final class BlockPosition {
     public int hashCode() {
         final int prime = 31;
         final World ref = this.world.get();
-    
+
         int result = 0;
         result += prime * (ref == null ? 0 : ref.hashCode());
         result += prime * Long.hashCode(position);
-        
+
         return result;
     }
 
