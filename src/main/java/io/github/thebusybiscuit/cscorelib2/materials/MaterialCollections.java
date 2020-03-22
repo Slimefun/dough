@@ -6,6 +6,7 @@ import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 
+import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.Getter;
 
 /**
@@ -65,7 +66,14 @@ public final class MaterialCollections {
 		allLogs = new MaterialCollection(Tag.LOGS);
 		allPlanks = new MaterialCollection(Tag.PLANKS);
 		allWoodenSlabs = new MaterialCollection(Tag.WOODEN_SLABS);
-		allWoodenFences = new MaterialCollection(Tag.WOODEN_FENCES);
+		
+		if (!ReflectionUtils.isVersion("v1_13_")) {
+	        allWoodenFences = new MaterialCollection(Tag.WOODEN_FENCES);
+		}
+		else {
+		    allWoodenFences = new MaterialCollection(Material.OAK_FENCE);
+		}
+		
 		allWoodenDoors = new MaterialCollection(Tag.WOODEN_DOORS);
 		allWoodenTrapdoors = new MaterialCollection(Tag.WOODEN_TRAPDOORS);
 		allWoodenStairs = new MaterialCollection(Tag.WOODEN_STAIRS);
@@ -201,22 +209,22 @@ public final class MaterialCollections {
 
 	@Getter
 	private static final MaterialCollection allDyeColors = new MaterialCollection(
-            Material.WHITE_DYE,
+            ReflectionUtils.isVersion("v1_13_") ? Material.BONE_MEAL : Material.WHITE_DYE,
             Material.ORANGE_DYE,
             Material.MAGENTA_DYE,
             Material.LIGHT_BLUE_DYE,
-            Material.YELLOW_DYE,
+            ReflectionUtils.isVersion("v1_13_") ? Material.valueOf("DANDELION_YELLOW") : Material.YELLOW_DYE,
             Material.LIME_DYE,
             Material.PINK_DYE,
             Material.GRAY_DYE,
             Material.LIGHT_GRAY_DYE,
             Material.CYAN_DYE,
             Material.PURPLE_DYE,
-            Material.BLUE_DYE,
-            Material.BROWN_DYE,
-            Material.GREEN_DYE,
-            Material.RED_DYE,
-            Material.BLACK_DYE
+            ReflectionUtils.isVersion("v1_13_") ? Material.LAPIS_LAZULI : Material.BLUE_DYE,
+            ReflectionUtils.isVersion("v1_13_") ? Material.COCOA_BEANS : Material.BROWN_DYE,
+            ReflectionUtils.isVersion("v1_13_") ? Material.valueOf("CACTUS_GREEN") : Material.GREEN_DYE,
+            ReflectionUtils.isVersion("v1_13_") ? Material.valueOf("ROSE_RED") : Material.RED_DYE,
+            ReflectionUtils.isVersion("v1_13_") ? Material.INK_SAC : Material.BLACK_DYE
     );
 
 	@Getter

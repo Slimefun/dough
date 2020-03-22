@@ -86,7 +86,7 @@ public class MinecraftRecipe<T extends Recipe> {
 	
 	public static final MinecraftRecipe<FurnaceRecipe> FURNACE = new MinecraftRecipe<>(Material.FURNACE, FurnaceRecipe.class, recipe -> recipe.length == 1, 
 		recipe -> new RecipeChoice[] {recipe.getInputChoice()}, (input, stream) ->
-		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CookingRecipe::getResult)
+		stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(FurnaceRecipe::getResult)
 	);
 	
 	public static final MinecraftRecipe<BlastingRecipe> BLAST_FURNACE = new MinecraftRecipe<>(Material.BLAST_FURNACE, BlastingRecipe.class, recipe -> recipe.length == 1, 

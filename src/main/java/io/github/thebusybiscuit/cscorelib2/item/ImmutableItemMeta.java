@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.item;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -27,7 +29,7 @@ public class ImmutableItemMeta {
 
     private final Optional<String> displayName;
     private final Optional<List<String>> lore;
-    private final Optional<Integer> customModelData;
+    private final OptionalInt customModelData;
 
     private final Set<ItemFlag> itemFlags;
     private final Map<Enchantment, Integer> enchants;
@@ -43,7 +45,13 @@ public class ImmutableItemMeta {
     public ImmutableItemMeta(@NonNull ItemMeta meta) {
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
         this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
-        this.customModelData = meta.hasCustomModelData() ? Optional.of(meta.getCustomModelData()) : Optional.empty();
+
+        if (!ReflectionUtils.isVersion("v1_13_")) {
+            this.customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
+        }
+        else {
+            this.customModelData = OptionalInt.empty();
+        }
 
         this.itemFlags = meta.getItemFlags();
         this.enchants = meta.getEnchants();
