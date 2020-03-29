@@ -19,48 +19,49 @@ import world.bentobox.bentobox.managers.IslandsManager;
 
 /**
  * Provides protection handling using the BentoBox API.
+ * 
  * @author Poslovitch
  * @author TheBusyBiscuit
  */
 public class BentoBoxProtectionModule implements ProtectionModule {
-	
-	private IslandsManager manager;
-	private IslandWorldManager iwm;
-	
-	@Override
-	public void load() {
-		manager = BentoBox.getInstance().getIslands();
-		iwm = BentoBox.getInstance().getIWM();
-	}
-	
-	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-		Optional<Island> island = manager.getIslandAt(l);
-		Flag flag = convert(action, l.getWorld());
-		return !iwm.inWorld(l) || island.map(value -> value.isAllowed(User.getInstance(p), flag)).orElse(flag.isSetForWorld(l.getWorld()));
-	}
-	
-	private Flag convert(ProtectableAction action, World world) {
-		switch (action) {
-		case ACCESS_INVENTORIES:
-			return Flags.CONTAINER;
-		case PVP:
-			if (world != null) {
-				if (world.getEnvironment() == World.Environment.NETHER) {
-					return Flags.PVP_NETHER;
-				} 
-				else if (world.getEnvironment() == World.Environment.THE_END) {
-					return Flags.PVP_END;
-				}
-			}
-			return Flags.PVP_OVERWORLD;
-		case BREAK_BLOCK:
-			return Flags.BREAK_BLOCKS;
-		case PLACE_BLOCK:
-		default:
-			return Flags.PLACE_BLOCKS;
-		}
-	}
+
+    private IslandsManager manager;
+    private IslandWorldManager iwm;
+
+    @Override
+    public void load() {
+        manager = BentoBox.getInstance().getIslands();
+        iwm = BentoBox.getInstance().getIWM();
+    }
+
+    @Override
+    public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
+        Optional<Island> island = manager.getIslandAt(l);
+        Flag flag = convert(action, l.getWorld());
+        return !iwm.inWorld(l) || island.map(value -> value.isAllowed(User.getInstance(p), flag)).orElse(flag.isSetForWorld(l.getWorld()));
+    }
+
+    private Flag convert(ProtectableAction action, World world) {
+        switch (action) {
+        case ACCESS_INVENTORIES:
+            return Flags.CONTAINER;
+        case PVP:
+            if (world != null) {
+                if (world.getEnvironment() == World.Environment.NETHER) {
+                    return Flags.PVP_NETHER;
+                }
+                else if (world.getEnvironment() == World.Environment.THE_END) {
+                    return Flags.PVP_END;
+                }
+            }
+            return Flags.PVP_OVERWORLD;
+        case BREAK_BLOCK:
+            return Flags.BREAK_BLOCKS;
+        case PLACE_BLOCK:
+        default:
+            return Flags.PLACE_BLOCKS;
+        }
+    }
 
     @Override
     public String getName() {

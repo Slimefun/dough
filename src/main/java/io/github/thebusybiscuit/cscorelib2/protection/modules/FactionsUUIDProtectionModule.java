@@ -13,24 +13,24 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class FactionsUUIDProtectionModule implements ProtectionModule {
 
-	private FPlayers api;
-	
-	@Override
-	public void load() {
-		api = FPlayers.getInstance();
-	}
-	
-	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-		Faction faction = Board.getInstance().getFactionAt(new FLocation(l));
-		if (faction == null || faction.getId().equals("0")) return true;
-		
-		return faction.getId().equals(api.getByOfflinePlayer(p).getFaction().getId());
-	}
+    private FPlayers api;
 
-	@Override
-	public String getName() {
-		return "Factions";
-	}
+    @Override
+    public void load() {
+        api = FPlayers.getInstance();
+    }
+
+    @Override
+    public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
+        Faction faction = Board.getInstance().getFactionAt(new FLocation(l));
+        if (faction == null || faction.getId().equals("0")) return true;
+
+        return faction.getId().equals(api.getByOfflinePlayer(p).getFaction().getId());
+    }
+
+    @Override
+    public String getName() {
+        return "Factions";
+    }
 
 }

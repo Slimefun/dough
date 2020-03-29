@@ -12,32 +12,32 @@ import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
 
 public class PreciousStonesProtectionModule implements ProtectionModule {
 
-	private IApi api;
-	
-	@Override
-	public void load() {
-		api = PreciousStones.API();
-	}
+    private IApi api;
+
+    @Override
+    public void load() {
+        api = PreciousStones.API();
+    }
 
     @Override
     public String getName() {
         return "PreciousStones";
     }
-	
-	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-		if (!(p instanceof Player)) return false;
-		
+
+    @Override
+    public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
+        if (!(p instanceof Player)) return false;
+
         switch (action) {
-			case PVP:
-				return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
-			case BREAK_BLOCK:
-				return api.canBreak((Player) p, l);
-			case ACCESS_INVENTORIES:
-			case PLACE_BLOCK:
-				return api.canPlace((Player) p, l);
-			default:
-				return false;
+        case PVP:
+            return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
+        case BREAK_BLOCK:
+            return api.canBreak((Player) p, l);
+        case ACCESS_INVENTORIES:
+        case PLACE_BLOCK:
+            return api.canPlace((Player) p, l);
+        default:
+            return false;
         }
-	}
+    }
 }

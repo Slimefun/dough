@@ -13,33 +13,32 @@ import nl.rutgerkok.blocklocker.profile.Profile;
 import nl.rutgerkok.blocklocker.protection.Protection;
 
 public class BlockLockerProtectionModule implements ProtectionModule {
-	
-	private BlockLockerPlugin plugin;
-	
-	@Override
-	public void load() {
-		plugin = BlockLockerAPIv2.getPlugin();
-	}
 
-	@Override
-	public String getName() {
-		return "BlockLocker";
-	}
-	
-	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-		if (!action.isBlockAction()) return true;
-		
-		Optional<Protection> protection = plugin.getProtectionFinder().findProtection(l.getBlock());
-		
-		if (protection.isPresent()) {
-			Profile profile = plugin.getProfileFactory().fromNameAndUniqueId(p.getName(), Optional.of(p.getUniqueId()));
-			return protection.get().isAllowed(profile);
-		}
-		else {
-			return true;
-		}
-		
-	}
+    private BlockLockerPlugin plugin;
+
+    @Override
+    public void load() {
+        plugin = BlockLockerAPIv2.getPlugin();
+    }
+
+    @Override
+    public String getName() {
+        return "BlockLocker";
+    }
+
+    @Override
+    public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
+        if (!action.isBlockAction()) return true;
+
+        Optional<Protection> protection = plugin.getProtectionFinder().findProtection(l.getBlock());
+
+        if (protection.isPresent()) {
+            Profile profile = plugin.getProfileFactory().fromNameAndUniqueId(p.getName(), Optional.of(p.getUniqueId()));
+            return protection.get().isAllowed(profile);
+        }
+        else {
+            return true;
+        }
+
+    }
 }
-	

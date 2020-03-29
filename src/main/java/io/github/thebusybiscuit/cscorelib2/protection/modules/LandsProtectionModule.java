@@ -34,17 +34,17 @@ public class LandsProtectionModule implements ProtectionModule {
 
     private RoleSetting convert(ProtectableAction protectableAction) {
         switch (protectableAction) {
-            case PLACE_BLOCK:
-                return RoleSetting.BLOCK_PLACE;
+        case PLACE_BLOCK:
+            return RoleSetting.BLOCK_PLACE;
 
-            case PVP:
-                return RoleSetting.ATTACK_PLAYER;
+        case PVP:
+            return RoleSetting.ATTACK_PLAYER;
 
-            case ACCESS_INVENTORIES:
-                return RoleSetting.INTERACT_CONTAINER;
+        case ACCESS_INVENTORIES:
+            return RoleSetting.INTERACT_CONTAINER;
 
-            default:
-                return RoleSetting.BLOCK_BREAK;
+        default:
+            return RoleSetting.BLOCK_BREAK;
         }
     }
 }
