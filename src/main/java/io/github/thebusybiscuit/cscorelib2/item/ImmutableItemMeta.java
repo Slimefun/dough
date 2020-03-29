@@ -28,7 +28,7 @@ public class ImmutableItemMeta {
 
     private final Optional<String> displayName;
     private final Optional<List<String>> lore;
-    private final OptionalInt customModelData;
+    private OptionalInt customModelData;
 
     private final Set<ItemFlag> itemFlags;
     private final Map<Enchantment, Integer> enchants;
@@ -43,7 +43,13 @@ public class ImmutableItemMeta {
 
     public ImmutableItemMeta(@NonNull ItemMeta meta) {
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
-        this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();this.customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
+        this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
+        
+        try {
+            customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
+        } catch(NoSuchMethodError x) {
+            customModelData = OptionalInt.empty();
+        }
 
         this.itemFlags = meta.getItemFlags();
         this.enchants = meta.getEnchants();
