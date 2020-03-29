@@ -26,7 +26,7 @@ public class MaterialCollection implements Iterable<Material> {
     @Getter
     private final Material[] asArray;
 
-    public MaterialCollection(Collection<Material> materials) {
+    public MaterialCollection(@NonNull Collection<Material> materials) {
         this(materials.stream());
     }
 
@@ -34,7 +34,7 @@ public class MaterialCollection implements Iterable<Material> {
         this(Arrays.stream(materials));
     }
 
-    public MaterialCollection(Tag<Material> tag) {
+    public MaterialCollection(@NonNull Tag<Material> tag) {
         this(tag.getValues());
     }
 
