@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -44,10 +45,11 @@ public class ImmutableItemMeta {
     public ImmutableItemMeta(@NonNull ItemMeta meta) {
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
         this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
-        
-        try {
+
+        if (!ReflectionUtils.isVersion("v_1_13_")) {
             customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
-        } catch(NoSuchMethodError x) {
+        }
+        else {
             customModelData = OptionalInt.empty();
         }
 
