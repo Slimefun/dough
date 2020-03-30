@@ -91,10 +91,12 @@ public final class ItemUtils {
                 if (!((LeatherArmorMeta) aMeta).getColor().equals(((LeatherArmorMeta) bMeta).getColor())) return false;
             }
 
-            // Custom Model Data
-            if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData()) return false;
-            if (aMeta.hasCustomModelData()) {
-                if (aMeta.getCustomModelData() != bMeta.getCustomModelData()) return false;
+            if (!ReflectionUtils.isVersion("v_1_13_")) {
+                // Custom Model Data
+                if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData()) return false;
+                if (aMeta.hasCustomModelData()) {
+                    if (aMeta.getCustomModelData() != bMeta.getCustomModelData()) return false;
+                }
             }
 
             // Enchantments
