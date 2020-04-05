@@ -40,7 +40,7 @@ public class CustomBookListener implements Listener {
         CustomBookInterface book = books.get(e.getPlayer().getUniqueId());
 
         if (book != null) {
-            if (e.getMessage().startsWith("written_book:open - ")) {
+            if (!e.getMessage().startsWith("written_book:open - ")) {
                 books.remove(e.getPlayer().getUniqueId());
             }
             else {
