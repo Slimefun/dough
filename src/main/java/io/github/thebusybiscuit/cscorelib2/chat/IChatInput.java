@@ -5,11 +5,7 @@ import java.util.function.Predicate;
 import org.bukkit.entity.Player;
 
 public interface IChatInput extends Predicate<String> {
-	
-	void onChat(Player p, String msg);
-	
-	default boolean isExpired() {
-		return false;
-	}
+
+    void onChat(Player p, String msg);
 
 }

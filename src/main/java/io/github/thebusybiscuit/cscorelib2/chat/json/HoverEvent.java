@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.chat.json;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -29,23 +30,32 @@ public class HoverEvent {
 	
 	private final JsonObject json;
 	
-	public HoverEvent(String... text) {
-		json = new JsonObject();
-		json.addProperty("action", "show_text");
-		json.addProperty("value", String.join("\n", text));
+	public HoverEvent(String... lines) {
+        this("show_text", String.join("\n", lines));
 	}
+    
+    public HoverEvent(Collection<String> lines) {
+        this("show_text", String.join("\n", lines));
+    }
 	
 	public HoverEvent(ItemStack item) {
-		json = new JsonObject();
-		json.addProperty("action", "show_item");
-
-		try {
-			Object nbt = getNBT.invoke(copy.invoke(null, item), nbtConstructor.newInstance());
-			json.addProperty("value", nbt.toString());
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
-			e.printStackTrace();
-		}
-		
+	    this("show_item", encodeItemStack(item));
+	}
+	
+	private HoverEvent(String type, String value) {
+        json = new JsonObject();
+        json.addProperty("action", type);
+        json.addProperty("value", value);
+	}
+	
+	private static String encodeItemStack(ItemStack item) {
+	    try {
+            Object nbt = getNBT.invoke(copy.invoke(null, item), nbtConstructor.newInstance());
+            return nbt.toString();
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
 	}
 	
 	public JsonObject asJson() {
