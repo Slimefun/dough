@@ -46,11 +46,11 @@ public class ImmutableItemMeta {
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
         this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
 
-        if (!ReflectionUtils.isVersion("v_1_13_")) {
-            customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
+        if (ReflectionUtils.isVersion("v1_13_")) {
+            customModelData = OptionalInt.empty();
         }
         else {
-            customModelData = OptionalInt.empty();
+            customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
         }
 
         this.itemFlags = meta.getItemFlags();
