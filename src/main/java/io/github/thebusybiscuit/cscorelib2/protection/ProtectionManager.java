@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.block.Block;
+import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.loggers.CoreProtectLogger;
 import io.github.thebusybiscuit.cscorelib2.protection.loggers.LogBlockLogger;
@@ -23,7 +24,8 @@ import io.github.thebusybiscuit.cscorelib2.protection.modules.GriefPreventionPro
 import io.github.thebusybiscuit.cscorelib2.protection.modules.LWCProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.LandsProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.LocketteProtectionModule;
-import io.github.thebusybiscuit.cscorelib2.protection.modules.PlotSquaredProtectionModule;
+import io.github.thebusybiscuit.cscorelib2.protection.modules.PlotSquared4ProtectionModule;
+import io.github.thebusybiscuit.cscorelib2.protection.modules.PlotSquared5ProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.PreciousStonesProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.RedProtectProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.TownyProtectionModule;
@@ -85,7 +87,14 @@ public final class ProtectionManager {
             registerModule("Lockette", LocketteProtectionModule::new);
         }
         if (server.getPluginManager().isPluginEnabled("PlotSquared")) {
-            registerModule("PlotSquared", PlotSquaredProtectionModule::new);
+            Plugin plotSquared = server.getPluginManager().getPlugin("PlotSquared");
+
+            if (plotSquared.getDescription().getVersion().startsWith("4.")) {
+                registerModule("PlotSquared v4", PlotSquared4ProtectionModule::new);
+            }
+            else {
+                registerModule("PlotSquared v5", PlotSquared5ProtectionModule::new);
+            }
         }
         if (server.getPluginManager().isPluginEnabled("RedProtect")) {
             registerModule("RedProtect", RedProtectProtectionModule::new);

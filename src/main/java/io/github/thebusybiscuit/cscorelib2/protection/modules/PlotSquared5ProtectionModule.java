@@ -3,16 +3,16 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 
-import com.github.intellectualsites.plotsquared.plot.config.Captions;
-import com.github.intellectualsites.plotsquared.plot.object.Location;
-import com.github.intellectualsites.plotsquared.plot.object.Plot;
-import com.github.intellectualsites.plotsquared.plot.object.PlotPlayer;
-import com.github.intellectualsites.plotsquared.plot.util.Permissions;
+import com.plotsquared.core.configuration.Captions;
+import com.plotsquared.core.location.Location;
+import com.plotsquared.core.player.PlotPlayer;
+import com.plotsquared.core.plot.Plot;
+import com.plotsquared.core.util.Permissions;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
-public class PlotSquaredProtectionModule implements ProtectionModule {
+public class PlotSquared5ProtectionModule implements ProtectionModule {
 
     @Override
     public void load() {
@@ -21,7 +21,7 @@ public class PlotSquaredProtectionModule implements ProtectionModule {
 
     @Override
     public String getName() {
-        return "PlotSquared";
+        return "PlotSquared v5";
     }
 
     @Override

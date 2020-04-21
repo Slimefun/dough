@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.thebusybiscuit</groupId>
     <artifactId>CSCoreLib2</artifactId>
-    <version>0.13</version>
+    <version>0.14</version>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -43,12 +43,12 @@
             <url>https://raw.github.com/FabioZumbi12/RedProtect/mvn-repo/</url>
         </repository>
         <repository>
-            <id>plotsquared-ci</id>
-            <url>http://ci.athion.net/job/PlotSquared-Releases/ws/mvn/</url>
-        </repository>
-        <repository>
             <id>FactionsUUID-repo</id>
             <url>https://ci.ender.zone/job/FactionsUUID/122/maven-repository/repository</url>
+        </repository>
+        <repository>
+            <id>plotsquared</id>
+            <url>https://plotsquared.com/mvn/</url>
         </repository>
         <repository>
             <id>rutger-repo</id>
@@ -164,11 +164,13 @@
             <groupId>com.wasteofplastic</groupId>
             <artifactId>askyblock</artifactId>
             <version>3.0.9.4</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.dmulloy2.LWC</groupId>
             <artifactId>lwc</artifactId>
             <version>master-4.5.1-g2100b5e-18</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.massivecraft.massivecore</groupId>
@@ -188,21 +190,31 @@
             <groupId>com.massivecraft</groupId>
             <artifactId>Factions</artifactId>
             <version>1.6.9.5-U0.2.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.LlmDl</groupId>
             <artifactId>Towny</artifactId>
             <version>1b86d017c5</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.fubira</groupId>
             <artifactId>Lockette</artifactId>
             <version>9dac96e8f8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.plotsquared</groupId>
+            <artifactId>PlotSquared</artifactId>
+            <version>5.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.github.intellectualsites.plotsquared</groupId>
             <artifactId>PlotSquared-API</artifactId>
-            <version>4.453</version>
+            <version>4.514</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>br.net.fabiozumbi12.RedProtect</groupId>
