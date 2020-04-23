@@ -38,7 +38,8 @@ public final class MinecraftAccount {
      * @param name
      *            The Name of the Player
      * @return An Optional describing the UUID of the Player
-     * @throws IOException thrown if the stream cannot be opened.
+     * @throws IOException
+     *             thrown if the stream cannot be opened.
      * @throws TooManyRequestsException
      *             If too many requests were sent to the Server
      */
@@ -68,7 +69,7 @@ public final class MinecraftAccount {
                     }
 
                     String id = obj.get("id").getAsString();
-                    return Optional.ofNullable(UUID.fromString(UUID_PATTERN.matcher(id).replaceAll("$1-$2-$3-$4-$5")));
+                    return Optional.of(UUID.fromString(UUID_PATTERN.matcher(id).replaceAll("$1-$2-$3-$4-$5")));
                 }
             }
         }
@@ -91,8 +92,10 @@ public final class MinecraftAccount {
      * @return An Optional describing the Skin Texture of the Player
      * @throws TooManyRequestsException
      *             If too many requests were sent to the Server
+     * @throws IOException
+     *             An {@link IOException} is thrown if the Server is down or rate-limits the request
      */
-    public static Optional<String> getSkin(@NonNull UUID uuid) throws TooManyRequestsException {
+    public static Optional<String> getSkin(@NonNull UUID uuid) throws TooManyRequestsException, IOException {
         Optional<URL> url = getURL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString().replace("-", "") + "?unsigned=false");
 
         if (url.isPresent()) {
@@ -122,9 +125,6 @@ public final class MinecraftAccount {
                     }
                 }
             }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
         return Optional.empty();
@@ -132,7 +132,7 @@ public final class MinecraftAccount {
 
     private static Optional<URL> getURL(String url) {
         try {
-            return Optional.ofNullable(new URL(url));
+            return Optional.of(new URL(url));
         }
         catch (MalformedURLException e) {
             e.printStackTrace();
