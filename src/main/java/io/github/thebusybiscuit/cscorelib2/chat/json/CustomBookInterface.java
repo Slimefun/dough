@@ -113,7 +113,7 @@ public class CustomBookInterface {
 
         listener.getBooks().put(p.getUniqueId(), this);
 
-        if (!ReflectionUtils.isVersion("1_13_")) {
+        if (!ReflectionUtils.isVersion("v1_13_")) {
             p.openBook(book);
         }
         else {
