@@ -148,7 +148,7 @@ public final class ProtectionManager {
     public void registerModule(@NonNull Server server, @NonNull String pluginName, @NonNull Supplier<ProtectionModule> supplier) {
         Plugin plugin = server.getPluginManager().getPlugin(pluginName);
 
-        if (plugin.isEnabled()) {
+        if (plugin != null && plugin.isEnabled()) {
             registerModule(plugin, pluginName, supplier);
         }
     }
