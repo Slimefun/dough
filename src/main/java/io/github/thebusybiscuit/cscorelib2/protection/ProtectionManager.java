@@ -57,25 +57,26 @@ public final class ProtectionManager {
         logger.log(Level.INFO, "Loading Protection Modules...");
         logger.log(Level.INFO, "This may happen more than once.");
 
-        registerModule(server, "WorldGuard", WorldGuardProtectionModule::new);
-        registerModule(server, "Towny", TownyProtectionModule::new);
-        registerModule(server, "GriefPrevention", GriefPreventionProtectionModule::new);
-        registerModule(server, "ASkyBlock", ASkyBlockProtectionModule::new);
-        registerModule(server, "LWC", LWCProtectionModule::new);
-        registerModule(server, "PreciousStones", PreciousStonesProtectionModule::new);
-        registerModule(server, "Lockette", LocketteProtectionModule::new);
+        // We sadly cannot use ModuleName() as this would load the class into memory prematurely
+        registerModule(server, "WorldGuard", () -> new WorldGuardProtectionModule());
+        registerModule(server, "Towny", () -> new TownyProtectionModule());
+        registerModule(server, "GriefPrevention", () -> new GriefPreventionProtectionModule());
+        registerModule(server, "ASkyBlock", () -> new ASkyBlockProtectionModule());
+        registerModule(server, "LWC", () -> new LWCProtectionModule());
+        registerModule(server, "PreciousStones", () -> new PreciousStonesProtectionModule());
+        registerModule(server, "Lockette", () -> new LocketteProtectionModule());
 
-        registerModule(server, "RedProtect", RedProtectProtectionModule::new);
-        registerModule(server, "BentoBox", BentoBoxProtectionModule::new);
-        registerModule(server, "BlockLocker", BlockLockerProtectionModule::new);
-        registerModule(server, "Lands", LandsProtectionModule::new);
+        registerModule(server, "RedProtect", () -> new RedProtectProtectionModule());
+        registerModule(server, "BentoBox", () -> new BentoBoxProtectionModule());
+        registerModule(server, "BlockLocker", () -> new BlockLockerProtectionModule());
+        registerModule(server, "Lands", () -> new LandsProtectionModule());
 
         if (server.getPluginManager().isPluginEnabled("Factions")) {
             if (server.getPluginManager().getPlugin("Factions").getDescription().getDepend().contains("MassiveCore")) {
-                registerModule(server, "Factions", FactionsProtectionModule::new);
+                registerModule(server, "Factions", () -> new FactionsProtectionModule());
             }
             else {
-                registerModule(server, "FactionsUUID", FactionsUUIDProtectionModule::new);
+                registerModule(server, "FactionsUUID", () -> new FactionsUUIDProtectionModule());
             }
         }
 
@@ -83,10 +84,10 @@ public final class ProtectionManager {
             Plugin plotSquared = server.getPluginManager().getPlugin("PlotSquared");
 
             if (plotSquared.getDescription().getVersion().startsWith("4.")) {
-                registerModule(plotSquared, "PlotSquared v4", PlotSquared4ProtectionModule::new);
+                registerModule(plotSquared, "PlotSquared v4", () -> new PlotSquared4ProtectionModule());
             }
             else {
-                registerModule(plotSquared, "PlotSquared v5", PlotSquared5ProtectionModule::new);
+                registerModule(plotSquared, "PlotSquared v5", () -> new PlotSquared5ProtectionModule());
             }
         }
 
