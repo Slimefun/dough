@@ -39,12 +39,14 @@ public class CustomBookInterface {
             pagesField = ReflectionUtils.getField(metaClass, "pages");
             pagesField.setAccessible(true);
 
-            copyBook = ReflectionUtils.getMethod(ReflectionUtils.getOBCClass("inventory.CraftItemStack"), "asNMSCopy", ItemStack.class);
+            if (ReflectionUtils.isVersion("v1_13_")) {
+                copyBook = ReflectionUtils.getMethod(ReflectionUtils.getOBCClass("inventory.CraftItemStack"), "asNMSCopy", ItemStack.class);
+                playerHandle = ReflectionUtils.getOBCClass("entity.CraftPlayer").getMethod("getHandle");
 
-            Class<?> enumhand = ReflectionUtils.getNMSClass("EnumHand");
-            playerHandle = ReflectionUtils.getOBCClass("entity.CraftPlayer").getMethod("getHandle");
-            openBook = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("EntityPlayer"), "openBook", ReflectionUtils.getNMSClass("ItemStack"), enumhand);
-            mainHand = ReflectionUtils.getEnumConstant(enumhand, "MAIN_HAND");
+                Class<?> enumhand = ReflectionUtils.getNMSClass("EnumHand");
+                openBook = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("EntityPlayer"), "a", ReflectionUtils.getNMSClass("ItemStack"), enumhand);
+                mainHand = ReflectionUtils.getEnumConstant(enumhand, "MAIN_HAND");
+            }
         }
         catch (ClassNotFoundException | SecurityException | NoSuchFieldException | NoSuchMethodException e) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
