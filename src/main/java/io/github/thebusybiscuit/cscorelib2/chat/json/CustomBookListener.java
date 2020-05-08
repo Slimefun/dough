@@ -25,6 +25,8 @@ import lombok.Getter;
 
 public class CustomBookListener implements Listener {
 
+    protected static final String TRIGGER = "written_book:open - ";
+
     @Getter
     private final Set<UUID> players = new HashSet<>();
 
@@ -39,15 +41,16 @@ public class CustomBookListener implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         CustomBookInterface book = books.get(e.getPlayer().getUniqueId());
 
-        if (book != null) {
-            if (!e.getMessage().startsWith("written_book:open - ")) {
-                books.remove(e.getPlayer().getUniqueId());
-            }
-            else {
+        if (!e.getMessage().startsWith(TRIGGER)) {
+            books.remove(e.getPlayer().getUniqueId());
+        }
+        else {
+            e.setCancelled(true);
+
+            if (book != null) {
                 for (Map.Entry<NamespacedKey, Consumer<Player>> entry : book.getClickables().entrySet()) {
-                    if (e.getMessage().equals("written_book:open - " + entry.getKey().toString())) {
+                    if (e.getMessage().equals(TRIGGER + entry.getKey().toString())) {
                         entry.getValue().accept(e.getPlayer());
-                        e.setCancelled(true);
                         break;
                     }
                 }

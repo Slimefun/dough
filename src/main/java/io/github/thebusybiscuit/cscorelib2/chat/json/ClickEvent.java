@@ -13,7 +13,7 @@ import lombok.NonNull;
 public class ClickEvent {
 
     private final JsonObject json;
-    
+
     @Getter
     private ClickableText clickableText;
 
@@ -32,7 +32,7 @@ public class ClickEvent {
     public ClickEvent(@NonNull NamespacedKey key, @NonNull Consumer<Player> callback) {
         json = new JsonObject();
         json.addProperty("action", "run_command");
-        json.addProperty("value", "written_book:open - " + key.toString());
+        json.addProperty("value", CustomBookListener.TRIGGER + key.toString());
         this.clickableText = new ClickableText(key, callback);
     }
 
