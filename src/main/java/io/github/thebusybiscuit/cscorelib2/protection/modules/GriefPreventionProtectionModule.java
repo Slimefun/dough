@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
@@ -14,14 +15,20 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
 
     private DataStore dataStore;
 
-    @Override
-    public void load() {
-        dataStore = GriefPrevention.instance.dataStore;
+    private final Plugin plugin;
+
+    public GriefPreventionProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     @Override
-    public String getName() {
-        return "GriefPrevention";
+    public Plugin getPlugin() {
+        return plugin;
+    }
+
+    @Override
+    public void load() {
+        dataStore = GriefPrevention.instance.dataStore;
     }
 
     @Override

@@ -19,12 +19,30 @@ public interface ProtectionModule {
     void load();
 
     /**
-     * Please return the Name of the Protection {@link Plugin} you are integrating.
+     * This returns the {@link Plugin} for this {@link ProtectionModule}.
+     * 
+     * @return The associated {@link Plugin}
+     */
+    Plugin getPlugin();
+
+    /**
+     * This returns the name of the Protection {@link Plugin} you are integrating.
      * It must be unique.
      * 
      * @return The Name of your {@link Plugin}
      */
-    String getName();
+    default String getName() {
+        return getPlugin().getName();
+    }
+
+    /**
+     * This returns the version of the {@link Plugin} this represents.
+     * 
+     * @return The version of your {@link Plugin}
+     */
+    default String getVersion() {
+        return getPlugin().getDescription().getVersion();
+    }
 
     /**
      * This method implements the functionality of this module.

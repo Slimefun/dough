@@ -1,26 +1,33 @@
 package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import me.angeschossen.lands.api.land.LandWorld;
 import me.angeschossen.lands.api.role.enums.RoleSetting;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 public class LandsProtectionModule implements ProtectionModule {
 
     private LandsIntegration landsIntegration;
+    private final Plugin plugin;
+
+    public LandsProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return plugin;
+    }
 
     @Override
     public void load() {
         this.landsIntegration = new LandsIntegration("CS-CoreLib2", false);
-    }
-
-    @Override
-    public String getName() {
-        return "Lands";
     }
 
     @Override

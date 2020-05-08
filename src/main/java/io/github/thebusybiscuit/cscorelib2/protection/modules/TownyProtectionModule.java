@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
@@ -12,14 +13,20 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class TownyProtectionModule implements ProtectionModule {
 
-    @Override
-    public void load() {
-        // We don't need to load any APIs, everything is static
+    private final Plugin plugin;
+
+    public TownyProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     @Override
-    public String getName() {
-        return "Towny";
+    public Plugin getPlugin() {
+        return plugin;
+    }
+
+    @Override
+    public void load() {
+        // We don't need to load any APIs, everything is static
     }
 
     @Override

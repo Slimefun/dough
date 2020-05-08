@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
 import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
@@ -13,15 +14,20 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 public class RedProtectProtectionModule implements ProtectionModule {
 
     private RedProtectAPI api;
+    private final Plugin plugin;
+
+    public RedProtectProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return plugin;
+    }
 
     @Override
     public void load() {
         api = RedProtect.get().getAPI();
-    }
-
-    @Override
-    public String getName() {
-        return "RedProtect";
     }
 
     @Override

@@ -2,6 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.plugin.Plugin;
 
 import com.github.intellectualsites.plotsquared.plot.config.Captions;
 import com.github.intellectualsites.plotsquared.plot.object.Location;
@@ -14,14 +15,20 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 
 public class PlotSquared4ProtectionModule implements ProtectionModule {
 
-    @Override
-    public void load() {
-        // We don't need to load any APIs, everything is static
+    private final Plugin plugin;
+
+    public PlotSquared4ProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     @Override
-    public String getName() {
-        return "PlotSquared v4";
+    public Plugin getPlugin() {
+        return plugin;
+    }
+
+    @Override
+    public void load() {
+        // We don't need to load any APIs, everything is static
     }
 
     @Override

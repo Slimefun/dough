@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
@@ -27,6 +28,17 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 
     private IslandsManager manager;
     private IslandWorldManager iwm;
+
+    private final Plugin plugin;
+
+    public BentoBoxProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return plugin;
+    }
 
     @Override
     public void load() {
@@ -61,10 +73,5 @@ public class BentoBoxProtectionModule implements ProtectionModule {
         default:
             return Flags.PLACE_BLOCKS;
         }
-    }
-
-    @Override
-    public String getName() {
-        return "BentoBox";
     }
 }

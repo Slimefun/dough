@@ -2,6 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.Plugin;
 
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -15,6 +16,17 @@ public class FactionsUUIDProtectionModule implements ProtectionModule {
 
     private FPlayers api;
 
+    private final Plugin plugin;
+
+    public FactionsUUIDProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return plugin;
+    }
+
     @Override
     public void load() {
         api = FPlayers.getInstance();
@@ -26,11 +38,6 @@ public class FactionsUUIDProtectionModule implements ProtectionModule {
         if (faction == null || faction.getId().equals("0")) return true;
 
         return faction.getId().equals(api.getByOfflinePlayer(p).getFaction().getId());
-    }
-
-    @Override
-    public String getName() {
-        return "Factions";
     }
 
 }

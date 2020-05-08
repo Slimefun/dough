@@ -2,7 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.protection;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Supplier;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -57,26 +57,26 @@ public final class ProtectionManager {
         logger.log(Level.INFO, "Loading Protection Modules...");
         logger.log(Level.INFO, "This may happen more than once.");
 
-        // We sadly cannot use ModuleName() as this would load the class into memory prematurely
-        registerModule(server, "WorldGuard", () -> new WorldGuardProtectionModule());
-        registerModule(server, "Towny", () -> new TownyProtectionModule());
-        registerModule(server, "GriefPrevention", () -> new GriefPreventionProtectionModule());
-        registerModule(server, "ASkyBlock", () -> new ASkyBlockProtectionModule());
-        registerModule(server, "LWC", () -> new LWCProtectionModule());
-        registerModule(server, "PreciousStones", () -> new PreciousStonesProtectionModule());
-        registerModule(server, "Lockette", () -> new LocketteProtectionModule());
+        // We sadly cannot use ModuleName::new as this would load the class into memory prematurely
+        registerModule(server, "WorldGuard", plugin -> new WorldGuardProtectionModule(plugin));
+        registerModule(server, "Towny", plugin -> new TownyProtectionModule(plugin));
+        registerModule(server, "GriefPrevention", plugin -> new GriefPreventionProtectionModule(plugin));
+        registerModule(server, "ASkyBlock", plugin -> new ASkyBlockProtectionModule(plugin));
+        registerModule(server, "LWC", plugin -> new LWCProtectionModule(plugin));
+        registerModule(server, "PreciousStones", plugin -> new PreciousStonesProtectionModule(plugin));
+        registerModule(server, "Lockette", plugin -> new LocketteProtectionModule(plugin));
 
-        registerModule(server, "RedProtect", () -> new RedProtectProtectionModule());
-        registerModule(server, "BentoBox", () -> new BentoBoxProtectionModule());
-        registerModule(server, "BlockLocker", () -> new BlockLockerProtectionModule());
-        registerModule(server, "Lands", () -> new LandsProtectionModule());
+        registerModule(server, "RedProtect", plugin -> new RedProtectProtectionModule(plugin));
+        registerModule(server, "BentoBox", plugin -> new BentoBoxProtectionModule(plugin));
+        registerModule(server, "BlockLocker", plugin -> new BlockLockerProtectionModule(plugin));
+        registerModule(server, "Lands", plugin -> new LandsProtectionModule(plugin));
 
         if (server.getPluginManager().isPluginEnabled("Factions")) {
             if (server.getPluginManager().getPlugin("Factions").getDescription().getDepend().contains("MassiveCore")) {
-                registerModule(server, "Factions", () -> new FactionsProtectionModule());
+                registerModule(server, "Factions", plugin -> new FactionsProtectionModule(plugin));
             }
             else {
-                registerModule(server, "FactionsUUID", () -> new FactionsUUIDProtectionModule());
+                registerModule(server, "FactionsUUID", plugin -> new FactionsUUIDProtectionModule(plugin));
             }
         }
 
@@ -84,10 +84,10 @@ public final class ProtectionManager {
             Plugin plotSquared = server.getPluginManager().getPlugin("PlotSquared");
 
             if (plotSquared.getDescription().getVersion().startsWith("4.")) {
-                registerModule(plotSquared, "PlotSquared v4", () -> new PlotSquared4ProtectionModule());
+                registerModule(plotSquared, plugin -> new PlotSquared4ProtectionModule(plugin));
             }
             else {
-                registerModule(plotSquared, "PlotSquared v5", () -> new PlotSquared5ProtectionModule());
+                registerModule(plotSquared, plugin -> new PlotSquared5ProtectionModule(plugin));
             }
         }
 
@@ -146,24 +146,24 @@ public final class ProtectionManager {
         loadModuleMSG(name);
     }
 
-    public void registerModule(@NonNull Server server, @NonNull String pluginName, @NonNull Supplier<ProtectionModule> supplier) {
+    public void registerModule(@NonNull Server server, @NonNull String pluginName, @NonNull Function<Plugin, ProtectionModule> constructor) {
         Plugin plugin = server.getPluginManager().getPlugin(pluginName);
 
         if (plugin != null && plugin.isEnabled()) {
-            registerModule(plugin, pluginName, supplier);
+            registerModule(plugin, constructor);
         }
     }
 
-    private void registerModule(@NonNull Plugin plugin, @NonNull String name, @NonNull Supplier<ProtectionModule> supplier) {
+    private void registerModule(@NonNull Plugin plugin, @NonNull Function<Plugin, ProtectionModule> constructor) {
         try {
-            ProtectionModule module = supplier.get();
+            ProtectionModule module = constructor.apply(plugin);
             module.load();
 
             protectionModules.add(module);
-            loadModuleMSG(name + " v" + plugin.getDescription().getVersion());
+            loadModuleMSG(module.getName() + " v" + module.getVersion());
         }
         catch (Throwable x) {
-            logger.log(Level.SEVERE, x, () -> "An Error occured while registering the Protection Module: \"" + name + "\" v" + plugin.getDescription().getVersion());
+            logger.log(Level.SEVERE, x, () -> "An Error occured while registering the Protection Module: \"" + plugin.getName() + "\" v" + plugin.getDescription().getVersion());
         }
     }
 
@@ -173,7 +173,7 @@ public final class ProtectionManager {
             registerLogger(module.getName(), module);
         }
         catch (Throwable x) {
-            logger.log(Level.SEVERE, "An Error occured while registering the Protection Module: \"" + module.getName() + "\"", x);
+            logger.log(Level.SEVERE, x, () -> "An Error occured while registering the Protection Module: \"" + module.getName() + "\"");
         }
     }
 
@@ -193,8 +193,9 @@ public final class ProtectionManager {
                 }
             }
             catch (Exception x) {
-                logger.log(Level.SEVERE, "An Error occured while querying the Protection Module: \"" + module.getName() + "\"", x);
-                return false;
+                logger.log(Level.SEVERE, x, () -> "An Error occured while querying the Protection Module: \"" + module.getName() + " v" + module.getVersion() + "\"");
+                // Fallback will just be "allow".
+                return true;
             }
         }
 
@@ -207,7 +208,7 @@ public final class ProtectionManager {
                 module.logAction(p, b, action);
             }
             catch (Exception x) {
-                logger.log(Level.SEVERE, "An Error occured while logging for the Protection Module: \"" + module.getName() + "\"", x);
+                logger.log(Level.SEVERE, x, () -> "An Error occured while logging for the Protection Module: \"" + module.getName() + "\"");
             }
         }
     }

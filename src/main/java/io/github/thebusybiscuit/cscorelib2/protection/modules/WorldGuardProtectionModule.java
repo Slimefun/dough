@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -25,16 +26,22 @@ public class WorldGuardProtectionModule implements ProtectionModule {
     private WorldGuardPlatform platform;
     private RegionContainer container;
 
+    private final Plugin plugin;
+
+    public WorldGuardProtectionModule(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public Plugin getPlugin() {
+        return plugin;
+    }
+
     @Override
     public void load() {
         worldguard = WorldGuardPlugin.inst();
         platform = WorldGuard.getInstance().getPlatform();
         container = platform.getRegionContainer();
-    }
-
-    @Override
-    public String getName() {
-        return "WorldGuard";
     }
 
     @Override
