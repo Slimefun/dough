@@ -1,5 +1,7 @@
 package io.github.thebusybiscuit.cscorelib2.inventory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
@@ -41,21 +43,86 @@ public final class InvUtils {
      *            The Item that shall be tested for
      * @param slots
      *            The Slots that shall be iterated over
+     * 
      * @return Whether the slots have space for the {@link ItemStack}
      */
     public static boolean fits(@NonNull Inventory inv, @NonNull ItemStack item, int... slots) {
-        if (slots.length == 0) slots = IntStream.range(0, inv.getSize()).toArray();
+        if (slots.length == 0) {
+            slots = IntStream.range(0, inv.getSize()).toArray();
+        }
 
         for (int slot : slots) {
             ItemStack stack = inv.getItem(slot);
 
-            if (stack == null || stack.getType() == Material.AIR) return true;
+            if (stack == null || stack.getType() == Material.AIR) {
+                return true;
+            }
             else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * This method works similar to {@link #fits(Inventory, ItemStack, int...)} but allows this check to be done for
+     * multiple {@link ItemStack ItemStacks}.
+     * 
+     * If you do not specify any Slots, all Slots of the Inventory will be checked.
+     *
+     * @param inv
+     *            The inventory to check
+     * @param items
+     *            The Items that shall be tested for
+     * @param slots
+     *            The Slots that shall be iterated over
+     * 
+     * @return Whether the slots have space for the given {@link ItemStack ItemStacks}
+     */
+    public static boolean fitAll(@NonNull Inventory inv, @NonNull ItemStack[] items, int... slots) {
+        if (slots.length == 0) {
+            slots = IntStream.range(0, inv.getSize()).toArray();
+        }
+
+        if (items.length == 0) {
+            return true;
+        }
+        else if (items.length == 1) {
+            return fits(inv, items[0], slots);
+        }
+
+        Map<Integer, ItemStack> cache = new HashMap<>();
+
+        for (int i = 0; i < items.length; i++) {
+            ItemStack item = items[i];
+            boolean resolved = false;
+
+            for (int slot : slots) {
+                ItemStack stack = cache.getOrDefault(slot, inv.getItem(slot));
+
+                if (stack == null || stack.getType() == Material.AIR) {
+                    cache.put(slot, items[i]);
+                    resolved = true;
+                }
+                else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
+                    ItemStack clone = stack.clone();
+                    clone.setAmount(stack.getAmount() + item.getAmount());
+                    cache.put(slot, clone);
+                    resolved = true;
+                }
+
+                if (resolved) {
+                    break;
+                }
+            }
+
+            if (!resolved) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
