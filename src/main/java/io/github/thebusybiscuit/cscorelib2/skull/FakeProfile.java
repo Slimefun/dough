@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+import org.bukkit.inventory.ItemStack;
+
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.NonNull;
 
@@ -16,6 +18,7 @@ public final class FakeProfile {
 
     protected static Method property;
     protected static Method insertProperty;
+    protected static Method setProfile;
 
     protected static Constructor<?> profileConstructor;
     protected static Constructor<?> propertyConstructor;
@@ -34,6 +37,9 @@ public final class FakeProfile {
             property = ReflectionUtils.getMethod(profileClass, "getProperties");
             propertyConstructor = ReflectionUtils.getConstructor(propertyClass, String.class, String.class);
             insertProperty = ReflectionUtils.getMethod(mapClass, "put", String.class, propertyClass);
+
+            setProfile = ReflectionUtils.getMethod(ReflectionUtils.getOBCClass("inventory.CraftMetaSkull"), "setProfile", profileClass);
+            setProfile.setAccessible(true);
         }
         catch (Exception e) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
@@ -46,6 +52,10 @@ public final class FakeProfile {
         Object properties = property.invoke(profile);
         insertProperty.invoke(properties, PROPERTY_KEY, propertyConstructor.newInstance(PROPERTY_KEY, texture));
         return profile;
+    }
+
+    public static void inject(@NonNull ItemStack item, @NonNull UUID uuid, @NonNull String texture) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException {
+        setProfile.invoke(item.getItemMeta(), createProfile(uuid, texture));
     }
 
 }
