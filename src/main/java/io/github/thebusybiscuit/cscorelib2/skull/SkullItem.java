@@ -9,7 +9,6 @@ import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.google.gson.JsonArray;
@@ -55,10 +54,10 @@ public final class SkullItem {
         try {
             ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 
-            ItemMeta im = item.getItemMeta();
-            FakeProfile.inject(item, uuid, texture);
+            SkullMeta meta = (SkullMeta) item.getItemMeta();
+            FakeProfile.inject(meta, uuid, texture);
 
-            item.setItemMeta(im);
+            item.setItemMeta(meta);
             return item;
         }
         catch (Exception x) {
