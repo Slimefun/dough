@@ -52,8 +52,12 @@ public final class FakeProfile {
 
     protected static void inject(@NonNull SkullMeta meta, @NonNull UUID uuid, @NonNull String texture) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
         ReflectionUtils.setFieldValue(meta, "profile", createProfile(uuid, texture));
+        
         // Forces SkullMeta to properly deserialize and serialize the profile
         meta.setOwningPlayer(meta.getOwningPlayer());
+        
+        // Now override the texture again
+        ReflectionUtils.setFieldValue(meta, "profile", createProfile(uuid, texture));
     }
 
 }

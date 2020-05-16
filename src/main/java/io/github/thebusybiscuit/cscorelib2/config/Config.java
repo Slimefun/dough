@@ -123,6 +123,9 @@ public class Config implements AbstractConfig {
         if (value == null) {
             this.store(path, value);
         }
+        else if (value instanceof Optional) {
+            this.store(path, ((Optional<?>) value).orElse(null));
+        }
         else if (value instanceof Inventory) {
             this.store(path + ".size", ((Inventory) value).getSize());
             for (int i = 0; i < ((Inventory) value).getSize(); i++) {
