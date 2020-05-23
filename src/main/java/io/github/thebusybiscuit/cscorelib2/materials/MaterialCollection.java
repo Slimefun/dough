@@ -2,6 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.materials;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,8 +35,8 @@ public class MaterialCollection implements Iterable<Material> {
         this(Arrays.stream(materials));
     }
 
-    public MaterialCollection(@NonNull Tag<Material> tag) {
-        this(tag.getValues());
+    public MaterialCollection(Tag<Material> tag) {
+        this(tag != null ? tag.getValues() : new HashSet<>());
     }
 
     public MaterialCollection(@NonNull Stream<Material> stream) {
