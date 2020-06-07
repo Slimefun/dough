@@ -1,12 +1,13 @@
 package io.github.thebusybiscuit.cscorelib2.blocks;
 
-import lombok.NonNull;
+import java.lang.ref.WeakReference;
+
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import java.lang.ref.WeakReference;
+import lombok.NonNull;
 
 /**
  * This is the position of a block in a World. Using this class as opposed to {@link Location} is much better because it
@@ -27,6 +28,14 @@ public final class BlockPosition {
     public BlockPosition(@NonNull World world, int x, int y, int z) {
         this.world = new WeakReference<>(world);
         this.position = ((long) (x & 0x3FFFFFF) << 38) | ((long) (z & 0x3FFFFFF) << 12) | (long) (y & 0xFFF);
+    }
+
+    public BlockPosition(@NonNull Block b) {
+        this(b.getWorld(), b.getX(), b.getY(), b.getZ());
+    }
+
+    public BlockPosition(@NonNull Location l) {
+        this(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
     }
 
     /**
@@ -142,8 +151,7 @@ public final class BlockPosition {
             final BlockPosition pos = (BlockPosition) o;
             if (pos.world.get() == null) return false;
 
-            return this.getWorld().getUID().equals(pos.getWorld().getUID())
-                && this.position == pos.position;
+            return this.getWorld().getUID().equals(pos.getWorld().getUID()) && this.position == pos.position;
         }
         return false;
     }
@@ -168,8 +176,6 @@ public final class BlockPosition {
      */
     @Override
     public String toString() {
-        return String.format("BlockPosition(world=%s, x=%d, y=%d, z=%d, position=%d)",
-            getWorld().getName(), getX(), getY(), getZ(), getPosition()
-        );
+        return String.format("BlockPosition(world=%s, x=%d, y=%d, z=%d, position=%d)", getWorld().getName(), getX(), getY(), getZ(), getPosition());
     }
 }
