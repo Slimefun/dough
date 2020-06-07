@@ -46,12 +46,12 @@ public final class BlockPosition {
      * @return The {@link World} for this block.
      */
     public World getWorld() {
-        final World world = this.world.get();
-        if (world == null) {
+        final World ref = this.world.get();
+        if (ref == null) {
             throw new IllegalStateException("The reference of this BlockPositions world has been cleared");
         }
 
-        return world;
+        return ref;
     }
 
     /**
@@ -107,12 +107,12 @@ public final class BlockPosition {
      * @return This blocks {@link Chunk}.
      */
     public Chunk getChunk() {
-        final World world = this.world.get();
-        if (world == null) {
+        final World ref = this.world.get();
+        if (ref == null) {
             throw new IllegalStateException("Cannot get Chunk when the world isn't loaded");
         }
 
-        return world.getChunkAt(getChunkX(), getChunkZ());
+        return ref.getChunkAt(getChunkX(), getChunkZ());
     }
 
     /**
@@ -176,6 +176,9 @@ public final class BlockPosition {
      */
     @Override
     public String toString() {
-        return String.format("BlockPosition(world=%s, x=%d, y=%d, z=%d, position=%d)", getWorld().getName(), getX(), getY(), getZ(), getPosition());
+        World w = this.world.get();
+        final String worldName = w != null ? w.getName() : "<no reference>";
+
+        return String.format("BlockPosition(world=%s, x=%d, y=%d, z=%d, position=%d)", worldName, getX(), getY(), getZ(), getPosition());
     }
 }
