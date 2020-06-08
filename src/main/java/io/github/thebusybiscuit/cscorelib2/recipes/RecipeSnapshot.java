@@ -42,9 +42,15 @@ public class RecipeSnapshot {
         plugin.getLogger().log(Level.INFO, "Collecting Snapshots of all Recipes...");
 
         while (iterator.hasNext()) {
-            Recipe recipe = iterator.next();
-            Set<Recipe> set = recipes.computeIfAbsent(recipe.getClass(), key -> new LinkedHashSet<>());
-            set.add(recipe);
+            Recipe recipe = null;
+            try {
+                recipe = iterator.next();
+                Set<Recipe> set = recipes.computeIfAbsent(recipe.getClass(), key -> new LinkedHashSet<>());
+                set.add(recipe);
+            }
+            catch (Exception x) {
+                plugin.getLogger().log(Level.WARNING, "Skipped a faulty recipe of unknown source ({0}): {1}", new Object[] { x.getClass().getSimpleName(), x.getMessage() });
+            }
         }
 
         plugin.getLogger().log(Level.INFO, "Found {0} Recipes!", recipes.entrySet().stream().mapToInt(entry -> entry.getValue().size()).sum());
