@@ -100,9 +100,6 @@ public class ChatComponent {
     }
 
     public Object getAsNMSComponent() {
-        System.out.println(serializerMethod);
-        System.out.println(serializerClass);
-        System.out.println(json);
         try {
             return serializerMethod.invoke(serializerClass, json);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
