@@ -5,7 +5,7 @@
     <groupId>io.github.thebusybiscuit</groupId>
     <artifactId>CSCoreLib2</artifactId>
     
-    <version>0.23</version>
+    <version>0.23.1</version>
     <inceptionYear>2019</inceptionYear>
     <url>https://github.com/TheBusyBiscuit/CS-CoreLib2</url>
     <packaging>jar</packaging>
