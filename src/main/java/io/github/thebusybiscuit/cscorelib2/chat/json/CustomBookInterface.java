@@ -92,7 +92,7 @@ public class CustomBookInterface {
         meta.setTitle(title);
         meta.setAuthor(author);
 
-        List field = null;
+        List field;
         try {
             field = (List) pagesField.get(meta);
 

@@ -5,7 +5,7 @@
     <groupId>io.github.thebusybiscuit</groupId>
     <artifactId>CSCoreLib2</artifactId>
     
-    <version>0.21</version>
+    <version>0.22</version>
     <inceptionYear>2019</inceptionYear>
     <url>https://github.com/TheBusyBiscuit/CS-CoreLib2</url>
     <packaging>jar</packaging>
@@ -24,6 +24,8 @@
     </licenses>
     
     <properties>
+        <bukkit.version>1.16.1</bukkit.version>
+
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -111,13 +113,11 @@
     </build>
     
     <dependencies>
-    
         <!-- Developer Dependencies -->
-        
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
