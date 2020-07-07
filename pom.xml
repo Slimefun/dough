@@ -59,7 +59,7 @@
         </repository>
         <repository>
             <id>redprotect-repo</id>
-            <url>https://raw.github.com/FabioZumbi12/RedProtect/mvn-repo/</url>
+            <url>https://raw.githubusercontent.com/FabioZumbi12/RedProtect/mvn-repo/</url>
         </repository>
         <repository>
             <id>FactionsUUID-repo</id>
