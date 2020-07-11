@@ -20,6 +20,14 @@ public final class MaterialConverter {
 	private MaterialConverter() {}
 	
 	public static Optional<Material> getSaplingFromLog(@NonNull Material log) {
+	    if (log.name().equals("CRIMSON_STEM") || log.name().equals("STRIPPED_CRIMSON_STEM")) {
+	        return Optional.of(Material.CRIMSON_FUNGUS);
+	    }
+	    
+	    if (log.name().equals("WARPED_STEM") || log.name().equals("STRIPPED_WARPED_STEM")) {
+            return Optional.of(Material.WARPED_FUNGUS);
+        }
+	    
 		return convert(log, 
 			MaterialCollections.getAllLogs()::contains,
 			type -> type.substring(0, type.lastIndexOf('_')).replace("STRIPPED_", "") + "_SAPLING"
