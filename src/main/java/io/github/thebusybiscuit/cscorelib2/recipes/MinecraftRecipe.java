@@ -102,7 +102,7 @@ public class MinecraftRecipe<T extends Recipe> {
         }
 
         try {
-            FURNACE = new MinecraftRecipe<>("FURNACE", FurnaceRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(FurnaceRecipe::getResult));
+            FURNACE = new MinecraftRecipe<>("FURNACE", FurnaceRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(recipe -> recipe.getResult()));
         }
         catch (Exception | LinkageError x) {
             System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the FurnaceRecipe type. Maybe for future Minecraft versions?");
