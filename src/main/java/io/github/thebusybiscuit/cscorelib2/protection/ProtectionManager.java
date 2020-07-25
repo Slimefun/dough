@@ -70,6 +70,7 @@ public final class ProtectionManager {
         registerModule(server, "BentoBox", plugin -> new BentoBoxProtectionModule(plugin));
         registerModule(server, "BlockLocker", plugin -> new BlockLockerProtectionModule(plugin));
         registerModule(server, "Lands", plugin -> new LandsProtectionModule(plugin));
+        registerModule(server, "ChestProtect", plugin -> new ChestProtectProtectionModule(plugin));
 
         if (server.getPluginManager().isPluginEnabled("Factions")) {
             if (server.getPluginManager().getPlugin("Factions").getDescription().getDepend().contains("MassiveCore")) {
