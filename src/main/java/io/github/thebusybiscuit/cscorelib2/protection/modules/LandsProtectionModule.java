@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
+import me.angeschossen.lands.api.land.Area;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -27,16 +28,16 @@ public class LandsProtectionModule implements ProtectionModule {
 
     @Override
     public void load() {
-        this.landsIntegration = new LandsIntegration("CS-CoreLib2", false);
+        this.landsIntegration = new LandsIntegration(plugin);
     }
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        if (!(p instanceof Player)) return false;
         LandWorld landWorld = landsIntegration.getLandWorld(l.getWorld());
         if (landWorld == null) return true;
 
-        return landWorld.canAction((Player) p, l, convert(action));
+        Area area = landWorld.getArea(l);
+        return area == null || area.canSetting(p.getUniqueId(), convert(action));
     }
 
     private RoleSetting convert(ProtectableAction protectableAction) {
