@@ -30,11 +30,12 @@ import io.github.thebusybiscuit.cscorelib2.protection.modules.PreciousStonesProt
 import io.github.thebusybiscuit.cscorelib2.protection.modules.RedProtectProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.TownyProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.WorldGuardProtectionModule;
+import io.github.thebusybiscuit.cscorelib2.protection.modules.ChestProtectProtectionModule;
 import lombok.NonNull;
 
 /**
  * This Class provides a nifty API for plugins to query popular protection plugins.
- * 
+ *
  * @author TheBusyBiscuit
  *
  */
@@ -47,7 +48,7 @@ public final class ProtectionManager {
     /**
      * This creates a new instance of {@link ProtectionManager}, you can see this
      * as a "Snapshot" of your plugins too.
-     * 
+     *
      * @param server
      *            The Server your plugin is running on.
      */
@@ -120,7 +121,7 @@ public final class ProtectionManager {
 
     /**
      * This is our custom Logger for this class.
-     * 
+     *
      * @param server
      *            The Server this is logging to
      * @return A new instance of {@link Logger}
