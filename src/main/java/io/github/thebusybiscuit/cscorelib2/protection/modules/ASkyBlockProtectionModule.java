@@ -15,7 +15,6 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 public class ASkyBlockProtectionModule implements ProtectionModule {
 
     private ASkyBlockAPI api;
-
     private final Plugin plugin;
 
     public ASkyBlockProtectionModule(Plugin plugin) {
@@ -35,8 +34,14 @@ public class ASkyBlockProtectionModule implements ProtectionModule {
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
         Island island = api.getIslandAt(l);
-        if (island == null) return true;
-        if (p.getUniqueId().equals(island.getOwner())) return true;
+
+        if (island == null) {
+            return true;
+        }
+
+        if (p.getUniqueId().equals(island.getOwner())) {
+            return true;
+        }
 
         for (UUID member : island.getMembers()) {
             if (p.getUniqueId().equals(member)) return true;

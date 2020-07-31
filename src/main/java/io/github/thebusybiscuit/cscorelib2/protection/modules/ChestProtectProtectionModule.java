@@ -30,7 +30,9 @@ public class ChestProtectProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        if (!action.isBlockAction() || !chestProtect.isProtectable(l.getBlock())) return true;
+        if (!action.isBlockAction() || !chestProtect.isProtectable(l.getBlock())) {
+            return true;
+        }
 
         Protection protection = chestProtect.getProtection(l);
         return protection == null || protection.isTrusted(p.getUniqueId());

@@ -35,7 +35,13 @@ public class PlotSquared5ProtectionModule implements ProtectionModule {
     public boolean hasPermission(OfflinePlayer p, org.bukkit.Location l, ProtectableAction action) {
         Block b = l.getBlock();
 
-        Plot plot = new Location(b.getWorld().getName(), b.getX(), b.getY(), b.getZ()).getOwnedPlot();
+        Location location = new Location(b.getWorld().getName(), b.getX(), b.getY(), b.getZ());
+
+        if (location.isPlotRoad()) {
+            return check(p, action);
+        }
+
+        Plot plot = location.getOwnedPlot();
         return plot == null || plot.isAdded(p.getUniqueId()) || check(p, action);
     }
 

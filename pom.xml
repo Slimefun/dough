@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.thebusybiscuit</groupId>
     <artifactId>CSCoreLib2</artifactId>
-    
-    <version>0.24</version>
+
+    <version>0.25</version>
     <inceptionYear>2019</inceptionYear>
     <url>https://github.com/TheBusyBiscuit/CS-CoreLib2</url>
     <packaging>jar</packaging>
@@ -22,7 +24,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
+
     <properties>
         <bukkit.version>1.16.1</bukkit.version>
 
@@ -30,7 +32,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <repositories>
         <repository>
             <id>jitpack.io</id>
@@ -78,11 +80,11 @@
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
     </repositories>
-    
+
     <build>
         <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <finalName>${project.name} v${project.version}</finalName>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -111,7 +113,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
         <!-- Developer Dependencies -->
         <dependency>
@@ -126,9 +128,9 @@
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <!-- Protection Plugins -->
-        
+
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-core</artifactId>
