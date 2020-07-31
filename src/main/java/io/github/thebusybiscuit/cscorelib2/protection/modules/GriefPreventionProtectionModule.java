@@ -14,7 +14,6 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention;
 public class GriefPreventionProtectionModule implements ProtectionModule {
 
     private DataStore dataStore;
-
     private final Plugin plugin;
 
     public GriefPreventionProtectionModule(Plugin plugin) {
@@ -38,13 +37,15 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
         if (claim == null) return true;
         if (p.getUniqueId().equals(claim.ownerID)) return true;
 
-        if (!(p instanceof Player)) return false;
+        if (!(p instanceof Player)) {
+            return false;
+        }
 
         switch (action) {
         case ACCESS_INVENTORIES:
             return claim.allowContainers((Player) p) == null;
         case PVP:
-            return claim.siegeData.attacker == null;
+            return claim.siegeData == null || claim.siegeData.attacker == null;
         case BREAK_BLOCK:
             return claim.allowBreak((Player) p, l.getBlock().getType()) == null;
         case PLACE_BLOCK:
