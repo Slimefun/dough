@@ -24,7 +24,7 @@ public class ChestProtectProtectionModule implements ProtectionModule {
 
     @Override
     public void load() {
-        this.chestProtect = new ChestProtectAddon(plugin);
+        this.chestProtect = new ChestProtectAddon(plugin, false);
     }
 
     @Override
