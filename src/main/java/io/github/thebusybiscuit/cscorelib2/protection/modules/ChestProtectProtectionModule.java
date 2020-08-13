@@ -3,7 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 import me.angeschossen.chestprotect.api.addons.ChestProtectAddon;
-import me.angeschossen.chestprotect.api.objects.Protection;
+import me.angeschossen.chestprotect.api.objects.BlockProtection;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
@@ -25,7 +25,6 @@ public class ChestProtectProtectionModule implements ProtectionModule {
     @Override
     public void load() {
         this.chestProtect = new ChestProtectAddon(plugin, false);
-        chestProtect.initialize();
     }
 
     @Override
@@ -34,7 +33,7 @@ public class ChestProtectProtectionModule implements ProtectionModule {
             return true;
         }
 
-        Protection protection = chestProtect.getProtection(l);
+        BlockProtection protection = chestProtect.getProtection(l);
         return protection == null || protection.isTrusted(p.getUniqueId());
     }
 
