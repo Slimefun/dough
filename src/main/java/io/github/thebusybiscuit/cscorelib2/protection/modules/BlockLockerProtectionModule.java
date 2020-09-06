@@ -34,7 +34,9 @@ public class BlockLockerProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        if (!action.isBlockAction()) return true;
+        if (!action.isBlockAction()) {
+            return true;
+        }
 
         Optional<Protection> protection = api.getProtectionFinder().findProtection(l.getBlock());
 

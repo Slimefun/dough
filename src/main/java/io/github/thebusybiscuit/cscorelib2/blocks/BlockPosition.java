@@ -14,6 +14,8 @@ import lombok.NonNull;
  * has a lower memory footprint and doesn't contain useless data such as yaw and pitch.<br>
  * This is 12 bytes in memory whereas {@link Location} is 36 bytes.
  * (Note, this is not accounting for things like object headers)
+ * 
+ * @author Walshy
  */
 public final class BlockPosition {
 

@@ -66,6 +66,7 @@ public class BentoBoxProtectionModule implements ProtectionModule {
                     return Flags.PVP_END;
                 }
             }
+
             return Flags.PVP_OVERWORLD;
         case BREAK_BLOCK:
             return Flags.BREAK_BLOCKS;
