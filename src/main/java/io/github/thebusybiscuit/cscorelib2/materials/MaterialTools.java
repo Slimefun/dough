@@ -16,6 +16,7 @@ import lombok.Getter;
  * @author TheBusyBiscuit
  *
  */
+@Deprecated
 public final class MaterialTools {
 
     // This is a pure Utility class, we do not want any instantiation to happen!

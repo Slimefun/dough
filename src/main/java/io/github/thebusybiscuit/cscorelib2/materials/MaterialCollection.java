@@ -22,6 +22,7 @@ import lombok.NonNull;
  * @author TheBusyBiscuit
  *
  */
+@Deprecated
 public class MaterialCollection implements Iterable<Material> {
 
     @Getter

@@ -16,22 +16,43 @@ import lombok.Getter;
  * @author TheBusyBiscuit
  *
  */
+@Deprecated
 public final class MaterialCollections {
 	
 	// This is a pure Utility class, we do not want any instantiation to happen!
 	private MaterialCollections() {}
 
+	@Deprecated
 	@Getter private static final MaterialCollection allLeaves;
-	@Getter private static final MaterialCollection allSaplings;
-	@Getter private static final MaterialCollection allFishItems;
 	
+    @Deprecated
+	@Getter private static final MaterialCollection allSaplings;
+    
+    @Deprecated
+	@Getter private static final MaterialCollection allFishItems;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allLogs;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allPlanks;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allWoodenSlabs;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allWoodenDoors;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allWoodenTrapdoors;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allWoodenStairs;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allWoodenButtons;
+
+    @Deprecated
 	@Getter private static final MaterialCollection allWoodenPressurePlates;
 	
 	@Getter private static final MaterialCollection allOres;
