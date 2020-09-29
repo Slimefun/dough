@@ -131,7 +131,7 @@ public final class ProtectionManager {
 
             @Override
             public void log(@NonNull LogRecord logRecord) {
-                logRecord.setMessage("[CS-CoreLib2 - Protection] " + logRecord.getMessage());
+                logRecord.setMessage(logRecord.getMessage());
                 super.log(logRecord);
             }
 
