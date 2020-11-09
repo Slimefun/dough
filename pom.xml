@@ -156,7 +156,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>19.2</version>
+            <version>19.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
