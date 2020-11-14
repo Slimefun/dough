@@ -15,7 +15,6 @@ import world.bentobox.bentobox.api.user.User;
 import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.lists.Flags;
 import world.bentobox.bentobox.managers.IslandWorldManager;
-
 import world.bentobox.bentobox.managers.IslandsManager;
 
 /**
@@ -49,27 +48,39 @@ public class BentoBoxProtectionModule implements ProtectionModule {
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
         Optional<Island> island = manager.getIslandAt(l);
-        Flag flag = convert(action, l.getWorld());
-        return !iwm.inWorld(l) || island.map(value -> value.isAllowed(User.getInstance(p), flag)).orElse(flag.isSetForWorld(l.getWorld()));
+
+        if (iwm.inWorld(l)) {
+            Flag flag = convert(action, l.getWorld());
+
+            if (island.isPresent()) {
+                Island is = island.get();
+                User user = User.getInstance(p);
+
+                return is.isAllowed(user, flag);
+            } else {
+                return flag.isSetForWorld(l.getWorld());
+            }
+        }
+
+        return true;
     }
 
     private Flag convert(ProtectableAction action, World world) {
         switch (action) {
-        case ACCESS_INVENTORIES:
+        case INTERACT_BLOCK:
             return Flags.CONTAINER;
-        case PVP:
-            if (world != null) {
-                if (world.getEnvironment() == World.Environment.NETHER) {
-                    return Flags.PVP_NETHER;
-                }
-                else if (world.getEnvironment() == World.Environment.THE_END) {
-                    return Flags.PVP_END;
-                }
+        case ATTACK_PLAYER:
+            if (world.getEnvironment() == World.Environment.NETHER) {
+                return Flags.PVP_NETHER;
+            } else if (world.getEnvironment() == World.Environment.THE_END) {
+                return Flags.PVP_END;
+            } else {
+                return Flags.PVP_OVERWORLD;
             }
-
-            return Flags.PVP_OVERWORLD;
         case BREAK_BLOCK:
             return Flags.BREAK_BLOCKS;
+        case ATTACK_ENTITY:
+            return Flags.HURT_ANIMALS;
         case PLACE_BLOCK:
         default:
             return Flags.PLACE_BLOCKS;

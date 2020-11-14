@@ -34,14 +34,20 @@ public class RedProtectProtectionModule implements ProtectionModule {
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
         Region region = api.getRegion(l);
 
-        if (region == null) return true;
-        if (!(p instanceof Player)) return false;
-        Player player = (Player) p;
+        if (region == null) {
+            return true;
+        } else if (!(p instanceof Player)) {
+            return false;
+        }
 
+        Player player = (Player) p;
         switch (action) {
-        case ACCESS_INVENTORIES:
+        case INTERACT_BLOCK:
             return region.canChest(player);
-        case PVP:
+        case ATTACK_ENTITY:
+        case INTERACT_ENTITY:
+            return region.canInteractPassives(player);
+        case ATTACK_PLAYER:
             return region.canPVP(player, player);
         case BREAK_BLOCK:
         case PLACE_BLOCK:

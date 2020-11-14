@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.protection.modules;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.plugin.Plugin;
 import org.yi.acru.bukkit.Lockette.Lockette;
@@ -30,19 +31,22 @@ public class LocketteProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        if (!action.isBlockAction()) return true;
+        if (!action.isBlockAction()) {
+            return true;
+        }
 
         Block b = l.getBlock();
 
         if (Lockette.isProtected(b)) {
-            if (b.getState() instanceof Sign) {
-                return !Lockette.isOwner((Sign) b.getState(), p);
-            }
-            else {
+            BlockState state = b.getState();
+
+            if (state instanceof Sign) {
+                return !Lockette.isOwner((Sign) state, p);
+            } else {
                 return !Lockette.isOwner(b, p);
             }
-        }
-        else return false;
+        } else
+            return false;
     }
 
 }

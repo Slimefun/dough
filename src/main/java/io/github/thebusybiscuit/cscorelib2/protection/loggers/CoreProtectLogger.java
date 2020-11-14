@@ -26,7 +26,7 @@ public class CoreProtectLogger implements ProtectionLogger {
 	@Override
 	public void logAction(OfflinePlayer p, Block b, ProtectableAction action) {
 		switch (action) {
-		case ACCESS_INVENTORIES:
+		case INTERACT_BLOCK:
 			coreprotect.logContainerTransaction(p.getName(), b.getLocation());
 			break;
 		case BREAK_BLOCK:

@@ -15,7 +15,6 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
 public class FactionsUUIDProtectionModule implements ProtectionModule {
 
     private FPlayers api;
-
     private final Plugin plugin;
 
     public FactionsUUIDProtectionModule(Plugin plugin) {
@@ -35,9 +34,12 @@ public class FactionsUUIDProtectionModule implements ProtectionModule {
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
         Faction faction = Board.getInstance().getFactionAt(new FLocation(l));
-        if (faction == null || faction.getId().equals("0")) return true;
 
-        return faction.getId().equals(api.getByOfflinePlayer(p).getFaction().getId());
+        if (faction == null || faction.getId().equals("0")) {
+            return true;
+        } else {
+            return faction.getId().equals(api.getByOfflinePlayer(p).getFaction().getId());
+        }
     }
 
 }

@@ -32,14 +32,19 @@ public class PreciousStonesProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        if (!(p instanceof Player)) return false;
+        if (!(p instanceof Player)) {
+            return false;
+        }
 
         switch (action) {
-        case PVP:
+        case ATTACK_PLAYER:
             return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
+        case INTERACT_ENTITY:
+        case ATTACK_ENTITY:
+            return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_ENTITY_INTERACT, l);
         case BREAK_BLOCK:
             return api.canBreak((Player) p, l);
-        case ACCESS_INVENTORIES:
+        case INTERACT_BLOCK:
         case PLACE_BLOCK:
             return api.canPlace((Player) p, l);
         default:

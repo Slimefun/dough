@@ -34,23 +34,25 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
         Claim claim = dataStore.getClaimAt(l, true, null);
 
-        if (claim == null) return true;
-        if (p.getUniqueId().equals(claim.ownerID)) return true;
-
-        if (!(p instanceof Player)) {
+        if (claim == null) {
+            return true;
+        } else if (p.getUniqueId().equals(claim.ownerID)) {
+            return true;
+        } else if (!(p instanceof Player)) {
             return false;
         }
 
         switch (action) {
-        case ACCESS_INVENTORIES:
+        case INTERACT_BLOCK:
             return claim.allowContainers((Player) p) == null;
-        case PVP:
+        case ATTACK_PLAYER:
             return claim.siegeData == null || claim.siegeData.attacker == null;
         case BREAK_BLOCK:
             return claim.allowBreak((Player) p, l.getBlock().getType()) == null;
         case PLACE_BLOCK:
-        default:
             return claim.allowBuild((Player) p, l.getBlock().getType()) == null;
+        default:
+            return claim.allowAccess((Player) p) == null;
         }
     }
 

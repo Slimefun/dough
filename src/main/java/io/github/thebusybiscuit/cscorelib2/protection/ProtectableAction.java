@@ -5,6 +5,8 @@ import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -32,18 +34,24 @@ public enum ProtectableAction {
     /**
      * This represents a {@link Player} (posibly offline) trying to access an {@link Inventory}.
      */
-    ACCESS_INVENTORIES(true),
+    INTERACT_BLOCK(true),
 
     /**
      * This represents a {@link Player} trying to attack another {@link Player}.
      */
-    PVP(false),
+    ATTACK_PLAYER(false),
 
     /**
      * This represents a {@link Player} trying to attack an {@link Entity}, either an {@link Animals} or a
      * {@link Monster}.
      */
-    PVE(false);
+    ATTACK_ENTITY(false),
+
+    /**
+     * This represents a {@link Player} trying to interact with an {@link Entity}.
+     * This could be a {@link Sheep} that is getting dyed, or a {@link Villager} being traded with.
+     */
+    INTERACT_ENTITY(false);
 
     private boolean hasBlock;
 

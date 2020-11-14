@@ -31,7 +31,9 @@ public class TownyProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        if (!(p instanceof Player)) return false;
+        if (!(p instanceof Player)) {
+            return false;
+        }
 
         Player player = (Player) p;
         return PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), convert(action));
@@ -39,8 +41,10 @@ public class TownyProtectionModule implements ProtectionModule {
 
     private ActionType convert(ProtectableAction action) {
         switch (action) {
-        case ACCESS_INVENTORIES:
-        case PVP:
+        case INTERACT_BLOCK:
+        case INTERACT_ENTITY:
+        case ATTACK_PLAYER:
+        case ATTACK_ENTITY:
             return ActionType.ITEM_USE;
         case BREAK_BLOCK:
             return ActionType.DESTROY;

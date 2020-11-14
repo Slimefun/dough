@@ -61,21 +61,22 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 
             if (regions.isEmpty()) {
                 return true;
-            }
-            else {
+            } else {
                 return container.createQuery().testState(loc, player, convert(action));
             }
-        }
-        else {
+        } else {
             return container.createQuery().testBuild(loc, player, convert(action));
         }
     }
 
     private StateFlag convert(ProtectableAction action) {
         switch (action) {
-        case PVP:
+        case ATTACK_PLAYER:
             return Flags.PVP;
-        case ACCESS_INVENTORIES:
+        case ATTACK_ENTITY:
+            return Flags.DAMAGE_ANIMALS;
+        case INTERACT_BLOCK:
+        case INTERACT_ENTITY:
             return Flags.USE;
         case BREAK_BLOCK:
             return Flags.BLOCK_BREAK;

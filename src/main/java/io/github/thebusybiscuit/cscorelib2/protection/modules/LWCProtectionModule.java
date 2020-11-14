@@ -31,9 +31,13 @@ public class LWCProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-        if (!action.isBlockAction()) return true;
-        if (!lwc.isProtectable(l.getBlock())) return true;
-        if (lwc.getProtectionCache().getProtection(l.getBlock()) == null) return true;
+        if (!action.isBlockAction()) {
+            return true;
+        } else if (!lwc.isProtectable(l.getBlock())) {
+            return true;
+        } else if (lwc.getProtectionCache().getProtection(l.getBlock()) == null) {
+            return true;
+        }
 
         return p instanceof Player && lwc.canAccessProtection((Player) p, l.getBlock());
     }
