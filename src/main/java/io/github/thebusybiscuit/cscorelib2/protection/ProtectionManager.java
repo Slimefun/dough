@@ -18,7 +18,7 @@ import io.github.thebusybiscuit.cscorelib2.protection.loggers.LogBlockLogger;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.ASkyBlockProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BentoBoxProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BlockLockerProtectionModule;
-import io.github.thebusybiscuit.cscorelib2.protection.modules.FactionsProtectionModule;
+import io.github.thebusybiscuit.cscorelib2.protection.modules.ChestProtectProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.FactionsUUIDProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.GriefPreventionProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.LWCProtectionModule;
@@ -30,7 +30,6 @@ import io.github.thebusybiscuit.cscorelib2.protection.modules.PreciousStonesProt
 import io.github.thebusybiscuit.cscorelib2.protection.modules.RedProtectProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.TownyProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.WorldGuardProtectionModule;
-import io.github.thebusybiscuit.cscorelib2.protection.modules.ChestProtectProtectionModule;
 import lombok.NonNull;
 
 /**
@@ -72,15 +71,7 @@ public final class ProtectionManager {
         registerModule(server, "BlockLocker", plugin -> new BlockLockerProtectionModule(plugin));
         registerModule(server, "Lands", plugin -> new LandsProtectionModule(plugin));
         registerModule(server, "ChestProtect", plugin -> new ChestProtectProtectionModule(plugin));
-
-        if (server.getPluginManager().isPluginEnabled("Factions")) {
-            if (server.getPluginManager().getPlugin("Factions").getDescription().getDepend().contains("MassiveCore")) {
-                registerModule(server, "Factions", plugin -> new FactionsProtectionModule(plugin));
-            }
-            else {
-                registerModule(server, "FactionsUUID", plugin -> new FactionsUUIDProtectionModule(plugin));
-            }
-        }
+        registerModule(server, "Factions", plugin -> new FactionsUUIDProtectionModule(plugin));
 
         if (server.getPluginManager().isPluginEnabled("PlotSquared")) {
             Plugin plotSquared = server.getPluginManager().getPlugin("PlotSquared");
