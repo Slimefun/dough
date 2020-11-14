@@ -29,8 +29,7 @@ public final class SkullBlock {
             Class<?> blockPosition = ReflectionUtils.getNMSClass("BlockPosition");
             newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
             getTileEntity = ReflectionUtils.getNMSClass("WorldServer").getMethod("getTileEntity", blockPosition);
-        }
-        catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+        } catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
             e.printStackTrace();
         }
@@ -43,7 +42,9 @@ public final class SkullBlock {
     }
 
     public static void setFromBase64(@NonNull Block block, @NonNull UUID uuid, @NonNull String texture) {
-        if (!block.getType().equals(Material.PLAYER_HEAD) && !block.getType().equals(Material.PLAYER_WALL_HEAD)) {
+        Material material = block.getType();
+
+        if (material != Material.PLAYER_HEAD && material != Material.PLAYER_WALL_HEAD) {
             throw new IllegalArgumentException("Block is not a Skull");
         }
 
@@ -59,8 +60,7 @@ public final class SkullBlock {
                 block.getState().update(true);
             }
 
-        }
-        catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
 

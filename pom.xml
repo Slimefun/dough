@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.thebusybiscuit</groupId>
-    <artifactId>CSCoreLib2</artifactId>
+    <artifactId>cscorelib2</artifactId>
 
     <version>0.27</version>
     <inceptionYear>2019</inceptionYear>

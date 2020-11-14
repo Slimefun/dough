@@ -10,21 +10,21 @@ import org.bukkit.inventory.meta.SkullMeta;
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.NonNull;
 
-public final class FakeProfile {
+final class FakeProfile {
 
-    protected static final String PROPERTY_KEY = "textures";
+    public static final String PROPERTY_KEY = "textures";
 
     private FakeProfile() {}
 
-    protected static Method property;
-    protected static Method insertProperty;
+    private static Method property;
+    private static Method insertProperty;
 
-    protected static Constructor<?> profileConstructor;
-    protected static Constructor<?> propertyConstructor;
+    private static Constructor<?> profileConstructor;
+    private static Constructor<?> propertyConstructor;
 
-    protected static Class<?> profileClass;
-    protected static Class<?> propertyClass;
-    protected static Class<?> mapClass;
+    public static Class<?> profileClass;
+    private static Class<?> propertyClass;
+    private static Class<?> mapClass;
 
     static {
         try {
@@ -36,26 +36,25 @@ public final class FakeProfile {
             property = ReflectionUtils.getMethod(profileClass, "getProperties");
             propertyConstructor = ReflectionUtils.getConstructor(propertyClass, String.class, String.class);
             insertProperty = ReflectionUtils.getMethod(mapClass, "put", String.class, propertyClass);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
             e.printStackTrace();
         }
     }
 
-    protected static Object createProfile(@NonNull UUID uuid, @NonNull String texture) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+    static Object createProfile(@NonNull UUID uuid, @NonNull String texture) throws InstantiationException, IllegalAccessException, InvocationTargetException {
         Object profile = profileConstructor.newInstance(uuid, "CS-CoreLib");
         Object properties = property.invoke(profile);
         insertProperty.invoke(properties, PROPERTY_KEY, propertyConstructor.newInstance(PROPERTY_KEY, texture));
         return profile;
     }
 
-    protected static void inject(@NonNull SkullMeta meta, @NonNull UUID uuid, @NonNull String texture) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
+    static void inject(@NonNull SkullMeta meta, @NonNull UUID uuid, @NonNull String texture) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
         ReflectionUtils.setFieldValue(meta, "profile", createProfile(uuid, texture));
-        
+
         // Forces SkullMeta to properly deserialize and serialize the profile
         meta.setOwningPlayer(meta.getOwningPlayer());
-        
+
         // Now override the texture again
         ReflectionUtils.setFieldValue(meta, "profile", createProfile(uuid, texture));
     }
