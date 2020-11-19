@@ -48,8 +48,7 @@ abstract class UpdaterTask implements Runnable {
             if (latestVersion != null) {
                 validateAndInstall(latestVersion);
             }
-        }
-        catch (NumberFormatException x) {
+        } catch (NumberFormatException x) {
             plugin.getLogger().log(Level.SEVERE, "Could not auto-update {0}", plugin.getName());
             plugin.getLogger().log(Level.SEVERE, "Unrecognized Version: {0}", localVersion);
         }
@@ -65,13 +64,9 @@ abstract class UpdaterTask implements Runnable {
 
             @Cleanup
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
             return parse(reader.readLine());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             plugin.getLogger().log(Level.WARNING, "Could not connect to the updating site, is it down?", e);
-            join();
-
             return null;
         }
     }
@@ -79,10 +74,8 @@ abstract class UpdaterTask implements Runnable {
     private void validateAndInstall(@NonNull UpdateInfo latestVersion) {
         if (hasUpdate(localVersion, latestVersion.getVersion())) {
             install(latestVersion);
-        }
-        else {
+        } else {
             plugin.getLogger().log(Level.INFO, "{0} is already up to date!", plugin.getName());
-            join();
         }
     }
 
@@ -97,28 +90,14 @@ abstract class UpdaterTask implements Runnable {
             while ((read = input.read(data, 0, 1024)) != -1) {
                 output.write(data, 0, read);
             }
-        }
-        catch (Exception x) {
+        } catch (Exception x) {
             plugin.getLogger().log(Level.SEVERE, x, () -> "Failed to auto-update " + plugin.getName());
-        }
-        finally {
+        } finally {
             plugin.getLogger().log(Level.INFO, " ");
             plugin.getLogger().log(Level.INFO, "#################### - UPDATE - ####################");
             plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), localVersion, info.getVersion() });
             plugin.getLogger().log(Level.INFO, "Please restart your Server in order to use the new Version");
             plugin.getLogger().log(Level.INFO, " ");
-
-            join();
-        }
-    }
-
-    private void join() {
-        try {
-            Thread.currentThread().join();
-        }
-        catch (InterruptedException x) {
-            plugin.getLogger().log(Level.SEVERE, "The Auto-Updater Thread was interrupted", x);
-            Thread.currentThread().interrupt();
         }
     }
 }
