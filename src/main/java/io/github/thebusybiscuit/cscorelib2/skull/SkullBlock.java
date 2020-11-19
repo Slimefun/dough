@@ -57,7 +57,7 @@ public final class SkullBlock {
 
             if (tileEntity != null) {
                 setGameProfile.invoke(tileEntity, profile);
-                block.getState().update(true);
+                block.getState().update(true, false);
             }
 
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
