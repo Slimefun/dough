@@ -114,8 +114,9 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
      */
     public boolean contains(@NonNull T obj) {
         for (WeightedNode<T> node : internalSet) {
-            if (node.equals(obj))
+            if (node.equals(obj)) {
                 return true;
+            }
         }
 
         return false;
@@ -176,8 +177,9 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
      * @return Whether the element was added successfully
      */
     public boolean add(@NonNull T obj, float weight) {
-        if (weight <= 0F)
+        if (weight <= 0F) {
             throw new IllegalArgumentException("A Weight may never be less than or equal to zero!");
+        }
 
         if (internalSet.add(new WeightedNode<>(weight, obj))) {
             size++;
@@ -199,8 +201,9 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
      *            The new weight for this element
      */
     public void setWeight(@NonNull T obj, float weight) {
-        if (weight <= 0F)
+        if (weight <= 0F) {
             throw new IllegalArgumentException("A Weight may never be less than or equal to zero!");
+        }
 
         for (WeightedNode<T> node : internalSet) {
             if (node.equals(obj)) {
@@ -382,6 +385,7 @@ public class RandomizedSet<T> implements Iterable<T>, Streamable<T> {
         StringBuilder builder = new StringBuilder();
 
         boolean first = true;
+
         for (WeightedNode<T> node : internalSet) {
             if (!first) {
                 builder.append(", ");

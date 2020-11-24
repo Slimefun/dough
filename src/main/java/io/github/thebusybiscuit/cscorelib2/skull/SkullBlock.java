@@ -37,11 +37,47 @@ public final class SkullBlock {
 
     private SkullBlock() {}
 
+    public static void setFromHash(@NonNull Block block, @NonNull String hash) {
+        setFromHash(block, hash, true);
+    }
+
+    public static void setFromHash(@NonNull Block block, @NonNull String hash, boolean causeBlockUpdate) {
+        setFromHash(block, UUID.nameUUIDFromBytes(hash.getBytes()), hash, causeBlockUpdate);
+    }
+
+    public static void setFromHash(@NonNull Block block, @NonNull UUID uuid, @NonNull String hash) {
+        setFromHash(block, uuid, hash, true);
+    }
+
+    public static void setFromHash(@NonNull Block block, @NonNull UUID uuid, @NonNull String hash, boolean causeBlockUpdate) {
+        setFromURL(block, uuid, "http://textures.minecraft.net/texture/" + hash, causeBlockUpdate);
+    }
+
+    public static void setFromURL(@NonNull Block block, @NonNull String url) {
+        setFromURL(block, url, true);
+    }
+
+    public static void setFromURL(@NonNull Block block, @NonNull String url, boolean causeBlockUpdate) {
+        setFromURL(block, UUID.nameUUIDFromBytes(url.getBytes()), url, causeBlockUpdate);
+    }
+
+    public static void setFromURL(@NonNull Block block, @NonNull UUID uuid, @NonNull String url) {
+        setFromURL(block, uuid, url, true);
+    }
+
+    public static void setFromURL(@NonNull Block block, @NonNull UUID uuid, @NonNull String url, boolean causeBlockUpdate) {
+        setFromBase64(block, uuid, Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}").getBytes()), causeBlockUpdate);
+    }
+
     public static void setFromBase64(@NonNull Block block, @NonNull String texture) {
         setFromBase64(block, UUID.nameUUIDFromBytes(texture.getBytes()), texture);
     }
 
     public static void setFromBase64(@NonNull Block block, @NonNull UUID uuid, @NonNull String texture) {
+        setFromBase64(block, uuid, texture, true);
+    }
+
+    public static void setFromBase64(@NonNull Block block, @NonNull UUID uuid, @NonNull String texture, boolean causeBlockUpdate) {
         Material material = block.getType();
 
         if (material != Material.PLAYER_HEAD && material != Material.PLAYER_WALL_HEAD) {
@@ -55,7 +91,7 @@ public final class SkullBlock {
             Object position = newPosition.newInstance(block.getX(), block.getY(), block.getZ());
             Object tileEntity = getTileEntity.invoke(world, position);
 
-            if (tileEntity != null) {
+            if (tileEntity != null && causeBlockUpdate) {
                 setGameProfile.invoke(tileEntity, profile);
                 block.getState().update(true, false);
             }
@@ -64,22 +100,6 @@ public final class SkullBlock {
             e.printStackTrace();
         }
 
-    }
-
-    public static void setFromURL(@NonNull Block block, @NonNull UUID uuid, @NonNull String url) {
-        setFromBase64(block, uuid, Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}").getBytes()));
-    }
-
-    public static void setFromURL(@NonNull Block block, @NonNull String url) {
-        setFromURL(block, UUID.nameUUIDFromBytes(url.getBytes()), url);
-    }
-
-    public static void setFromHash(@NonNull Block block, @NonNull UUID uuid, @NonNull String hash) {
-        setFromURL(block, uuid, "http://textures.minecraft.net/texture/" + hash);
-    }
-
-    public static void setFromHash(@NonNull Block block, @NonNull String hash) {
-        setFromHash(block, UUID.nameUUIDFromBytes(hash.getBytes()), hash);
     }
 
 }
