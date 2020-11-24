@@ -5,6 +5,6 @@ import org.bukkit.inventory.ItemStack;
 
 @FunctionalInterface
 public interface MenuClickHandler {
-	
-	public boolean onClick(Player p, int slot, ItemStack item, ItemStack cursor, ClickAction action);
+
+    public boolean onClick(Player p, int slot, ItemStack item, ItemStack cursor, ClickAction action);
 }

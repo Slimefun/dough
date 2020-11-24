@@ -47,8 +47,7 @@ public class RecipeSnapshot {
                 recipe = iterator.next();
                 Set<Recipe> set = recipes.computeIfAbsent(recipe.getClass(), key -> new LinkedHashSet<>());
                 set.add(recipe);
-            }
-            catch (Exception x) {
+            } catch (Exception x) {
                 plugin.getLogger().log(Level.WARNING, "Skipped a faulty recipe of unknown source ({0}): {1}", new Object[] { x.getClass().getSimpleName(), x.getMessage() });
             }
         }
@@ -128,8 +127,7 @@ public class RecipeSnapshot {
 
         if (type.isPresent()) {
             return getRecipeInput(type.get(), recipe);
-        }
-        else {
+        } else {
             return new RecipeChoice[0];
         }
     }
@@ -151,8 +149,7 @@ public class RecipeSnapshot {
     public <T extends Recipe> Optional<ItemStack> getRecipeOutput(@NonNull MinecraftRecipe<T> recipeType, ItemStack... inputs) {
         if (recipeType.validate(inputs)) {
             return recipeType.getOutput(stream(recipeType.getRecipeClass()), inputs);
-        }
-        else {
+        } else {
             return Optional.empty();
         }
     }

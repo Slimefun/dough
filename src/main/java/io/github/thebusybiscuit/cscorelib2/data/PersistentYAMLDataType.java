@@ -13,35 +13,35 @@ import lombok.Cleanup;
 
 public final class PersistentYAMLDataType implements PersistentDataType<String, FileConfiguration> {
 
-	public static final PersistentYAMLDataType CONFIG = new PersistentYAMLDataType();
-	
-	private PersistentYAMLDataType() {}
-	
-	@Override
-	public Class<String> getPrimitiveType() {
-		return String.class;
-	}
+    public static final PersistentYAMLDataType CONFIG = new PersistentYAMLDataType();
 
-	@Override
-	public Class<FileConfiguration> getComplexType() {
-		return FileConfiguration.class;
-	}
+    private PersistentYAMLDataType() {}
 
-	@Override
-	public String toPrimitive(FileConfiguration complex, PersistentDataAdapterContext context) {
-		return complex.saveToString();
-	}
-	
-	@Override
-	public FileConfiguration fromPrimitive(String primitive, PersistentDataAdapterContext context) {
-		try {
-			@Cleanup
-			Reader reader = new StringReader(primitive);
-			return YamlConfiguration.loadConfiguration(reader);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
+    @Override
+    public Class<String> getPrimitiveType() {
+        return String.class;
+    }
+
+    @Override
+    public Class<FileConfiguration> getComplexType() {
+        return FileConfiguration.class;
+    }
+
+    @Override
+    public String toPrimitive(FileConfiguration complex, PersistentDataAdapterContext context) {
+        return complex.saveToString();
+    }
+
+    @Override
+    public FileConfiguration fromPrimitive(String primitive, PersistentDataAdapterContext context) {
+        try {
+            @Cleanup
+            Reader reader = new StringReader(primitive);
+            return YamlConfiguration.loadConfiguration(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

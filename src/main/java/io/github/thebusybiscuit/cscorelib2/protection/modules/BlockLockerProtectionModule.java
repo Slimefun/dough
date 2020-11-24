@@ -43,8 +43,7 @@ public class BlockLockerProtectionModule implements ProtectionModule {
         if (protection.isPresent()) {
             Profile profile = api.getProfileFactory().fromNameAndUniqueId(p.getName(), Optional.of(p.getUniqueId()));
             return protection.get().isAllowed(profile);
-        }
-        else {
+        } else {
             return true;
         }
 

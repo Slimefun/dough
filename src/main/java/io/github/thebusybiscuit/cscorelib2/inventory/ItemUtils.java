@@ -26,8 +26,7 @@ public final class ItemUtils {
             copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
             getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
             toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
-        }
-        catch (Exception x) {
+        } catch (Exception x) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
             x.printStackTrace();
         }
@@ -43,7 +42,8 @@ public final class ItemUtils {
      * @return The formatted Item Name
      */
     public static String getItemName(ItemStack item) {
-        if (item == null) return "null";
+        if (item == null)
+            return "null";
 
         if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             return item.getItemMeta().getDisplayName();
@@ -52,8 +52,7 @@ public final class ItemUtils {
         try {
             Object instance = copy.invoke(null, item);
             return (String) toString.invoke(getName.invoke(instance));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "ERROR";
         }
@@ -70,51 +69,66 @@ public final class ItemUtils {
      * @return Whether the two instances of {@link ItemStack} are similiar and can be stacked.
      */
     public static boolean canStack(ItemStack a, ItemStack b) {
-        if (a == null || b == null) return false;
+        if (a == null || b == null)
+            return false;
 
-        if (a.getType() != b.getType()) return false;
-        if (a.hasItemMeta() != b.hasItemMeta()) return false;
+        if (a.getType() != b.getType())
+            return false;
+        if (a.hasItemMeta() != b.hasItemMeta())
+            return false;
 
         if (a.hasItemMeta()) {
             ItemMeta aMeta = a.getItemMeta();
             ItemMeta bMeta = b.getItemMeta();
 
             // Item Damage
-            if (aMeta instanceof Damageable != bMeta instanceof Damageable) return false;
+            if (aMeta instanceof Damageable != bMeta instanceof Damageable)
+                return false;
             if (aMeta instanceof Damageable) {
-                if (((Damageable) aMeta).getDamage() != ((Damageable) bMeta).getDamage()) return false;
+                if (((Damageable) aMeta).getDamage() != ((Damageable) bMeta).getDamage())
+                    return false;
             }
 
             // Leather Armor Color
-            if (aMeta instanceof LeatherArmorMeta != bMeta instanceof LeatherArmorMeta) return false;
+            if (aMeta instanceof LeatherArmorMeta != bMeta instanceof LeatherArmorMeta)
+                return false;
             if (aMeta instanceof LeatherArmorMeta) {
-                if (!((LeatherArmorMeta) aMeta).getColor().equals(((LeatherArmorMeta) bMeta).getColor())) return false;
+                if (!((LeatherArmorMeta) aMeta).getColor().equals(((LeatherArmorMeta) bMeta).getColor()))
+                    return false;
             }
 
             if (!ReflectionUtils.isVersion("v1_13_")) {
                 // Custom Model Data
-                if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData()) return false;
+                if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData())
+                    return false;
                 if (aMeta.hasCustomModelData()) {
-                    if (aMeta.getCustomModelData() != bMeta.getCustomModelData()) return false;
+                    if (aMeta.getCustomModelData() != bMeta.getCustomModelData())
+                        return false;
                 }
             }
 
             // Enchantments
-            if (!aMeta.getEnchants().equals(bMeta.getEnchants())) return false;
+            if (!aMeta.getEnchants().equals(bMeta.getEnchants()))
+                return false;
 
             // Display Name
-            if (aMeta.hasDisplayName() != bMeta.hasDisplayName()) return false;
+            if (aMeta.hasDisplayName() != bMeta.hasDisplayName())
+                return false;
             if (aMeta.hasDisplayName()) {
-                if (!aMeta.getDisplayName().equals(bMeta.getDisplayName())) return false;
+                if (!aMeta.getDisplayName().equals(bMeta.getDisplayName()))
+                    return false;
             }
 
             // Lore
-            if (aMeta.hasLore() != bMeta.hasLore()) return false;
+            if (aMeta.hasLore() != bMeta.hasLore())
+                return false;
             if (aMeta.hasLore()) {
-                if (aMeta.getLore().size() != bMeta.getLore().size()) return false;
+                if (aMeta.getLore().size() != bMeta.getLore().size())
+                    return false;
 
                 for (int i = 0; i < aMeta.getLore().size(); i++) {
-                    if (!aMeta.getLore().get(i).equals(bMeta.getLore().get(i))) return false;
+                    if (!aMeta.getLore().get(i).equals(bMeta.getLore().get(i)))
+                        return false;
                 }
             }
         }
@@ -165,8 +179,7 @@ public final class ItemUtils {
 
             if (damageable.getDamage() + remove > item.getType().getMaxDurability()) {
                 item.setAmount(0);
-            }
-            else {
+            } else {
                 damageable.setDamage(damageable.getDamage() + remove);
                 item.setItemMeta(meta);
             }
@@ -212,15 +225,12 @@ public final class ItemUtils {
             if (MaterialCollections.getAllFilledBuckets().contains(item.getType()) && replaceConsumables) {
                 item.setType(Material.BUCKET);
                 item.setAmount(1);
-            }
-            else if (item.getType() == Material.POTION && replaceConsumables) {
+            } else if (item.getType() == Material.POTION && replaceConsumables) {
                 item.setType(Material.GLASS_BOTTLE);
                 item.setAmount(1);
-            }
-            else if (item.getAmount() <= amount) {
+            } else if (item.getAmount() <= amount) {
                 item.setAmount(0);
-            }
-            else {
+            } else {
                 item.setAmount(item.getAmount() - amount);
             }
         }

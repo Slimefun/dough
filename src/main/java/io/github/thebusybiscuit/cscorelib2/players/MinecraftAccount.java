@@ -62,8 +62,7 @@ public final class MinecraftAccount {
 
                         if (error.equals("TooManyRequestsException")) {
                             throw new TooManyRequestsException(url.orElse(null));
-                        }
-                        else {
+                        } else {
                             throw new UnknownServiceException(error);
                         }
                     }
@@ -110,8 +109,7 @@ public final class MinecraftAccount {
 
                         if (error.equals("TooManyRequestsException")) {
                             throw new TooManyRequestsException(url.orElse(null));
-                        }
-                        else {
+                        } else {
                             throw new UnknownServiceException(error);
                         }
                     }
@@ -133,8 +131,7 @@ public final class MinecraftAccount {
     private static Optional<URL> getURL(String url) {
         try {
             return Optional.of(new URL(url));
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
             return Optional.empty();
         }

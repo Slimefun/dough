@@ -12,22 +12,22 @@ package io.github.thebusybiscuit.cscorelib2.inventory;
  *
  */
 public enum ClickAction {
-	
-	LEFT_CLICK,
-	SHIFT_LEFT_CLICK,
-	RIGHT_CLICK,
-	SHIFT_RIGHT_CLICK;
 
-	public boolean isRightClick() {
-		return equals(RIGHT_CLICK) || equals(SHIFT_RIGHT_CLICK);
-	}
-	
-	public boolean isLeftClick() {
-		return equals(LEFT_CLICK) || equals(SHIFT_LEFT_CLICK);
-	}
-	
-	public boolean isShiftClick() {
-		return equals(SHIFT_LEFT_CLICK) || equals(SHIFT_RIGHT_CLICK);
-	}
-	
+    LEFT_CLICK,
+    SHIFT_LEFT_CLICK,
+    RIGHT_CLICK,
+    SHIFT_RIGHT_CLICK;
+
+    public boolean isRightClick() {
+        return equals(RIGHT_CLICK) || equals(SHIFT_RIGHT_CLICK);
+    }
+
+    public boolean isLeftClick() {
+        return equals(LEFT_CLICK) || equals(SHIFT_LEFT_CLICK);
+    }
+
+    public boolean isShiftClick() {
+        return equals(SHIFT_LEFT_CLICK) || equals(SHIFT_RIGHT_CLICK);
+    }
+
 }

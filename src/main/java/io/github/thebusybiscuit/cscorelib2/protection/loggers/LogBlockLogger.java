@@ -11,26 +11,26 @@ import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionLogger;
 
 public class LogBlockLogger implements ProtectionLogger {
-	
-	private Consumer consumer;
-	
-	@Override
-	public void load() {
-		consumer = LogBlock.getInstance().getConsumer();
-	}
 
-	@Override
-	public String getName() {
-		return "LogBlock";
-	}
+    private Consumer consumer;
 
-	@Override
-	public void logAction(OfflinePlayer p, Block b, ProtectableAction action) {
-		if (action == ProtectableAction.BREAK_BLOCK) {
-			Actor actor = new Actor(p.getName(), p.getUniqueId());
+    @Override
+    public void load() {
+        consumer = LogBlock.getInstance().getConsumer();
+    }
 
-			LoggingUtil.smartLogBlockBreak(consumer, actor, b);
-		}
-	}
+    @Override
+    public String getName() {
+        return "LogBlock";
+    }
+
+    @Override
+    public void logAction(OfflinePlayer p, Block b, ProtectableAction action) {
+        if (action == ProtectableAction.BREAK_BLOCK) {
+            Actor actor = new Actor(p.getName(), p.getUniqueId());
+
+            LoggingUtil.smartLogBlockBreak(consumer, actor, b);
+        }
+    }
 
 }

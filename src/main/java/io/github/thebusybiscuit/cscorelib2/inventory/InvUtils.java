@@ -56,8 +56,7 @@ public final class InvUtils {
 
             if (stack == null || stack.getType() == Material.AIR) {
                 return true;
-            }
-            else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
+            } else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
                 return true;
             }
         }
@@ -87,8 +86,7 @@ public final class InvUtils {
 
         if (items.length == 0) {
             return true;
-        }
-        else if (items.length == 1) {
+        } else if (items.length == 1) {
             return fits(inv, items[0], slots);
         }
 
@@ -104,8 +102,7 @@ public final class InvUtils {
                 if (stack == null || stack.getType() == Material.AIR) {
                     cache.put(slot, items[i]);
                     resolved = true;
-                }
-                else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
+                } else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
                     ItemStack clone = stack.clone();
                     clone.setAmount(stack.getAmount() + item.getAmount());
                     cache.put(slot, clone);
@@ -148,8 +145,7 @@ public final class InvUtils {
                 if (item.getAmount() + removed >= amount) {
                     ItemUtils.consumeItem(item, amount - removed, replaceConsumables);
                     return true;
-                }
-                else if (item.getAmount() > 0) {
+                } else if (item.getAmount() > 0) {
                     removed += item.getAmount();
                     ItemUtils.consumeItem(item, item.getAmount(), replaceConsumables);
                 }

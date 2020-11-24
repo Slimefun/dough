@@ -43,8 +43,7 @@ public class CustomBookListener implements Listener {
 
         if (!e.getMessage().startsWith(TRIGGER)) {
             books.remove(e.getPlayer().getUniqueId());
-        }
-        else {
+        } else {
             e.setCancelled(true);
 
             if (book != null) {

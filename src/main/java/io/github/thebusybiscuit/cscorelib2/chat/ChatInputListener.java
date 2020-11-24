@@ -83,7 +83,8 @@ class ChatInputListener implements Listener {
                 }
             }
 
-            if (callbacks.isEmpty()) handlers.remove(p.getUniqueId());
+            if (callbacks.isEmpty())
+                handlers.remove(p.getUniqueId());
         }
     }
 

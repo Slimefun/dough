@@ -78,8 +78,7 @@ public final class ProtectionManager {
 
             if (plotSquared.getDescription().getVersion().startsWith("4.")) {
                 registerModule(plotSquared, plugin -> new PlotSquared4ProtectionModule(plugin));
-            }
-            else {
+            } else {
                 registerModule(plotSquared, plugin -> new PlotSquared5ProtectionModule(plugin));
             }
         }
@@ -154,8 +153,7 @@ public final class ProtectionManager {
 
             protectionModules.add(module);
             loadModuleMSG(module.getName() + " v" + module.getVersion());
-        }
-        catch (Throwable x) {
+        } catch (Throwable x) {
             logger.log(Level.SEVERE, x, () -> "An Error occured while registering the Protection Module: \"" + plugin.getName() + "\" v" + plugin.getDescription().getVersion());
         }
     }
@@ -164,8 +162,7 @@ public final class ProtectionManager {
         try {
             module.load();
             registerLogger(module.getName(), module);
-        }
-        catch (Throwable x) {
+        } catch (Throwable x) {
             logger.log(Level.SEVERE, x, () -> "An Error occured while registering the Protection Module: \"" + module.getName() + "\"");
         }
     }
@@ -184,8 +181,7 @@ public final class ProtectionManager {
                 if (!module.hasPermission(p, l, action)) {
                     return false;
                 }
-            }
-            catch (Exception x) {
+            } catch (Exception x) {
                 logger.log(Level.SEVERE, x, () -> "An Error occured while querying the Protection Module: \"" + module.getName() + " v" + module.getVersion() + "\"");
                 // Fallback will just be "allow".
                 return true;
@@ -199,8 +195,7 @@ public final class ProtectionManager {
         for (ProtectionLogger module : protectionLoggers) {
             try {
                 module.logAction(p, b, action);
-            }
-            catch (Exception x) {
+            } catch (Exception x) {
                 logger.log(Level.SEVERE, x, () -> "An Error occured while logging for the Protection Module: \"" + module.getName() + "\"");
             }
         }

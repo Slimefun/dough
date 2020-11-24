@@ -73,15 +73,15 @@ public final class PersistentDataAPI {
     public static void setContainer(PersistentDataHolder holder, NamespacedKey key, PersistentDataContainer value) {
         holder.getPersistentDataContainer().set(key, PersistentDataType.TAG_CONTAINER, value);
     }
-    
+
     public static void setBoolean(PersistentDataHolder holder, NamespacedKey key, boolean value) {
-    	setByte(holder, key, value ? ((byte) 1): ((byte) 0));
+        setByte(holder, key, value ? ((byte) 1) : ((byte) 0));
     }
-    
+
     public static void setJsonObject(PersistentDataHolder holder, NamespacedKey key, JsonObject value) {
         holder.getPersistentDataContainer().set(key, PersistentJsonDataType.JSON_OBJECT, value);
     }
-    
+
     public static void setJsonArray(PersistentDataHolder holder, NamespacedKey key, JsonArray value) {
         holder.getPersistentDataContainer().set(key, PersistentJsonDataType.JSON_ARRAY, value);
     }
@@ -246,11 +246,11 @@ public final class PersistentDataAPI {
      */
     public static boolean hasBoolean(PersistentDataHolder holder, NamespacedKey key) {
         if (holder.getPersistentDataContainer().has(key, PersistentDataType.BYTE)) {
-        	byte value = getByte(holder, key);
-        	
-        	return value == 0 || value == 1;
+            byte value = getByte(holder, key);
+
+            return value == 0 || value == 1;
         }
-        
+
         return false;
     }
 
@@ -312,7 +312,7 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static Optional<Byte> getOptionalByte(PersistentDataHolder holder, NamespacedKey key) {
-    	return !hasByte(holder, key) ? Optional.empty(): Optional.of(getByte(holder, key));
+        return !hasByte(holder, key) ? Optional.empty() : Optional.of(getByte(holder, key));
     }
 
     /**
@@ -343,7 +343,7 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static Optional<Boolean> getOptionalBoolean(PersistentDataHolder holder, NamespacedKey key) {
-    	return !hasBoolean(holder, key) ? Optional.empty(): Optional.of(getBoolean(holder, key));
+        return !hasBoolean(holder, key) ? Optional.empty() : Optional.of(getBoolean(holder, key));
     }
 
     /**
@@ -385,7 +385,7 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static Optional<Short> getOptionalShort(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasShort(holder, key) ? Optional.empty(): Optional.of(getShort(holder, key));
+        return !hasShort(holder, key) ? Optional.empty() : Optional.of(getShort(holder, key));
     }
 
     /**
@@ -429,7 +429,7 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static OptionalInt getOptionalInt(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasInt(holder, key) ? OptionalInt.empty(): OptionalInt.of(getInt(holder, key));
+        return !hasInt(holder, key) ? OptionalInt.empty() : OptionalInt.of(getInt(holder, key));
     }
 
     /**
@@ -473,7 +473,7 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static OptionalLong getOptionalLong(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasLong(holder, key) ? OptionalLong.empty(): OptionalLong.of(getLong(holder, key));
+        return !hasLong(holder, key) ? OptionalLong.empty() : OptionalLong.of(getLong(holder, key));
     }
 
     /**
@@ -517,7 +517,7 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static Optional<Float> getOptionalFloat(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasFloat(holder, key) ? Optional.empty(): Optional.of(getFloat(holder, key));
+        return !hasFloat(holder, key) ? Optional.empty() : Optional.of(getFloat(holder, key));
     }
 
     /**
@@ -563,7 +563,7 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static OptionalDouble getOptionalDouble(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasDouble(holder, key) ? OptionalDouble.empty(): OptionalDouble.of(getDouble(holder, key));
+        return !hasDouble(holder, key) ? OptionalDouble.empty() : OptionalDouble.of(getDouble(holder, key));
     }
 
     /**
@@ -888,7 +888,7 @@ public final class PersistentDataAPI {
     public static JsonArray getJsonArray(PersistentDataHolder holder, NamespacedKey key, JsonArray defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentJsonDataType.JSON_ARRAY, defaultVal);
     }
-    
+
     /**
      * This removes the data stored with the given key on the given data holder
      * 
@@ -898,6 +898,6 @@ public final class PersistentDataAPI {
      *            The key of the data to remove
      */
     public static void remove(PersistentDataHolder holder, NamespacedKey key) {
-    	holder.getPersistentDataContainer().remove(key);
+        holder.getPersistentDataContainer().remove(key);
     }
 }

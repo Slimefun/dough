@@ -65,10 +65,12 @@ public class MaterialCollection implements Iterable<Material> {
     }
 
     public boolean contains(Material type) {
-        if (type == null) return false;
+        if (type == null)
+            return false;
 
         for (Material m : asArray) {
-            if (m == type) return true;
+            if (m == type)
+                return true;
         }
 
         return false;

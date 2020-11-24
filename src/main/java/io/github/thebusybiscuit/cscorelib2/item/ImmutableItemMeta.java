@@ -48,8 +48,7 @@ public class ImmutableItemMeta {
 
         if (ReflectionUtils.isVersion("v1_13_")) {
             customModelData = OptionalInt.empty();
-        }
-        else {
+        } else {
             customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
         }
 

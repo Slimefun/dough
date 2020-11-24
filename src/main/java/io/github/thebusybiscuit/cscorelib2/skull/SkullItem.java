@@ -59,8 +59,7 @@ public final class SkullItem {
 
             item.setItemMeta(meta);
             return item;
-        }
-        catch (Exception x) {
+        } catch (Exception x) {
             x.printStackTrace();
             return new ItemStack(Material.PLAYER_HEAD);
         }

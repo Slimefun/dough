@@ -47,8 +47,7 @@ public class CustomBookInterface {
                 openBook = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("EntityPlayer"), "a", ReflectionUtils.getNMSClass("ItemStack"), enumhand);
                 mainHand = ReflectionUtils.getEnumConstant(enumhand, "MAIN_HAND");
             }
-        }
-        catch (ClassNotFoundException | SecurityException | NoSuchFieldException | NoSuchMethodException e) {
+        } catch (ClassNotFoundException | SecurityException | NoSuchFieldException | NoSuchMethodException e) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
             e.printStackTrace();
         }
@@ -99,8 +98,7 @@ public class CustomBookInterface {
             for (ChatComponent page : pages) {
                 field.add(page.getAsNMSComponent());
             }
-        }
-        catch (IllegalArgumentException | IllegalAccessException e) {
+        } catch (IllegalArgumentException | IllegalAccessException e) {
             plugin.getLogger().log(Level.SEVERE, "Could not access pages of a book", e);
         }
 
@@ -109,7 +107,8 @@ public class CustomBookInterface {
     }
 
     public void open(@NonNull Player p) {
-        if (listener.getPlayers().contains(p.getUniqueId())) return;
+        if (listener.getPlayers().contains(p.getUniqueId()))
+            return;
 
         ItemStack book = getItem();
 
@@ -117,8 +116,7 @@ public class CustomBookInterface {
 
         if (!ReflectionUtils.isVersion("v1_13_")) {
             p.openBook(book);
-        }
-        else {
+        } else {
             int slot = p.getInventory().getHeldItemSlot();
             ItemStack item = p.getInventory().getItem(slot);
 
@@ -129,8 +127,7 @@ public class CustomBookInterface {
                 try {
                     Object copy = copyBook.invoke(null, book);
                     openBook.invoke(playerHandle.invoke(p), copy, mainHand);
-                }
-                catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                     plugin.getLogger().log(Level.SEVERE, "Could not open a Written Book", e);
                 }
 

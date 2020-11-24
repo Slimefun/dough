@@ -116,8 +116,7 @@ public class BukkitUpdater implements Updater {
 
                 thread.start();
             });
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             plugin.getLogger().log(Level.SEVERE, "Auto-Updater URL is malformed", e);
         }
     }

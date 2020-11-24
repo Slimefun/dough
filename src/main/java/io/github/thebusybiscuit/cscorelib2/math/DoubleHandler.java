@@ -22,28 +22,35 @@ public final class DoubleHandler {
         DecimalFormat format = new DecimalFormat("##.##");
 
         double d2 = d / 1000000000000000D;
-        if (d2 > 1.0) return format.format(d2).replace(",", ".") + "Q";
+        if (d2 > 1.0)
+            return format.format(d2).replace(",", ".") + "Q";
 
         d2 = d / 1000000000000D;
-        if (d2 > 1.0) return format.format(d2).replace(",", ".") + "T";
+        if (d2 > 1.0)
+            return format.format(d2).replace(",", ".") + "T";
 
         d2 = d / 1000000000D;
-        if (d2 > 1.0) return format.format(d2).replace(",", ".") + "B";
+        if (d2 > 1.0)
+            return format.format(d2).replace(",", ".") + "B";
 
         d2 = d / 1000000D;
-        if (d2 > 1.0) return format.format(d2).replace(",", ".") + "M";
+        if (d2 > 1.0)
+            return format.format(d2).replace(",", ".") + "M";
 
         d2 = d / 1000D;
-        if (d2 > 1.0) return format.format(d2).replace(",", ".") + "K";
+        if (d2 > 1.0)
+            return format.format(d2).replace(",", ".") + "K";
 
         return format.format(d).replace(",", ".");
     }
 
     public static double fixDouble(double amount, int digits) {
-        if (digits == 0) return (int) amount;
+        if (digits == 0)
+            return (int) amount;
         StringBuilder format = new StringBuilder("##");
         for (int i = 0; i < digits; i++) {
-            if (i == 0) format.append(".");
+            if (i == 0)
+                format.append(".");
             format.append("#");
         }
         return Double.valueOf(new DecimalFormat(format.toString()).format(amount).replace(",", "."));

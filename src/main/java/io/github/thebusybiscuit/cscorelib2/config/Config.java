@@ -122,45 +122,36 @@ public class Config implements AbstractConfig {
     public void setValue(@NonNull String path, Object value) {
         if (value == null) {
             this.store(path, value);
-        }
-        else if (value instanceof Optional) {
+        } else if (value instanceof Optional) {
             this.store(path, ((Optional<?>) value).orElse(null));
-        }
-        else if (value instanceof Inventory) {
+        } else if (value instanceof Inventory) {
             this.store(path + ".size", ((Inventory) value).getSize());
             for (int i = 0; i < ((Inventory) value).getSize(); i++) {
                 this.store(path + "." + i, ((Inventory) value).getItem(i));
             }
-        }
-        else if (value instanceof Date) {
+        } else if (value instanceof Date) {
             this.store(path, String.valueOf(((Date) value).getTime()));
-        }
-        else if (value instanceof Long) {
+        } else if (value instanceof Long) {
             this.store(path, String.valueOf(value));
-        }
-        else if (value instanceof UUID) {
+        } else if (value instanceof UUID) {
             this.store(path, value.toString());
-        }
-        else if (value instanceof Sound) {
+        } else if (value instanceof Sound) {
             this.store(path, String.valueOf(value));
-        }
-        else if (value instanceof Location) {
+        } else if (value instanceof Location) {
             this.store(path + ".x", ((Location) value).getX());
             this.store(path + ".y", ((Location) value).getY());
             this.store(path + ".z", ((Location) value).getZ());
             this.store(path + ".pitch", ((Location) value).getPitch());
             this.store(path + ".yaw", ((Location) value).getYaw());
             this.store(path + ".world", ((Location) value).getWorld().getName());
-        }
-        else if (value instanceof Chunk) {
+        } else if (value instanceof Chunk) {
             this.store(path + ".x", ((Chunk) value).getX());
             this.store(path + ".z", ((Chunk) value).getZ());
             this.store(path + ".world", ((Chunk) value).getWorld().getName());
-        }
-        else if (value instanceof World) {
+        } else if (value instanceof World) {
             this.store(path, ((World) value).getName());
-        }
-        else this.store(path, value);
+        } else
+            this.store(path, value);
     }
 
     /**
@@ -170,8 +161,7 @@ public class Config implements AbstractConfig {
     public void save() {
         try {
             fileConfig.save(file);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -186,8 +176,7 @@ public class Config implements AbstractConfig {
     public void save(@NonNull File file) {
         try {
             fileConfig.save(file);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -203,7 +192,8 @@ public class Config implements AbstractConfig {
      */
     @Override
     public void setDefaultValue(@NonNull String path, Object value) {
-        if (!contains(path)) setValue(path, value);
+        if (!contains(path))
+            setValue(path, value);
     }
 
     @SuppressWarnings("unchecked")
@@ -213,8 +203,7 @@ public class Config implements AbstractConfig {
 
         if (value.getClass().isInstance(val)) {
             return (T) val;
-        }
-        else {
+        } else {
             setValue(path, value);
             return value;
         }
@@ -329,8 +318,7 @@ public class Config implements AbstractConfig {
     public boolean createFile() {
         try {
             return this.file.createNewFile();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
