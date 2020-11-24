@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.Map;
 
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import lombok.NonNull;
@@ -35,6 +36,10 @@ public final class ChunkPosition {
 
     public ChunkPosition(@NonNull Chunk chunk) {
         this(chunk.getWorld(), chunk.getX(), chunk.getZ());
+    }
+
+    public ChunkPosition(@NonNull Location l) {
+        this(l.getWorld(), l.getBlockX() >> 4, l.getBlockZ() >> 4);
     }
 
     /**

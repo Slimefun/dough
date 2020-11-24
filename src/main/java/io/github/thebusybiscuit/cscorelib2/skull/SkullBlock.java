@@ -91,9 +91,12 @@ public final class SkullBlock {
             Object position = newPosition.newInstance(block.getX(), block.getY(), block.getZ());
             Object tileEntity = getTileEntity.invoke(world, position);
 
-            if (tileEntity != null && causeBlockUpdate) {
+            if (tileEntity != null) {
                 setGameProfile.invoke(tileEntity, profile);
-                block.getState().update(true, false);
+
+                if (causeBlockUpdate) {
+                    block.getState().update(true, false);
+                }
             }
 
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
