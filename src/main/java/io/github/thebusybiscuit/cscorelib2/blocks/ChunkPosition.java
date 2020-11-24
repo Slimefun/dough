@@ -55,6 +55,23 @@ public final class ChunkPosition {
     }
 
     /**
+     * This checks whether this {@link Chunk} is loaded.
+     * If the {@link World} is not loaded, this method will
+     * return false.
+     * 
+     * @return Whether this {@link Chunk} is loaded
+     */
+    public boolean isLoaded() {
+        final World ref = this.world.get();
+
+        if (ref == null) {
+            return false;
+        } else {
+            return ref.isChunkLoaded(getX(), getZ());
+        }
+    }
+
+    /**
      * Gets the long position of this block. This is constructed of the x and z. <br>
      * This is encoded as follows: {@code (x << 32) | (z & 0xFFFFFFFFL)}
      *
