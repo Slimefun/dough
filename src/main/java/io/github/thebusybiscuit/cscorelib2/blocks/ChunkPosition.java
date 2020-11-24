@@ -1,12 +1,23 @@
 package io.github.thebusybiscuit.cscorelib2.blocks;
 
 import java.lang.ref.WeakReference;
+import java.util.Map;
 
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
 import lombok.NonNull;
 
+/**
+ * This is a memory efficient version of a {@link Chunk}.
+ * It can be used to optimize {@link Map} usage or other storage means.
+ * 
+ * @author TheBusyBiscuit
+ * @author Walshy
+ * 
+ * @see BlockPosition
+ *
+ */
 public final class ChunkPosition {
 
     private final WeakReference<World> world;
@@ -19,7 +30,7 @@ public final class ChunkPosition {
 
     public ChunkPosition(@NonNull World world, int x, int z) {
         this.world = new WeakReference<>(world);
-        this.position = ((long) (x & 0x3FFFFFF) << 38) | (long) (z & 0xFFF);
+        this.position = (((long) x) << 32) | (z & 0xFFFFFFFFL);
     }
 
     public ChunkPosition(@NonNull Chunk chunk) {
@@ -44,8 +55,8 @@ public final class ChunkPosition {
     }
 
     /**
-     * Gets the long position of this block. This is constructed of the x, y and z. <br>
-     * This is encoded as follows: {@code ((x & 0x3FFFFFF) << 38) | ((z & 0x3FFFFFF) << 12) | (y & 0xFFF)}
+     * Gets the long position of this block. This is constructed of the x and z. <br>
+     * This is encoded as follows: {@code (x << 32) | (z & 0xFFFFFFFFL)}
      *
      * @return The position of this block.
      */
@@ -59,7 +70,7 @@ public final class ChunkPosition {
      * @return This chunks x coordinate.
      */
     public int getX() {
-        return (int) (this.position >> 38);
+        return (int) (this.position >> 32);
     }
 
     /**
@@ -68,7 +79,7 @@ public final class ChunkPosition {
      * @return This chunks z coordinate.
      */
     public int getZ() {
-        return (int) (this.position & 0xFFF);
+        return (int) this.position;
     }
 
     /**
@@ -93,10 +104,14 @@ public final class ChunkPosition {
     public boolean equals(Object o) {
         if (o instanceof ChunkPosition) {
             final ChunkPosition pos = (ChunkPosition) o;
-            if (pos.world.get() == null) return false;
+
+            if (pos.world.get() == null) {
+                return false;
+            }
 
             return this.getWorld().getUID().equals(pos.getWorld().getUID()) && this.position == pos.position;
         }
+
         return false;
     }
 

@@ -110,6 +110,7 @@ public final class BlockPosition {
      */
     public Chunk getChunk() {
         final World ref = this.world.get();
+
         if (ref == null) {
             throw new IllegalStateException("Cannot get Chunk when the world isn't loaded");
         }
@@ -151,10 +152,14 @@ public final class BlockPosition {
     public boolean equals(Object o) {
         if (o instanceof BlockPosition) {
             final BlockPosition pos = (BlockPosition) o;
-            if (pos.world.get() == null) return false;
+
+            if (pos.world.get() == null) {
+                return false;
+            }
 
             return this.getWorld().getUID().equals(pos.getWorld().getUID()) && this.position == pos.position;
         }
+
         return false;
     }
 
