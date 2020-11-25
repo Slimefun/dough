@@ -2,6 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.math;
 
 import java.text.DecimalFormat;
 
+@Deprecated
 public final class DoubleHandler {
 
     private DoubleHandler() {}
