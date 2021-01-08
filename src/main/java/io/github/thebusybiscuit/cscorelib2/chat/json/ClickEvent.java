@@ -10,6 +10,12 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.NonNull;
 
+/**
+ * 
+ * @deprecated Honestly, Kyori-adventure is infinite times better than this, please use that.
+ *
+ */
+@Deprecated
 public class ClickEvent {
 
     private final JsonObject json;

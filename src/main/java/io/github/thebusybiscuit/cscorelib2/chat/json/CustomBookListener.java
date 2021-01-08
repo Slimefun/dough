@@ -22,7 +22,12 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
-
+/**
+ * 
+ * @deprecated Honestly, Kyori-adventure is infinite times better than this, please use that.
+ *
+ */
+@Deprecated
 public class CustomBookListener implements Listener {
 
     protected static final String TRIGGER = "written_book:open - ";

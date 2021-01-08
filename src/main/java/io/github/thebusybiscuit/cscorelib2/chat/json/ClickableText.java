@@ -10,6 +10,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
+/**
+ * 
+ * @deprecated Honestly, Kyori-adventure is infinite times better than this, please use that.
+ *
+ */
+@Deprecated
 @Getter
 @AllArgsConstructor
 class ClickableText implements Keyed {

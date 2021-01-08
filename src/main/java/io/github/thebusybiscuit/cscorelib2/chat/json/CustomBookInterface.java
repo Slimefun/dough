@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -22,7 +23,12 @@ import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-
+/**
+ * 
+ * @deprecated Honestly, Kyori-adventure is infinite times better than this, please use that.
+ *
+ */
+@Deprecated
 public class CustomBookInterface {
 
     private static CustomBookListener listener;
@@ -94,6 +100,7 @@ public class CustomBookInterface {
         List field;
         try {
             field = (List) pagesField.get(meta);
+            Validate.notNull(field, "'pages' field seems to be null for BookMeta");
 
             for (ChatComponent page : pages) {
                 field.add(page.getAsNMSComponent());

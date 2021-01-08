@@ -15,6 +15,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * 
+ * @deprecated Honestly, Kyori-adventure is infinite times better than this, please use that.
+ *
+ */
+@Deprecated
 public class ChatComponent {
 
     private static Class<?> serializerClass;

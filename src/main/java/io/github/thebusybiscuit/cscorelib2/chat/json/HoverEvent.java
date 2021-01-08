@@ -10,7 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import com.google.gson.JsonObject;
 
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
-
+/**
+ * 
+ * @deprecated Honestly, Kyori-adventure is infinite times better than this, please use that.
+ *
+ */
+@Deprecated
 public class HoverEvent {
 
     private static Constructor<?> nbtConstructor;
