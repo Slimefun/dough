@@ -9,7 +9,6 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import io.github.thebusybiscuit.cscorelib2.materials.MaterialCollections;
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.NonNull;
 
@@ -72,63 +71,73 @@ public final class ItemUtils {
         if (a == null || b == null)
             return false;
 
-        if (a.getType() != b.getType())
+        if (a.getType() != b.getType()) {
             return false;
-        if (a.hasItemMeta() != b.hasItemMeta())
+        } else if (a.hasItemMeta() != b.hasItemMeta()) {
             return false;
+        }
 
         if (a.hasItemMeta()) {
             ItemMeta aMeta = a.getItemMeta();
             ItemMeta bMeta = b.getItemMeta();
 
             // Item Damage
-            if (aMeta instanceof Damageable != bMeta instanceof Damageable)
+            if (aMeta instanceof Damageable != bMeta instanceof Damageable) {
                 return false;
-            if (aMeta instanceof Damageable) {
-                if (((Damageable) aMeta).getDamage() != ((Damageable) bMeta).getDamage())
-                    return false;
+            }
+
+            if (aMeta instanceof Damageable && ((Damageable) aMeta).getDamage() != ((Damageable) bMeta).getDamage()) {
+                return false;
             }
 
             // Leather Armor Color
-            if (aMeta instanceof LeatherArmorMeta != bMeta instanceof LeatherArmorMeta)
+            if (aMeta instanceof LeatherArmorMeta != bMeta instanceof LeatherArmorMeta) {
                 return false;
-            if (aMeta instanceof LeatherArmorMeta) {
-                if (!((LeatherArmorMeta) aMeta).getColor().equals(((LeatherArmorMeta) bMeta).getColor()))
-                    return false;
+            }
+
+            if (aMeta instanceof LeatherArmorMeta && !((LeatherArmorMeta) aMeta).getColor().equals(((LeatherArmorMeta) bMeta).getColor())) {
+                return false;
             }
 
             if (!ReflectionUtils.isVersion("v1_13_")) {
                 // Custom Model Data
-                if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData())
+                if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData()) {
                     return false;
-                if (aMeta.hasCustomModelData()) {
-                    if (aMeta.getCustomModelData() != bMeta.getCustomModelData())
-                        return false;
+                }
+
+                if (aMeta.hasCustomModelData() && aMeta.getCustomModelData() != bMeta.getCustomModelData()) {
+                    return false;
                 }
             }
 
             // Enchantments
-            if (!aMeta.getEnchants().equals(bMeta.getEnchants()))
+            if (!aMeta.getEnchants().equals(bMeta.getEnchants())) {
                 return false;
+            }
 
             // Display Name
-            if (aMeta.hasDisplayName() != bMeta.hasDisplayName())
+            if (aMeta.hasDisplayName() != bMeta.hasDisplayName()) {
                 return false;
-            if (aMeta.hasDisplayName()) {
-                if (!aMeta.getDisplayName().equals(bMeta.getDisplayName()))
-                    return false;
+            }
+
+            if (aMeta.hasDisplayName() && !aMeta.getDisplayName().equals(bMeta.getDisplayName())) {
+                return false;
             }
 
             // Lore
-            if (aMeta.hasLore() != bMeta.hasLore())
+            if (aMeta.hasLore() != bMeta.hasLore()) {
                 return false;
+            }
+
             if (aMeta.hasLore()) {
-                if (aMeta.getLore().size() != bMeta.getLore().size())
+                if (aMeta.getLore().size() != bMeta.getLore().size()) {
                     return false;
+                }
 
                 for (int i = 0; i < aMeta.getLore().size(); i++) {
-                    if (!aMeta.getLore().get(i).equals(bMeta.getLore().get(i)))
+                    if (!aMeta.getLore().get(i).equals(bMeta.getLore().get(i))) {
                         return false;
+                    }
                 }
             }
         }
@@ -222,13 +231,26 @@ public final class ItemUtils {
      */
     public static void consumeItem(@NonNull ItemStack item, int amount, boolean replaceConsumables) {
         if (item.getType() != Material.AIR && item.getAmount() > 0) {
-            if (MaterialCollections.getAllFilledBuckets().contains(item.getType()) && replaceConsumables) {
-                item.setType(Material.BUCKET);
-                item.setAmount(1);
-            } else if (item.getType() == Material.POTION && replaceConsumables) {
-                item.setType(Material.GLASS_BOTTLE);
-                item.setAmount(1);
-            } else if (item.getAmount() <= amount) {
+            if (replaceConsumables) {
+                switch (item.getType()) {
+                case POTION:
+                case DRAGON_BREATH:
+                case HONEY_BOTTLE:
+                    item.setType(Material.GLASS_BOTTLE);
+                    item.setAmount(1);
+                    return;
+                case WATER_BUCKET:
+                case LAVA_BUCKET:
+                case MILK_BUCKET:
+                    item.setType(Material.BUCKET);
+                    item.setAmount(1);
+                    return;
+                default:
+                    break;
+                }
+            }
+
+            if (item.getAmount() <= amount) {
                 item.setAmount(0);
             } else {
                 item.setAmount(item.getAmount() - amount);
