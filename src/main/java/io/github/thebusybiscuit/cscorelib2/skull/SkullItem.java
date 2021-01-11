@@ -55,7 +55,7 @@ public final class SkullItem {
             ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 
             SkullMeta meta = (SkullMeta) item.getItemMeta();
-            FakeProfile.inject(meta, uuid, texture);
+            new FakeProfile(uuid, texture).inject(meta);
 
             item.setItemMeta(meta);
             return item;
