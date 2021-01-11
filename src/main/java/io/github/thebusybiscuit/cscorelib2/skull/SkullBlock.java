@@ -9,6 +9,8 @@ import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import com.mojang.authlib.GameProfile;
+
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.NonNull;
 
@@ -24,7 +26,7 @@ public final class SkullBlock {
         try {
             handle = ReflectionUtils.getOBCClass("CraftWorld").getMethod("getHandle");
 
-            setGameProfile = ReflectionUtils.getNMSClass("TileEntitySkull").getMethod("setGameProfile", FakeProfile.profileClass);
+            setGameProfile = ReflectionUtils.getNMSClass("TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
 
             Class<?> blockPosition = ReflectionUtils.getNMSClass("BlockPosition");
             newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
