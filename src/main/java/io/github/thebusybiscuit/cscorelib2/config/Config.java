@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +32,8 @@ public class Config implements AbstractConfig {
     @Getter
     private File file;
 
+    private final Logger logger;
+
     protected FileConfiguration fileConfig;
 
     /**
@@ -43,12 +47,14 @@ public class Config implements AbstractConfig {
         plugin.getConfig().options().copyDefaults(true);
         plugin.saveConfig();
 
+        this.logger = plugin.getLogger();
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), "config.yml");
         this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
         fileConfig.options().copyDefaults(true);
     }
 
     public Config(@NonNull Plugin plugin, @NonNull String name) {
+        this.logger = plugin.getLogger();
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), name);
         this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
         fileConfig.options().copyDefaults(true);
@@ -63,6 +69,7 @@ public class Config implements AbstractConfig {
      *            The FileConfiguration
      */
     public Config(@NonNull File file, @NonNull FileConfiguration config) {
+        this.logger = Logger.getLogger("CS-CoreLib2");
         this.file = file;
         this.fileConfig = config;
         config.options().copyDefaults(true);
@@ -162,7 +169,7 @@ public class Config implements AbstractConfig {
         try {
             fileConfig.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Exception while saving a Config file", e);
         }
     }
 
@@ -177,7 +184,7 @@ public class Config implements AbstractConfig {
         try {
             fileConfig.save(file);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Exception while saving a Config file", e);
         }
     }
 
@@ -319,7 +326,7 @@ public class Config implements AbstractConfig {
         try {
             return this.file.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Exception while creating a Config file", e);
             return false;
         }
     }

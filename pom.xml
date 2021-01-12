@@ -8,14 +8,10 @@
     <artifactId>cscorelib2</artifactId>
 
     <version>0.29</version>
-    <inceptionYear>2019</inceptionYear>
-    <url>https://github.com/TheBusyBiscuit/CS-CoreLib2</url>
-    <packaging>jar</packaging>
 
-    <issueManagement>
-        <system>GitHub Issues</system>
-        <url>https://github.com/TheBusyBiscuit/CS-CoreLib2/issues</url>
-    </issueManagement>
+    <packaging>jar</packaging>
+    <url>https://github.com/TheBusyBiscuit/CS-CoreLib2</url>
+    <inceptionYear>2019</inceptionYear>
 
     <licenses>
         <license>
@@ -24,6 +20,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/TheBusyBiscuit/CS-CoreLib2/issues</url>
+    </issueManagement>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
