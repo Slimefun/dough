@@ -8,6 +8,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import lombok.NonNull;
+
 public final class PersistentJsonDataType<T extends JsonElement> implements PersistentDataType<String, T> {
 
     public static final PersistentJsonDataType<JsonObject> JSON_OBJECT = new PersistentJsonDataType<>(JsonObject.class);
@@ -16,7 +18,7 @@ public final class PersistentJsonDataType<T extends JsonElement> implements Pers
     private final Class<T> jsonClass;
     private final JsonParser parser = new JsonParser();
 
-    public PersistentJsonDataType(Class<T> jsonClass) {
+    public PersistentJsonDataType(@NonNull Class<T> jsonClass) {
         this.jsonClass = jsonClass;
     }
 
@@ -39,10 +41,11 @@ public final class PersistentJsonDataType<T extends JsonElement> implements Pers
     public T fromPrimitive(String primitive, PersistentDataAdapterContext context) {
         JsonElement json = parser.parse(primitive);
 
-        if (jsonClass.isInstance(json))
+        if (jsonClass.isInstance(json)) {
             return jsonClass.cast(json);
-        else
+        } else {
             return null;
+        }
     }
 
 }

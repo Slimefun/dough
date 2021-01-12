@@ -5,6 +5,8 @@ import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
@@ -21,6 +23,7 @@ import com.google.gson.JsonObject;
  * @author TheBusyBiscuit
  *
  */
+@ParametersAreNonnullByDefault
 public final class PersistentDataAPI {
 
     private PersistentDataAPI() {

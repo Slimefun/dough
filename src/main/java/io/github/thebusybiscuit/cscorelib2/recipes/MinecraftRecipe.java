@@ -10,6 +10,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.BlastingRecipe;
 import org.bukkit.inventory.CampfireRecipe;
@@ -147,6 +150,7 @@ public class MinecraftRecipe<T extends Recipe> {
     private Function<T, RecipeChoice[]> inputFunction;
     private BiFunction<ItemStack[], Stream<T>, Optional<ItemStack>> outputFunction;
 
+    @ParametersAreNonnullByDefault
     private MinecraftRecipe(String material, Class<T> recipeClass, Predicate<ItemStack[]> predicate, Function<T, RecipeChoice[]> inputFunction, BiFunction<ItemStack[], Stream<T>, Optional<ItemStack>> outputFunction) {
         try {
             this.machine = Material.valueOf(material);
@@ -161,15 +165,17 @@ public class MinecraftRecipe<T extends Recipe> {
         }
     }
 
-    protected boolean validate(ItemStack[] inputs) {
+    protected boolean validate(@Nonnull ItemStack[] inputs) {
         return predicate.test(inputs);
     }
 
-    public RecipeChoice[] getInputs(T recipe) {
+    @Nonnull
+    public RecipeChoice[] getInputs(@Nonnull T recipe) {
         return inputFunction.apply(recipe);
     }
 
-    public Optional<ItemStack> getOutput(Stream<T> stream, ItemStack[] inputs) {
+    @Nonnull
+    public Optional<ItemStack> getOutput(@Nonnull Stream<T> stream, @Nonnull ItemStack[] inputs) {
         return outputFunction.apply(inputs, stream);
     }
 
@@ -180,6 +186,7 @@ public class MinecraftRecipe<T extends Recipe> {
         return recipeTypes.stream().filter(type -> type.getRecipeClass().isAssignableFrom(recipeClass)).findAny().map(type -> (MinecraftRecipe<? super T>) type);
     }
 
+    @Nonnull
     public static Stream<MinecraftRecipe<?>> stream() {
         return recipeTypes.stream();
     }

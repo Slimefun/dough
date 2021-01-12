@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -60,6 +62,7 @@ public class RecipeSnapshot {
      * 
      * @return A Stream of all Recipes in this Snapshot
      */
+    @Nonnull
     public Stream<Recipe> streamAllRecipes() {
         return recipes.values().stream().flatMap(Set::stream);
     }
@@ -74,6 +77,7 @@ public class RecipeSnapshot {
      *            A child-class of {@link Recipe}.
      * @return A {@link Set} of Recipes of the given Type.
      */
+    @Nonnull
     public <T extends Recipe> Set<T> getRecipes(@NonNull Class<T> recipeClass) {
         return stream(recipeClass).collect(Collectors.toSet());
     }
@@ -88,6 +92,7 @@ public class RecipeSnapshot {
      *            A child-class of {@link Recipe}.
      * @return A {@link Stream} of Recipes of the given Type.
      */
+    @Nonnull
     public <T extends Recipe> Stream<T> stream(@NonNull Class<T> recipeClass) {
         return recipes.entrySet().stream().filter(entry -> recipeClass.isAssignableFrom(entry.getKey())).flatMap(entry -> entry.getValue().stream()).map(recipeClass::cast);
     }
@@ -104,6 +109,7 @@ public class RecipeSnapshot {
      *            The Recipe to get the inputs from
      * @return The Inputs for the given Recipe
      */
+    @Nonnull
     public <T extends Recipe> RecipeChoice[] getRecipeInput(@NonNull MinecraftRecipe<? super T> recipeType, @NonNull T recipe) {
         return recipeType.getInputs(recipe);
     }
@@ -122,6 +128,7 @@ public class RecipeSnapshot {
      *            The Recipe to get the inputs from
      * @return The Inputs for the given Recipe
      */
+    @Nonnull
     public <T extends Recipe> RecipeChoice[] getRecipeInput(@NonNull T recipe) {
         Optional<MinecraftRecipe<? super T>> type = MinecraftRecipe.of(recipe);
 
@@ -146,6 +153,7 @@ public class RecipeSnapshot {
      *            The Inputs to the Recipe you are looking for
      * @return An {@link Optional} describing the output of the Recipe matching your type and inputs
      */
+    @Nonnull
     public <T extends Recipe> Optional<ItemStack> getRecipeOutput(@NonNull MinecraftRecipe<T> recipeType, ItemStack... inputs) {
         if (recipeType.validate(inputs)) {
             return recipeType.getOutput(stream(recipeType.getRecipeClass()), inputs);
@@ -161,6 +169,7 @@ public class RecipeSnapshot {
      *            The {@link Predicate} to filter recipes.
      * @return A Set of Recipes matching your filter.
      */
+    @Nonnull
     public Set<Recipe> getRecipes(@NonNull Predicate<Recipe> predicate) {
         return streamAllRecipes().filter(predicate).collect(Collectors.toSet());
     }
@@ -173,6 +182,7 @@ public class RecipeSnapshot {
      *            The {@link Material} of your Recipes' outputs.
      * @return A {@link Set} of Recipes resulting in an {@link ItemStack} with the given {@link Material}
      */
+    @Nonnull
     public Set<Recipe> getRecipesFor(@NonNull Material type) {
         return getRecipes(recipe -> recipe.getResult().getType() == type);
     }
@@ -184,6 +194,7 @@ public class RecipeSnapshot {
      *            The Result of the Recipes you are looking for
      * @return A {@link Set} of Recipes resulting in the given {@link ItemStack}
      */
+    @Nonnull
     public Set<Recipe> getRecipesFor(@NonNull ItemStack item) {
         return getRecipes(recipe -> recipe.getResult().isSimilar(item));
     }
@@ -197,6 +208,7 @@ public class RecipeSnapshot {
      *            The ItemStack input for the Recipes you are looking for.
      * @return A {@link Set} of Recipes that include the given {@link ItemStack} as an input.
      */
+    @Nonnull
     public Set<Recipe> getRecipesWith(@NonNull ItemStack item) {
         return getRecipes(recipe -> Arrays.stream(getRecipeInput(recipe)).anyMatch(choice -> choice.test(item)));
     }
