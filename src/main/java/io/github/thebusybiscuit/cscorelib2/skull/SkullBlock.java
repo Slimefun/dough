@@ -83,7 +83,7 @@ public final class SkullBlock {
         Material material = block.getType();
 
         if (material != Material.PLAYER_HEAD && material != Material.PLAYER_WALL_HEAD) {
-            throw new IllegalArgumentException("Block is not a Skull");
+            throw new IllegalArgumentException("Cannot update a head texture. Expected a Player Head, received: " + material);
         }
 
         try {
