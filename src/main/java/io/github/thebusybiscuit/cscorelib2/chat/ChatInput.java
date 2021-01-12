@@ -11,7 +11,7 @@ import lombok.NonNull;
 
 public final class ChatInput {
 
-    protected static ChatInputListener listener;
+    static ChatInputListener listener;
 
     private ChatInput() {}
 

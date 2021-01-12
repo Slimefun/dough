@@ -32,8 +32,7 @@ public class Config implements AbstractConfig {
     @Getter
     private File file;
 
-    private final Logger logger;
-
+    private Logger logger;
     protected FileConfiguration fileConfig;
 
     /**
@@ -104,6 +103,16 @@ public class Config implements AbstractConfig {
     @Override
     public FileConfiguration getConfiguration() {
         return this.fileConfig;
+    }
+
+    /**
+     * This sets the {@link Logger} instance to be used for this {@link Config}.
+     * 
+     * @param logger
+     *            Your {@link Logger} instance
+     */
+    public void setLogger(@NonNull Logger logger) {
+        this.logger = logger;
     }
 
     @Override

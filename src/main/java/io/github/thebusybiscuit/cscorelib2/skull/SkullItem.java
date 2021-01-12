@@ -3,8 +3,11 @@ package io.github.thebusybiscuit.cscorelib2.skull;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
+
+import javax.annotation.Nonnull;
 
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -27,8 +30,10 @@ public final class SkullItem {
      * 
      * @param player
      *            The Owner of your Head
+     * 
      * @return A new Head Item for the specified Player
      */
+    @Nonnull
     public static ItemStack fromPlayer(@NonNull OfflinePlayer player) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta meta = (SkullMeta) item.getItemMeta();
@@ -48,8 +53,10 @@ public final class SkullItem {
      *            The UUID for the fake Profile that is created
      * @param texture
      *            The Base64 representation of your Texture
+     * 
      * @return A new Player Head with the Texture you specified
      */
+    @Nonnull
     public static ItemStack fromBase64(@NonNull UUID uuid, @NonNull String texture) {
         try {
             ItemStack item = new ItemStack(Material.PLAYER_HEAD);
@@ -71,10 +78,12 @@ public final class SkullItem {
      * 
      * @param texture
      *            The Base64 representation of your Texture
+     * 
      * @return A new Player Head with the Texture you specified
      */
+    @Nonnull
     public static ItemStack fromBase64(@NonNull String texture) {
-        return fromBase64(UUID.nameUUIDFromBytes(texture.getBytes()), texture);
+        return fromBase64(UUID.nameUUIDFromBytes(texture.getBytes(StandardCharsets.UTF_8)), texture);
     }
 
     /**
@@ -90,8 +99,10 @@ public final class SkullItem {
      *            The UUID for the fake Profile that is created
      * @param texture
      *            The texture for your Player
+     * 
      * @return A new Player Head with the Texture you specified
      */
+    @Nonnull
     public static ItemStack fromHash(@NonNull UUID uuid, @NonNull String texture) {
         return fromURL(uuid, "http://textures.minecraft.net/texture/" + texture);
     }
@@ -102,10 +113,12 @@ public final class SkullItem {
      * 
      * @param texture
      *            The texture for your Player
+     * 
      * @return A new Player Head with the Texture you specified
      */
+    @Nonnull
     public static ItemStack fromHash(@NonNull String texture) {
-        return fromHash(UUID.nameUUIDFromBytes(texture.getBytes()), texture);
+        return fromHash(UUID.nameUUIDFromBytes(texture.getBytes(StandardCharsets.UTF_8)), texture);
     }
 
     /**
@@ -121,10 +134,12 @@ public final class SkullItem {
      *            The UUID for the fake Profile that is created
      * @param url
      *            The URL to your Texture
+     * 
      * @return A new Player Head with the Texture you specified
      */
+    @Nonnull
     public static ItemStack fromURL(@NonNull UUID uuid, @NonNull String url) {
-        return fromBase64(uuid, Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}").getBytes()));
+        return fromBase64(uuid, Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}").getBytes(StandardCharsets.UTF_8)));
     }
 
     /**
@@ -133,10 +148,12 @@ public final class SkullItem {
      * 
      * @param url
      *            The URL to your Texture
+     * 
      * @return A new Player Head with the Texture you specified
      */
+    @Nonnull
     public static ItemStack fromURL(@NonNull String url) {
-        return fromURL(UUID.nameUUIDFromBytes(url.getBytes()), url);
+        return fromURL(UUID.nameUUIDFromBytes(url.getBytes(StandardCharsets.UTF_8)), url);
     }
 
     /**
@@ -150,6 +167,7 @@ public final class SkullItem {
      * @throws IOException
      *             This method makes a Web Request, if that fails, it will result in an {@link IOException}
      */
+    @Nonnull
     public static ItemStack fromName(@NonNull String name) throws IOException {
         @Cleanup
         InputStreamReader profileReader = null;
@@ -158,11 +176,11 @@ public final class SkullItem {
         InputStreamReader sessionReader = null;
 
         URL profile = new URL("https://api.mojang.com/users/profiles/minecraft/" + name);
-        profileReader = new InputStreamReader(profile.openStream());
+        profileReader = new InputStreamReader(profile.openStream(), StandardCharsets.UTF_8);
         String uuid = new JsonParser().parse(profileReader).getAsJsonObject().get("id").getAsString();
 
         URL session = new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid + "?unsigned=false");
-        sessionReader = new InputStreamReader(session.openStream());
+        sessionReader = new InputStreamReader(session.openStream(), StandardCharsets.UTF_8);
         JsonArray properties = new JsonParser().parse(sessionReader).getAsJsonObject().get("properties").getAsJsonArray();
 
         for (JsonElement el : properties) {
@@ -171,7 +189,7 @@ public final class SkullItem {
             }
         }
 
-        return null;
+        return new ItemStack(Material.PLAYER_HEAD);
     }
 
 }

@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -19,8 +21,9 @@ public final class PlayerList {
      * 
      * @return A Stream of online Players
      */
+    @Nonnull
     public static Stream<Player> stream() {
-        return Bukkit.getOnlinePlayers().stream().map(p -> (Player) p);
+        return Bukkit.getOnlinePlayers().stream().map(Player.class::cast);
     }
 
     /**
@@ -31,6 +34,7 @@ public final class PlayerList {
      *            The name of the Player
      * @return An Optional describing the player (or an empty Optional)
      */
+    @Nonnull
     public static Optional<Player> findByName(@NonNull String name) {
         return stream().filter(p -> p.getName().equalsIgnoreCase(name)).findAny();
     }
@@ -43,6 +47,7 @@ public final class PlayerList {
      *            The permission the Players should have
      * @return A Set of Players
      */
+    @Nonnull
     public static Set<Player> findPermitted(@NonNull String permission) {
         return stream().filter(p -> p.hasPermission(permission)).collect(Collectors.toSet());
     }

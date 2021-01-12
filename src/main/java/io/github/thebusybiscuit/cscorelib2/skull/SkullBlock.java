@@ -3,6 +3,7 @@ package io.github.thebusybiscuit.cscorelib2.skull;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -44,7 +45,7 @@ public final class SkullBlock {
     }
 
     public static void setFromHash(@NonNull Block block, @NonNull String hash, boolean causeBlockUpdate) {
-        setFromHash(block, UUID.nameUUIDFromBytes(hash.getBytes()), hash, causeBlockUpdate);
+        setFromHash(block, UUID.nameUUIDFromBytes(hash.getBytes(StandardCharsets.UTF_8)), hash, causeBlockUpdate);
     }
 
     public static void setFromHash(@NonNull Block block, @NonNull UUID uuid, @NonNull String hash) {
@@ -60,7 +61,7 @@ public final class SkullBlock {
     }
 
     public static void setFromURL(@NonNull Block block, @NonNull String url, boolean causeBlockUpdate) {
-        setFromURL(block, UUID.nameUUIDFromBytes(url.getBytes()), url, causeBlockUpdate);
+        setFromURL(block, UUID.nameUUIDFromBytes(url.getBytes(StandardCharsets.UTF_8)), url, causeBlockUpdate);
     }
 
     public static void setFromURL(@NonNull Block block, @NonNull UUID uuid, @NonNull String url) {
@@ -68,11 +69,11 @@ public final class SkullBlock {
     }
 
     public static void setFromURL(@NonNull Block block, @NonNull UUID uuid, @NonNull String url, boolean causeBlockUpdate) {
-        setFromBase64(block, uuid, Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}").getBytes()), causeBlockUpdate);
+        setFromBase64(block, uuid, Base64.getEncoder().encodeToString(("{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}").getBytes(StandardCharsets.UTF_8)), causeBlockUpdate);
     }
 
     public static void setFromBase64(@NonNull Block block, @NonNull String texture) {
-        setFromBase64(block, UUID.nameUUIDFromBytes(texture.getBytes()), texture);
+        setFromBase64(block, UUID.nameUUIDFromBytes(texture.getBytes(StandardCharsets.UTF_8)), texture);
     }
 
     public static void setFromBase64(@NonNull Block block, @NonNull UUID uuid, @NonNull String texture) {

@@ -59,7 +59,7 @@ public class BukkitUpdater implements Updater {
             }
         }
 
-        localVersion = localVersion.toLowerCase();
+        localVersion = localVersion.toLowerCase(Locale.ROOT);
         prepareUpdateFolder();
 
         try {

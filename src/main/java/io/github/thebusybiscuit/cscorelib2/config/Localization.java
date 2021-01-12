@@ -131,9 +131,11 @@ public class Localization {
      * @return The List this key is referring to
      */
     public List<String> getMessages(String key) {
-        if (!allowUnicodes)
+        if (!allowUnicodes) {
             return config.getStringList(key);
-        return config.getStringList(key).stream().map(Localization::translateUnicodes).collect(Collectors.toList());
+        } else {
+            return config.getStringList(key).stream().map(Localization::translateUnicodes).collect(Collectors.toList());
+        }
     }
 
     /**
@@ -251,8 +253,9 @@ public class Localization {
     }
 
     protected static String translateUnicodes(String str) {
-        if (str == null)
+        if (str == null) {
             return null;
+        }
 
         StringBuilder builder = new StringBuilder();
         char[] chars = str.toCharArray();
