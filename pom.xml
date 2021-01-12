@@ -7,7 +7,7 @@
     <groupId>com.github.thebusybiscuit</groupId>
     <artifactId>cscorelib2</artifactId>
 
-    <version>0.28.1</version>
+    <version>0.29</version>
     <inceptionYear>2019</inceptionYear>
     <url>https://github.com/TheBusyBiscuit/CS-CoreLib2</url>
     <packaging>jar</packaging>
@@ -127,7 +127,7 @@
         <dependency>
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>
-            <version>1.5.21</version>
+            <version>1.5.25</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
