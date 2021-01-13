@@ -26,18 +26,18 @@ public final class ReflectionUtils {
 
     private ReflectionUtils() {}
 
-    private static final Map<Class<?>, Class<?>> conversion = new HashMap<>();
     private static String currentVersion;
+    private static final Map<Class<?>, Class<?>> primitiveTypes = new HashMap<>();
 
     static {
-        conversion.put(Byte.class, Byte.TYPE);
-        conversion.put(Short.class, Short.TYPE);
-        conversion.put(Integer.class, Integer.TYPE);
-        conversion.put(Long.class, Long.TYPE);
-        conversion.put(Character.class, Character.TYPE);
-        conversion.put(Float.class, Float.TYPE);
-        conversion.put(Double.class, Double.TYPE);
-        conversion.put(Boolean.class, Boolean.TYPE);
+        primitiveTypes.put(Byte.class, Byte.TYPE);
+        primitiveTypes.put(Short.class, Short.TYPE);
+        primitiveTypes.put(Integer.class, Integer.TYPE);
+        primitiveTypes.put(Long.class, Long.TYPE);
+        primitiveTypes.put(Character.class, Character.TYPE);
+        primitiveTypes.put(Float.class, Float.TYPE);
+        primitiveTypes.put(Double.class, Double.TYPE);
+        primitiveTypes.put(Boolean.class, Boolean.TYPE);
     }
 
     /**
@@ -178,15 +178,18 @@ public final class ReflectionUtils {
      *
      * @param classes
      *            The Types you want to convert
+     * 
      * @return An Array of primitive Types
      */
     @Nonnull
     public static Class<?>[] toPrimitiveTypeArray(@NonNull Class<?>[] classes) {
-        int size = classes != null ? classes.length : 0;
+        int size = classes.length;
 
         Class<?>[] types = new Class[size];
+
         for (int i = 0; i < size; i++) {
-            types[i] = conversion.containsKey(classes[i]) ? conversion.get(classes[i]) : classes[i];
+            Class<?> primitive = primitiveTypes.get(classes[i]);
+            types[i] = primitive != null ? primitive : classes[i];
         }
 
         return types;
@@ -199,15 +202,18 @@ public final class ReflectionUtils {
      *
      * @param objects
      *            The Types you want to convert
+     * 
      * @return An Array of primitive Types
      */
     @Nonnull
     public static Class<?>[] toPrimitiveTypeArray(@NonNull Object[] objects) {
-        int size = objects != null ? objects.length : 0;
+        int size = objects.length;
 
         Class<?>[] types = new Class[size];
+
         for (int i = 0; i < size; i++) {
-            types[i] = conversion.containsKey(objects[i].getClass()) ? conversion.get(objects[i].getClass()) : objects[i].getClass();
+            Class<?> primitive = primitiveTypes.get(objects[i].getClass());
+            types[i] = primitive != null ? primitive : objects[i].getClass();
         }
 
         return types;
@@ -310,10 +316,13 @@ public final class ReflectionUtils {
 
     /**
      * Returns the formatted Server Version usable for Reflection
+     * 
+     * @deprecated Use PaperLib :)
      *
      * @return The formatted Server Version
      */
     @Nonnull
+    @Deprecated
     public static String getVersion() {
         if (currentVersion == null) {
             currentVersion = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
@@ -322,6 +331,17 @@ public final class ReflectionUtils {
         return currentVersion;
     }
 
+    /**
+     * This checks if {@link #getVersion()} is the given version
+     * 
+     * @deprecated Use PaperLib :)
+     * 
+     * @param prefixes
+     *            The prefixes
+     * 
+     * @return Whether it is one of those versions
+     */
+    @Deprecated
     public static boolean isVersion(String... prefixes) {
         String version = getVersion();
 
