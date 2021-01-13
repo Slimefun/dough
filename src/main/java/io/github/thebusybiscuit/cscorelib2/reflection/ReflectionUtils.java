@@ -8,8 +8,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 
+import lombok.NonNull;
+
+/**
+ * This class provides some useful static methods to perform reflection.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
+@SuppressWarnings("java:S3011")
 public final class ReflectionUtils {
 
     private ReflectionUtils() {}
@@ -37,7 +49,8 @@ public final class ReflectionUtils {
      *            The Method you are looking for
      * @return The found Method
      */
-    public static Method getMethod(Class<?> c, String method) {
+    @Nullable
+    public static Method getMethod(@NonNull Class<?> c, @NonNull String method) {
         for (Method m : c.getMethods()) {
             if (m.getName().equals(method))
                 return m;
@@ -57,7 +70,8 @@ public final class ReflectionUtils {
      *            The Types of the Parameters
      * @return The found Method
      */
-    public static Method getMethod(Class<?> c, String method, Class<?>... paramTypes) {
+    @Nullable
+    public static Method getMethod(@NonNull Class<?> c, @NonNull String method, Class<?>... paramTypes) {
         Class<?>[] t = toPrimitiveTypeArray(paramTypes);
 
         for (Method m : c.getMethods()) {
@@ -83,7 +97,8 @@ public final class ReflectionUtils {
      * @throws NoSuchFieldException
      *             If the field could not be found.
      */
-    public static Field getField(Class<?> c, String field) throws NoSuchFieldException {
+    @Nonnull
+    public static Field getField(@NonNull Class<?> c, @NonNull String field) throws NoSuchFieldException {
         return c.getDeclaredField(field);
     }
 
@@ -106,7 +121,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException
      *             If the field could not be modified.
      */
-    public static <T> void setFieldValue(T object, Class<?> c, String field, Object value) throws NoSuchFieldException, IllegalAccessException {
+    public static <T> void setFieldValue(@NonNull T object, @NonNull Class<?> c, @NonNull String field, @Nullable Object value) throws NoSuchFieldException, IllegalAccessException {
         Field f = getField(c, field);
         f.setAccessible(true);
         f.set(object, value);
@@ -129,7 +144,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException
      *             If the field could not be modified.
      */
-    public static <T> void setFieldValue(T object, String field, Object value) throws NoSuchFieldException, IllegalAccessException {
+    public static <T> void setFieldValue(@NonNull T object, @NonNull String field, @Nullable Object value) throws NoSuchFieldException, IllegalAccessException {
         Field f = getField(object.getClass(), field);
         f.setAccessible(true);
         f.set(object, value);
@@ -150,10 +165,11 @@ public final class ReflectionUtils {
      * 
      * @return The Value of a Field
      */
-    public static Object getFieldValue(Object object, String field) throws NoSuchFieldException, IllegalAccessException {
+    @Nullable
+    public static <T> T getFieldValue(@NonNull Object object, @NonNull Class<T> fieldType, @NonNull String field) throws NoSuchFieldException, IllegalAccessException {
         Field f = getField(object.getClass(), field);
         f.setAccessible(true);
-        return f.get(object);
+        return fieldType.cast(f.get(object));
     }
 
     /**
@@ -164,7 +180,8 @@ public final class ReflectionUtils {
      *            The Types you want to convert
      * @return An Array of primitive Types
      */
-    public static Class<?>[] toPrimitiveTypeArray(Class<?>... classes) {
+    @Nonnull
+    public static Class<?>[] toPrimitiveTypeArray(@NonNull Class<?>[] classes) {
         int size = classes != null ? classes.length : 0;
 
         Class<?>[] types = new Class[size];
@@ -184,7 +201,8 @@ public final class ReflectionUtils {
      *            The Types you want to convert
      * @return An Array of primitive Types
      */
-    public static Class<?>[] toPrimitiveTypeArray(Object... objects) {
+    @Nonnull
+    public static Class<?>[] toPrimitiveTypeArray(@NonNull Object[] objects) {
         int size = objects != null ? objects.length : 0;
 
         Class<?>[] types = new Class[size];
@@ -206,8 +224,9 @@ public final class ReflectionUtils {
      *            The Parameters for that Constructor
      * @return The Constructor for that Class
      */
+    @Nullable
     @SuppressWarnings("unchecked")
-    public static <T> Constructor<T> getConstructor(Class<T> c, Class<?>... paramTypes) {
+    public static <T> Constructor<T> getConstructor(@NonNull Class<T> c, Class<?>... paramTypes) {
         Class<?>[] t = toPrimitiveTypeArray(paramTypes);
 
         for (Constructor<?> constructor : c.getConstructors()) {
@@ -234,8 +253,9 @@ public final class ReflectionUtils {
      * 
      * @return The Class in your specified Class
      */
-    public static Class<?> getInnerNMSClass(String name, String subname) throws ClassNotFoundException {
-        return getNMSClass(name + "$" + subname);
+    @Nonnull
+    public static Class<?> getInnerNMSClass(@NonNull String name, @NonNull String subname) throws ClassNotFoundException {
+        return getNMSClass(name + '$' + subname);
     }
 
     /**
@@ -249,7 +269,8 @@ public final class ReflectionUtils {
      * 
      * @return The Class in that Package
      */
-    public static Class<?> getNMSClass(String name) throws ClassNotFoundException {
+    @Nonnull
+    public static Class<?> getNMSClass(@NonNull String name) throws ClassNotFoundException {
         return Class.forName(new StringBuilder().append("net.minecraft.server.").append(getVersion()).append(".").append(name).toString());
     }
 
@@ -266,8 +287,9 @@ public final class ReflectionUtils {
      * 
      * @return The Class in your specified Class
      */
-    public static Class<?> getInnerOBCClass(String name, String subname) throws ClassNotFoundException {
-        return getOBCClass(name + "$" + subname);
+    @Nonnull
+    public static Class<?> getInnerOBCClass(@NonNull String name, @NonNull String subname) throws ClassNotFoundException {
+        return getOBCClass(name + '$' + subname);
     }
 
     /**
@@ -281,7 +303,8 @@ public final class ReflectionUtils {
      * 
      * @return The Class in that Package
      */
-    public static Class<?> getOBCClass(String name) throws ClassNotFoundException {
+    @Nonnull
+    public static Class<?> getOBCClass(@NonNull String name) throws ClassNotFoundException {
         return Class.forName(new StringBuilder().append("org.bukkit.craftbukkit.").append(getVersion()).append(".").append(name).toString());
     }
 
@@ -290,6 +313,7 @@ public final class ReflectionUtils {
      *
      * @return The formatted Server Version
      */
+    @Nonnull
     public static String getVersion() {
         if (currentVersion == null) {
             currentVersion = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
@@ -302,8 +326,9 @@ public final class ReflectionUtils {
         String version = getVersion();
 
         for (String prefix : prefixes) {
-            if (version.startsWith(prefix))
+            if (version.startsWith(prefix)) {
                 return true;
+            }
         }
 
         return false;
@@ -318,9 +343,10 @@ public final class ReflectionUtils {
      *            All following Arrays you want to compare
      * @return Whether they equal each other
      */
-    private static boolean equalsTypeArray(Class<?>[] a, Class<?>... o) {
-        if (a.length != o.length)
+    private static boolean equalsTypeArray(@NonNull Class<?>[] a, Class<?>... o) {
+        if (a.length != o.length) {
             return false;
+        }
 
         for (int i = 0; i < a.length; i++) {
             if ((!a[i].equals(o[i])) && (!a[i].isAssignableFrom(o[i]))) {
@@ -340,7 +366,8 @@ public final class ReflectionUtils {
      *            The Enum you are targeting
      * @return An ArrayList of all Enum Constants in that Enum
      */
-    public static <T> List<T> getEnumConstants(Class<T> c) {
+    @Nonnull
+    public static <T> List<T> getEnumConstants(@NonNull Class<T> c) {
         return Arrays.asList(c.getEnumConstants());
     }
 
@@ -355,10 +382,12 @@ public final class ReflectionUtils {
      *            The Name of the Constant you are targeting
      * @return The found Enum Constant
      */
-    public static <T> T getEnumConstant(Class<T> c, String name) {
+    @Nullable
+    public static <T> T getEnumConstant(@NonNull Class<T> c, @NonNull String name) {
         for (T field : c.getEnumConstants()) {
-            if (field.toString().equals(name))
+            if (field.toString().equals(name)) {
                 return field;
+            }
         }
 
         return null;
