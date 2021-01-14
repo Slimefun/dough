@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -32,6 +34,25 @@ public final class InvUtils {
     }
 
     /**
+     * This method checks both an ItemStack's and an Inventory's maxStackSize to determine
+     * if a given ItemStack can stack with another ItemStack in the given Inventory
+     * 
+     * @author kii-chan-reloaded
+     *
+     * @param stack
+     *            The ItemStack already in the inventory
+     * @param item
+     *            The ItemStack that shall be tested for
+     * @param inv
+     *            The Inventory these items are existing in
+     * @return Whether the maxStackSizes allow for these items to stack
+     */
+    private static boolean isValidStackSize(@Nonnull ItemStack stack, @Nonnull ItemStack item, @Nonnull Inventory inv) {
+        int newStackSize = stack.getAmount() + item.getAmount();
+        return newStackSize <= stack.getMaxStackSize() && newStackSize <= inv.getMaxStackSize();
+    }
+
+    /**
      * This method checks if an Item can fit into the specified slots.
      * Note that this also checks {@link ItemStack#getAmount()}
      * 
@@ -56,7 +77,7 @@ public final class InvUtils {
 
             if (stack == null || stack.getType() == Material.AIR) {
                 return true;
-            } else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
+            } else if (isValidStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
                 return true;
             }
         }
@@ -102,7 +123,7 @@ public final class InvUtils {
                 if (stack == null || stack.getType() == Material.AIR) {
                     cache.put(slot, items[i]);
                     resolved = true;
-                } else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
+                } else if (isValidStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
                     ItemStack clone = stack.clone();
                     clone.setAmount(stack.getAmount() + item.getAmount());
                     cache.put(slot, clone);
