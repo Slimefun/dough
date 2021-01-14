@@ -77,7 +77,7 @@ public final class InvUtils {
 
             if (stack == null || stack.getType() == Material.AIR) {
                 return true;
-            } else if (underMaxStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
+            } else if (isValidStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
                 return true;
             }
         }
@@ -123,7 +123,7 @@ public final class InvUtils {
                 if (stack == null || stack.getType() == Material.AIR) {
                     cache.put(slot, items[i]);
                     resolved = true;
-                } else if (underMaxStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
+                } else if (isValidStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
                     ItemStack clone = stack.clone();
                     clone.setAmount(stack.getAmount() + item.getAmount());
                     cache.put(slot, clone);
