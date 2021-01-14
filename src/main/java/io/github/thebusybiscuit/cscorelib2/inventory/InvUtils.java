@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
