@@ -45,7 +45,7 @@ public final class InvUtils {
      *            The Inventory these items are existing in
      * @return Whether the maxStackSizes allow for these items to stack
      */
-    private static boolean underMaxStackSize(@NonNull ItemStack stack, @NonNull ItemStack item, @NonNull Inventory inv) {
+    private static boolean isValidStackSize(@Nonnull ItemStack stack, @Nonnull ItemStack item, @Nonnull Inventory inv) {
         int newStackSize = stack.getAmount() + item.getAmount();
         return newStackSize <= stack.getMaxStackSize() && newStackSize <= inv.getMaxStackSize();
     }
