@@ -507,7 +507,7 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
                 toInventory().setItem(slot, item);
                 markDirty();
                 return true;
-            } else if (stack.getAmount() + item.getAmount() <= stack.getMaxStackSize() && ItemUtils.canStack(stack, item)) {
+            } else if (InvUtils.isValidStackSize(stack, item, toInventory()) && ItemUtils.canStack(stack, item)) {
                 stack.setAmount(stack.getAmount() + item.getAmount());
                 toInventory().setItem(slot, stack);
                 markDirty();

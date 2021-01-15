@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import javax.annotation.Nonnull;
-
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -47,7 +45,7 @@ public final class InvUtils {
      *            The Inventory these items are existing in
      * @return Whether the maxStackSizes allow for these items to stack
      */
-    private static boolean isValidStackSize(@Nonnull ItemStack stack, @Nonnull ItemStack item, @Nonnull Inventory inv) {
+    public static boolean isValidStackSize(@NonNull ItemStack stack, @NonNull ItemStack item, @NonNull Inventory inv) {
         int newStackSize = stack.getAmount() + item.getAmount();
         return newStackSize <= stack.getMaxStackSize() && newStackSize <= inv.getMaxStackSize();
     }
