@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -43,11 +44,35 @@ public final class InvUtils {
      *            The ItemStack that shall be tested for
      * @param inv
      *            The Inventory these items are existing in
+     * 
      * @return Whether the maxStackSizes allow for these items to stack
      */
     public static boolean isValidStackSize(@NonNull ItemStack stack, @NonNull ItemStack item, @NonNull Inventory inv) {
         int newStackSize = stack.getAmount() + item.getAmount();
         return newStackSize <= stack.getMaxStackSize() && newStackSize <= inv.getMaxStackSize();
+    }
+
+    /**
+     * This checks if a given {@link InventoryType} accepts items of the given {@link Material}
+     * 
+     * @param item
+     *            The {@link Material} of the {@link ItemStack}
+     * @param inventoryType
+     *            The {@link InventoryType}
+     * 
+     * @return Whether the given {@link InventoryType} allows this {@link Material} to be stored within
+     */
+    public static boolean isItemAllowed(@NonNull Material itemType, @NonNull InventoryType inventoryType) {
+        switch (inventoryType) {
+        case LECTERN:
+            // Lecterns only allow written books or writable books
+            return itemType == Material.WRITABLE_BOOK || itemType == Material.WRITTEN_BOOK;
+        case SHULKER_BOX:
+            // Shulker Boxes do not allow Shulker boxes
+            return itemType != Material.SHULKER_BOX && !itemType.name().endsWith("_SHULKER_BOX");
+        default:
+            return true;
+        }
     }
 
     /**
@@ -66,6 +91,10 @@ public final class InvUtils {
      * @return Whether the slots have space for the {@link ItemStack}
      */
     public static boolean fits(@NonNull Inventory inv, @NonNull ItemStack item, int... slots) {
+        if (!isItemAllowed(item.getType(), inv.getType())) {
+            return false;
+        }
+
         if (slots.length == 0) {
             slots = IntStream.range(0, inv.getSize()).toArray();
         }
@@ -75,7 +104,9 @@ public final class InvUtils {
 
             if (stack == null || stack.getType() == Material.AIR) {
                 return true;
-            } else if (isValidStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
+            }
+
+            if (isValidStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
                 return true;
             }
         }

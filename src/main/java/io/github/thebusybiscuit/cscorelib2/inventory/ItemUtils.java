@@ -71,9 +71,7 @@ public final class ItemUtils {
         if (a == null || b == null)
             return false;
 
-        if (a.getType() != b.getType()) {
-            return false;
-        } else if (a.hasItemMeta() != b.hasItemMeta()) {
+        if (a.getType() != b.getType() || a.hasItemMeta() != b.hasItemMeta()) {
             return false;
         }
 
@@ -99,15 +97,13 @@ public final class ItemUtils {
                 return false;
             }
 
-            if (!ReflectionUtils.isVersion("v1_13_")) {
-                // Custom Model Data
-                if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData()) {
-                    return false;
-                }
+            // Custom Model Data
+            if (aMeta.hasCustomModelData() != bMeta.hasCustomModelData()) {
+                return false;
+            }
 
-                if (aMeta.hasCustomModelData() && aMeta.getCustomModelData() != bMeta.getCustomModelData()) {
-                    return false;
-                }
+            if (aMeta.hasCustomModelData() && aMeta.getCustomModelData() != bMeta.getCustomModelData()) {
+                return false;
             }
 
             // Enchantments

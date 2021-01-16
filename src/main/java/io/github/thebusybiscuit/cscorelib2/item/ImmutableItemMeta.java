@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -34,23 +33,18 @@ public class ImmutableItemMeta {
     private final Set<ItemFlag> itemFlags;
     private final Map<Enchantment, Integer> enchants;
 
-    public ImmutableItemMeta(Supplier<ItemMeta> supplier) {
+    public ImmutableItemMeta(@NonNull Supplier<ItemMeta> supplier) {
         this(supplier.get());
     }
 
-    public ImmutableItemMeta(ItemStack item) {
+    public ImmutableItemMeta(@NonNull ItemStack item) {
         this(item.getItemMeta());
     }
 
     public ImmutableItemMeta(@NonNull ItemMeta meta) {
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
         this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
-
-        if (ReflectionUtils.isVersion("v1_13_")) {
-            customModelData = OptionalInt.empty();
-        } else {
-            customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
-        }
+        this.customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
 
         this.itemFlags = meta.getItemFlags();
         this.enchants = meta.getEnchants();
