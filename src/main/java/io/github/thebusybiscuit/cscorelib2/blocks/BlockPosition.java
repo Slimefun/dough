@@ -29,7 +29,7 @@ public final class BlockPosition {
 
     public BlockPosition(@NonNull World world, int x, int y, int z) {
         this.world = new WeakReference<>(world);
-        this.position = ((long) (x & 0x3FFFFFF) << 38) | ((long) (z & 0x3FFFFFF) << 12) | (long) (y & 0xFFF);
+        this.position = getAsLong(x, y, z);
     }
 
     public BlockPosition(@NonNull Block b) {
@@ -146,6 +146,23 @@ public final class BlockPosition {
     }
 
     /**
+     * This compacts the three provided integers into one {@link Long}.
+     * This allows us to save a lot memory-wise.
+     * 
+     * @param x
+     *            The x component
+     * @param y
+     *            The y component
+     * @param z
+     *            The z component
+     * 
+     * @return The compacted {@link Long}
+     */
+    public static long getAsLong(int x, int y, int z) {
+        return ((long) (x & 0x3FFFFFF) << 38) | ((long) (z & 0x3FFFFFF) << 12) | (long) (y & 0xFFF);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -188,4 +205,5 @@ public final class BlockPosition {
 
         return String.format("BlockPosition(world=%s, x=%d, y=%d, z=%d, position=%d)", worldName, getX(), getY(), getZ(), getPosition());
     }
+
 }

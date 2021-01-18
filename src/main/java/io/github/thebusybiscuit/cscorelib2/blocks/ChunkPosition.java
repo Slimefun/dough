@@ -31,7 +31,7 @@ public final class ChunkPosition {
 
     public ChunkPosition(@NonNull World world, int x, int z) {
         this.world = new WeakReference<>(world);
-        this.position = (((long) x) << 32) | (z & 0xFFFFFFFFL);
+        this.position = getAsLong(x, z);
     }
 
     public ChunkPosition(@NonNull Chunk chunk) {
@@ -117,6 +117,21 @@ public final class ChunkPosition {
         }
 
         return ref.getChunkAt(getX(), getZ());
+    }
+
+    /**
+     * This compacts the two provided integers into one {@link Long}.
+     * This allows us to save a lot memory-wise.
+     * 
+     * @param x
+     *            The x component
+     * @param z
+     *            The z component
+     * 
+     * @return The compacted {@link Long}
+     */
+    public static long getAsLong(int x, int z) {
+        return (((long) x) << 32) | (z & 0xFFFFFFFFL);
     }
 
     /**

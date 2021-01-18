@@ -27,7 +27,7 @@ import org.bukkit.plugin.Plugin;
 import lombok.Getter;
 import lombok.NonNull;
 
-public class Config implements AbstractConfig {
+public class Config {
 
     @Getter
     private File file;
@@ -100,7 +100,6 @@ public class Config implements AbstractConfig {
      *
      * @return The converted FileConfiguration Object
      */
-    @Override
     public FileConfiguration getConfiguration() {
         return this.fileConfig;
     }
@@ -115,7 +114,6 @@ public class Config implements AbstractConfig {
         this.logger = logger;
     }
 
-    @Override
     public void clear() {
         for (String key : getKeys()) {
             setValue(key, null);
@@ -134,7 +132,6 @@ public class Config implements AbstractConfig {
      * @param value
      *            The Value for that Path
      */
-    @Override
     public void setValue(@NonNull String path, Object value) {
         if (value == null) {
             this.store(path, value);
@@ -173,7 +170,6 @@ public class Config implements AbstractConfig {
     /**
      * Saves the Config Object to its File
      */
-    @Override
     public void save() {
         try {
             fileConfig.save(file);
@@ -188,7 +184,6 @@ public class Config implements AbstractConfig {
      * @param file
      *            The File you are saving this Config to
      */
-    @Override
     public void save(@NonNull File file) {
         try {
             fileConfig.save(file);
@@ -206,14 +201,12 @@ public class Config implements AbstractConfig {
      * @param value
      *            The Value for that Path
      */
-    @Override
     public void setDefaultValue(@NonNull String path, Object value) {
         if (!contains(path))
             setValue(path, value);
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     public <T> T getOrSetDefault(@NonNull String path, T value) {
         Object val = getValue(path);
 
@@ -232,7 +225,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return True/false
      */
-    @Override
     public boolean contains(@NonNull String path) {
         return fileConfig.contains(path);
     }
@@ -244,12 +236,10 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Value at that Path
      */
-    @Override
     public Object getValue(@NonNull String path) {
         return fileConfig.get(path);
     }
 
-    @Override
     public <T> Optional<T> getValueAs(@NonNull Class<T> c, @NonNull String path) {
         Object obj = getValue(path);
         return c.isInstance(obj) ? Optional.of(c.cast(obj)) : Optional.empty();
@@ -262,7 +252,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The ItemStack at that Path
      */
-    @Override
     public ItemStack getItem(@NonNull String path) {
         return fileConfig.getItemStack(path);
     }
@@ -274,7 +263,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The String at that Path
      */
-    @Override
     public String getString(@NonNull String path) {
         return fileConfig.getString(path);
     }
@@ -286,7 +274,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Integer at that Path
      */
-    @Override
     public int getInt(@NonNull String path) {
         return fileConfig.getInt(path);
     }
@@ -298,7 +285,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Boolean at that Path
      */
-    @Override
     public boolean getBoolean(@NonNull String path) {
         return fileConfig.getBoolean(path);
     }
@@ -310,7 +296,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The StringList at that Path
      */
-    @Override
     public List<String> getStringList(@NonNull String path) {
         return fileConfig.getStringList(path);
     }
@@ -347,7 +332,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Float at that Path
      */
-    @Override
     public float getFloat(@NonNull String path) {
         return Float.valueOf(String.valueOf(getValue(path)));
     }
@@ -359,7 +343,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Long at that Path
      */
-    @Override
     public long getLong(@NonNull String path) {
         return Long.valueOf(String.valueOf(getValue(path)));
     }
@@ -371,7 +354,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Sound at that Path
      */
-    @Override
     public Sound getSound(@NonNull String path) {
         return Sound.valueOf(getString(path));
     }
@@ -383,7 +365,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Date at that Path
      */
-    @Override
     public Date getDate(@NonNull String path) {
         return new Date(getLong(path));
     }
@@ -406,7 +387,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The UUID at that Path
      */
-    @Override
     public UUID getUUID(@NonNull String path) {
         String value = getString(path);
         return value != null ? UUID.fromString(value) : null;
@@ -430,7 +410,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return The Double at that Path
      */
-    @Override
     public double getDouble(@NonNull String path) {
         return fileConfig.getDouble(path);
     }
@@ -490,7 +469,6 @@ public class Config implements AbstractConfig {
      *
      * @return All Paths in this Config
      */
-    @Override
     public Set<String> getKeys() {
         return fileConfig.getKeys(false);
     }
@@ -502,7 +480,6 @@ public class Config implements AbstractConfig {
      *            The path in the Config File
      * @return All Sub-Paths of the specified Path
      */
-    @Override
     public Set<String> getKeys(@NonNull String path) {
         ConfigurationSection section = fileConfig.getConfigurationSection(path);
         return section == null ? new HashSet<>() : section.getKeys(false);
@@ -511,7 +488,6 @@ public class Config implements AbstractConfig {
     /**
      * Reloads the Configuration File
      */
-    @Override
     public void reload() {
         this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
     }
