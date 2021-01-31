@@ -51,19 +51,7 @@ public enum ProtectableAction {
      * This represents a {@link Player} trying to interact with an {@link Entity}.
      * This could be a {@link Sheep} that is getting dyed, or a {@link Villager} being traded with.
      */
-    INTERACT_ENTITY(false),
-
-    /**
-     * @deprecated Please use ATTACK_PLAYER instead.
-     */
-    @Deprecated
-    PVP(false),
-
-    /**
-     * @deprecated Please use INTERACT_BLOCK instead.
-     */
-    @Deprecated
-    ACCESS_INVENTORIES(true);
+    INTERACT_ENTITY(false);
 
     private boolean hasBlock;
 
@@ -71,6 +59,11 @@ public enum ProtectableAction {
         this.hasBlock = hasBlock;
     }
 
+    /**
+     * This checks whether this {@link ProtectableAction} involves a {@link Block} or not.
+     * 
+     * @return Whether this {@link ProtectableAction} involves a {@link Block}
+     */
     public boolean isBlockAction() {
         return hasBlock;
     }
