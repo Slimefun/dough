@@ -13,8 +13,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Keyed;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
@@ -31,6 +35,8 @@ import lombok.NonNull;
 public class RecipeSnapshot {
 
     private final Map<Class<? extends Recipe>, Set<Recipe>> recipes = new HashMap<>();
+
+    private final Map<NamespacedKey, Recipe> keyedRecipes = new HashMap<>();
 
     /**
      * This will create a Snapshot of all Recipes on the plugin's Server.
@@ -49,6 +55,10 @@ public class RecipeSnapshot {
                 recipe = iterator.next();
                 Set<Recipe> set = recipes.computeIfAbsent(recipe.getClass(), key -> new LinkedHashSet<>());
                 set.add(recipe);
+
+                if (recipe instanceof Keyed) {
+                    keyedRecipes.put(((Keyed) recipe).getKey(), recipe);
+                }
             } catch (Exception x) {
                 plugin.getLogger().log(Level.WARNING, "Skipped a faulty recipe of unknown source ({0}): {1}", new Object[] { x.getClass().getSimpleName(), x.getMessage() });
             }
@@ -75,6 +85,7 @@ public class RecipeSnapshot {
      *            The Type of recipeClass
      * @param recipeClass
      *            A child-class of {@link Recipe}.
+     * 
      * @return A {@link Set} of Recipes of the given Type.
      */
     @Nonnull
@@ -90,6 +101,7 @@ public class RecipeSnapshot {
      *            The Type of recipeClass
      * @param recipeClass
      *            A child-class of {@link Recipe}.
+     * 
      * @return A {@link Stream} of Recipes of the given Type.
      */
     @Nonnull
@@ -107,6 +119,7 @@ public class RecipeSnapshot {
      *            The Type of the given Recipe
      * @param recipe
      *            The Recipe to get the inputs from
+     * 
      * @return The Inputs for the given Recipe
      */
     @Nonnull
@@ -126,6 +139,7 @@ public class RecipeSnapshot {
      *            The Type of recipe
      * @param recipe
      *            The Recipe to get the inputs from
+     * 
      * @return The Inputs for the given Recipe
      */
     @Nonnull
@@ -151,6 +165,7 @@ public class RecipeSnapshot {
      *            The Recipe Type you are looking for
      * @param inputs
      *            The Inputs to the Recipe you are looking for
+     * 
      * @return An {@link Optional} describing the output of the Recipe matching your type and inputs
      */
     @Nonnull
@@ -167,6 +182,7 @@ public class RecipeSnapshot {
      * 
      * @param predicate
      *            The {@link Predicate} to filter recipes.
+     * 
      * @return A Set of Recipes matching your filter.
      */
     @Nonnull
@@ -180,6 +196,7 @@ public class RecipeSnapshot {
      * 
      * @param type
      *            The {@link Material} of your Recipes' outputs.
+     * 
      * @return A {@link Set} of Recipes resulting in an {@link ItemStack} with the given {@link Material}
      */
     @Nonnull
@@ -192,6 +209,7 @@ public class RecipeSnapshot {
      * 
      * @param item
      *            The Result of the Recipes you are looking for
+     * 
      * @return A {@link Set} of Recipes resulting in the given {@link ItemStack}
      */
     @Nonnull
@@ -206,11 +224,29 @@ public class RecipeSnapshot {
      * 
      * @param item
      *            The ItemStack input for the Recipes you are looking for.
+     * 
      * @return A {@link Set} of Recipes that include the given {@link ItemStack} as an input.
      */
     @Nonnull
     public Set<Recipe> getRecipesWith(@NonNull ItemStack item) {
         return getRecipes(recipe -> Arrays.stream(getRecipeInput(recipe)).anyMatch(choice -> choice.test(item)));
+    }
+
+    /**
+     * This method will return a {@link Recipe} based on the provided {@link NamespacedKey}
+     * (if that {@link Recipe} is of type {@link Keyed})
+     * The method works similar to {@link Bukkit#getRecipe(NamespacedKey)}, though it is significantly
+     * faster since we operate on a cached {@link HashMap} and don't have to perform any data
+     * conversion.
+     * 
+     * @param key
+     *            The {@link NamespacedKey}
+     * 
+     * @return The corresponding {@link Recipe} or null
+     */
+    @Nullable
+    public Recipe getRecipe(@NonNull NamespacedKey key) {
+        return keyedRecipes.get(key);
     }
 
 }
