@@ -11,6 +11,9 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -31,6 +34,9 @@ public class Config {
 
     @Getter
     private File file;
+
+    @Getter
+    private String header;
 
     private Logger logger;
     protected FileConfiguration fileConfig;
@@ -89,7 +95,7 @@ public class Config {
      * the specified Location
      *
      * @param path
-     *            The Path of the File which the Config object is created for
+     *            The path of the File which the Config object is created for
      */
     public Config(@NonNull String path) {
         this(new File(path));
@@ -100,6 +106,7 @@ public class Config {
      *
      * @return The converted FileConfiguration Object
      */
+    @Nonnull
     public FileConfiguration getConfiguration() {
         return this.fileConfig;
     }
@@ -125,12 +132,12 @@ public class Config {
     }
 
     /**
-     * Sets the Value for the specified Path
+     * Sets the Value for the specified path
      *
      * @param path
      *            The path in the Config File
      * @param value
-     *            The Value for that Path
+     *            The Value for that path
      */
     public void setValue(@NonNull String path, Object value) {
         if (value == null) {
@@ -168,24 +175,27 @@ public class Config {
     }
 
     /**
-     * Saves the Config Object to its File
+     * Saves the {@link Config} to its {@link File}
      */
     public void save() {
-        try {
-            fileConfig.save(file);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Exception while saving a Config file", e);
-        }
+        save(this.file);
     }
 
     /**
-     * Saves the Config Object to a File
+     * Saves the {@link Config} to a {@link File}
      * 
      * @param file
-     *            The File you are saving this Config to
+     *            The {@link File} you are saving this {@link Config} to
      */
     public void save(@NonNull File file) {
         try {
+            if (header != null) {
+                fileConfig.options().copyHeader(true);
+                fileConfig.options().header(header);
+            } else {
+                fileConfig.options().copyHeader(false);
+            }
+
             fileConfig.save(file);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Exception while saving a Config file", e);
@@ -193,17 +203,18 @@ public class Config {
     }
 
     /**
-     * Sets the Value for the specified Path
-     * (IF the Path does not yet exist)
+     * Sets the Value for the specified path
+     * (If the path does not yet exist)
      *
      * @param path
-     *            The path in the Config File
+     *            The path in the {@link Config} file
      * @param value
-     *            The Value for that Path
+     *            The Value for that path
      */
-    public void setDefaultValue(@NonNull String path, Object value) {
-        if (!contains(path))
+    public void setDefaultValue(@NonNull String path, @Nullable Object value) {
+        if (!contains(path)) {
             setValue(path, value);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -219,7 +230,7 @@ public class Config {
     }
 
     /**
-     * Checks whether the Config contains the specified Path
+     * Checks whether the Config contains the specified path
      *
      * @param path
      *            The path in the Config File
@@ -230,83 +241,96 @@ public class Config {
     }
 
     /**
-     * Returns the Object at the specified Path
+     * Returns the Object at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Value at that Path
+     * 
+     * @return The Value at that path
      */
+    @Nullable
     public Object getValue(@NonNull String path) {
         return fileConfig.get(path);
     }
 
+    @Nonnull
     public <T> Optional<T> getValueAs(@NonNull Class<T> c, @NonNull String path) {
         Object obj = getValue(path);
         return c.isInstance(obj) ? Optional.of(c.cast(obj)) : Optional.empty();
     }
 
     /**
-     * Returns the ItemStack at the specified Path
+     * Returns the ItemStack at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The ItemStack at that Path
+     * 
+     * @return The ItemStack at that path
      */
+    @Nullable
     public ItemStack getItem(@NonNull String path) {
         return fileConfig.getItemStack(path);
     }
 
     /**
-     * Returns the String at the specified Path
+     * Returns the String at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The String at that Path
+     * 
+     * @return The String at that path
      */
+    @Nullable
     public String getString(@NonNull String path) {
         return fileConfig.getString(path);
     }
 
     /**
-     * Returns the Integer at the specified Path
+     * Returns the Integer at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Integer at that Path
+     * 
+     * @return The Integer at that path
      */
     public int getInt(@NonNull String path) {
         return fileConfig.getInt(path);
     }
 
     /**
-     * Returns the Boolean at the specified Path
+     * Returns the Boolean at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Boolean at that Path
+     * 
+     * @return The Boolean at that path
      */
     public boolean getBoolean(@NonNull String path) {
         return fileConfig.getBoolean(path);
     }
 
     /**
-     * Returns the StringList at the specified Path
+     * Returns the StringList at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The StringList at that Path
+     * 
+     * @return The StringList at that path
      */
+    @Nonnull
     public List<String> getStringList(@NonNull String path) {
         return fileConfig.getStringList(path);
     }
 
     /**
-     * Returns the IntegerList at the specified Path
+     * Returns the IntegerList at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The IntegerList at that Path
+     * 
+     * @return The IntegerList at that path
      */
+    @Nonnull
     public List<Integer> getIntList(@NonNull String path) {
         return fileConfig.getIntegerList(path);
     }
@@ -326,66 +350,75 @@ public class Config {
     }
 
     /**
-     * Returns the Float at the specified Path
+     * Returns the Float at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Float at that Path
+     * 
+     * @return The Float at that path
      */
     public float getFloat(@NonNull String path) {
         return Float.valueOf(String.valueOf(getValue(path)));
     }
 
     /**
-     * Returns the Long at the specified Path
+     * Returns the Long at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Long at that Path
+     * 
+     * @return The Long at that path
      */
     public long getLong(@NonNull String path) {
         return Long.valueOf(String.valueOf(getValue(path)));
     }
 
     /**
-     * Returns the Sound at the specified Path
+     * Returns the Sound at the specified path
+     * 
+     * @deprecated This method is no longer supported.
      *
      * @param path
      *            The path in the Config File
-     * @return The Sound at that Path
+     * 
+     * @return The Sound at that path
      */
+    @Deprecated
     public Sound getSound(@NonNull String path) {
         return Sound.valueOf(getString(path));
     }
 
     /**
-     * Returns the Date at the specified Path
+     * Returns the Date at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Date at that Path
+     * 
+     * @return The Date at that path
      */
     public Date getDate(@NonNull String path) {
         return new Date(getLong(path));
     }
 
     /**
-     * Returns the Chunk at the specified Path
+     * Returns the Chunk at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Chunk at that Path
+     * 
+     * @return The Chunk at that path
      */
     public Chunk getChunk(@NonNull String path) {
         return Bukkit.getWorld(getString(path + ".world")).getChunkAt(getInt(path + ".x"), getInt(path + ".z"));
     }
 
     /**
-     * Returns the UUID at the specified Path
+     * Returns the UUID at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The UUID at that Path
+     * 
+     * @return The UUID at that path
      */
     public UUID getUUID(@NonNull String path) {
         String value = getString(path);
@@ -393,40 +426,44 @@ public class Config {
     }
 
     /**
-     * Returns the World at the specified Path
+     * Returns the World at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The World at that Path
+     * 
+     * @return The World at that path
      */
     public World getWorld(@NonNull String path) {
         return Bukkit.getWorld(getString(path));
     }
 
     /**
-     * Returns the Double at the specified Path
+     * Returns the Double at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Double at that Path
+     * 
+     * @return The Double at that path
      */
     public double getDouble(@NonNull String path) {
         return fileConfig.getDouble(path);
     }
 
     /**
-     * Returns the Location at the specified Path
+     * Returns the Location at the specified path
      *
      * @param path
      *            The path in the Config File
-     * @return The Location at that Path
+     * 
+     * @return The Location at that path
      */
+    @Nonnull
     public Location getLocation(@NonNull String path) {
         return new Location(Bukkit.getWorld(getString(path + ".world")), getDouble(path + ".x"), getDouble(path + ".y"), getDouble(path + ".z"), getFloat(path + ".yaw"), getFloat(path + ".pitch"));
     }
 
     /**
-     * Gets the Contents of an Inventory at the specified Path
+     * Gets the Contents of an Inventory at the specified path
      *
      * @param path
      *            The path in the Config File
@@ -434,8 +471,10 @@ public class Config {
      *            The Size of the Inventory
      * @param title
      *            The Title of the Inventory
+     * 
      * @return The generated Inventory
      */
+    @Nonnull
     public Inventory getInventory(@NonNull String path, int size, @NonNull String title) {
         Inventory inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', title));
         for (int i = 0; i < size; i++) {
@@ -445,14 +484,16 @@ public class Config {
     }
 
     /**
-     * Gets the Contents of an Inventory at the specified Path
+     * Gets the Contents of an Inventory at the specified path
      *
      * @param path
      *            The path in the Config File
      * @param title
      *            The title of the inventory, this can accept &amp; for color codes.
+     * 
      * @return The generated Inventory
      */
+    @Nonnull
     public Inventory getInventory(@NonNull String path, @NonNull String title) {
         int size = getInt(path + ".size");
         Inventory inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', title));
@@ -465,21 +506,24 @@ public class Config {
     }
 
     /**
-     * Returns all Paths in this Config
+     * Returns all paths in this Config
      *
-     * @return All Paths in this Config
+     * @return All paths in this Config
      */
+    @Nonnull
     public Set<String> getKeys() {
         return fileConfig.getKeys(false);
     }
 
     /**
-     * Returns all Sub-Paths in this Config
+     * Returns all sub-paths in this Config
      *
      * @param path
      *            The path in the Config File
-     * @return All Sub-Paths of the specified Path
+     * 
+     * @return All sub-paths of the specified path
      */
+    @Nonnull
     public Set<String> getKeys(@NonNull String path) {
         ConfigurationSection section = fileConfig.getConfigurationSection(path);
         return section == null ? new HashSet<>() : section.getKeys(false);
