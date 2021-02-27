@@ -29,13 +29,14 @@ import org.bukkit.plugin.Plugin;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 public class Config {
 
     @Getter
     private File file;
 
-    @Getter
+    @Getter @Setter
     private String header;
 
     private Logger logger;
