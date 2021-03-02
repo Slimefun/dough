@@ -7,6 +7,7 @@ import java.util.OptionalLong;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.bukkit.NamespacedKey;
@@ -942,6 +943,7 @@ public final class PersistentDataAPI {
      *            The key of the data to retrieve
      * @return The UUID associated with this key or null if it doesn't exist
      */
+    @Nullable
     public static UUID getUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key) {
         NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
         NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
