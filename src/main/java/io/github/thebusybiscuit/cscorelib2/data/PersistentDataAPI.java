@@ -924,6 +924,8 @@ public final class PersistentDataAPI {
      *
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param plugin
+     *            The {@link Plugin} to use for the {@link NamespacedKey}
      * @param key
      *            The key of the data to retrieve
      * @return The UUID associated with this key or null if it doesn't exist
