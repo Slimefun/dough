@@ -6,6 +6,7 @@ import java.util.OptionalInt;
 import java.util.OptionalLong;
 import java.util.UUID;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.bukkit.NamespacedKey;
@@ -91,9 +92,20 @@ public final class PersistentDataAPI {
         holder.getPersistentDataContainer().set(key, PersistentJsonDataType.JSON_ARRAY, value);
     }
 
-    public static void setUuid(PersistentDataHolder holder, Plugin plugin, String key, UUID uuid) {
-        final NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
-        final NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
+    /**
+     * Set a {@link UUID} in a {@link PersistentDataContainer}, split as the 2 longs containing its bits.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to add the data to
+     * @param plugin
+     *            The {@link Plugin} to use for the {@link NamespacedKey}
+     * @param key
+     *            The key of the data to set
+     */
+    public static void setUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key,
+                               @Nonnull UUID uuid) {
+        NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
+        NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
         setLong(holder, key1, uuid.getMostSignificantBits());
         setLong(holder, key2, uuid.getLeastSignificantBits());
     }
@@ -306,9 +318,9 @@ public final class PersistentDataAPI {
      *            The key to check for
      * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
      */
-    public static boolean hasUuid(PersistentDataHolder holder, Plugin plugin, String key) {
-        final NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
-        final NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
+    public static boolean hasUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key) {
+        NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
+        NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
         return hasLong(holder, key1) && hasLong(holder, key2);
     }
 
@@ -930,11 +942,11 @@ public final class PersistentDataAPI {
      *            The key of the data to retrieve
      * @return The UUID associated with this key or null if it doesn't exist
      */
-    public static UUID getUuid(PersistentDataHolder holder, Plugin plugin, String key) {
-        final NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
-        final NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
-        final long mostSigBits = getLong(holder, key1);
-        final long leastSigBits = getLong(holder, key2);
+    public static UUID getUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key) {
+        NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
+        NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
+        long mostSigBits = getLong(holder, key1);
+        long leastSigBits = getLong(holder, key2);
 
         return mostSigBits != -1 && leastSigBits != -1 ? new UUID(mostSigBits, leastSigBits) : null;
     }
