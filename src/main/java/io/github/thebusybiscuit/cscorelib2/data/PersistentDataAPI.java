@@ -947,10 +947,30 @@ public final class PersistentDataAPI {
     public static UUID getUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key) {
         NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
         NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
-        long mostSigBits = getLong(holder, key1);
-        long leastSigBits = getLong(holder, key2);
+        OptionalLong mostSigBits = getOptionalLong(holder, key1);
+        OptionalLong leastSigBits = getOptionalLong(holder, key2);
 
-        return mostSigBits != -1 && leastSigBits != -1 ? new UUID(mostSigBits, leastSigBits) : null;
+        return mostSigBits.isPresent() && leastSigBits.isPresent()
+            ? new UUID(mostSigBits.getAsLong(), leastSigBits.getAsLong()) : null;
+    }
+
+    /**
+     * This method returns an {@link Optional} describing the {@link UUID} found under the given key.
+     * An empty {@link Optional} will be returned if no value has been found.
+     *
+     * @see PersistentDataAPI#getJsonObject(PersistentDataHolder, NamespacedKey)
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param plugin
+     *            The {@link Plugin} to use for the {@link NamespacedKey}
+     * @param key
+     *            The key of the data to retrieve
+     * @return An Optional describing the result
+     */
+    public static Optional<UUID> getOptionalUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin,
+                                                      @Nonnull String key) {
+        return Optional.ofNullable(getUuid(holder, plugin, key));
     }
 
     /**
