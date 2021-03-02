@@ -300,6 +300,8 @@ public final class PersistentDataAPI {
      *
      * @param holder
      *            The {@link PersistentDataHolder} to check
+     * @param plugin
+     *            The {@link Plugin} to use for the {@link NamespacedKey}
      * @param key
      *            The key to check for
      * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
