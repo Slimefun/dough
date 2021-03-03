@@ -98,17 +98,14 @@ public final class PersistentDataAPI {
      *
      * @param holder
      *            The {@link PersistentDataHolder} to add the data to
-     * @param plugin
-     *            The {@link Plugin} to use for the {@link NamespacedKey}
      * @param key
      *            The key of the data to set
+     * @param uuid
+     *            The uuid to put in the container
      */
-    public static void setUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key,
+    public static void setUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key,
                                @Nonnull UUID uuid) {
-        NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
-        NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
-        setLong(holder, key1, uuid.getMostSignificantBits());
-        setLong(holder, key2, uuid.getLeastSignificantBits());
+        holder.getPersistentDataContainer().set(key, PersistentUuidDataType.TYPE, uuid);
     }
 
     /////////////////////////////////////
@@ -313,16 +310,12 @@ public final class PersistentDataAPI {
      *
      * @param holder
      *            The {@link PersistentDataHolder} to check
-     * @param plugin
-     *            The {@link Plugin} to use for the {@link NamespacedKey}
      * @param key
      *            The key to check for
      * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
      */
-    public static boolean hasUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key) {
-        NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
-        NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
-        return hasLong(holder, key1) && hasLong(holder, key2);
+    public static boolean hasUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return holder.getPersistentDataContainer().has(key, PersistentUuidDataType.TYPE);
     }
 
     /////////////////////////////////////
@@ -937,21 +930,13 @@ public final class PersistentDataAPI {
      *
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
-     * @param plugin
-     *            The {@link Plugin} to use for the {@link NamespacedKey}
      * @param key
      *            The key of the data to retrieve
      * @return The UUID associated with this key or null if it doesn't exist
      */
     @Nullable
-    public static UUID getUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin, @Nonnull String key) {
-        NamespacedKey key1 = new NamespacedKey(plugin, key + "_most_sig_bits");
-        NamespacedKey key2 = new NamespacedKey(plugin, key + "_least_sig_bits");
-        OptionalLong mostSigBits = getOptionalLong(holder, key1);
-        OptionalLong leastSigBits = getOptionalLong(holder, key2);
-
-        return mostSigBits.isPresent() && leastSigBits.isPresent()
-            ? new UUID(mostSigBits.getAsLong(), leastSigBits.getAsLong()) : null;
+    public static UUID getUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return holder.getPersistentDataContainer().get(key, PersistentUuidDataType.TYPE);
     }
 
     /**
@@ -962,15 +947,12 @@ public final class PersistentDataAPI {
      *
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
-     * @param plugin
-     *            The {@link Plugin} to use for the {@link NamespacedKey}
      * @param key
      *            The key of the data to retrieve
      * @return An Optional describing the result
      */
-    public static Optional<UUID> getOptionalUuid(@Nonnull PersistentDataHolder holder, @Nonnull Plugin plugin,
-                                                      @Nonnull String key) {
-        return Optional.ofNullable(getUuid(holder, plugin, key));
+    public static Optional<UUID> getOptionalUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return Optional.ofNullable(getUuid(holder, key));
     }
 
     /**
