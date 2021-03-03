@@ -1,23 +1,20 @@
 package io.github.thebusybiscuit.cscorelib2.data;
 
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
-import java.util.OptionalLong;
-import java.util.UUID;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import org.bukkit.plugin.Plugin;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
+import java.util.UUID;
 
 /**
  * This is a utility class that allows you to modify data for any Objects
@@ -103,8 +100,7 @@ public final class PersistentDataAPI {
      * @param uuid
      *            The uuid to put in the container
      */
-    public static void setUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key,
-                               @Nonnull UUID uuid) {
+    public static void setUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key, @Nonnull UUID uuid) {
         holder.getPersistentDataContainer().set(key, PersistentUuidDataType.TYPE, uuid);
     }
 
@@ -949,8 +945,9 @@ public final class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
-     * @return An Optional describing the result
+     * @return An {@link Optional} describing the result
      */
+    @Nonnull
     public static Optional<UUID> getOptionalUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
         return Optional.ofNullable(getUuid(holder, key));
     }
