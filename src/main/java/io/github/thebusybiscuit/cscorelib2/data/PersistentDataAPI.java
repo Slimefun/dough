@@ -941,7 +941,7 @@ public final class PersistentDataAPI {
      * This method returns an {@link Optional} describing the {@link UUID} found under the given key.
      * An empty {@link Optional} will be returned if no value has been found.
      *
-     * @see PersistentDataAPI#getJsonObject(PersistentDataHolder, NamespacedKey)
+     * @see PersistentDataAPI#getUuid(PersistentDataHolder, NamespacedKey)
      *
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
