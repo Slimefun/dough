@@ -941,7 +941,7 @@ public final class PersistentDataAPI {
      * This method returns an {@link Optional} describing the {@link UUID} found under the given key.
      * An empty {@link Optional} will be returned if no value has been found.
      *
-     * @see PersistentDataAPI#getUuid(PersistentDataHolder, NamespacedKey)
+     * @see PersistentDataAPI#getUUID(PersistentDataHolder, NamespacedKey)
      *
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
@@ -951,7 +951,7 @@ public final class PersistentDataAPI {
      */
     @Nonnull
     public static Optional<UUID> getOptionalUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
-        return Optional.ofNullable(getUuid(holder, key));
+        return Optional.ofNullable(getUUID(holder, key));
     }
 
     /**
