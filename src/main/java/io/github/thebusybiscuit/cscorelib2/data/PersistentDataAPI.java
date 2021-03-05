@@ -102,8 +102,8 @@ public final class PersistentDataAPI {
      * @param uuid
      *            The uuid to put in the container
      */
-    public static void setUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key, @Nonnull UUID uuid) {
-        holder.getPersistentDataContainer().set(key, PersistentUuidDataType.TYPE, uuid);
+    public static void setUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key, @Nonnull UUID uuid) {
+        holder.getPersistentDataContainer().set(key, PersistentUUIDDataType.TYPE, uuid);
     }
 
     /////////////////////////////////////
@@ -312,8 +312,8 @@ public final class PersistentDataAPI {
      *            The key to check for
      * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
      */
-    public static boolean hasUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
-        return holder.getPersistentDataContainer().has(key, PersistentUuidDataType.TYPE);
+    public static boolean hasUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return holder.getPersistentDataContainer().has(key, PersistentUUIDDataType.TYPE);
     }
 
     /////////////////////////////////////
@@ -933,8 +933,8 @@ public final class PersistentDataAPI {
      * @return The UUID associated with this key or null if it doesn't exist
      */
     @Nullable
-    public static UUID getUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
-        return holder.getPersistentDataContainer().get(key, PersistentUuidDataType.TYPE);
+    public static UUID getUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return holder.getPersistentDataContainer().get(key, PersistentUUIDDataType.TYPE);
     }
 
     /**
@@ -950,7 +950,7 @@ public final class PersistentDataAPI {
      * @return An {@link Optional} describing the result
      */
     @Nonnull
-    public static Optional<UUID> getOptionalUuid(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+    public static Optional<UUID> getOptionalUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
         return Optional.ofNullable(getUuid(holder, key));
     }
 
