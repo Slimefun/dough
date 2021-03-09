@@ -4,7 +4,10 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
+import java.util.UUID;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.bukkit.NamespacedKey;
@@ -87,6 +90,20 @@ public final class PersistentDataAPI {
 
     public static void setJsonArray(PersistentDataHolder holder, NamespacedKey key, JsonArray value) {
         holder.getPersistentDataContainer().set(key, PersistentJsonDataType.JSON_ARRAY, value);
+    }
+
+    /**
+     * Set a {@link UUID} in a {@link PersistentDataContainer}, split as the 2 longs containing its bits.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to add the data to
+     * @param key
+     *            The key of the data to set
+     * @param uuid
+     *            The uuid to put in the container
+     */
+    public static void setUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key, @Nonnull UUID uuid) {
+        holder.getPersistentDataContainer().set(key, PersistentUUIDDataType.TYPE, uuid);
     }
 
     /////////////////////////////////////
@@ -283,6 +300,20 @@ public final class PersistentDataAPI {
      */
     public static boolean hasJsonArray(PersistentDataHolder holder, NamespacedKey key) {
         return holder.getPersistentDataContainer().has(key, PersistentJsonDataType.JSON_ARRAY);
+    }
+
+    /**
+     * Checks if the specified {@link PersistentDataHolder} has a {@link PersistentDataContainer} with the specified
+     * key.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to check
+     * @param key
+     *            The key to check for
+     * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
+     */
+    public static boolean hasUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return holder.getPersistentDataContainer().has(key, PersistentUUIDDataType.TYPE);
     }
 
     /////////////////////////////////////
@@ -890,6 +921,37 @@ public final class PersistentDataAPI {
      */
     public static JsonArray getJsonArray(PersistentDataHolder holder, NamespacedKey key, JsonArray defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, PersistentJsonDataType.JSON_ARRAY, defaultVal);
+    }
+
+    /**
+     * Get a {@link UUID} in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return The UUID associated with this key or null if it doesn't exist
+     */
+    @Nullable
+    public static UUID getUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return holder.getPersistentDataContainer().get(key, PersistentUUIDDataType.TYPE);
+    }
+
+    /**
+     * This method returns an {@link Optional} describing the {@link UUID} found under the given key.
+     * An empty {@link Optional} will be returned if no value has been found.
+     *
+     * @see PersistentDataAPI#getUUID(PersistentDataHolder, NamespacedKey)
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return An {@link Optional} describing the result
+     */
+    @Nonnull
+    public static Optional<UUID> getOptionalUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
+        return Optional.ofNullable(getUUID(holder, key));
     }
 
     /**

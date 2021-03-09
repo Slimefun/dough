@@ -171,6 +171,7 @@ IMPORTANT: Some Packages also require other packages, check the Wiki for more In
 ```xml
 <include>**/thebusybiscuit/cscorelib2/config/**</include>
 <include>**/thebusybiscuit/cscorelib2/updater/**</include>
+<include>**/thebusybiscuit/cscorelib2/data/**</include>
 <include>**/thebusybiscuit/cscorelib2/database/**</include>
 <include>**/thebusybiscuit/cscorelib2/reflection/**</include>
 <include>**/thebusybiscuit/cscorelib2/protection/**</include>
