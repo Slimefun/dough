@@ -43,8 +43,8 @@ public final class PersistentUUIDDataType implements PersistentDataType<int[], U
 
     @Nonnull
     public static int[] toIntArray(@Nonnull UUID uuid) {
-        final long mostSig = uuid.getMostSignificantBits();
-        final long leastSig = uuid.getLeastSignificantBits();
+        long mostSig = uuid.getMostSignificantBits();
+        long leastSig = uuid.getLeastSignificantBits();
         return new int[] { (int) (mostSig >> 32L), (int) mostSig, (int) (leastSig >> 32L), (int) leastSig };
     }
 }
