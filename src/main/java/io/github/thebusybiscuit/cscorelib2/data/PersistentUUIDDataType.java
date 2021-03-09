@@ -6,7 +6,7 @@ import org.bukkit.persistence.PersistentDataType;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class PersistentUUIDDataType implements PersistentDataType<int[], UUID> {
+public final class PersistentUUIDDataType implements PersistentDataType<int[], UUID> {
 
     public static final PersistentDataType<int[], UUID> TYPE = new PersistentUUIDDataType();
 
