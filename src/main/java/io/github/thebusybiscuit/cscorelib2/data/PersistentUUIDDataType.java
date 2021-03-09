@@ -47,7 +47,7 @@ public final class PersistentUUIDDataType implements PersistentDataType<int[], U
 
     @Nonnull
     public static int[] toIntArray(@Nonnull UUID uuid) {
-        Validate.notNull(ints, "The provided uuid cannot be null!");
+        Validate.notNull(uuid, "The provided uuid cannot be null!");
 
         long mostSig = uuid.getMostSignificantBits();
         long leastSig = uuid.getLeastSignificantBits();
