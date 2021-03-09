@@ -2,6 +2,7 @@ package io.github.thebusybiscuit.cscorelib2.data;
 
 import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;
+import org.apache.commons.lang.Validate;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -38,11 +39,16 @@ public final class PersistentUUIDDataType implements PersistentDataType<int[], U
     
     @Nonnull
     public static UUID fromIntArray(@Nonnull int[] ints) {
+        Validate.notNull(ints, "The provided integer array cannot be null!");
+        Validate.isTrue(ints.length == 4, "The integer array must have a length of 4.");
+
         return new UUID(ints[0] << 32L | ints[1] & 0xFFFFFFFFL, ints[2] << 32L | ints[3] & 0xFFFFFFFFL);
     }
 
     @Nonnull
     public static int[] toIntArray(@Nonnull UUID uuid) {
+        Validate.notNull(ints, "The provided uuid cannot be null!");
+
         long mostSig = uuid.getMostSignificantBits();
         long leastSig = uuid.getLeastSignificantBits();
         return new int[] { (int) (mostSig >> 32L), (int) mostSig, (int) (leastSig >> 32L), (int) leastSig };
