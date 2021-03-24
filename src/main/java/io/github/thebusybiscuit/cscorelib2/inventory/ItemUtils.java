@@ -229,20 +229,20 @@ public final class ItemUtils {
         if (item.getType() != Material.AIR && item.getAmount() > 0) {
             if (replaceConsumables) {
                 switch (item.getType()) {
-                case POTION:
-                case DRAGON_BREATH:
-                case HONEY_BOTTLE:
-                    item.setType(Material.GLASS_BOTTLE);
-                    item.setAmount(1);
-                    return;
-                case WATER_BUCKET:
-                case LAVA_BUCKET:
-                case MILK_BUCKET:
-                    item.setType(Material.BUCKET);
-                    item.setAmount(1);
-                    return;
-                default:
-                    break;
+                    case POTION:
+                    case DRAGON_BREATH:
+                    case HONEY_BOTTLE:
+                        item.setType(Material.GLASS_BOTTLE);
+                        item.setAmount(1);
+                        return;
+                    case WATER_BUCKET:
+                    case LAVA_BUCKET:
+                    case MILK_BUCKET:
+                        item.setType(Material.BUCKET);
+                        item.setAmount(1);
+                        return;
+                    default:
+                        break;
                 }
             }
 

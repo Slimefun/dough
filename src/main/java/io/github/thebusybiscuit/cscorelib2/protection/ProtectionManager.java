@@ -181,7 +181,7 @@ public final class ProtectionManager {
                 if (!module.hasPermission(p, l, action)) {
                     return false;
                 }
-            } catch (Exception x) {
+            } catch (Exception | LinkageError x) {
                 logger.log(Level.SEVERE, x, () -> "An Error occured while querying the Protection Module: \"" + module.getName() + " v" + module.getVersion() + "\"");
                 // Fallback will just be "allow".
                 return true;
@@ -195,7 +195,7 @@ public final class ProtectionManager {
         for (ProtectionLogger module : protectionLoggers) {
             try {
                 module.logAction(p, b, action);
-            } catch (Exception x) {
+            } catch (Exception | LinkageError x) {
                 logger.log(Level.SEVERE, x, () -> "An Error occured while logging for the Protection Module: \"" + module.getName() + "\"");
             }
         }

@@ -67,23 +67,23 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 
     private Flag convert(ProtectableAction action, World world) {
         switch (action) {
-        case INTERACT_BLOCK:
-            return Flags.CONTAINER;
-        case ATTACK_PLAYER:
-            if (world.getEnvironment() == World.Environment.NETHER) {
-                return Flags.PVP_NETHER;
-            } else if (world.getEnvironment() == World.Environment.THE_END) {
-                return Flags.PVP_END;
-            } else {
-                return Flags.PVP_OVERWORLD;
-            }
-        case BREAK_BLOCK:
-            return Flags.BREAK_BLOCKS;
-        case ATTACK_ENTITY:
-            return Flags.HURT_ANIMALS;
-        case PLACE_BLOCK:
-        default:
-            return Flags.PLACE_BLOCKS;
+            case INTERACT_BLOCK:
+                return Flags.CONTAINER;
+            case ATTACK_PLAYER:
+                if (world.getEnvironment() == World.Environment.NETHER) {
+                    return Flags.PVP_NETHER;
+                } else if (world.getEnvironment() == World.Environment.THE_END) {
+                    return Flags.PVP_END;
+                } else {
+                    return Flags.PVP_OVERWORLD;
+                }
+            case BREAK_BLOCK:
+                return Flags.BREAK_BLOCKS;
+            case ATTACK_ENTITY:
+                return Flags.HURT_ANIMALS;
+            case PLACE_BLOCK:
+            default:
+                return Flags.PLACE_BLOCKS;
         }
     }
 }

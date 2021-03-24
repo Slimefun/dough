@@ -26,17 +26,17 @@ public class CoreProtectLogger implements ProtectionLogger {
     @Override
     public void logAction(OfflinePlayer p, Block b, ProtectableAction action) {
         switch (action) {
-        case INTERACT_BLOCK:
-            coreprotect.logContainerTransaction(p.getName(), b.getLocation());
-            break;
-        case BREAK_BLOCK:
-            coreprotect.logRemoval(p.getName(), b.getLocation(), b.getType(), b.getBlockData());
-            break;
-        case PLACE_BLOCK:
-            coreprotect.logPlacement(p.getName(), b.getLocation(), b.getType(), b.getBlockData());
-            break;
-        default:
-            break;
+            case INTERACT_BLOCK:
+                coreprotect.logContainerTransaction(p.getName(), b.getLocation());
+                break;
+            case BREAK_BLOCK:
+                coreprotect.logRemoval(p.getName(), b.getLocation(), b.getType(), b.getBlockData());
+                break;
+            case PLACE_BLOCK:
+                coreprotect.logPlacement(p.getName(), b.getLocation(), b.getType(), b.getBlockData());
+                break;
+            default:
+                break;
         }
     }
 

@@ -36,7 +36,8 @@ public class Config {
     @Getter
     private File file;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String header;
 
     private Logger logger;

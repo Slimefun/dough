@@ -43,16 +43,16 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
         }
 
         switch (action) {
-        case INTERACT_BLOCK:
-            return claim.allowContainers((Player) p) == null;
-        case ATTACK_PLAYER:
-            return claim.siegeData == null || claim.siegeData.attacker == null;
-        case BREAK_BLOCK:
-            return claim.allowBreak((Player) p, l.getBlock().getType()) == null;
-        case PLACE_BLOCK:
-            return claim.allowBuild((Player) p, l.getBlock().getType()) == null;
-        default:
-            return claim.allowAccess((Player) p) == null;
+            case INTERACT_BLOCK:
+                return claim.allowContainers((Player) p) == null;
+            case ATTACK_PLAYER:
+                return claim.siegeData == null || claim.siegeData.attacker == null;
+            case BREAK_BLOCK:
+                return claim.allowBreak((Player) p, l.getBlock().getType()) == null;
+            case PLACE_BLOCK:
+                return claim.allowBuild((Player) p, l.getBlock().getType()) == null;
+            default:
+                return claim.allowAccess((Player) p) == null;
         }
     }
 

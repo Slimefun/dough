@@ -47,16 +47,16 @@ public class PlotSquared5ProtectionModule implements ProtectionModule {
 
     private boolean check(OfflinePlayer p, ProtectableAction action) {
         switch (action) {
-        case INTERACT_BLOCK:
-            return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_INTERACT_UNOWNED);
-        case INTERACT_ENTITY:
-        case ATTACK_ENTITY:
-            return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.FLAG_ANIMAL_INTERACT);
-        case ATTACK_PLAYER:
-            return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.FLAG_PVP);
-        case PLACE_BLOCK:
-        default:
-            return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_BUILD_UNOWNED);
+            case INTERACT_BLOCK:
+                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_INTERACT_UNOWNED);
+            case INTERACT_ENTITY:
+            case ATTACK_ENTITY:
+                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.FLAG_ANIMAL_INTERACT);
+            case ATTACK_PLAYER:
+                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.FLAG_PVP);
+            case PLACE_BLOCK:
+            default:
+                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_BUILD_UNOWNED);
         }
     }
 }

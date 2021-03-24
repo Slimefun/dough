@@ -42,17 +42,17 @@ public class RedProtectProtectionModule implements ProtectionModule {
 
         Player player = (Player) p;
         switch (action) {
-        case INTERACT_BLOCK:
-            return region.canChest(player);
-        case ATTACK_ENTITY:
-        case INTERACT_ENTITY:
-            return region.canInteractPassives(player);
-        case ATTACK_PLAYER:
-            return region.canPVP(player, player);
-        case BREAK_BLOCK:
-        case PLACE_BLOCK:
-        default:
-            return region.canBuild(player);
+            case INTERACT_BLOCK:
+                return region.canChest(player);
+            case ATTACK_ENTITY:
+            case INTERACT_ENTITY:
+                return region.canInteractPassives(player);
+            case ATTACK_PLAYER:
+                return region.canPVP(player, player);
+            case BREAK_BLOCK:
+            case PLACE_BLOCK:
+            default:
+                return region.canBuild(player);
         }
     }
 }

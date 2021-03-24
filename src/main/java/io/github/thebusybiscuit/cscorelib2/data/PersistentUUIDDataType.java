@@ -36,7 +36,7 @@ public final class PersistentUUIDDataType implements PersistentDataType<int[], U
     public UUID fromPrimitive(@Nonnull int[] primitive, @Nonnull PersistentDataAdapterContext context) {
         return fromIntArray(primitive);
     }
-    
+
     @Nonnull
     public static UUID fromIntArray(@Nonnull int[] ints) {
         Validate.notNull(ints, "The provided integer array cannot be null!");

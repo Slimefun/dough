@@ -64,14 +64,14 @@ public final class InvUtils {
      */
     public static boolean isItemAllowed(@NonNull Material itemType, @NonNull InventoryType inventoryType) {
         switch (inventoryType) {
-        case LECTERN:
-            // Lecterns only allow written books or writable books
-            return itemType == Material.WRITABLE_BOOK || itemType == Material.WRITTEN_BOOK;
-        case SHULKER_BOX:
-            // Shulker Boxes do not allow Shulker boxes
-            return itemType != Material.SHULKER_BOX && !itemType.name().endsWith("_SHULKER_BOX");
-        default:
-            return true;
+            case LECTERN:
+                // Lecterns only allow written books or writable books
+                return itemType == Material.WRITABLE_BOOK || itemType == Material.WRITTEN_BOOK;
+            case SHULKER_BOX:
+                // Shulker Boxes do not allow Shulker boxes
+                return itemType != Material.SHULKER_BOX && !itemType.name().endsWith("_SHULKER_BOX");
+            default:
+                return true;
         }
     }
 

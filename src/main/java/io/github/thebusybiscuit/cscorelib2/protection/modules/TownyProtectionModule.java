@@ -41,16 +41,16 @@ public class TownyProtectionModule implements ProtectionModule {
 
     private ActionType convert(ProtectableAction action) {
         switch (action) {
-        case INTERACT_BLOCK:
-        case INTERACT_ENTITY:
-        case ATTACK_PLAYER:
-        case ATTACK_ENTITY:
-            return ActionType.ITEM_USE;
-        case BREAK_BLOCK:
-            return ActionType.DESTROY;
-        case PLACE_BLOCK:
-        default:
-            return ActionType.BUILD;
+            case INTERACT_BLOCK:
+            case INTERACT_ENTITY:
+            case ATTACK_PLAYER:
+            case ATTACK_ENTITY:
+                return ActionType.ITEM_USE;
+            case BREAK_BLOCK:
+                return ActionType.DESTROY;
+            case PLACE_BLOCK:
+            default:
+                return ActionType.BUILD;
         }
     }
 

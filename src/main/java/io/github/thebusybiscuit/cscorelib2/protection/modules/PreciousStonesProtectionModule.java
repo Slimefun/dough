@@ -37,18 +37,18 @@ public class PreciousStonesProtectionModule implements ProtectionModule {
         }
 
         switch (action) {
-        case ATTACK_PLAYER:
-            return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
-        case INTERACT_ENTITY:
-        case ATTACK_ENTITY:
-            return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_ENTITY_INTERACT, l);
-        case BREAK_BLOCK:
-            return api.canBreak((Player) p, l);
-        case INTERACT_BLOCK:
-        case PLACE_BLOCK:
-            return api.canPlace((Player) p, l);
-        default:
-            return false;
+            case ATTACK_PLAYER:
+                return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_PVP, l);
+            case INTERACT_ENTITY:
+            case ATTACK_ENTITY:
+                return !api.flagAppliesToPlayer((Player) p, FieldFlag.PREVENT_ENTITY_INTERACT, l);
+            case BREAK_BLOCK:
+                return api.canBreak((Player) p, l);
+            case INTERACT_BLOCK:
+            case PLACE_BLOCK:
+                return api.canPlace((Player) p, l);
+            default:
+                return false;
         }
     }
 }
