@@ -316,19 +316,26 @@ public final class ReflectionUtils {
 
     /**
      * Returns the formatted Server Version usable for Reflection
-     * 
-     * @deprecated Use PaperLib :)
      *
      * @return The formatted Server Version
      */
     @Nonnull
-    @Deprecated
-    public static String getVersion() {
+    private static String getVersion() {
         if (currentVersion == null) {
             currentVersion = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
         }
 
         return currentVersion;
+    }
+
+    /**
+     * This checks if the current Server instance is a mock (MockBukkit) and
+     * whether we are in a Unit Test environment.
+     * 
+     * @return Whether the current Server instance is a mock
+     */
+    public static boolean isUnitTestEnvironment() {
+        return getVersion().equals("mockbukkit");
     }
 
     /**
