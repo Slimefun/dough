@@ -1,6 +1,10 @@
 package io.github.thebusybiscuit.cscorelib2.inventory;
 
 import java.lang.reflect.Method;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -12,6 +16,12 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.NonNull;
 
+/**
+ * A utility class providing some methods to handle {@link ItemStack}s.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public final class ItemUtils {
 
     private ItemUtils() {}
@@ -22,9 +32,13 @@ public final class ItemUtils {
 
     static {
         try {
-            copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
-            getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
-            toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
+            if (ReflectionUtils.isUnitTestEnvironment()) {
+                System.out.println("MockBukkit detected! Cannot access NMS ItemStack API.");
+            } else {
+                copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
+                getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
+                toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
+            }
         } catch (Exception x) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
             x.printStackTrace();
@@ -38,13 +52,14 @@ public final class ItemUtils {
      * 
      * @param item
      *            The Item to format
+     * 
      * @return The formatted Item Name
      */
-    public static String getItemName(ItemStack item) {
-        if (item == null)
+    @Nonnull
+    public static String getItemName(@Nullable ItemStack item) {
+        if (item == null) {
             return "null";
-
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+        } else if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             return item.getItemMeta().getDisplayName();
         }
 
@@ -67,9 +82,10 @@ public final class ItemUtils {
      *            {@link ItemStack} Two
      * @return Whether the two instances of {@link ItemStack} are similiar and can be stacked.
      */
-    public static boolean canStack(ItemStack a, ItemStack b) {
-        if (a == null || b == null)
+    public static boolean canStack(@Nullable ItemStack a, @Nullable ItemStack b) {
+        if (a == null || b == null) {
             return false;
+        }
 
         if (a.getType() != b.getType() || a.hasItemMeta() != b.hasItemMeta()) {
             return false;
@@ -126,12 +142,15 @@ public final class ItemUtils {
             }
 
             if (aMeta.hasLore()) {
-                if (aMeta.getLore().size() != bMeta.getLore().size()) {
+                List<String> aLore = aMeta.getLore();
+                List<String> bLore = bMeta.getLore();
+
+                if (aLore.size() != bLore.size()) {
                     return false;
                 }
 
-                for (int i = 0; i < aMeta.getLore().size(); i++) {
-                    if (!aMeta.getLore().get(i).equals(bMeta.getLore().get(i))) {
+                for (int i = 0; i < aLore.size(); i++) {
+                    if (!aLore.get(i).equals(bLore.get(i))) {
                         return false;
                     }
                 }
