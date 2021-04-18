@@ -34,7 +34,7 @@ public class FunnyGuildsProtectionModule implements ProtectionModule {
 
 	@Override
 	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-		return p instanceof Player && !ProtectionSystem.isProtected((Player) p, l, convert(action));
+		return p instanceof Player && ProtectionSystem.isProtected((Player) p, l, convert(action)).isEmpty();
 	}
 
 	private boolean convert(ProtectableAction protectableAction) {
