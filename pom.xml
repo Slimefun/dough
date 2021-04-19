@@ -7,7 +7,7 @@
     <groupId>com.github.thebusybiscuit</groupId>
     <artifactId>cscorelib2</artifactId>
 
-    <version>0.30.4</version>
+    <version>0.30.5</version>
 
     <packaging>jar</packaging>
     <url>https://github.com/TheBusyBiscuit/CS-CoreLib2</url>
