@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -59,7 +62,7 @@ public class Localization {
      *            Whether Unicodes are allowed
      */
     public Localization(@NonNull Plugin plugin, @NonNull String name, boolean allowUnicodes) {
-        this.file = new File("plugins/" + plugin.getDescription().getName().replace(" ", "_") + "/" + name);
+        this.file = new File("plugins/" + plugin.getDescription().getName().replace(" ", "_") + '/' + name);
         this.config = new Config(file);
         this.allowUnicodes = allowUnicodes;
     }
@@ -69,8 +72,10 @@ public class Localization {
         this.config = new Config(file);
     }
 
+    @Nonnull
     public String getPrefix() {
-        return config.contains("prefix") ? getMessage("prefix") : "";
+        String prefix = getMessage("prefix");
+        return prefix != null ? prefix : "";
     }
 
     /**
@@ -252,7 +257,8 @@ public class Localization {
         config.save();
     }
 
-    protected static String translateUnicodes(String str) {
+    @Nullable
+    protected static String translateUnicodes(@Nullable String str) {
         if (str == null) {
             return null;
         }

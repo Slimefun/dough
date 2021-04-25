@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.DataStore;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -16,7 +17,7 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
     private DataStore dataStore;
     private final Plugin plugin;
 
-    public GriefPreventionProtectionModule(Plugin plugin) {
+    public GriefPreventionProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

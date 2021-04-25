@@ -339,29 +339,6 @@ public final class ReflectionUtils {
     }
 
     /**
-     * This checks if {@link #getVersion()} is the given version
-     * 
-     * @deprecated Use PaperLib :)
-     * 
-     * @param prefixes
-     *            The prefixes
-     * 
-     * @return Whether it is one of those versions
-     */
-    @Deprecated
-    public static boolean isVersion(String... prefixes) {
-        String version = getVersion();
-
-        for (String prefix : prefixes) {
-            if (version.startsWith(prefix)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Compares multiple Type Arrays
      *
      * @param a

@@ -11,13 +11,14 @@ import com.massivecraft.factions.Faction;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class FactionsUUIDProtectionModule implements ProtectionModule {
 
     private FPlayers api;
     private final Plugin plugin;
 
-    public FactionsUUIDProtectionModule(Plugin plugin) {
+    public FactionsUUIDProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

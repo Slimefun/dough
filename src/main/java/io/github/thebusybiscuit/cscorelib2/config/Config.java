@@ -376,21 +376,6 @@ public class Config {
     }
 
     /**
-     * Returns the Sound at the specified path
-     * 
-     * @deprecated This method is no longer supported.
-     *
-     * @param path
-     *            The path in the Config File
-     * 
-     * @return The Sound at that path
-     */
-    @Deprecated
-    public Sound getSound(@NonNull String path) {
-        return Sound.valueOf(getString(path));
-    }
-
-    /**
      * Returns the Date at the specified path
      *
      * @param path

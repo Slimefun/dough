@@ -10,13 +10,14 @@ import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 import br.net.fabiozumbi12.RedProtect.Bukkit.API.RedProtectAPI;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class RedProtectProtectionModule implements ProtectionModule {
 
     private RedProtectAPI api;
     private final Plugin plugin;
 
-    public RedProtectProtectionModule(Plugin plugin) {
+    public RedProtectProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

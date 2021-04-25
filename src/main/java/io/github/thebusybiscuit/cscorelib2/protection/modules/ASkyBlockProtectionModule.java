@@ -11,13 +11,14 @@ import com.wasteofplastic.askyblock.Island;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class ASkyBlockProtectionModule implements ProtectionModule {
 
     private ASkyBlockAPI api;
     private final Plugin plugin;
 
-    public ASkyBlockProtectionModule(Plugin plugin) {
+    public ASkyBlockProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

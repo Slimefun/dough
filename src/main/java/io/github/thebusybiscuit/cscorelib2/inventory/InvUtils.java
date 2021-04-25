@@ -26,10 +26,31 @@ public final class InvUtils {
      * 
      * @param inv
      *            The Inventory to check
+     * 
      * @return Whether an empty slot exists
      */
     public static boolean hasEmptySlot(@NonNull Inventory inv) {
         return inv.firstEmpty() != 1;
+    }
+
+    /**
+     * This checks if the given {@link Inventory} is empty.
+     * 
+     * @param inv
+     *            The {@link Inventory} to check
+     * 
+     * @return Whether that {@link Inventory} is empty
+     */
+    public static boolean isEmpty(@NonNull Inventory inv) {
+        // Sadly Inventory#isEmpty() is not available everywhere
+
+        for (ItemStack item : inv) {
+            if (item != null && !item.getType().isAir()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

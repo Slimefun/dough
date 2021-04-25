@@ -6,6 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 import me.angeschossen.chestprotect.api.addons.ChestProtectAddon;
 import me.angeschossen.chestprotect.api.objects.BlockProtection;
 
@@ -14,7 +15,7 @@ public class ChestProtectProtectionModule implements ProtectionModule {
     private final Plugin plugin;
     private ChestProtectAddon chestProtect;
 
-    public ChestProtectProtectionModule(Plugin plugin) {
+    public ChestProtectProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

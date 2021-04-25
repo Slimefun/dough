@@ -23,7 +23,7 @@ import org.bukkit.plugin.Plugin;
 class ChatInputListener implements Listener {
 
     private Plugin plugin;
-    protected Map<UUID, Set<IChatInput>> handlers;
+    protected Map<UUID, Set<ChatInputHandler>> handlers;
 
     protected ChatInputListener(Plugin plugin) {
         this.plugin = plugin;
@@ -32,8 +32,8 @@ class ChatInputListener implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    public void addCallback(UUID uuid, IChatInput input) {
-        Set<IChatInput> callbacks = handlers.computeIfAbsent(uuid, id -> new HashSet<>());
+    public void addCallback(UUID uuid, ChatInputHandler input) {
+        Set<ChatInputHandler> callbacks = handlers.computeIfAbsent(uuid, id -> new HashSet<>());
         callbacks.add(input);
     }
 
@@ -66,13 +66,13 @@ class ChatInputListener implements Listener {
     }
 
     private void checkInput(Cancellable e, Player p, String msg) {
-        Set<IChatInput> callbacks = handlers.get(p.getUniqueId());
+        Set<ChatInputHandler> callbacks = handlers.get(p.getUniqueId());
 
         if (callbacks != null) {
-            Iterator<IChatInput> iterator = callbacks.iterator();
+            Iterator<ChatInputHandler> iterator = callbacks.iterator();
 
             while (iterator.hasNext()) {
-                IChatInput handler = iterator.next();
+                ChatInputHandler handler = iterator.next();
 
                 if (handler.test(msg)) {
                     iterator.remove();

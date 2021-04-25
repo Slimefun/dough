@@ -1,11 +1,14 @@
 package io.github.thebusybiscuit.cscorelib2.protection.modules;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import me.angeschossen.lands.api.land.Area;
 import me.angeschossen.lands.api.land.LandWorld;
@@ -16,7 +19,7 @@ public class LandsProtectionModule implements ProtectionModule {
     private LandsIntegration landsIntegration;
     private final Plugin plugin;
 
-    public LandsProtectionModule(Plugin plugin) {
+    public LandsProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -42,7 +45,8 @@ public class LandsProtectionModule implements ProtectionModule {
         return area == null || area.canSetting(p.getUniqueId(), convert(action));
     }
 
-    private RoleSetting convert(ProtectableAction protectableAction) {
+    @Nonnull
+    private RoleSetting convert(@NonNull ProtectableAction protectableAction) {
         switch (protectableAction) {
             case PLACE_BLOCK:
                 return RoleSetting.BLOCK_PLACE;

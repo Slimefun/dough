@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
 import javax.annotation.Nullable;
@@ -63,7 +64,7 @@ abstract class UpdaterTask implements Runnable {
             connection.setDoOutput(true);
 
             @Cleanup
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
             return parse(reader.readLine());
         } catch (IOException e) {
             plugin.getLogger().log(Level.WARNING, "Could not connect to the updating site, is it down?", e);

@@ -8,6 +8,7 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import nl.rutgerkok.blocklocker.BlockLockerPlugin;
 import nl.rutgerkok.blocklocker.profile.Profile;
@@ -18,7 +19,7 @@ public class BlockLockerProtectionModule implements ProtectionModule {
     private BlockLockerPlugin api;
     private final Plugin plugin;
 
-    public BlockLockerProtectionModule(Plugin plugin) {
+    public BlockLockerProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

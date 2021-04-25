@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import net.sacredlabyrinth.Phaed.PreciousStones.api.IApi;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
@@ -16,7 +17,7 @@ public class PreciousStonesProtectionModule implements ProtectionModule {
     private IApi api;
     private final Plugin plugin;
 
-    public PreciousStonesProtectionModule(Plugin plugin) {
+    public PreciousStonesProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

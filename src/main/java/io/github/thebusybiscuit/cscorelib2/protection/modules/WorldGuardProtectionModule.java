@@ -19,6 +19,7 @@ import com.sk89q.worldguard.protection.regions.RegionContainer;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class WorldGuardProtectionModule implements ProtectionModule {
 
@@ -28,7 +29,7 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public WorldGuardProtectionModule(Plugin plugin) {
+    public WorldGuardProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

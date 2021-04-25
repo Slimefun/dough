@@ -10,12 +10,13 @@ import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class TownyProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public TownyProtectionModule(Plugin plugin) {
+    public TownyProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

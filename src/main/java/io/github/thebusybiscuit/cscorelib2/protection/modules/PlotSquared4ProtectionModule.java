@@ -12,12 +12,13 @@ import com.github.intellectualsites.plotsquared.plot.util.Permissions;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class PlotSquared4ProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public PlotSquared4ProtectionModule(Plugin plugin) {
+    public PlotSquared4ProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

@@ -16,29 +16,29 @@ import org.bukkit.plugin.Plugin;
  */
 public class FunnyGuildsProtectionModule implements ProtectionModule {
 
-	private final Plugin plugin;
+    private final Plugin plugin;
 
-	public FunnyGuildsProtectionModule(@NonNull Plugin plugin) {
-		this.plugin = plugin;
-	}
+    public FunnyGuildsProtectionModule(@NonNull Plugin plugin) {
+        this.plugin = plugin;
+    }
 
-	@Override
-	public Plugin getPlugin() {
-		return plugin;
-	}
+    @Override
+    public Plugin getPlugin() {
+        return plugin;
+    }
 
-	@Override
-	public void load() {
-		// We don't need to load any APIs, everything is static
-	}
+    @Override
+    public void load() {
+        // We don't need to load any APIs, everything is static
+    }
 
-	@Override
-	public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
-		return p instanceof Player && ProtectionSystem.isProtected((Player) p, l, convert(action)).isEmpty();
-	}
+    @Override
+    public boolean hasPermission(OfflinePlayer p, Location l, ProtectableAction action) {
+        return p instanceof Player && ProtectionSystem.isProtected((Player) p, l, convert(action)).isEmpty();
+    }
 
-	private boolean convert(ProtectableAction protectableAction) {
-		return protectableAction == ProtectableAction.PLACE_BLOCK;
-	}
+    private boolean convert(ProtectableAction protectableAction) {
+        return protectableAction == ProtectableAction.PLACE_BLOCK;
+    }
 
 }

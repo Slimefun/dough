@@ -9,6 +9,7 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.api.user.User;
@@ -30,7 +31,7 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public BentoBoxProtectionModule(Plugin plugin) {
+    public BentoBoxProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

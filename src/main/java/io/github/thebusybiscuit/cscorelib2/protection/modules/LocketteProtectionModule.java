@@ -10,12 +10,13 @@ import org.yi.acru.bukkit.Lockette.Lockette;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class LocketteProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public LocketteProtectionModule(Plugin plugin) {
+    public LocketteProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

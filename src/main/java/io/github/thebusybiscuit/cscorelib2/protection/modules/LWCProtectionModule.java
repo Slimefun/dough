@@ -9,13 +9,14 @@ import com.griefcraft.lwc.LWC;
 
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectableAction;
 import io.github.thebusybiscuit.cscorelib2.protection.ProtectionModule;
+import lombok.NonNull;
 
 public class LWCProtectionModule implements ProtectionModule {
 
     private LWC lwc;
     private final Plugin plugin;
 
-    public LWCProtectionModule(Plugin plugin) {
+    public LWCProtectionModule(@NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 
