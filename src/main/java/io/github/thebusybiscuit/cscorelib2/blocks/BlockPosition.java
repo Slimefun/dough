@@ -163,6 +163,19 @@ public final class BlockPosition {
     }
 
     /**
+     * This compacts the three provided integers into one {@link Long}.
+     * This allows us to save a lot memory-wise.
+     * 
+     * @param loc
+     *            The {@link Location} to simplify.
+     * 
+     * @return The compacted {@link Long}, ignoring the {@link World}
+     */
+    public static long getAsLong(@NonNull Location loc) {
+        return getAsLong(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
