@@ -88,7 +88,7 @@ public final class SkullBlock {
         }
 
         try {
-            GameProfile profile = new FakeProfile(uuid, texture);
+            GameProfile profile = new FakeGameProfile(uuid, texture);
             Object world = handle.invoke(block.getWorld());
 
             Object position = newPosition.newInstance(block.getX(), block.getY(), block.getZ());

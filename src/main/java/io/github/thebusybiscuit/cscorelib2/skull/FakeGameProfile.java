@@ -10,16 +10,16 @@ import com.mojang.authlib.properties.Property;
 import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.NonNull;
 
-final class FakeProfile extends GameProfile {
+final class FakeGameProfile extends GameProfile {
 
     public static final String PROPERTY_KEY = "textures";
 
-    public FakeProfile(UUID uuid, String texture) {
+    FakeGameProfile(@NonNull UUID uuid, @NonNull String texture) {
         super(uuid, "CS-CoreLib");
         getProperties().put(PROPERTY_KEY, new Property(PROPERTY_KEY, texture));
     }
 
-    public void inject(@NonNull SkullMeta meta) throws NoSuchFieldException, IllegalAccessException {
+    void inject(@NonNull SkullMeta meta) throws NoSuchFieldException, IllegalAccessException {
         ReflectionUtils.setFieldValue(meta, "profile", this);
 
         // Forces SkullMeta to properly deserialize and serialize the profile

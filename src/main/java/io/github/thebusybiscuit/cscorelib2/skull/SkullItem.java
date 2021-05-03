@@ -62,7 +62,7 @@ public final class SkullItem {
             ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 
             SkullMeta meta = (SkullMeta) item.getItemMeta();
-            new FakeProfile(uuid, texture).inject(meta);
+            new FakeGameProfile(uuid, texture).inject(meta);
 
             item.setItemMeta(meta);
             return item;
@@ -184,7 +184,7 @@ public final class SkullItem {
         JsonArray properties = new JsonParser().parse(sessionReader).getAsJsonObject().get("properties").getAsJsonArray();
 
         for (JsonElement el : properties) {
-            if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals(FakeProfile.PROPERTY_KEY)) {
+            if (el.isJsonObject() && el.getAsJsonObject().get("name").getAsString().equals(FakeGameProfile.PROPERTY_KEY)) {
                 return fromBase64(UUID.fromString(uuid), el.getAsJsonObject().get("value").getAsString());
             }
         }
