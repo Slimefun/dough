@@ -42,7 +42,7 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>papermc</id>
+            <id>papermc-repo</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <repository>
@@ -50,13 +50,8 @@
             <url>https://libraries.minecraft.net/</url>
         </repository>
         <repository>
-            <id>bintray-tastybento-maven-repo</id>
-            <name>bintray</name>
-            <url>http://dl.bintray.com/tastybento/maven-repo</url>
-        </repository>
-        <repository>
-            <id>CodeMC</id>
-            <url>https://repo.codemc.org/repository/maven-public</url>
+            <id>tastybento-repo</id>
+            <url>https://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
         <repository>
             <id>coreprotect-repo</id>
@@ -71,16 +66,16 @@
             <url>https://ci.ender.zone/job/FactionsUUID/122/maven-repository/repository</url>
         </repository>
         <repository>
-            <id>plotsquared</id>
+            <id>plotsquared-repo</id>
             <url>https://plotsquared.com/mvn/</url>
         </repository>
         <repository>
-            <id>rutger-repo</id>
-            <url>http://www.rutgerkok.nl/repo</url>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
         <repository>
             <id>worldedit-worldguard-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
+            <url>https://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
             <id>funnyguilds-repo</id>
@@ -177,12 +172,6 @@
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>16.17.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.wasteofplastic</groupId>
-            <artifactId>askyblock</artifactId>
-            <version>3.0.9.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

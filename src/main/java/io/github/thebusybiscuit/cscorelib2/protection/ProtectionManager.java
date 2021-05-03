@@ -7,7 +7,14 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import io.github.thebusybiscuit.cscorelib2.protection.modules.ASkyBlockProtectionModule;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
+import org.bukkit.block.Block;
+import org.bukkit.plugin.Plugin;
+
+import io.github.thebusybiscuit.cscorelib2.protection.loggers.CoreProtectLogger;
+import io.github.thebusybiscuit.cscorelib2.protection.loggers.LogBlockLogger;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BentoBoxProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.BlockLockerProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.ChestProtectProtectionModule;
@@ -23,14 +30,6 @@ import io.github.thebusybiscuit.cscorelib2.protection.modules.PreciousStonesProt
 import io.github.thebusybiscuit.cscorelib2.protection.modules.RedProtectProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.TownyProtectionModule;
 import io.github.thebusybiscuit.cscorelib2.protection.modules.WorldGuardProtectionModule;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
-import org.bukkit.block.Block;
-import org.bukkit.plugin.Plugin;
-
-import io.github.thebusybiscuit.cscorelib2.protection.loggers.CoreProtectLogger;
-import io.github.thebusybiscuit.cscorelib2.protection.loggers.LogBlockLogger;
 import lombok.NonNull;
 
 /**
@@ -62,7 +61,6 @@ public final class ProtectionManager {
         registerModule(server, "WorldGuard", plugin -> new WorldGuardProtectionModule(plugin));
         registerModule(server, "Towny", plugin -> new TownyProtectionModule(plugin));
         registerModule(server, "GriefPrevention", plugin -> new GriefPreventionProtectionModule(plugin));
-        registerModule(server, "ASkyBlock", plugin -> new ASkyBlockProtectionModule(plugin));
         registerModule(server, "LWC", plugin -> new LWCProtectionModule(plugin));
         registerModule(server, "PreciousStones", plugin -> new PreciousStonesProtectionModule(plugin));
         registerModule(server, "Lockette", plugin -> new LocketteProtectionModule(plugin));
