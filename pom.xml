@@ -59,7 +59,7 @@
         </repository>
         <repository>
             <id>FactionsUUID-repo</id>
-            <url>https://ci.ender.zone/job/FactionsUUID/122/maven-repository/repository</url>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
         <repository>
             <id>plotsquared-repo</id>
@@ -181,7 +181,7 @@
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>Factions</artifactId>
-            <version>1.6.9.5-U0.2.2</version>
+            <version>1.6.9.5-U0.5.20</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
