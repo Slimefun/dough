@@ -50,10 +50,6 @@
             <url>https://libraries.minecraft.net/</url>
         </repository>
         <repository>
-            <id>tastybento-repo</id>
-            <url>https://dl.bintray.com/tastybento/maven-repo</url>
-        </repository>
-        <repository>
             <id>coreprotect-repo</id>
             <url>https://maven.playpro.com/</url>
         </repository>
