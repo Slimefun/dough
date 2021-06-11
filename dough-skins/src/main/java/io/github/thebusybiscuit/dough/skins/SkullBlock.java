@@ -22,13 +22,25 @@ public final class SkullBlock {
 
     static {
         try {
-            handle = ReflectionUtils.getOBCClass("CraftWorld").getMethod("getHandle");
+            if (ReflectionUtils.getMajorVersion() >= 17) {
+                handle = ReflectionUtils.getOBCClass("CraftWorld").getMethod("getHandle");
 
-            setGameProfile = ReflectionUtils.getNMSClass("TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
+                setGameProfile = ReflectionUtils.getNetMinecraftClass("world.level.block.entity.TileEntitySkull")
+                    .getMethod("setGameProfile", GameProfile.class);
 
-            Class<?> blockPosition = ReflectionUtils.getNMSClass("BlockPosition");
-            newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
-            getTileEntity = ReflectionUtils.getNMSClass("WorldServer").getMethod("getTileEntity", blockPosition);
+                Class<?> blockPosition = ReflectionUtils.getNetMinecraftClass("core.BlockPosition");
+                System.out.println(blockPosition);
+                newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
+                getTileEntity = ReflectionUtils.getNMSClass("level.WorldServer").getMethod("getTileEntity", blockPosition);
+            } else {
+                handle = ReflectionUtils.getOBCClass("CraftWorld").getMethod("getHandle");
+
+                setGameProfile = ReflectionUtils.getNMSClass("TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
+
+                Class<?> blockPosition = ReflectionUtils.getNMSClass("BlockPosition");
+                newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
+                getTileEntity = ReflectionUtils.getNMSClass("WorldServer").getMethod("getTileEntity", blockPosition);
+            }
         } catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
             System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
             e.printStackTrace();
