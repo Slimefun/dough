@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.item;
+package io.github.thebusybiscuit.dough.items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,29 +13,29 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
-public class CustomItem extends ItemStack {
+public class CustomItemStack extends ItemStack {
 
-    public CustomItem(ItemStack item) {
+    public CustomItemStack(ItemStack item) {
         super(item);
     }
 
-    public CustomItem(Material type) {
+    public CustomItemStack(Material type) {
         super(type);
     }
 
-    public CustomItem(ItemStack item, Consumer<ItemMeta> meta) {
+    public CustomItemStack(ItemStack item, Consumer<ItemMeta> meta) {
         super(item);
         ItemMeta im = getItemMeta();
         meta.accept(im);
         setItemMeta(im);
     }
 
-    public CustomItem(Material type, Consumer<ItemMeta> meta) {
+    public CustomItemStack(Material type, Consumer<ItemMeta> meta) {
         this(new ItemStack(type), meta);
 
     }
 
-    public CustomItem(ItemStack item, String name, String... lore) {
+    public CustomItemStack(ItemStack item, String name, String... lore) {
         this(item, im -> {
             if (name != null) {
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
@@ -52,7 +52,7 @@ public class CustomItem extends ItemStack {
         });
     }
 
-    public CustomItem(ItemStack item, Color color, String name, String... lore) {
+    public CustomItemStack(ItemStack item, Color color, String name, String... lore) {
         this(item, im -> {
             if (name != null) {
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
@@ -76,7 +76,7 @@ public class CustomItem extends ItemStack {
         });
     }
 
-    public CustomItem addFlags(ItemFlag... flags) {
+    public CustomItemStack addFlags(ItemFlag... flags) {
         ItemMeta im = getItemMeta();
         im.addItemFlags(flags);
         setItemMeta(im);
@@ -84,7 +84,7 @@ public class CustomItem extends ItemStack {
         return this;
     }
 
-    public CustomItem setCustomModel(int data) {
+    public CustomItemStack setCustomModel(int data) {
         ItemMeta im = getItemMeta();
         im.setCustomModelData(data == 0 ? null : data);
         setItemMeta(im);
@@ -92,28 +92,28 @@ public class CustomItem extends ItemStack {
         return this;
     }
 
-    public CustomItem(Material type, String name, String... lore) {
+    public CustomItemStack(Material type, String name, String... lore) {
         this(new ItemStack(type), name, lore);
     }
 
-    public CustomItem(Material type, String name, List<String> lore) {
+    public CustomItemStack(Material type, String name, List<String> lore) {
         this(new ItemStack(type), name, lore.toArray(new String[lore.size()]));
     }
 
-    public CustomItem(ItemStack item, List<String> list) {
+    public CustomItemStack(ItemStack item, List<String> list) {
         this(item, list.get(0), list.subList(1, list.size()).toArray(new String[0]));
     }
 
-    public CustomItem(Material type, List<String> list) {
+    public CustomItemStack(Material type, List<String> list) {
         this(new ItemStack(type), list);
     }
 
-    public CustomItem(ItemStack item, int amount) {
+    public CustomItemStack(ItemStack item, int amount) {
         super(item);
         setAmount(amount);
     }
 
-    public CustomItem(ItemStack item, Material type) {
+    public CustomItemStack(ItemStack item, Material type) {
         super(item);
         setType(type);
     }

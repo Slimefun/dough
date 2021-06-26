@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.players;
+package io.github.thebusybiscuit.dough.common;
 
 import java.util.Optional;
 import java.util.Set;
@@ -10,8 +10,12 @@ import javax.annotation.Nonnull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import lombok.NonNull;
-
+/**
+ * Some utility methods dealing with the {@link Player} list.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public final class PlayerList {
 
     private PlayerList() {}
@@ -21,8 +25,7 @@ public final class PlayerList {
      * 
      * @return A Stream of online Players
      */
-    @Nonnull
-    public static Stream<Player> stream() {
+    public static @Nonnull Stream<Player> stream() {
         return Bukkit.getOnlinePlayers().stream().map(Player.class::cast);
     }
 
@@ -34,8 +37,7 @@ public final class PlayerList {
      *            The name of the Player
      * @return An Optional describing the player (or an empty Optional)
      */
-    @Nonnull
-    public static Optional<Player> findByName(@NonNull String name) {
+    public static @Nonnull Optional<Player> findByName(@Nonnull String name) {
         return stream().filter(p -> p.getName().equalsIgnoreCase(name)).findAny();
     }
 
@@ -47,8 +49,7 @@ public final class PlayerList {
      *            The permission the Players should have
      * @return A Set of Players
      */
-    @Nonnull
-    public static Set<Player> findPermitted(@NonNull String permission) {
+    public static @Nonnull Set<Player> findPermitted(@Nonnull String permission) {
         return stream().filter(p -> p.hasPermission(permission)).collect(Collectors.toSet());
     }
 
@@ -60,7 +61,7 @@ public final class PlayerList {
      *            The Name of the Player
      * @return Whether the Player is online
      */
-    public static boolean isOnline(@NonNull String name) {
+    public static boolean isOnline(@Nonnull String name) {
         return findByName(name).isPresent();
     }
 

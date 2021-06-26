@@ -7,7 +7,18 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
 import org.bukkit.Server;
+import org.bukkit.plugin.PluginLogger;
 
+/**
+ * A utility {@link Logger} implementation which automatically sets the
+ * {@link Server} as its parent {@link Logger}.
+ * 
+ * This allows us to properly log messages and warnings without the need
+ * for a {@link PluginLogger}.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public class DoughLogger extends Logger {
 
     public DoughLogger(@Nonnull Server server, @Nonnull String name) {

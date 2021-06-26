@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.item;
+package io.github.thebusybiscuit.dough.items;
 
 import java.util.List;
 import java.util.Map;
@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.function.Supplier;
+
+import javax.annotation.Nonnull;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -24,7 +26,7 @@ import lombok.NonNull;
  *
  */
 @Getter
-public class ImmutableItemMeta {
+public class ItemMetaSnapshot {
 
     private final Optional<String> displayName;
     private final Optional<List<String>> lore;
@@ -33,15 +35,15 @@ public class ImmutableItemMeta {
     private final Set<ItemFlag> itemFlags;
     private final Map<Enchantment, Integer> enchants;
 
-    public ImmutableItemMeta(@NonNull Supplier<ItemMeta> supplier) {
+    public ItemMetaSnapshot(@Nonnull Supplier<ItemMeta> supplier) {
         this(supplier.get());
     }
 
-    public ImmutableItemMeta(@NonNull ItemStack item) {
+    public ItemMetaSnapshot(@Nonnull ItemStack item) {
         this(item.getItemMeta());
     }
 
-    public ImmutableItemMeta(@NonNull ItemMeta meta) {
+    public ItemMetaSnapshot(@Nonnull ItemMeta meta) {
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
         this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
         this.customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();

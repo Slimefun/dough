@@ -1,4 +1,6 @@
-package io.github.thebusybiscuit.cscorelib2.chat;
+package io.github.thebusybiscuit.dough.common;
+
+import javax.annotation.Nonnull;
 
 import org.bukkit.ChatColor;
 
@@ -12,9 +14,10 @@ public final class ChatColors {
      * 
      * @param input
      *            The String that should be colored
+     * 
      * @return The colored String
      */
-    public static String color(String input) {
+    public static @Nonnull String color(@Nonnull String input) {
         return ChatColor.translateAlternateColorCodes('&', input);
     }
 
@@ -27,9 +30,10 @@ public final class ChatColors {
      *            The String that should be colored
      * @param colors
      *            The Colors that should be applied
+     * 
      * @return The colored String
      */
-    public static String alternating(String text, ChatColor... colors) {
+    public static @Nonnull String alternating(@Nonnull String text, ChatColor... colors) {
         int i = 0;
         StringBuilder builder = new StringBuilder(text.length() * 3);
 

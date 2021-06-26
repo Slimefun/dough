@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.scheduling;
+package io.github.thebusybiscuit.dough.scheduling;
 
 import java.util.function.IntConsumer;
 

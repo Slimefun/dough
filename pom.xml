@@ -34,10 +34,13 @@
         <module>dough-common</module>
         <module>dough-data</module>
         <module>dough-skins</module>
+        <module>dough-items</module>
+        <module>dough-inventories</module>
         <module>dough-protection</module>
         <module>dough-reflection</module>
         <module>dough-recipes</module>
         <module>dough-updater</module>
+        <module>dough-scheduling</module>
     </modules>
 
     <repositories>
