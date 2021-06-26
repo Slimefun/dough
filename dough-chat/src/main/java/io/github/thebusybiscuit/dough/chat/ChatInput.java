@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.chat;
+package io.github.thebusybiscuit.dough.chat;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;

@@ -33,6 +33,7 @@
     <modules>
         <module>dough-common</module>
         <module>dough-config</module>
+        <module>dough-chat</module>
         <module>dough-data</module>
         <module>dough-skins</module>
         <module>dough-items</module>
