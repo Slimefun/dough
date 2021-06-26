@@ -32,6 +32,7 @@
 
     <modules>
         <module>dough-common</module>
+        <module>dough-config</module>
         <module>dough-data</module>
         <module>dough-skins</module>
         <module>dough-items</module>
@@ -41,6 +42,7 @@
         <module>dough-recipes</module>
         <module>dough-updater</module>
         <module>dough-scheduling</module>
+        <module>dough-tags</module>
     </modules>
 
     <repositories>

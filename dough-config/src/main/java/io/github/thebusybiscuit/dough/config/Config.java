@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.config;
+package io.github.thebusybiscuit.dough.config;
 
 import java.io.File;
 import java.io.IOException;
