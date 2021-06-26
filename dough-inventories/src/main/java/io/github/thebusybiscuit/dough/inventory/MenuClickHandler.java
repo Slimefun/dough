@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.inventory;
+package io.github.thebusybiscuit.dough.inventory;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

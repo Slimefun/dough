@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.inventory;
+package io.github.thebusybiscuit.dough.inventory;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +14,6 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import io.github.thebusybiscuit.cscorelib2.reflection.ReflectionUtils;
 import lombok.NonNull;
 
 /**

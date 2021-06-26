@@ -3,16 +3,14 @@ package io.github.thebusybiscuit.dough.skins;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.UUID;
 
+import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
+import lombok.NonNull;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.mojang.authlib.GameProfile;
-
-import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
 
 public final class SkullBlock {
 

@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.Getter;
-import lombok.NonNull;
 
 /**
  * This is an immutable version of ItemMeta.
