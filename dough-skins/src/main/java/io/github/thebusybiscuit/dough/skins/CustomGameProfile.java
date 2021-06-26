@@ -4,12 +4,11 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-
-import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
 
 final class CustomGameProfile extends GameProfile {
 

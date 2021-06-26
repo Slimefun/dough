@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.inventory;
+package io.github.thebusybiscuit.dough.inventory;
 
 import java.util.HashMap;
 import java.util.Map;

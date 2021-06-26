@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.cscorelib2.inventory;
+package io.github.thebusybiscuit.dough.inventory;
 
 /**
  * This simple enum represents four types of Clicks:

@@ -1,11 +1,10 @@
 package io.github.thebusybiscuit.dough.protection.loggers;
 
+import io.github.thebusybiscuit.dough.protection.Interaction;
+import io.github.thebusybiscuit.dough.protection.ProtectionLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
-
-import io.github.thebusybiscuit.dough.protection.Interaction;
-import io.github.thebusybiscuit.dough.protection.ProtectionLogger;
 
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;

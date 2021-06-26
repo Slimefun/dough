@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import io.github.thebusybiscuit.dough.common.DoughLogger;
 import org.bukkit.plugin.Plugin;
 
 import com.google.gson.JsonArray;
@@ -20,8 +21,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import io.github.thebusybiscuit.dough.common.DoughLogger;
 
 public final class PlayerSkin {
 
