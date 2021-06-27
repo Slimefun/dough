@@ -9,7 +9,6 @@ import org.bukkit.plugin.Plugin;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import me.angeschossen.lands.api.land.Area;
 import me.angeschossen.lands.api.land.LandWorld;
@@ -20,7 +19,7 @@ public class LandsProtectionModule implements ProtectionModule {
     private LandsIntegration landsIntegration;
     private final Plugin plugin;
 
-    public LandsProtectionModule(@NonNull Plugin plugin) {
+    public LandsProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -47,7 +46,7 @@ public class LandsProtectionModule implements ProtectionModule {
     }
 
     @Nonnull
-    private RoleSetting convert(@NonNull Interaction protectableAction) {
+    private RoleSetting convert(@Nonnull Interaction protectableAction) {
         switch (protectableAction) {
             case PLACE_BLOCK:
                 return RoleSetting.BLOCK_PLACE;

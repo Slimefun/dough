@@ -10,7 +10,6 @@ import org.bukkit.plugin.Plugin;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
 import world.bentobox.bentobox.BentoBox;
 import world.bentobox.bentobox.api.flags.Flag;
 import world.bentobox.bentobox.api.user.User;
@@ -18,6 +17,8 @@ import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.lists.Flags;
 import world.bentobox.bentobox.managers.IslandWorldManager;
 import world.bentobox.bentobox.managers.IslandsManager;
+
+import javax.annotation.Nonnull;
 
 /**
  * Provides protection handling using the BentoBox API.
@@ -32,7 +33,7 @@ public class BentoBoxProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public BentoBoxProtectionModule(@NonNull Plugin plugin) {
+    public BentoBoxProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

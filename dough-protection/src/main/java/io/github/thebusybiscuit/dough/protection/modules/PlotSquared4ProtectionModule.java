@@ -13,13 +13,13 @@ import com.github.intellectualsites.plotsquared.plot.util.Permissions;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
+import javax.annotation.Nonnull;
 
 public class PlotSquared4ProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public PlotSquared4ProtectionModule(@NonNull Plugin plugin) {
+    public PlotSquared4ProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

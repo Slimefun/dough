@@ -13,8 +13,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
+
+import javax.annotation.Nonnull;
 
 public class BukkitUpdater implements Updater {
 
@@ -36,7 +37,7 @@ public class BukkitUpdater implements Updater {
     @Setter
     protected int timeout = 8000;
 
-    public BukkitUpdater(@NonNull Plugin plugin, @NonNull File file, int id) {
+    public BukkitUpdater(@Nonnull Plugin plugin, @Nonnull File file, int id) {
         this.plugin = plugin;
         this.id = id;
         this.file = file;

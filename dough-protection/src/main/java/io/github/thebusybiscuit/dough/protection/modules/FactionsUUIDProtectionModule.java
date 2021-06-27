@@ -12,14 +12,14 @@ import com.massivecraft.factions.Faction;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
+import javax.annotation.Nonnull;
 
 public class FactionsUUIDProtectionModule implements ProtectionModule {
 
     private FPlayers api;
     private final Plugin plugin;
 
-    public FactionsUUIDProtectionModule(@NonNull Plugin plugin) {
+    public FactionsUUIDProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

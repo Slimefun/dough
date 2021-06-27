@@ -11,14 +11,15 @@ import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
 import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 import br.net.fabiozumbi12.RedProtect.Bukkit.API.RedProtectAPI;
-import lombok.NonNull;
+
+import javax.annotation.Nonnull;
 
 public class RedProtectProtectionModule implements ProtectionModule {
 
     private RedProtectAPI api;
     private final Plugin plugin;
 
-    public RedProtectProtectionModule(@NonNull Plugin plugin) {
+    public RedProtectProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

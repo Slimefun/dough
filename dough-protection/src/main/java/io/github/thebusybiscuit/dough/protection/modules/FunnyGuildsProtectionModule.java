@@ -1,6 +1,5 @@
 package io.github.thebusybiscuit.dough.protection.modules;
 
-import lombok.NonNull;
 import net.dzikoysk.funnyguilds.system.protection.ProtectionSystem;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -9,6 +8,8 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
+
+import javax.annotation.Nonnull;
 
 /**
  * Provides protection handling for FunnyGuilds
@@ -19,7 +20,7 @@ public class FunnyGuildsProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public FunnyGuildsProtectionModule(@NonNull Plugin plugin) {
+    public FunnyGuildsProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

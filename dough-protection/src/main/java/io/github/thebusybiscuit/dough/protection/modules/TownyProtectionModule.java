@@ -11,13 +11,13 @@ import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
+import javax.annotation.Nonnull;
 
 public class TownyProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public TownyProtectionModule(@NonNull Plugin plugin) {
+    public TownyProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 
