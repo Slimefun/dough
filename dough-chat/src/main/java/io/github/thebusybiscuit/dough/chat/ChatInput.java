@@ -4,10 +4,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import lombok.NonNull;
 
 public final class ChatInput {
 
@@ -26,7 +26,7 @@ public final class ChatInput {
      * @param handler
      *            A callback to invoke when the Player has entered some text
      */
-    public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Consumer<String> handler) {
+    public static void waitForPlayer(@Nonnull Plugin plugin, @Nonnull Player p, @Nonnull Consumer<String> handler) {
         waitForPlayer(plugin, p, s -> true, handler);
     }
 
@@ -45,7 +45,7 @@ public final class ChatInput {
      * @param handler
      *            A callback to invoke when the Player has entered some text
      */
-    public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull Consumer<String> handler) {
+    public static void waitForPlayer(@Nonnull Plugin plugin, @Nonnull Player p, @Nonnull Predicate<String> predicate, @Nonnull Consumer<String> handler) {
         queue(plugin, p, new ChatInputHandler() {
 
             @Override
@@ -72,7 +72,7 @@ public final class ChatInput {
      * @param handler
      *            A callback to invoke when the Player has entered some text
      */
-    public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull BiConsumer<Player, String> handler) {
+    public static void waitForPlayer(@Nonnull Plugin plugin, @Nonnull Player p, @Nonnull BiConsumer<Player, String> handler) {
         waitForPlayer(plugin, p, s -> true, handler);
     }
 
@@ -91,7 +91,7 @@ public final class ChatInput {
      * @param handler
      *            A callback to invoke when the Player has entered some text
      */
-    public static void waitForPlayer(@NonNull Plugin plugin, @NonNull Player p, @NonNull Predicate<String> predicate, @NonNull BiConsumer<Player, String> handler) {
+    public static void waitForPlayer(@Nonnull Plugin plugin, @Nonnull Player p, @Nonnull Predicate<String> predicate, @Nonnull BiConsumer<Player, String> handler) {
         queue(plugin, p, new ChatInputHandler() {
 
             @Override
@@ -107,7 +107,7 @@ public final class ChatInput {
         });
     }
 
-    public static void queue(@NonNull Plugin plugin, @NonNull Player p, @NonNull ChatInputHandler callback) {
+    public static void queue(@Nonnull Plugin plugin, @Nonnull Player p, @Nonnull ChatInputHandler callback) {
         if (listener == null) {
             listener = new ChatInputListener(plugin);
         }

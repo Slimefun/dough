@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginLogger;
 
@@ -26,6 +27,10 @@ public class DoughLogger extends Logger {
 
         setParent(server.getLogger());
         setLevel(Level.ALL);
+    }
+
+    public DoughLogger(@Nonnull String name) {
+        this(Bukkit.getServer(), name);
     }
 
     @Override

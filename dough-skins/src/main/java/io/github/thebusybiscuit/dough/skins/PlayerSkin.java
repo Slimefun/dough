@@ -11,9 +11,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import io.github.thebusybiscuit.dough.common.DoughLogger;
 import org.bukkit.plugin.Plugin;
 
 import com.google.gson.JsonArray;
@@ -22,14 +22,15 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import io.github.thebusybiscuit.dough.common.DoughLogger;
+
 public final class PlayerSkin {
 
     private static final String ERROR_TOKEN = "error";
 
     private final CustomGameProfile profile;
 
-    @ParametersAreNonnullByDefault
-    private PlayerSkin(UUID uuid, String base64skinTexture) {
+    PlayerSkin(@Nonnull UUID uuid, @Nullable String base64skinTexture) {
         this.profile = new CustomGameProfile(uuid, base64skinTexture);
     }
 

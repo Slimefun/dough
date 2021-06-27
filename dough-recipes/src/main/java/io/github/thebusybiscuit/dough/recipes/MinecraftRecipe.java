@@ -8,9 +8,12 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.bukkit.Material;
@@ -26,124 +29,96 @@ import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.SmokingRecipe;
 import org.bukkit.inventory.StonecuttingRecipe;
 
-import lombok.Getter;
-import lombok.NonNull;
+import io.github.thebusybiscuit.dough.common.DoughLogger;
 
 public class MinecraftRecipe<T extends Recipe> {
 
     private static final Set<MinecraftRecipe<?>> recipeTypes = new HashSet<>();
 
-    public static MinecraftRecipe<ShapedRecipe> SHAPED_CRAFTING;
-    public static MinecraftRecipe<ShapelessRecipe> SHAPELESS_CRAFTING;
-    public static MinecraftRecipe<FurnaceRecipe> FURNACE;
-    public static MinecraftRecipe<BlastingRecipe> BLAST_FURNACE;
-    public static MinecraftRecipe<SmokingRecipe> SMOKER;
-    public static MinecraftRecipe<CampfireRecipe> CAMPFIRE;
-    public static MinecraftRecipe<StonecuttingRecipe> STONECUTTER;
-    public static MinecraftRecipe<SmithingRecipe> SMITHING;
+    public static final MinecraftRecipe<ShapedRecipe> SHAPED_CRAFTING;
+    public static final MinecraftRecipe<ShapelessRecipe> SHAPELESS_CRAFTING;
+    public static final MinecraftRecipe<FurnaceRecipe> FURNACE;
+    public static final MinecraftRecipe<BlastingRecipe> BLAST_FURNACE;
+    public static final MinecraftRecipe<SmokingRecipe> SMOKER;
+    public static final MinecraftRecipe<CampfireRecipe> CAMPFIRE;
+    public static final MinecraftRecipe<StonecuttingRecipe> STONECUTTER;
+    public static final MinecraftRecipe<SmithingRecipe> SMITHING;
 
     static {
-        // Proof of concept, please refactor in the future!
-        try {
-            SHAPED_CRAFTING = new MinecraftRecipe<>("CRAFTING_TABLE", ShapedRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, recipe -> {
-                List<RecipeChoice> choices = new LinkedList<>();
+        DoughLogger logger = new DoughLogger("recipes");
 
-                for (String row : recipe.getShape()) {
-                    for (char key : row.toCharArray()) {
-                        choices.add(recipe.getChoiceMap().get(key));
-                    }
+        SHAPED_CRAFTING = findRecipeType(logger, "CRAFTING_TABLE", type -> new MinecraftRecipe<>(type, ShapedRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, recipe -> {
+            List<RecipeChoice> choices = new LinkedList<>();
+
+            for (String row : recipe.getShape()) {
+                for (char key : row.toCharArray()) {
+                    choices.add(recipe.getChoiceMap().get(key));
                 }
+            }
 
-                return choices.toArray(new RecipeChoice[0]);
-            }, (input, stream) -> stream.filter(recipe -> {
-                int i = 0;
+            return choices.toArray(new RecipeChoice[0]);
+        }, (input, stream) -> stream.filter(recipe -> {
+            int i = 0;
 
-                for (String row : recipe.getShape()) {
-                    for (char key : row.toCharArray()) {
-                        if (i > input.length)
-                            return false;
+            for (String row : recipe.getShape()) {
+                for (char key : row.toCharArray()) {
+                    if (i > input.length)
+                        return false;
 
-                        RecipeChoice choice = recipe.getChoiceMap().get(key);
-                        if (choice != null && !choice.test(input[i])) {
-                            return false;
-                        }
-
-                        i++;
-                    }
-                }
-
-                return true;
-            }).findAny().map(ShapedRecipe::getResult));
-        } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the ShapedRecipe type. Maybe for future Minecraft versions?");
-        }
-
-        try {
-            SHAPELESS_CRAFTING = new MinecraftRecipe<>("CRAFTING_TABLE", ShapelessRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, recipe -> recipe.getChoiceList().toArray(new RecipeChoice[0]), (input, stream) -> stream.filter(recipe -> {
-                for (RecipeChoice ingredient : recipe.getChoiceList()) {
-                    boolean found = false;
-
-                    ItemStack[] inputs = input.clone();
-                    for (int i = 0; i < inputs.length; i++) {
-                        if (inputs[i] != null && ingredient.test(inputs[i])) {
-                            inputs[i] = null;
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found) {
+                    RecipeChoice choice = recipe.getChoiceMap().get(key);
+                    if (choice != null && !choice.test(input[i])) {
                         return false;
                     }
+
+                    i++;
+                }
+            }
+
+            return true;
+        }).findAny().map(ShapedRecipe::getResult)));
+
+        SHAPELESS_CRAFTING = findRecipeType(logger, "CRAFTING_TABLE", type -> new MinecraftRecipe<>(type, ShapelessRecipe.class, recipe -> recipe.length > 0 && recipe.length < 10, recipe -> recipe.getChoiceList().toArray(new RecipeChoice[0]), (input, stream) -> stream.filter(recipe -> {
+            for (RecipeChoice ingredient : recipe.getChoiceList()) {
+                boolean found = false;
+
+                ItemStack[] inputs = input.clone();
+                for (int i = 0; i < inputs.length; i++) {
+                    if (inputs[i] != null && ingredient.test(inputs[i])) {
+                        inputs[i] = null;
+                        found = true;
+                        break;
+                    }
                 }
 
-                return true;
-            }).findAny().map(ShapelessRecipe::getResult));
-        } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the ShapelessRecipe type. Maybe for future Minecraft versions?");
-        }
+                if (!found) {
+                    return false;
+                }
+            }
 
-        try {
-            FURNACE = new MinecraftRecipe<>("FURNACE", FurnaceRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(recipe -> recipe.getResult()));
-        } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the FurnaceRecipe type. Maybe for future Minecraft versions?");
-        }
+            return true;
+        }).findAny().map(ShapelessRecipe::getResult)));
 
-        try {
-            BLAST_FURNACE = new MinecraftRecipe<>("BLAST_FURNACE", BlastingRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(BlastingRecipe::getResult));
-        } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the FurnaceRecipe type. Maybe for future Minecraft versions?");
-        }
+        FURNACE = findRecipeType(logger, "FURNACE", type -> new MinecraftRecipe<>(type, FurnaceRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(recipe -> recipe.getResult())));
 
-        try {
-            SMOKER = new MinecraftRecipe<>("SMOKER", SmokingRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(SmokingRecipe::getResult));
-        } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the SmokingRecipe type. Maybe for future Minecraft versions?");
-        }
+        // 1.14+
+        BLAST_FURNACE = findRecipeType(logger, "BLAST_FURNACE", type -> new MinecraftRecipe<>(type, BlastingRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(BlastingRecipe::getResult)));
+        SMOKER = findRecipeType(logger, "SMOKER", type -> new MinecraftRecipe<>(type, SmokingRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(SmokingRecipe::getResult)));
+        CAMPFIRE = findRecipeType(logger, "CAMPFIRE", type -> new MinecraftRecipe<>(type, CampfireRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CampfireRecipe::getResult)));
+        STONECUTTER = findRecipeType(logger, "STONECUTTER", type -> new MinecraftRecipe<>(type, StonecuttingRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(StonecuttingRecipe::getResult)));
+        SMITHING = findRecipeType(logger, "SMITHING_TABLE", type -> new MinecraftRecipe<>(type, SmithingRecipe.class, recipe -> recipe.length == 2, recipe -> new RecipeChoice[] { recipe.getBase(), recipe.getAddition() }, (input, stream) -> stream.filter(recipe -> recipe.getBase().test(input[0]) && recipe.getAddition().test(input[1])).findAny().map(SmithingRecipe::getResult)));
+    }
 
+    @ParametersAreNonnullByDefault
+    private static <T extends Recipe> @Nullable MinecraftRecipe<T> findRecipeType(Logger logger, String type, Function<String, MinecraftRecipe<T>> supplier) {
         try {
-            CAMPFIRE = new MinecraftRecipe<>("CAMPFIRE", CampfireRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(CampfireRecipe::getResult));
+            return supplier.apply(type);
         } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the CampfireRecipe type. Maybe for future Minecraft versions?");
-        }
-
-        try {
-            STONECUTTER = new MinecraftRecipe<>("STONECUTTER", StonecuttingRecipe.class, recipe -> recipe.length == 1, recipe -> new RecipeChoice[] { recipe.getInputChoice() }, (input, stream) -> stream.filter(recipe -> recipe.getInputChoice().test(input[0])).findAny().map(StonecuttingRecipe::getResult));
-        } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the StonecuttingRecipe type. Maybe for future Minecraft versions?");
-        }
-
-        try {
-            SMITHING = new MinecraftRecipe<>("SMITHING_TABLE", SmithingRecipe.class, recipe -> recipe.length == 2, recipe -> new RecipeChoice[] { recipe.getBase(), recipe.getAddition() }, (input, stream) -> stream.filter(recipe -> recipe.getBase().test(input[0]) && recipe.getAddition().test(input[1])).findAny().map(SmithingRecipe::getResult));
-        } catch (Exception | LinkageError x) {
-            System.err.println("[CS-CoreLib2]" + x.getClass().getSimpleName() + " was thrown while trying to access the SmithingRecipe type. Maybe for future Minecraft versions?");
+            logger.log(Level.WARNING, "{0} was thrown while trying to access the {1} type. Maybe added in future Minecraft versions?", new Object[] { x.getClass().getSimpleName(), type });
+            return null;
         }
     }
 
-    @Getter
     private Material machine;
-
-    @Getter
     private Class<T> recipeClass;
 
     private Predicate<ItemStack[]> predicate;
@@ -169,25 +144,30 @@ public class MinecraftRecipe<T extends Recipe> {
         return predicate.test(inputs);
     }
 
-    @Nonnull
-    public RecipeChoice[] getInputs(@Nonnull T recipe) {
+    public @Nonnull Material getMachine() {
+        return machine;
+    }
+
+    public @Nonnull Class<T> getRecipeClass() {
+        return recipeClass;
+    }
+
+    public @Nonnull RecipeChoice[] getInputs(@Nonnull T recipe) {
         return inputFunction.apply(recipe);
     }
 
-    @Nonnull
-    public Optional<ItemStack> getOutput(@Nonnull Stream<T> stream, @Nonnull ItemStack[] inputs) {
+    public @Nonnull Optional<ItemStack> getOutput(@Nonnull Stream<T> stream, @Nonnull ItemStack[] inputs) {
         return outputFunction.apply(inputs, stream);
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends Recipe> Optional<MinecraftRecipe<? super T>> of(@NonNull T recipe) {
+    public static <T extends Recipe> Optional<MinecraftRecipe<? super T>> of(@Nonnull T recipe) {
         Class<?> recipeClass = recipe.getClass();
 
         return recipeTypes.stream().filter(type -> type.getRecipeClass().isAssignableFrom(recipeClass)).findAny().map(type -> (MinecraftRecipe<? super T>) type);
     }
 
-    @Nonnull
-    public static Stream<MinecraftRecipe<?>> stream() {
+    public static @Nonnull Stream<MinecraftRecipe<?>> stream() {
         return recipeTypes.stream();
     }
 

@@ -14,8 +14,9 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import javax.annotation.Nonnull;
+
 import lombok.Getter;
-import lombok.NonNull;
 
 /**
  * This Class functions similar to {@link Map} but returns an
@@ -45,7 +46,7 @@ public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>>, Streamable<
      * @param constructor
      *            A Constructor reference to an existing Map implementation
      */
-    public OptionalMap(@NonNull Supplier<? extends Map<K, V>> constructor) {
+    public OptionalMap(@Nonnull Supplier<? extends Map<K, V>> constructor) {
         internalMap = constructor.get();
 
         if (internalMap == null) {

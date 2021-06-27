@@ -2,7 +2,6 @@ package io.github.thebusybiscuit.dough.collections;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 @AllArgsConstructor
@@ -12,7 +11,6 @@ public class WeightedNode<T> {
 
     private float weight;
 
-    @NonNull
     private T object;
 
     @Override
