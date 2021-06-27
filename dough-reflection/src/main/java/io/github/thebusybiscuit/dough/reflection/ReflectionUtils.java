@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,14 +24,20 @@ public final class ReflectionUtils {
 
     private ReflectionUtils() {}
 
-    private static int majorVersion;
-    private static String currentVersion;
+    private static int MAJOR_VERSION;
+    private static String CURRENT_VERSION;
+    private static final Pattern versionPattern = Pattern.compile("v\\d_(\\d+)_R\\d");
 
     static {
-        currentVersion =  Bukkit.getServer().getClass().getPackage().getName()
+        CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName()
             .substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
-        // Turn v1_17_R1 -> 17
-        majorVersion = Integer.parseInt(currentVersion.replace("v1_", "").replace("_R1", ""));
+
+        Matcher matcher = versionPattern.matcher(CURRENT_VERSION);
+        if (matcher.matches()) {
+            MAJOR_VERSION = Integer.parseInt(matcher.group(1));
+        } else {
+            MAJOR_VERSION = 0;
+        }
     }
 
 
@@ -263,7 +271,7 @@ public final class ReflectionUtils {
      * @throws ClassNotFoundException If the class does not exist
      */
     public static Class<?> getNetMinecraftClass(@Nonnull String name) throws ClassNotFoundException {
-        return Class.forName("net.minecraft." + (majorVersion <= 16 ? getVersion() + '.' : "") + name);
+        return Class.forName("net.minecraft." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
     }
 
     /**
@@ -279,7 +287,7 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getNMSClass(@Nonnull String name) throws ClassNotFoundException {
-        return Class.forName("net.minecraft.server." + (majorVersion <= 16 ? getVersion() + '.' : "") + name);
+        return Class.forName("net.minecraft.server." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
     }
 
     /**
@@ -323,18 +331,18 @@ public final class ReflectionUtils {
      */
     @Nonnull
     private static String getVersion() {
-        if (currentVersion == null) {
-            currentVersion = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
+        if (CURRENT_VERSION == null) {
+            CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
         }
 
-        return currentVersion;
+        return CURRENT_VERSION;
     }
 
     /**
      * Return the Minecraft Major Version (15, 16, 17).
      */
     public static int getMajorVersion() {
-        return majorVersion;
+        return MAJOR_VERSION;
     }
 
     /**
