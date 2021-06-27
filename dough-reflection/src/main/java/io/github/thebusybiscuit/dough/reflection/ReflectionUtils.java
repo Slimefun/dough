@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,7 +24,22 @@ public final class ReflectionUtils {
 
     private ReflectionUtils() {}
 
-    private static String currentVersion;
+    private static int MAJOR_VERSION;
+    private static String CURRENT_VERSION;
+    private static final Pattern versionPattern = Pattern.compile("v\\d_(\\d+)_R\\d");
+
+    static {
+        CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName()
+            .substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
+
+        Matcher matcher = versionPattern.matcher(CURRENT_VERSION);
+        if (matcher.matches()) {
+            MAJOR_VERSION = Integer.parseInt(matcher.group(1));
+        } else {
+            MAJOR_VERSION = 0;
+        }
+    }
+
 
     /**
      * Returns a certain Method in the specified Class
@@ -247,6 +264,17 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Returns a `net.minecraft` class via Reflection.
+     *
+     * @param name The class name of which to fetch
+     * @return The `net.minecraft` class.
+     * @throws ClassNotFoundException If the class does not exist
+     */
+    public static Class<?> getNetMinecraftClass(@Nonnull String name) throws ClassNotFoundException {
+        return Class.forName("net.minecraft." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
+    }
+
+    /**
      * Returns an NMS Class via Reflection
      *
      * @param name
@@ -259,7 +287,7 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getNMSClass(@Nonnull String name) throws ClassNotFoundException {
-        return Class.forName(new StringBuilder().append("net.minecraft.server.").append(getVersion()).append(".").append(name).toString());
+        return Class.forName("net.minecraft.server." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
     }
 
     /**
@@ -293,7 +321,7 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getOBCClass(@Nonnull String name) throws ClassNotFoundException {
-        return Class.forName(new StringBuilder().append("org.bukkit.craftbukkit.").append(getVersion()).append(".").append(name).toString());
+        return Class.forName("org.bukkit.craftbukkit." + getVersion() + '.' + name);
     }
 
     /**
@@ -303,11 +331,18 @@ public final class ReflectionUtils {
      */
     @Nonnull
     private static String getVersion() {
-        if (currentVersion == null) {
-            currentVersion = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
+        if (CURRENT_VERSION == null) {
+            CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
         }
 
-        return currentVersion;
+        return CURRENT_VERSION;
+    }
+
+    /**
+     * Return the Minecraft Major Version (15, 16, 17).
+     */
+    public static int getMajorVersion() {
+        return MAJOR_VERSION;
     }
 
     /**

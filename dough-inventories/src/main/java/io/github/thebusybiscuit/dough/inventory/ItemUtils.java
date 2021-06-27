@@ -34,6 +34,10 @@ public final class ItemUtils {
         try {
             if (ReflectionUtils.isUnitTestEnvironment()) {
                 System.out.println("MockBukkit detected! Cannot access NMS ItemStack API.");
+            } else if (ReflectionUtils.getMajorVersion() >= 17) {
+                copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
+                getName = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("world.item.ItemStack"), "getName");
+                toString = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("network.chat.IChatBaseComponent"), "getString");
             } else {
                 copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
                 getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
