@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
+import io.github.thebusybiscuit.dough.items.ItemUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 

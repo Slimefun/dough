@@ -1,12 +1,12 @@
-package io.github.thebusybiscuit.dough.inventory;
+package io.github.thebusybiscuit.dough.items;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +14,8 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import lombok.NonNull;
+import io.github.thebusybiscuit.dough.common.DoughLogger;
+import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
 
 /**
  * A utility class providing some methods to handle {@link ItemStack}s.
@@ -31,17 +32,21 @@ public final class ItemUtils {
     private static Method toString;
 
     static {
+        DoughLogger logger = new DoughLogger("items");
         try {
             if (ReflectionUtils.isUnitTestEnvironment()) {
-                System.out.println("MockBukkit detected! Cannot access NMS ItemStack API.");
+                logger.log(Level.WARNING, "MockBukkit detected! Cannot access NMS ItemStack API.");
+            } else if (ReflectionUtils.getMajorVersion() >= 17) {
+                copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
+                getName = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("world.item.ItemStack"), "getName");
+                toString = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("network.chat.IChatBaseComponent"), "getString");
             } else {
                 copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
                 getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
                 toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
             }
         } catch (Exception x) {
-            System.err.println("Perhaps you forgot to shade CS-CoreLib's \"reflection\" package?");
-            x.printStackTrace();
+            logger.log(Level.SEVERE, "Failed to detect item nbt methods", x);
         }
     }
 
@@ -169,7 +174,7 @@ public final class ItemUtils {
      * @param ignoreEnchantments
      *            Whether the Unbreaking Enchantment should be ignored
      */
-    public static void damageItem(@NonNull ItemStack item, boolean ignoreEnchantments) {
+    public static void damageItem(@Nonnull ItemStack item, boolean ignoreEnchantments) {
         damageItem(item, 1, ignoreEnchantments);
     }
 
@@ -184,7 +189,7 @@ public final class ItemUtils {
      * @param ignoreEnchantments
      *            Whether the Unbreaking Enchantment should be ignored
      */
-    public static void damageItem(@NonNull ItemStack item, int damage, boolean ignoreEnchantments) {
+    public static void damageItem(@Nonnull ItemStack item, int damage, boolean ignoreEnchantments) {
         if (item.getType() != Material.AIR && item.getAmount() > 0) {
             int remove = damage;
 
@@ -220,7 +225,7 @@ public final class ItemUtils {
      *            Whether Consumable Items should be replaced with their "empty" version, see
      *            {@link ItemUtils#consumeItem(ItemStack, int, boolean)}
      */
-    public static void consumeItem(@NonNull ItemStack item, boolean replaceConsumables) {
+    public static void consumeItem(@Nonnull ItemStack item, boolean replaceConsumables) {
         consumeItem(item, 1, replaceConsumables);
     }
 
@@ -244,7 +249,7 @@ public final class ItemUtils {
      * @param replaceConsumables
      *            Whether Items should be replaced with their "empty" version
      */
-    public static void consumeItem(@NonNull ItemStack item, int amount, boolean replaceConsumables) {
+    public static void consumeItem(@Nonnull ItemStack item, int amount, boolean replaceConsumables) {
         if (item.getType() != Material.AIR && item.getAmount() > 0) {
             if (replaceConsumables) {
                 switch (item.getType()) {

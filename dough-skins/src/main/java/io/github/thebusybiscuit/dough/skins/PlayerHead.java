@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import com.mojang.authlib.GameProfile;
 
+import io.github.thebusybiscuit.dough.common.DoughLogger;
 import io.github.thebusybiscuit.dough.reflection.ReflectionUtils;
 
 public final class PlayerHead {
@@ -31,13 +33,22 @@ public final class PlayerHead {
         try {
             handle = ReflectionUtils.getOBCClass("CraftWorld").getMethod("getHandle");
 
-            setGameProfile = ReflectionUtils.getNMSClass("TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
+            if (ReflectionUtils.getMajorVersion() >= 17) {
+                setGameProfile = ReflectionUtils.getNetMinecraftClass("world.level.block.entity.TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
 
-            Class<?> blockPosition = ReflectionUtils.getNMSClass("BlockPosition");
-            newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
-            getTileEntity = ReflectionUtils.getNMSClass("WorldServer").getMethod("getTileEntity", blockPosition);
+                Class<?> blockPosition = ReflectionUtils.getNetMinecraftClass("core.BlockPosition");
+                newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
+                getTileEntity = ReflectionUtils.getNMSClass("level.WorldServer").getMethod("getTileEntity", blockPosition);
+            } else {
+                setGameProfile = ReflectionUtils.getNMSClass("TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
+
+                Class<?> blockPosition = ReflectionUtils.getNMSClass("BlockPosition");
+                newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
+                getTileEntity = ReflectionUtils.getNMSClass("WorldServer").getMethod("getTileEntity", blockPosition);
+            }
         } catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
-            e.printStackTrace();
+            DoughLogger logger = new DoughLogger("skins");
+            logger.log(Level.SEVERE, "Failed to detect skull nbt methods", e);
         }
     }
 
