@@ -62,7 +62,7 @@ public final class CopyUtils {
      *            The type of the returned collection
      *
      */
-    public static <T, C extends Collection<T>> @Nonnull C deepCopy(@Nonnull Collection<T> source, @Nonnull UnaryOperator<T> cloningFunction, @Nonnull IntFunction<C> sinkSupplier) {
+    public static @Nonnull <T, C extends Collection<T>> C deepCopy(@Nonnull Collection<T> source, @Nonnull UnaryOperator<T> cloningFunction, @Nonnull IntFunction<C> sinkSupplier) {
         C sink = sinkSupplier.apply(source.size());
         deepCopy(source, cloningFunction, sink);
         return sink;
@@ -117,7 +117,7 @@ public final class CopyUtils {
      *            The type of the returned map
      *
      */
-    public static <K, V, M extends Map<K, V>> @Nonnull M deepCopy(@Nonnull Map<K, V> source, @Nonnull UnaryOperator<V> cloningFunction, @Nonnull Supplier<M> sinkSupplier) {
+    public static @Nonnull <K, V, M extends Map<K, V>> M deepCopy(@Nonnull Map<K, V> source, @Nonnull UnaryOperator<V> cloningFunction, @Nonnull Supplier<M> sinkSupplier) {
         M sink = sinkSupplier.get();
         deepCopy(source, cloningFunction, sink);
         return sink;
@@ -189,7 +189,7 @@ public final class CopyUtils {
      *            The type of elements in the arrays
      *
      */
-    public static <T> @Nonnull T[] deepCopy(@Nonnull T[] source, @Nonnull UnaryOperator<T> cloningFunction, @Nonnull IntFunction<T[]> sinkSupplier) {
+    public static @Nonnull <T> T[] deepCopy(@Nonnull T[] source, @Nonnull UnaryOperator<T> cloningFunction, @Nonnull IntFunction<T[]> sinkSupplier) {
         T[] sink = sinkSupplier.apply(source.length);
         deepCopy(source, cloningFunction, sink);
         return sink;
