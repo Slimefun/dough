@@ -12,13 +12,13 @@ import io.github.thebusybiscuit.dough.protection.ActionType;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
+import javax.annotation.Nonnull;
 
 public class LocketteProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public LocketteProtectionModule(@NonNull Plugin plugin) {
+    public LocketteProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

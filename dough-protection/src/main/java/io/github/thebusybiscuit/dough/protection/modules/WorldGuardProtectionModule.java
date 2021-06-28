@@ -21,7 +21,7 @@ import io.github.thebusybiscuit.dough.protection.ActionType;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
+import javax.annotation.Nonnull;
 
 public class WorldGuardProtectionModule implements ProtectionModule {
 
@@ -31,7 +31,7 @@ public class WorldGuardProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public WorldGuardProtectionModule(@NonNull Plugin plugin) {
+    public WorldGuardProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

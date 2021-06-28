@@ -11,8 +11,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
+
+import javax.annotation.Nonnull;
 
 public class GitHubBuildsUpdater implements Updater {
 
@@ -35,11 +36,11 @@ public class GitHubBuildsUpdater implements Updater {
     @Setter
     protected int timeout = 10000;
 
-    public GitHubBuildsUpdater(@NonNull Plugin plugin, @NonNull File file, @NonNull String repo) {
+    public GitHubBuildsUpdater(@Nonnull Plugin plugin, @Nonnull File file, @Nonnull String repo) {
         this(plugin, file, repo, "DEV - ");
     }
 
-    public GitHubBuildsUpdater(@NonNull Plugin plugin, @NonNull File file, @NonNull String repo, @NonNull String prefix) {
+    public GitHubBuildsUpdater(@Nonnull Plugin plugin, @Nonnull File file, @Nonnull String repo, @Nonnull String prefix) {
         this.plugin = plugin;
         this.file = file;
         this.repository = repo;

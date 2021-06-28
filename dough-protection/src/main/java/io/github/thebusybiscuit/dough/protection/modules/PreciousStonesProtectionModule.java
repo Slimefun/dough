@@ -8,17 +8,18 @@ import org.bukkit.plugin.Plugin;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
 import net.sacredlabyrinth.Phaed.PreciousStones.PreciousStones;
 import net.sacredlabyrinth.Phaed.PreciousStones.api.IApi;
 import net.sacredlabyrinth.Phaed.PreciousStones.field.FieldFlag;
+
+import javax.annotation.Nonnull;
 
 public class PreciousStonesProtectionModule implements ProtectionModule {
 
     private IApi api;
     private final Plugin plugin;
 
-    public PreciousStonesProtectionModule(@NonNull Plugin plugin) {
+    public PreciousStonesProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

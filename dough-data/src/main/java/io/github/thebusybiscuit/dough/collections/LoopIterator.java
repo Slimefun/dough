@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import lombok.Getter;
-import lombok.NonNull;
+
+import javax.annotation.Nonnull;
 
 /**
  * This is an infite implementation of {@link Iterator}.

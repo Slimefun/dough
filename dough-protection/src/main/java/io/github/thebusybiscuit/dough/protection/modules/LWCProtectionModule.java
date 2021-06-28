@@ -11,14 +11,14 @@ import io.github.thebusybiscuit.dough.protection.ActionType;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
+import javax.annotation.Nonnull;
 
 public class LWCProtectionModule implements ProtectionModule {
 
     private LWC lwc;
     private final Plugin plugin;
 
-    public LWCProtectionModule(@NonNull Plugin plugin) {
+    public LWCProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 

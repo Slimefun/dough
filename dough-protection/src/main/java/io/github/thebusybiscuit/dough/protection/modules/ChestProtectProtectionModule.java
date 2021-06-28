@@ -8,16 +8,17 @@ import io.github.thebusybiscuit.dough.protection.ActionType;
 import io.github.thebusybiscuit.dough.protection.Interaction;
 import io.github.thebusybiscuit.dough.protection.ProtectionModule;
 
-import lombok.NonNull;
 import me.angeschossen.chestprotect.api.addons.ChestProtectAddon;
 import me.angeschossen.chestprotect.api.objects.BlockProtection;
+
+import javax.annotation.Nonnull;
 
 public class ChestProtectProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
     private ChestProtectAddon chestProtect;
 
-    public ChestProtectProtectionModule(@NonNull Plugin plugin) {
+    public ChestProtectProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 
