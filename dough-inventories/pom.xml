@@ -25,6 +25,11 @@
             <artifactId>dough-reflection</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.thebusybiscuit</groupId>
+            <artifactId>dough-items</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
