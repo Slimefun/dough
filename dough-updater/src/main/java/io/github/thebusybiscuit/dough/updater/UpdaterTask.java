@@ -18,8 +18,6 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import lombok.Cleanup;
-
 abstract class UpdaterTask implements Runnable {
 
     private final Plugin plugin;
@@ -28,7 +26,7 @@ abstract class UpdaterTask implements Runnable {
     private final int timeout;
     private final String localVersion;
 
-    UpdaterTask(@Nonnull Updater updater, @Nonnull URL url) {
+    UpdaterTask(@Nonnull PluginUpdater updater, @Nonnull URL url) {
         this.plugin = updater.getPlugin();
         this.file = updater.getFile();
         this.url = url;
@@ -63,9 +61,9 @@ abstract class UpdaterTask implements Runnable {
             connection.addRequestProperty("User-Agent", "Auto Updater (by TheBusyBiscuit)");
             connection.setDoOutput(true);
 
-            @Cleanup
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-            return parse(reader.readLine());
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                return parse(reader.readLine());
+            }
         } catch (IOException e) {
             plugin.getLogger().log(Level.WARNING, "Could not connect to the updating site, is it down?", e);
             return null;

@@ -17,7 +17,7 @@ import lombok.Setter;
 
 import javax.annotation.Nonnull;
 
-public class BukkitUpdater implements Updater {
+public class BukkitUpdater implements PluginUpdater {
 
     private static final String API_URL = "https://api.curseforge.com/servermods/files?projectIds=";
     private static final String[] DEV_KEYWORDS = { "DEV", "EXPERIMENTAL", "BETA", "ALPHA", "UNFINISHED" };

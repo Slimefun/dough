@@ -15,7 +15,7 @@ import lombok.Setter;
 
 import javax.annotation.Nonnull;
 
-public class GitHubBuildsUpdater implements Updater {
+public class GitHubBuildsUpdater implements PluginUpdater {
 
     private static final String API_URL = "https://thebusybiscuit.github.io/builds/";
 
