@@ -45,7 +45,7 @@ public class TaskQueue {
         }
 
         Runnable runnable = () -> {
-            node.getRunnable().accept(index);
+            node.execute(index);
             run(plugin, node.getNextNode(), index + 1);
         };
 
@@ -471,7 +471,7 @@ public class TaskQueue {
         return append(node);
     }
 
-    private @Nonnull TaskQueue append(TaskNode node) {
+    private @Nonnull TaskQueue append(@Nonnull TaskNode node) {
         if (head == null) {
             head = node;
         } else {

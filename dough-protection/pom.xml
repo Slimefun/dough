@@ -12,6 +12,7 @@
 
     <artifactId>dough-protection</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <repositories>
         <repository>
@@ -71,7 +72,7 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.4</version>
+            <version>7.0.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -133,12 +134,24 @@
             <artifactId>PlotSquared</artifactId>
             <version>5.1</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.intellectualsites.plotsquared</groupId>
             <artifactId>PlotSquared-API</artifactId>
             <version>4.514</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>br.net.fabiozumbi12.RedProtect</groupId>
@@ -155,13 +168,13 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.16.1</version>
+            <version>1.17.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.9.2</version>
+            <version>1.10</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import lombok.Cleanup;
+import io.github.thebusybiscuit.dough.versions.Version;
 
 abstract class UpdaterTask implements Runnable {
 
@@ -26,20 +26,18 @@ abstract class UpdaterTask implements Runnable {
     private final File file;
     private final URL url;
     private final int timeout;
-    private final String localVersion;
+    private final Version currentVersion;
 
-    UpdaterTask(@Nonnull Updater updater, @Nonnull URL url) {
+    UpdaterTask(@Nonnull PluginUpdater updater, @Nonnull URL url) {
         this.plugin = updater.getPlugin();
         this.file = updater.getFile();
         this.url = url;
-        this.timeout = updater.getTimeout();
-        this.localVersion = updater.getLocalVersion();
+        this.timeout = updater.getConnectionTimeout();
+        this.currentVersion = updater.getCurrentVersion();
     }
 
     @Nullable
     public abstract UpdateInfo parse(String result) throws MalformedURLException;
-
-    public abstract boolean hasUpdate(String localVersion, String remoteVersion);
 
     @Override
     public void run() {
@@ -51,7 +49,7 @@ abstract class UpdaterTask implements Runnable {
             }
         } catch (NumberFormatException x) {
             plugin.getLogger().log(Level.SEVERE, "Could not auto-update {0}", plugin.getName());
-            plugin.getLogger().log(Level.SEVERE, "Unrecognized Version: {0}", localVersion);
+            plugin.getLogger().log(Level.SEVERE, "Unrecognized Version: {0}", currentVersion);
         }
     }
 
@@ -63,18 +61,18 @@ abstract class UpdaterTask implements Runnable {
             connection.addRequestProperty("User-Agent", "Auto Updater (by TheBusyBiscuit)");
             connection.setDoOutput(true);
 
-            @Cleanup
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
-            return parse(reader.readLine());
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+                return parse(reader.readLine());
+            }
         } catch (IOException e) {
             plugin.getLogger().log(Level.WARNING, "Could not connect to the updating site, is it down?", e);
             return null;
         }
     }
 
-    private void validateAndInstall(@Nonnull UpdateInfo latestVersion) {
-        if (hasUpdate(localVersion, latestVersion.getVersion())) {
-            install(latestVersion);
+    private void validateAndInstall(@Nonnull UpdateInfo updateInfo) {
+        if (updateInfo.getVersion().isNewerThan(currentVersion)) {
+            install(updateInfo);
         } else {
             plugin.getLogger().log(Level.INFO, "{0} is already up to date!", plugin.getName());
         }
@@ -96,7 +94,7 @@ abstract class UpdaterTask implements Runnable {
         } finally {
             plugin.getLogger().log(Level.INFO, " ");
             plugin.getLogger().log(Level.INFO, "#################### - UPDATE - ####################");
-            plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), localVersion, info.getVersion() });
+            plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), currentVersion, info.getVersion() });
             plugin.getLogger().log(Level.INFO, "Please restart your Server in order to use the new Version");
             plugin.getLogger().log(Level.INFO, " ");
         }

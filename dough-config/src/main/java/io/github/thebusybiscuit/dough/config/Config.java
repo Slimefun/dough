@@ -27,19 +27,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import lombok.Getter;
-import lombok.Setter;
+import io.github.thebusybiscuit.dough.common.DoughLogger;
 
 public class Config {
 
-    @Getter
-    private File file;
-
-    @Getter
-    @Setter
-    private String header;
+    private final File file;
 
     private Logger logger;
+    private String header;
     protected FileConfiguration fileConfig;
 
     /**
@@ -55,6 +50,7 @@ public class Config {
 
         this.logger = plugin.getLogger();
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), "config.yml");
+
         this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
         fileConfig.options().copyDefaults(true);
     }
@@ -63,6 +59,7 @@ public class Config {
         this.logger = plugin.getLogger();
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), name);
         this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
+
         fileConfig.options().copyDefaults(true);
     }
 
@@ -75,10 +72,11 @@ public class Config {
      *            The FileConfiguration
      */
     public Config(@Nonnull File file, @Nonnull FileConfiguration config) {
-        this.logger = Logger.getLogger("CS-CoreLib2");
+        this.logger = new DoughLogger("config");
         this.file = file;
+
         this.fileConfig = config;
-        config.options().copyDefaults(true);
+        fileConfig.options().copyDefaults(true);
     }
 
     /**
@@ -102,13 +100,24 @@ public class Config {
         this(new File(path));
     }
 
+    public @Nonnull File getFile() {
+        return this.file;
+    }
+
+    public @Nullable String getHeader() {
+        return this.header;
+    }
+
+    public void setHeader(@Nullable String header) {
+        this.header = header;
+    }
+
     /**
      * Converts this Config Object into a plain FileConfiguration Object
      *
      * @return The converted FileConfiguration Object
      */
-    @Nonnull
-    public FileConfiguration getConfiguration() {
+    public @Nonnull FileConfiguration getConfiguration() {
         return this.fileConfig;
     }
 

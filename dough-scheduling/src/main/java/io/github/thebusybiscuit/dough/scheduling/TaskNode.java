@@ -3,10 +3,11 @@ package io.github.thebusybiscuit.dough.scheduling;
 import java.util.function.IntConsumer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import lombok.Data;
+import org.apache.commons.lang.Validate;
 
-@Data
+// TODO: Convert to Java 16 record
 class TaskNode {
 
     private final IntConsumer runnable;
@@ -27,6 +28,32 @@ class TaskNode {
 
     protected boolean hasNextNode() {
         return nextNode != null;
+    }
+
+    public @Nullable TaskNode getNextNode() {
+        return nextNode;
+    }
+
+    public void setNextNode(@Nullable TaskNode node) {
+        this.nextNode = node;
+    }
+
+    public void execute(int index) {
+        runnable.accept(index);
+    }
+
+    public boolean isAsynchronous() {
+        return asynchronous;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        Validate.isTrue(delay >= 0, "The delay cannot be negative.");
+
+        this.delay = delay;
     }
 
 }
