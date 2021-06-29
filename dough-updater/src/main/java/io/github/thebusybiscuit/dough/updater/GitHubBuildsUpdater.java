@@ -5,94 +5,73 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import org.bukkit.plugin.Plugin;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import lombok.Getter;
-import lombok.Setter;
+import io.github.thebusybiscuit.dough.common.CommonPatterns;
+import io.github.thebusybiscuit.dough.versions.PrefixedVersion;
+import io.github.thebusybiscuit.dough.versions.Version;
 
-import javax.annotation.Nonnull;
-
-public class GitHubBuildsUpdater implements PluginUpdater {
+public class GitHubBuildsUpdater extends AbstractPluginUpdater {
 
     private static final String API_URL = "https://thebusybiscuit.github.io/builds/";
 
-    @Getter
-    private final Plugin plugin;
-
-    @Getter
-    private final File file;
-
-    @Getter
     private final String repository;
     private final String prefix;
-
-    @Getter
-    private String localVersion;
-
-    @Getter
-    @Setter
-    protected int timeout = 10000;
 
     public GitHubBuildsUpdater(@Nonnull Plugin plugin, @Nonnull File file, @Nonnull String repo) {
         this(plugin, file, repo, "DEV - ");
     }
 
     public GitHubBuildsUpdater(@Nonnull Plugin plugin, @Nonnull File file, @Nonnull String repo, @Nonnull String prefix) {
-        this.plugin = plugin;
-        this.file = file;
+        super(plugin, file, extractBuild(prefix, plugin));
+
         this.repository = repo;
         this.prefix = prefix;
-
-        localVersion = extractBuild(plugin.getDescription().getVersion());
-
-        prepareUpdateFolder();
     }
 
-    private String extractBuild(String version) {
-        if (version.startsWith(prefix)) {
-            return version.substring(prefix.length()).split(" ")[0];
-        }
+    @ParametersAreNonnullByDefault
+    private static @Nonnull Version extractBuild(String prefix, Plugin plugin) {
+        String pluginVersion = plugin.getDescription().getVersion();
 
-        throw new IllegalArgumentException("Not a valid Development-Build Version: " + version);
+        if (pluginVersion.startsWith(prefix)) {
+            int version = Integer.parseInt(pluginVersion.substring(prefix.length()).split(" ")[0], 10);
+            return new PrefixedVersion(prefix, version);
+        } else {
+            throw new IllegalArgumentException("Not a valid build version: " + pluginVersion);
+        }
     }
 
     @Override
     public void start() {
         try {
-            URL versionsURL = new URL(API_URL + getRepository() + "/builds.json");
+            URL versionsURL = new URL(API_URL + repository + "/builds.json");
 
-            plugin.getServer().getScheduler().runTask(plugin, () -> {
-                Thread thread = new Thread(new UpdaterTask(this, versionsURL) {
+            scheduleAsyncUpdateTask(new UpdaterTask(this, versionsURL) {
 
-                    @Override
-                    public boolean hasUpdate(String localVersion, String remoteVersion) {
-                        return Integer.parseInt(remoteVersion) > Integer.parseInt(localVersion);
+                @Override
+                public UpdateInfo parse(String result) throws MalformedURLException {
+                    JsonObject json = (JsonObject) new JsonParser().parse(result);
+
+                    if (json == null) {
+                        getLogger().log(Level.WARNING, "The Auto-Updater could not connect to github.io, is it down?");
+                        return null;
                     }
 
-                    @Override
-                    public UpdateInfo parse(String result) throws MalformedURLException {
-                        JsonObject json = (JsonObject) new JsonParser().parse(result);
+                    int latestVersion = json.get("last_successful").getAsInt();
+                    URL downloadURL = new URL(API_URL + repository + '/' + CommonPatterns.SLASH.split(repository)[1] + '-' + latestVersion + ".jar");
 
-                        if (json == null) {
-                            plugin.getLogger().log(Level.WARNING, "The Auto-Updater could not connect to github.io, is it down?");
-                            return null;
-                        }
+                    return new UpdateInfo(downloadURL, new PrefixedVersion(prefix, latestVersion));
+                }
 
-                        String remoteVersion = String.valueOf(json.get("last_successful").getAsInt());
-                        URL downloadURL = new URL(API_URL + getRepository() + "/" + getRepository().split("/")[1] + "-" + remoteVersion + ".jar");
-
-                        return new UpdateInfo(downloadURL, remoteVersion);
-                    }
-
-                }, "Updater Thread");
-
-                thread.start();
             });
         } catch (MalformedURLException e) {
-            plugin.getLogger().log(Level.SEVERE, "Auto-Updater URL is malformed", e);
+            getLogger().log(Level.SEVERE, "Auto-Updater URL is malformed", e);
         }
     }
 }

@@ -2,13 +2,18 @@ package io.github.thebusybiscuit.dough.updater;
 
 import java.net.URL;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+import io.github.thebusybiscuit.dough.versions.Version;
+
 // TODO: Convert to Java 16 record
 class UpdateInfo {
 
     private final URL url;
-    private final String version;
+    private final Version version;
 
-    UpdateInfo(URL url, String version) {
+    @ParametersAreNonnullByDefault
+    UpdateInfo(URL url, Version version) {
         this.url = url;
         this.version = version;
     }
@@ -17,7 +22,7 @@ class UpdateInfo {
         return url;
     }
 
-    String getVersion() {
+    Version getVersion() {
         return version;
     }
 

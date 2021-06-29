@@ -18,26 +18,26 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import io.github.thebusybiscuit.dough.versions.Version;
+
 abstract class UpdaterTask implements Runnable {
 
     private final Plugin plugin;
     private final File file;
     private final URL url;
     private final int timeout;
-    private final String localVersion;
+    private final Version currentVersion;
 
     UpdaterTask(@Nonnull PluginUpdater updater, @Nonnull URL url) {
         this.plugin = updater.getPlugin();
         this.file = updater.getFile();
         this.url = url;
-        this.timeout = updater.getTimeout();
-        this.localVersion = updater.getLocalVersion();
+        this.timeout = updater.getConnectionTimeout();
+        this.currentVersion = updater.getCurrentVersion();
     }
 
     @Nullable
     public abstract UpdateInfo parse(String result) throws MalformedURLException;
-
-    public abstract boolean hasUpdate(String localVersion, String remoteVersion);
 
     @Override
     public void run() {
@@ -49,7 +49,7 @@ abstract class UpdaterTask implements Runnable {
             }
         } catch (NumberFormatException x) {
             plugin.getLogger().log(Level.SEVERE, "Could not auto-update {0}", plugin.getName());
-            plugin.getLogger().log(Level.SEVERE, "Unrecognized Version: {0}", localVersion);
+            plugin.getLogger().log(Level.SEVERE, "Unrecognized Version: {0}", currentVersion);
         }
     }
 
@@ -70,9 +70,9 @@ abstract class UpdaterTask implements Runnable {
         }
     }
 
-    private void validateAndInstall(@Nonnull UpdateInfo latestVersion) {
-        if (hasUpdate(localVersion, latestVersion.getVersion())) {
-            install(latestVersion);
+    private void validateAndInstall(@Nonnull UpdateInfo updateInfo) {
+        if (updateInfo.getVersion().isNewerThan(currentVersion)) {
+            install(updateInfo);
         } else {
             plugin.getLogger().log(Level.INFO, "{0} is already up to date!", plugin.getName());
         }
@@ -94,7 +94,7 @@ abstract class UpdaterTask implements Runnable {
         } finally {
             plugin.getLogger().log(Level.INFO, " ");
             plugin.getLogger().log(Level.INFO, "#################### - UPDATE - ####################");
-            plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), localVersion, info.getVersion() });
+            plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), currentVersion, info.getVersion() });
             plugin.getLogger().log(Level.INFO, "Please restart your Server in order to use the new Version");
             plugin.getLogger().log(Level.INFO, " ");
         }

@@ -63,4 +63,11 @@ public class SemanticVersion implements Version {
         }
     }
 
+    public static @Nonnull SemanticVersion parse(@Nonnull String version) {
+        // TODO Implement version parser
+        return null;
+    }
+
+    // TODO Unit tests
+
 }

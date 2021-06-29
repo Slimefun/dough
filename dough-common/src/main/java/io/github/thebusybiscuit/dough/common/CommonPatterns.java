@@ -22,6 +22,7 @@ public final class CommonPatterns {
     public static final Pattern COMMA = Pattern.compile(",");
     public static final Pattern DASH = Pattern.compile("-");
     public static final Pattern UNDERSCORE = Pattern.compile("_");
+    public static final Pattern SLASH = Pattern.compile("\\/");
 
     public static final Pattern ASCII = Pattern.compile("[A-Za-z \"_]+");
     public static final Pattern HEXADECIMAL = Pattern.compile("[A-Fa-f0-9]+");
