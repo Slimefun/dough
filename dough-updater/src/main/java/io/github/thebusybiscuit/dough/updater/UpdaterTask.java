@@ -71,7 +71,7 @@ abstract class UpdaterTask implements Runnable {
     }
 
     private void validateAndInstall(@Nonnull UpdateInfo updateInfo) {
-        if (updateInfo.getVersion().isNewerThan(currentVersion)) {
+        if (updateInfo.version().isNewerThan(currentVersion)) {
             install(updateInfo);
         } else {
             plugin.getLogger().log(Level.INFO, "{0} is already up to date!", plugin.getName());
@@ -80,9 +80,9 @@ abstract class UpdaterTask implements Runnable {
 
     private void install(@Nonnull UpdateInfo info) {
         plugin.getLogger().log(Level.INFO, "{0} is outdated!", plugin.getName());
-        plugin.getLogger().log(Level.INFO, "Downloading {0}, version: {1}", new Object[] { plugin.getName(), info.getVersion() });
+        plugin.getLogger().log(Level.INFO, "Downloading {0}, version: {1}", new Object[] { plugin.getName(), info.version() });
 
-        try (BufferedInputStream input = new BufferedInputStream(info.getUrl().openStream()); FileOutputStream output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()))) {
+        try (BufferedInputStream input = new BufferedInputStream(info.url().openStream()); FileOutputStream output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()))) {
             byte[] data = new byte[1024];
             int read;
 
@@ -94,7 +94,7 @@ abstract class UpdaterTask implements Runnable {
         } finally {
             plugin.getLogger().log(Level.INFO, " ");
             plugin.getLogger().log(Level.INFO, "#################### - UPDATE - ####################");
-            plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), currentVersion, info.getVersion() });
+            plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), currentVersion, info.version() });
             plugin.getLogger().log(Level.INFO, "Please restart your Server in order to use the new Version");
             plugin.getLogger().log(Level.INFO, " ");
         }
