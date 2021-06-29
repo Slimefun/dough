@@ -2,6 +2,8 @@ package io.github.thebusybiscuit.dough.protection.modules;
 
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -17,8 +19,6 @@ import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.bentobox.lists.Flags;
 import world.bentobox.bentobox.managers.IslandWorldManager;
 import world.bentobox.bentobox.managers.IslandsManager;
-
-import javax.annotation.Nonnull;
 
 /**
  * Provides protection handling using the BentoBox API.

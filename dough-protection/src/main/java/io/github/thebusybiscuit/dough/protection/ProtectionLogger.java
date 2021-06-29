@@ -1,6 +1,7 @@
 package io.github.thebusybiscuit.dough.protection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -12,6 +13,7 @@ public interface ProtectionLogger {
     @Nonnull
     String getName();
 
-    void logAction(@Nonnull OfflinePlayer p, @Nonnull Block b, @Nonnull Interaction action);
+    @ParametersAreNonnullByDefault
+    void logAction(OfflinePlayer p, Block b, Interaction action);
 
 }
