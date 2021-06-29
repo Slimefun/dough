@@ -1,5 +1,6 @@
 package io.github.thebusybiscuit.dough.items;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,7 +28,6 @@ import org.bukkit.persistence.PersistentDataContainer;
  */
 public class ItemMetaSnapshot {
 
-    // TODO: Add Getters
     private final Optional<String> displayName;
     private final Optional<List<String>> lore;
     private final OptionalInt customModelData;
@@ -45,11 +45,31 @@ public class ItemMetaSnapshot {
 
     public ItemMetaSnapshot(@Nonnull ItemMeta meta) {
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
-        this.lore = meta.hasLore() ? Optional.of(meta.getLore()) : Optional.empty();
+        this.lore = meta.hasLore() ? Optional.of(Collections.unmodifiableList(meta.getLore())) : Optional.empty();
         this.customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
 
         this.itemFlags = meta.getItemFlags();
         this.enchantments = meta.getEnchants();
+    }
+
+    public @Nonnull Optional<String> getDisplayName() {
+        return displayName;
+    }
+
+    public @Nonnull Optional<List<String>> getLore() {
+        return lore;
+    }
+
+    public @Nonnull OptionalInt getCustomModelData() {
+        return customModelData;
+    }
+
+    public @Nonnull Set<ItemFlag> getItemFlags() {
+        return itemFlags;
+    }
+
+    public @Nonnull Map<Enchantment, Integer> getEnchantments() {
+        return enchantments;
     }
 
     public boolean isSimilar(@Nonnull ItemMetaSnapshot snapshot) {
