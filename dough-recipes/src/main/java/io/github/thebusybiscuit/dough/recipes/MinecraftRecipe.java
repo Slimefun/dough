@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.inventory.BlastingRecipe;
 import org.bukkit.inventory.CampfireRecipe;
@@ -109,7 +110,7 @@ public class MinecraftRecipe<T extends Recipe> {
     }
 
     @ParametersAreNonnullByDefault
-    private static <T extends Recipe> @Nullable MinecraftRecipe<T> findRecipeType(Logger logger, String type, Function<String, MinecraftRecipe<T>> supplier) {
+    private static @Nullable <T extends Recipe> MinecraftRecipe<T> findRecipeType(Logger logger, String type, Function<String, MinecraftRecipe<T>> supplier) {
         try {
             return supplier.apply(type);
         } catch (Exception | LinkageError x) {
@@ -162,6 +163,7 @@ public class MinecraftRecipe<T extends Recipe> {
 
     @SuppressWarnings("unchecked")
     public static <T extends Recipe> Optional<MinecraftRecipe<? super T>> of(@Nonnull T recipe) {
+        Validate.notNull(recipe, "The recipe cannot be null");
         Class<?> recipeClass = recipe.getClass();
 
         return recipeTypes.stream().filter(type -> type.getRecipeClass().isAssignableFrom(recipeClass)).findAny().map(type -> (MinecraftRecipe<? super T>) type);
