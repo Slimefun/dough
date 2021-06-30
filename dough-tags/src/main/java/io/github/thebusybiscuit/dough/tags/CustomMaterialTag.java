@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Tag;
@@ -41,22 +42,27 @@ public class CustomMaterialTag implements Tag<Material> {
      * {@link Slimefun} and {@link #name()}.
      */
     public CustomMaterialTag(@Nonnull NamespacedKey key) {
+        Validate.notNull(key, "The key cannot be null");
         this.key = key;
     }
 
     public void loadFromStream(@Nonnull InputStream inputStream) throws TagMisconfigurationException {
+        Validate.notNull(inputStream, "The InputStream cannot be null");
         load(new TagParser(key).parse(inputStream));
     }
 
     public void loadFromJson(@Nonnull JsonObject json) throws TagMisconfigurationException {
+        Validate.notNull(json, "The JsonObject cannot be null");
         load(new TagParser(key).parse(json));
     }
 
     public void loadFromString(@Nonnull String json) throws TagMisconfigurationException {
+        Validate.notNull(json, "The json string cannot be null");
         load(new TagParser(key).parse(json));
     }
 
     private void load(@Nonnull CompletableFuture<MaterialTagData> future) {
+        Validate.notNull(future, "The future cannot be null");
         future.thenAccept(data -> {
             this.includedMaterials.clear();
             this.includedMaterials.addAll(data.getMaterials());
@@ -73,6 +79,7 @@ public class CustomMaterialTag implements Tag<Material> {
 
     @Override
     public boolean isTagged(@Nonnull Material item) {
+        Validate.notNull(item, "The item cannot be null");
         if (includedMaterials.contains(item)) {
             return true;
         } else {

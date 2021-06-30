@@ -53,6 +53,7 @@ public class TagParser implements Keyed {
      *            The {@link NamespacedKey} of the resulting {@link CustomMaterialTag}
      */
     public TagParser(@Nonnull NamespacedKey key) {
+        Validate.notNull(key, "The key cannot be null");
         this.key = key;
     }
 
