@@ -23,6 +23,7 @@ import io.github.thebusybiscuit.dough.protection.modules.PreciousStonesProtectio
 import io.github.thebusybiscuit.dough.protection.modules.RedProtectProtectionModule;
 import io.github.thebusybiscuit.dough.protection.modules.TownyProtectionModule;
 import io.github.thebusybiscuit.dough.protection.modules.WorldGuardProtectionModule;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -54,6 +55,8 @@ public final class ProtectionManager {
      */
     @SuppressWarnings("java:S1612")
     public ProtectionManager(@Nonnull Server server) {
+        Validate.notNull(server, "The server cannot be null");
+
         logger = new DoughLogger(server, "protection");
 
         logger.log(Level.INFO, "Loading Protection Modules...");
@@ -112,11 +115,16 @@ public final class ProtectionManager {
     }
 
     public void registerLogger(@Nonnull String name, @Nonnull ProtectionLogger module) {
+        Validate.notNull(name, "The name cannot be null");
+        Validate.notNull(module, "The module cannot be null");
         protectionLoggers.add(module);
         loadModuleMSG(name);
     }
 
     public void registerModule(@Nonnull Server server, @Nonnull String pluginName, @Nonnull Function<Plugin, ProtectionModule> constructor) {
+        Validate.notNull(server, "The server cannot be null");
+        Validate.notNull(pluginName, "The plugin name cannot be null");
+        Validate.notNull(constructor, "The constructor cannot be null");
         Plugin plugin = server.getPluginManager().getPlugin(pluginName);
 
         if (plugin != null && plugin.isEnabled()) {
@@ -137,6 +145,8 @@ public final class ProtectionManager {
     }
 
     public void registerLogger(@Nonnull ProtectionLogger module) {
+        Validate.notNull(module, "The module cannot be null");
+
         try {
             module.load();
             registerLogger(module.getName(), module);
@@ -150,10 +160,16 @@ public final class ProtectionManager {
     }
 
     public boolean hasPermission(@Nonnull OfflinePlayer p, @Nonnull Block b, @Nonnull Interaction action) {
+        Validate.notNull(p, "The offline player cannot be null");
+        Validate.notNull(b, "The block cannot be null");
+        Validate.notNull(action, "The action cannot be null");
         return hasPermission(p, b.getLocation(), action);
     }
 
     public boolean hasPermission(@Nonnull OfflinePlayer p, @Nonnull Location l, @Nonnull Interaction action) {
+        Validate.notNull(p, "The offline player cannot be null");
+        Validate.notNull(l, "The location cannot be null");
+        Validate.notNull(action, "The action cannot be null");
         for (ProtectionModule module : protectionModules) {
             try {
                 if (!module.hasPermission(p, l, action)) {
@@ -170,6 +186,9 @@ public final class ProtectionManager {
     }
 
     public void logAction(@Nonnull OfflinePlayer p, @Nonnull Block b, @Nonnull Interaction action) {
+        Validate.notNull(p, "The offline player cannot be null");
+        Validate.notNull(b, "The block cannot be null");
+        Validate.notNull(action, "The action cannot be null");
         for (ProtectionLogger module : protectionLoggers) {
             try {
                 module.logAction(p, b, action);
