@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -45,6 +46,8 @@ public class Config {
      *            The Instance of the Plugin, the config.yml is referring to
      */
     public Config(@Nonnull Plugin plugin) {
+        Validate.notNull(plugin, "Plugin cannot be null");
+
         plugin.getConfig().options().copyDefaults(true);
         plugin.saveConfig();
 
@@ -56,6 +59,9 @@ public class Config {
     }
 
     public Config(@Nonnull Plugin plugin, @Nonnull String name) {
+        Validate.notNull(plugin, "Plugin cannot be null");
+        Validate.notNull(name, "Name cannot be null");
+
         this.logger = plugin.getLogger();
         this.file = new File("plugins/" + plugin.getName().replace(" ", "_"), name);
         this.fileConfig = YamlConfiguration.loadConfiguration(this.file);
@@ -72,6 +78,9 @@ public class Config {
      *            The FileConfiguration
      */
     public Config(@Nonnull File file, @Nonnull FileConfiguration config) {
+        Validate.notNull(file, "File cannot be null");
+        Validate.notNull(config, "FileConfiguration cannot be null");
+
         this.logger = new DoughLogger("config");
         this.file = file;
 
@@ -128,6 +137,7 @@ public class Config {
      *            Your {@link Logger} instance
      */
     public void setLogger(@Nonnull Logger logger) {
+        Validate.notNull(logger, "The logger cannot be null");
         this.logger = logger;
     }
 
@@ -138,6 +148,7 @@ public class Config {
     }
 
     protected void store(@Nonnull String path, Object value) {
+        Validate.notNull(path, "The path cannot be null");
         this.fileConfig.set(path, value);
     }
 
@@ -150,6 +161,7 @@ public class Config {
      *            The Value for that path
      */
     public void setValue(@Nonnull String path, Object value) {
+        Validate.notNull(path, "THe path cannot be null");
         if (value == null) {
             this.store(path, value);
         } else if (value instanceof Optional) {
@@ -198,6 +210,7 @@ public class Config {
      *            The {@link File} you are saving this {@link Config} to
      */
     public void save(@Nonnull File file) {
+        Validate.notNull(file, "The file cannot be null");
         try {
             if (header != null) {
                 fileConfig.options().copyHeader(true);
@@ -222,6 +235,7 @@ public class Config {
      *            The Value for that path
      */
     public void setDefaultValue(@Nonnull String path, @Nullable Object value) {
+        Validate.notNull(path, "The path cannot be null");
         if (!contains(path)) {
             setValue(path, value);
         }
@@ -229,6 +243,7 @@ public class Config {
 
     @SuppressWarnings("unchecked")
     public <T> T getOrSetDefault(@Nonnull String path, T value) {
+        Validate.notNull(path, "The path cannot be null");
         Object val = getValue(path);
 
         if (value.getClass().isInstance(val)) {
@@ -247,6 +262,7 @@ public class Config {
      * @return True/false
      */
     public boolean contains(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.contains(path);
     }
 
@@ -260,11 +276,15 @@ public class Config {
      */
     @Nullable
     public Object getValue(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.get(path);
     }
 
     @Nonnull
     public <T> Optional<T> getValueAs(@Nonnull Class<T> c, @Nonnull String path) {
+        Validate.notNull(c, "The class cannot be null");
+        Validate.notNull(path, "The path cannot be null");
+
         Object obj = getValue(path);
         return c.isInstance(obj) ? Optional.of(c.cast(obj)) : Optional.empty();
     }
@@ -279,6 +299,7 @@ public class Config {
      */
     @Nullable
     public ItemStack getItem(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.getItemStack(path);
     }
 
@@ -292,6 +313,7 @@ public class Config {
      */
     @Nullable
     public String getString(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.getString(path);
     }
 
@@ -304,6 +326,7 @@ public class Config {
      * @return The Integer at that path
      */
     public int getInt(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.getInt(path);
     }
 
@@ -316,6 +339,7 @@ public class Config {
      * @return The Boolean at that path
      */
     public boolean getBoolean(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.getBoolean(path);
     }
 
@@ -329,6 +353,7 @@ public class Config {
      */
     @Nonnull
     public List<String> getStringList(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.getStringList(path);
     }
 
@@ -342,6 +367,7 @@ public class Config {
      */
     @Nonnull
     public List<Integer> getIntList(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.getIntegerList(path);
     }
 
@@ -368,6 +394,7 @@ public class Config {
      * @return The Float at that path
      */
     public float getFloat(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return Float.valueOf(String.valueOf(getValue(path)));
     }
 
@@ -380,6 +407,7 @@ public class Config {
      * @return The Long at that path
      */
     public long getLong(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return Long.valueOf(String.valueOf(getValue(path)));
     }
 
@@ -392,6 +420,7 @@ public class Config {
      * @return The Date at that path
      */
     public Date getDate(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return new Date(getLong(path));
     }
 
@@ -404,6 +433,7 @@ public class Config {
      * @return The Chunk at that path
      */
     public Chunk getChunk(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return Bukkit.getWorld(getString(path + ".world")).getChunkAt(getInt(path + ".x"), getInt(path + ".z"));
     }
 
@@ -416,6 +446,7 @@ public class Config {
      * @return The UUID at that path
      */
     public UUID getUUID(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         String value = getString(path);
         return value != null ? UUID.fromString(value) : null;
     }
@@ -429,6 +460,7 @@ public class Config {
      * @return The World at that path
      */
     public World getWorld(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return Bukkit.getWorld(getString(path));
     }
 
@@ -441,6 +473,7 @@ public class Config {
      * @return The Double at that path
      */
     public double getDouble(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return fileConfig.getDouble(path);
     }
 
@@ -454,6 +487,7 @@ public class Config {
      */
     @Nonnull
     public Location getLocation(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         return new Location(Bukkit.getWorld(getString(path + ".world")), getDouble(path + ".x"), getDouble(path + ".y"), getDouble(path + ".z"), getFloat(path + ".yaw"), getFloat(path + ".pitch"));
     }
 
@@ -471,6 +505,9 @@ public class Config {
      */
     @Nonnull
     public Inventory getInventory(@Nonnull String path, int size, @Nonnull String title) {
+        Validate.notNull(path, "The path cannot be null");
+        Validate.notNull(title, "The title cannot be null");
+
         Inventory inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', title));
         for (int i = 0; i < size; i++) {
             inventory.setItem(i, getItem(path + "." + i));
@@ -490,6 +527,9 @@ public class Config {
      */
     @Nonnull
     public Inventory getInventory(@Nonnull String path, @Nonnull String title) {
+        Validate.notNull(path, "The path cannot be null");
+        Validate.notNull(title, "The title cannot be null");
+
         int size = getInt(path + ".size");
         Inventory inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', title));
 
@@ -520,6 +560,7 @@ public class Config {
      */
     @Nonnull
     public Set<String> getKeys(@Nonnull String path) {
+        Validate.notNull(path, "The path cannot be null");
         ConfigurationSection section = fileConfig.getConfigurationSection(path);
         return section == null ? new HashSet<>() : section.getKeys(false);
     }
