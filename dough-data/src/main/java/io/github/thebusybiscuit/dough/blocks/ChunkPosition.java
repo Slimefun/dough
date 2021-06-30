@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -25,11 +26,13 @@ public final class ChunkPosition {
     private final long position;
 
     public ChunkPosition(@Nonnull World world, long position) {
+        Validate.notNull(world, "The world cannot be null");
         this.world = new WeakReference<>(world);
         this.position = position;
     }
 
     public ChunkPosition(@Nonnull World world, int x, int z) {
+        Validate.notNull(world, "The world cannot be null");
         this.world = new WeakReference<>(world);
         this.position = getAsLong(x, z);
     }
