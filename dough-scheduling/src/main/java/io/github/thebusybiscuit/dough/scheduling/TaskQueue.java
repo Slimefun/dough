@@ -5,6 +5,7 @@ import java.util.function.IntConsumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -32,6 +33,7 @@ public class TaskQueue {
      *            The plugin that is performing this execution
      */
     public void execute(@Nonnull Plugin plugin) {
+        Validate.notNull(plugin, "Plugin cannot be null");
         if (head == null) {
             throw new IllegalStateException("Cannot execute TaskQueue, no head was found");
         }
@@ -40,6 +42,7 @@ public class TaskQueue {
     }
 
     private void run(@Nonnull Plugin plugin, @Nullable TaskNode node, int index) {
+        Validate.notNull(plugin, "Plugin cannot be null");
         if (node == null) {
             return;
         }
@@ -74,6 +77,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRun(@Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         return append(new TaskNode(consumer, false));
     }
 
@@ -86,6 +90,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRun(@Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRun(i -> runnable.run());
     }
 
@@ -99,6 +104,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRunAsynchronously(@Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         return append(new TaskNode(consumer, true));
     }
 
@@ -111,6 +117,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRunAsynchronously(@Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRunAsynchronously(i -> runnable.run());
     }
 
@@ -126,6 +133,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRun(int ticks, @Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         if (ticks < 1) {
             throw new IllegalArgumentException("thenAfter() must be given a time that is greater than zero!");
         }
@@ -144,6 +152,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRun(int ticks, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRun(ticks, i -> runnable.run());
     }
 
@@ -159,6 +168,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRunAsynchronously(int ticks, @Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         if (ticks < 1) {
             throw new IllegalArgumentException("thenAfter() must be given a time that is greater than zero!");
         }
@@ -177,6 +187,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRunAsynchronously(int ticks, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRunAsynchronously(ticks, i -> runnable.run());
     }
 
@@ -193,6 +204,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRepeat(int iterations, @Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         for (int i = 0; i < iterations; i++) {
             append(new TaskNode(consumer, false));
         }
@@ -212,6 +224,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRepeat(int iterations, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRepeat(iterations, i -> runnable.run());
     }
 
@@ -228,6 +241,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRepeatAsynchronously(int iterations, @Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         for (int i = 0; i < iterations; i++) {
             append(new TaskNode(consumer, true));
         }
@@ -247,6 +261,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRepeatAsynchronously(int iterations, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRepeatAsynchronously(iterations, i -> runnable.run());
     }
 
@@ -290,6 +305,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRepeatEvery(int ticks, int iterations, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRepeatEvery(ticks, iterations, i -> runnable.run());
     }
 
@@ -308,6 +324,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRepeatEveryAsynchronously(int ticks, int iterations, @Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         if (ticks < 1) {
             throw new IllegalArgumentException("thenRepeatEveryAsynchronously() must be given a time that is greater than zero!");
         }
@@ -333,6 +350,7 @@ public class TaskQueue {
      * @return The current instance of {@link TaskQueue}
      */
     public @Nonnull TaskQueue thenRepeatEveryAsynchronously(int ticks, int iterations, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         return thenRepeatEveryAsynchronously(ticks, iterations, i -> runnable.run());
     }
 
@@ -345,6 +363,7 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoop(@Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         TaskNode node = new TaskNode(consumer, false);
         node.setNextNode(node);
         append(node);
@@ -359,6 +378,7 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoop(@Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         thenLoop(i -> runnable.run());
     }
 
@@ -371,6 +391,7 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoopAsynchronously(@Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         TaskNode node = new TaskNode(consumer, true);
         node.setNextNode(node);
         append(node);
@@ -385,6 +406,7 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoopAsynchronously(@Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         thenLoopAsynchronously(i -> runnable.run());
     }
 
@@ -399,6 +421,7 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoopEvery(int ticks, @Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
         if (ticks < 1) {
             throw new IllegalArgumentException("thenLoopEvery() must be given a time that is greater than zero!");
         }
@@ -419,6 +442,7 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoopEvery(int ticks, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         thenLoopEvery(ticks, i -> runnable.run());
     }
 
@@ -433,6 +457,8 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoopEveryAsynchronously(int ticks, @Nonnull IntConsumer consumer) {
+        Validate.notNull(consumer, "The consumer cannot be null");
+
         if (ticks < 1) {
             throw new IllegalArgumentException("thenLoopEveryAsynchronously() must be given a time that is greater than zero!");
         }
@@ -453,6 +479,7 @@ public class TaskQueue {
      *            The callback to run
      */
     public void thenLoopEveryAsynchronously(int ticks, @Nonnull Runnable runnable) {
+        Validate.notNull(runnable, "The runnable cannot be null");
         thenLoopEveryAsynchronously(ticks, i -> runnable.run());
     }
 

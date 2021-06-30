@@ -16,11 +16,15 @@ class TaskNode {
     private TaskNode nextNode;
 
     protected TaskNode(@Nonnull IntConsumer consumer, boolean async) {
+        Validate.notNull(consumer, "The consumer cannot be null");
+
         this.runnable = consumer;
         this.asynchronous = async;
     }
 
     protected TaskNode(@Nonnull IntConsumer consumer, int delay, boolean async) {
+        Validate.notNull(consumer, "The consumer cannot be null");
+
         this.runnable = consumer;
         this.delay = delay;
         this.asynchronous = async;
