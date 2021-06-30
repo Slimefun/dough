@@ -16,8 +16,6 @@ import java.util.stream.StreamSupport;
 
 import javax.annotation.Nonnull;
 
-import lombok.Getter;
-
 /**
  * This Class functions similar to {@link Map} but returns an
  * Optional when calling {@link OptionalMap#get(Object)}.
@@ -33,7 +31,6 @@ import lombok.Getter;
  */
 public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>>, Streamable<Entry<K, V>> {
 
-    @Getter
     private Map<K, V> internalMap;
 
     /**
@@ -182,6 +179,10 @@ public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>>, Streamable<
     @Override
     public Stream<Entry<K, V>> stream() {
         return StreamSupport.stream(spliterator(), false);
+    }
+
+    public Map<K, V> getInternalMap() {
+        return this.internalMap;
     }
 
 }

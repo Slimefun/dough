@@ -1,10 +1,8 @@
 package io.github.thebusybiscuit.dough.collections;
 
 import java.util.Map;
+import java.util.Objects;
 
-import lombok.Data;
-
-@Data
 public class Pair<P, S> {
 
     private P firstValue;
@@ -23,4 +21,45 @@ public class Pair<P, S> {
         this(pair.getFirstValue().orElse(null), pair.getSecondValue().orElse(null));
     }
 
+    public P getFirstValue() {
+        return this.firstValue;
+    }
+
+    public S getSecondValue() {
+        return this.secondValue;
+    }
+
+    public void setFirstValue(P firstValue) {
+        this.firstValue = firstValue;
+    }
+
+    public void setSecondValue(S secondValue) {
+        this.secondValue = secondValue;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Pair)) {
+            return false;
+        }
+        final Pair<?, ?> other = (Pair<?, ?>) o;
+        if (!Objects.equals(this.firstValue, other.firstValue)) {
+            return false;
+        }
+        return Objects.equals(this.secondValue, other.secondValue);
+    }
+
+    public int hashCode() {
+        final int prime = 59;
+        int result = 1;
+        result = result * prime + (firstValue == null ? 43 : firstValue.hashCode());
+        result = result * prime + (secondValue == null ? 43 : secondValue.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "Pair(firstValue=" + firstValue + ", secondValue=" + secondValue + ")";
+    }
 }

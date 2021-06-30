@@ -10,8 +10,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import lombok.Getter;
-
 import javax.annotation.Nonnull;
 
 /**
@@ -34,7 +32,6 @@ public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
     private List<T> list;
     private int size;
 
-    @Getter
     private int index = 0;
 
     /**
@@ -117,6 +114,10 @@ public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
     @Override
     public Stream<T> stream() {
         return Stream.generate(this::next);
+    }
+
+    public int getIndex() {
+        return this.index;
     }
 
 }
