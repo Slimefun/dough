@@ -1,14 +1,6 @@
 package io.github.thebusybiscuit.dough.inventory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
+import io.github.thebusybiscuit.dough.items.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,28 +11,27 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import io.github.thebusybiscuit.dough.items.ItemUtils;
-
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class ChestMenu implements Cloneable, Iterable<ItemStack> {
 
     protected static ChestMenuListener listener;
 
-    @Getter
     protected boolean playerInventoryClickable;
 
-    @Getter
     protected final Plugin plugin;
 
-    @Getter
     protected final String title;
 
-    @Getter
     protected Consumer<Player> menuOpeningHandler;
 
-    @Getter
     protected Consumer<Player> menuClosingHandler;
 
     protected boolean emptyClickable;
@@ -50,8 +41,6 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
     protected MenuClickHandler playerclick;
     protected Predicate<ItemStack> predicate;
 
-    @Getter
-    @Setter
     protected int size;
 
     protected int timeout;
@@ -585,4 +574,33 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
     public ChestMenu clone() {
         return new ChestMenu(this);
     }
+
+    public boolean isPlayerInventoryClickable() {
+        return this.playerInventoryClickable;
+    }
+
+    public Plugin getPlugin() {
+        return this.plugin;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Consumer<Player> getMenuOpeningHandler() {
+        return this.menuOpeningHandler;
+    }
+
+    public Consumer<Player> getMenuClosingHandler() {
+        return this.menuClosingHandler;
+    }
+
+    public int getSize() {
+        return this.size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
 }
