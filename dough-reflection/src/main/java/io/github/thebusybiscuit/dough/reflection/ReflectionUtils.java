@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 
 /**
@@ -52,6 +53,8 @@ public final class ReflectionUtils {
      */
     @Nullable
     public static Method getMethod(@Nonnull Class<?> c, @Nonnull String method) {
+        Validate.notNull(c, "The class cannot be null");
+        Validate.notNull(method, "The method cannot be null");
         for (Method m : c.getMethods()) {
             if (m.getName().equals(method))
                 return m;
@@ -73,6 +76,9 @@ public final class ReflectionUtils {
      */
     @Nullable
     public static Method getMethod(@Nonnull Class<?> c, @Nonnull String method, Class<?>... paramTypes) {
+        Validate.notNull(c, "The class cannot be null");
+        Validate.notNull(method, "The method cannot be null");
+
         Class<?>[] t = toPrimitiveTypeArray(paramTypes);
 
         for (Method m : c.getMethods()) {
@@ -100,6 +106,9 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Field getField(@Nonnull Class<?> c, @Nonnull String field) throws NoSuchFieldException {
+        Validate.notNull(c, "The class cannot be null");
+        Validate.notNull(field, "The field cannot be null");
+
         return c.getDeclaredField(field);
     }
 
@@ -123,6 +132,10 @@ public final class ReflectionUtils {
      *             If the field could not be modified.
      */
     public static <T> void setFieldValue(@Nonnull T object, @Nonnull Class<?> c, @Nonnull String field, @Nullable Object value) throws NoSuchFieldException, IllegalAccessException {
+        Validate.notNull(object, "The object cannot be null");
+        Validate.notNull(c, "The class cannot be null");
+        Validate.notNull(field, "The field cannot be null");
+
         Field f = getField(c, field);
         f.setAccessible(true);
         f.set(object, value);
@@ -146,6 +159,9 @@ public final class ReflectionUtils {
      *             If the field could not be modified.
      */
     public static <T> void setFieldValue(@Nonnull T object, @Nonnull String field, @Nullable Object value) throws NoSuchFieldException, IllegalAccessException {
+        Validate.notNull(object, "The object cannot be null");
+        Validate.notNull(field, "The field cannot be null");
+
         Field f = getField(object.getClass(), field);
         f.setAccessible(true);
         f.set(object, value);
@@ -168,6 +184,10 @@ public final class ReflectionUtils {
      */
     @Nullable
     public static <T> T getFieldValue(@Nonnull Object object, @Nonnull Class<T> fieldType, @Nonnull String field) throws NoSuchFieldException, IllegalAccessException {
+        Validate.notNull(object, "The object cannot be null");
+        Validate.notNull(fieldType, "The field type cannot be null");
+        Validate.notNull(field, "The field cannot be null");
+
         Field f = getField(object.getClass(), field);
         f.setAccessible(true);
         return fieldType.cast(f.get(object));
@@ -184,6 +204,8 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?>[] toPrimitiveTypeArray(@Nonnull Class<?>[] classes) {
+        Validate.notNull(classes, "The classes cannot be null");
+        Validate.noNullElements(classes, "The class array cannot contain null elements");
         int size = classes.length;
 
         Class<?>[] types = new Class[size];
@@ -207,6 +229,8 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?>[] toPrimitiveTypeArray(@Nonnull Object[] objects) {
+        Validate.notNull(objects, "The objects cannot be null");
+        Validate.noNullElements(objects, "The object array cannot contain null elements");
         int size = objects.length;
 
         Class<?>[] types = new Class[size];
@@ -232,6 +256,7 @@ public final class ReflectionUtils {
     @Nullable
     @SuppressWarnings("unchecked")
     public static <T> Constructor<T> getConstructor(@Nonnull Class<T> c, Class<?>... paramTypes) {
+        Validate.notNull(c, "The class cannot be null");
         Class<?>[] t = toPrimitiveTypeArray(paramTypes);
 
         for (Constructor<?> constructor : c.getConstructors()) {
@@ -260,6 +285,8 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getInnerNMSClass(@Nonnull String name, @Nonnull String subname) throws ClassNotFoundException {
+        Validate.notNull(name, "The name cannot be null");
+        Validate.notNull(subname, "The subname cannot be null");
         return getNMSClass(name + '$' + subname);
     }
 
@@ -271,6 +298,7 @@ public final class ReflectionUtils {
      * @throws ClassNotFoundException If the class does not exist
      */
     public static Class<?> getNetMinecraftClass(@Nonnull String name) throws ClassNotFoundException {
+        Validate.notNull(name, "The name cannot be null");
         return Class.forName("net.minecraft." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
     }
 
@@ -287,6 +315,7 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getNMSClass(@Nonnull String name) throws ClassNotFoundException {
+        Validate.notNull(name, "The name cannot be null");
         return Class.forName("net.minecraft.server." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
     }
 
@@ -305,6 +334,8 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getInnerOBCClass(@Nonnull String name, @Nonnull String subname) throws ClassNotFoundException {
+        Validate.notNull(name, "The name cannot be null");
+        Validate.notNull(subname, "The subname cannot be null");
         return getOBCClass(name + '$' + subname);
     }
 
@@ -321,6 +352,7 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getOBCClass(@Nonnull String name) throws ClassNotFoundException {
+        Validate.notNull(name, "The name cannot be null");
         return Class.forName("org.bukkit.craftbukkit." + getVersion() + '.' + name);
     }
 
@@ -364,7 +396,11 @@ public final class ReflectionUtils {
      *            All following Arrays you want to compare
      * @return Whether they equal each other
      */
-    private static boolean equalsTypeArray(@Nonnull Class<?>[] a, Class<?>... o) {
+    private static boolean equalsTypeArray(@Nonnull Class<?>[] a, @Nonnull Class<?>... o) {
+        Validate.notNull(a, "The first array cannot be null");
+        Validate.notNull(o, "The second array cannot be null");
+        Validate.noNullElements(a, "The first array cannot contain null elements");
+        Validate.noNullElements(o, "The second array cannot contain null elements");
         if (a.length != o.length) {
             return false;
         }
@@ -389,6 +425,7 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static <T> List<T> getEnumConstants(@Nonnull Class<T> c) {
+        Validate.notNull(c, "The class cannot be null");
         return Arrays.asList(c.getEnumConstants());
     }
 
@@ -405,6 +442,9 @@ public final class ReflectionUtils {
      */
     @Nullable
     public static <T> T getEnumConstant(@Nonnull Class<T> c, @Nonnull String name) {
+        Validate.notNull(c, "The class cannot be null");
+        Validate.notNull(name, "The name cannot be null");
+
         for (T field : c.getEnumConstants()) {
             if (field.toString().equals(name)) {
                 return field;
