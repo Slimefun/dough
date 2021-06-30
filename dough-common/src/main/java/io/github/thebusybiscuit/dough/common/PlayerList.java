@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -38,6 +39,7 @@ public final class PlayerList {
      * @return An Optional describing the player (or an empty Optional)
      */
     public static @Nonnull Optional<Player> findByName(@Nonnull String name) {
+        Validate.notNull(name, "The name cannot be null");
         return stream().filter(p -> p.getName().equalsIgnoreCase(name)).findAny();
     }
 
@@ -50,6 +52,7 @@ public final class PlayerList {
      * @return A Set of Players
      */
     public static @Nonnull Set<Player> findPermitted(@Nonnull String permission) {
+        Validate.notNull(permission, "The permission cannot be null");
         return stream().filter(p -> p.hasPermission(permission)).collect(Collectors.toSet());
     }
 
@@ -62,6 +65,7 @@ public final class PlayerList {
      * @return Whether the Player is online
      */
     public static boolean isOnline(@Nonnull String name) {
+        Validate.notNull(name, "The name cannot be null");
         return findByName(name).isPresent();
     }
 

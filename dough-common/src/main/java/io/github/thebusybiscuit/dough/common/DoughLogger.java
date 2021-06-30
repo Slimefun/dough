@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginLogger;
@@ -35,6 +36,7 @@ public class DoughLogger extends Logger {
 
     @Override
     public void log(@Nonnull LogRecord logRecord) {
+        Validate.notNull(logRecord, "The log record cannot be null");
         logRecord.setMessage(logRecord.getMessage());
         super.log(logRecord);
     }
