@@ -1,12 +1,18 @@
 package io.github.thebusybiscuit.dough.collections;
 
+import org.apache.commons.lang.Validate;
+
+import javax.annotation.Nonnull;
+
 public class WeightedNode<T> {
 
     private float weight;
 
     private T object;
 
-    public WeightedNode(float weight, T object) {
+    public WeightedNode(float weight, @Nonnull T object) {
+        Validate.notNull(object, "Object cannot be null");
+
         this.weight = weight;
         this.object = object;
     }
@@ -15,7 +21,7 @@ public class WeightedNode<T> {
         return this.weight;
     }
 
-    public T getObject() {
+    public @Nonnull T getObject() {
         return this.object;
     }
 
@@ -23,7 +29,8 @@ public class WeightedNode<T> {
         this.weight = weight;
     }
 
-    public void setObject(T object) {
+    public void setObject(@Nonnull T object) {
+        Validate.notNull(object, "Object cannot be null");
         this.object = object;
     }
 
@@ -39,7 +46,7 @@ public class WeightedNode<T> {
             compared = ((WeightedNode<?>) obj).getObject();
         }
 
-        return obj != null && object.getClass().isInstance(compared) && compared.hashCode() == hashCode();
+        return object.getClass().isInstance(compared) && compared.hashCode() == hashCode();
     }
 
 }

@@ -1,5 +1,7 @@
 package io.github.thebusybiscuit.dough.collections;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -9,33 +11,33 @@ public class OptionalPair<P, S> {
     private Optional<P> firstValue;
     private Optional<S> secondValue;
 
-    public OptionalPair(P a, S b) {
+    public OptionalPair(@Nullable P a, @Nullable S b) {
         this.firstValue = Optional.ofNullable(a);
         this.secondValue = Optional.ofNullable(b);
     }
 
-    public OptionalPair(Map.Entry<P, S> mapEntry) {
+    public OptionalPair(@Nonnull Map.Entry<P, S> mapEntry) {
         this(mapEntry.getKey(), mapEntry.getValue());
     }
 
-    public OptionalPair(Pair<P, S> pair) {
+    public OptionalPair(@Nonnull Pair<P, S> pair) {
         this(pair.getFirstValue(), pair.getSecondValue());
     }
 
-    public Optional<P> getFirstValue() {
+    public @Nonnull Optional<P> getFirstValue() {
         return this.firstValue;
     }
 
-    public Optional<S> getSecondValue() {
+    public @Nonnull Optional<S> getSecondValue() {
         return this.secondValue;
     }
 
-    public void setFirstValue(Optional<P> firstValue) {
-        this.firstValue = firstValue;
+    public void setFirstValue(@Nullable P firstValue) {
+        this.firstValue = Optional.ofNullable(firstValue);
     }
 
-    public void setSecondValue(Optional<S> secondValue) {
-        this.secondValue = secondValue;
+    public void setSecondValue(@Nullable S secondValue) {
+        this.secondValue = Optional.ofNullable(secondValue);
     }
 
     public boolean equals(final Object o) {
@@ -60,8 +62,8 @@ public class OptionalPair<P, S> {
         return result;
     }
 
-    public String toString() {
-        return "OptionalPair(firstValue=" + this.getFirstValue() + ", secondValue=" + this.getSecondValue()
+    public @Nonnull String toString() {
+        return "OptionalPair(firstValue=" + firstValue + ", secondValue=" + secondValue
             + ")";
     }
 }

@@ -181,8 +181,8 @@ public class OptionalMap<K, V> implements Iterable<Map.Entry<K, V>>, Streamable<
         return StreamSupport.stream(spliterator(), false);
     }
 
-    public Map<K, V> getInternalMap() {
-        return this.internalMap;
+    public @Nonnull Map<K, V> getInternalMap() {
+        return internalMap;
     }
 
 }

@@ -1,5 +1,7 @@
 package io.github.thebusybiscuit.dough.collections;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Objects;
 
@@ -13,11 +15,11 @@ public class Pair<P, S> {
         this.secondValue = b;
     }
 
-    public Pair(Map.Entry<P, S> mapEntry) {
+    public Pair(@Nonnull Map.Entry<P, S> mapEntry) {
         this(mapEntry.getKey(), mapEntry.getValue());
     }
 
-    public Pair(OptionalPair<P, S> pair) {
+    public Pair(@Nonnull OptionalPair<P, S> pair) {
         this(pair.getFirstValue().orElse(null), pair.getSecondValue().orElse(null));
     }
 
@@ -59,7 +61,7 @@ public class Pair<P, S> {
         return result;
     }
 
-    public String toString() {
+    public @Nonnull String toString() {
         return "Pair(firstValue=" + firstValue + ", secondValue=" + secondValue + ")";
     }
 }
