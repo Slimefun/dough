@@ -1,17 +1,38 @@
 package io.github.thebusybiscuit.dough.collections;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import org.apache.commons.lang.Validate;
 
-@AllArgsConstructor
-@Getter
-@Setter
+import javax.annotation.Nonnull;
+
 public class WeightedNode<T> {
 
     private float weight;
 
     private T object;
+
+    public WeightedNode(float weight, @Nonnull T object) {
+        Validate.notNull(object, "Object cannot be null");
+
+        this.weight = weight;
+        this.object = object;
+    }
+
+    public float getWeight() {
+        return this.weight;
+    }
+
+    public @Nonnull T getObject() {
+        return this.object;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void setObject(@Nonnull T object) {
+        Validate.notNull(object, "Object cannot be null");
+        this.object = object;
+    }
 
     @Override
     public int hashCode() {
@@ -25,7 +46,7 @@ public class WeightedNode<T> {
             compared = ((WeightedNode<?>) obj).getObject();
         }
 
-        return obj != null && object.getClass().isInstance(compared) && compared.hashCode() == hashCode();
+        return object.getClass().isInstance(compared) && compared.hashCode() == hashCode();
     }
 
 }
