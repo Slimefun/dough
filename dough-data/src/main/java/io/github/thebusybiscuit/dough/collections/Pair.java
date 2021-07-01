@@ -23,19 +23,19 @@ public class Pair<P, S> {
         this(pair.getFirstValue().orElse(null), pair.getSecondValue().orElse(null));
     }
 
-    public P getFirstValue() {
+    public @Nullable P getFirstValue() {
         return this.firstValue;
     }
 
-    public S getSecondValue() {
+    public @Nullable S getSecondValue() {
         return this.secondValue;
     }
 
-    public void setFirstValue(P firstValue) {
+    public void setFirstValue(@Nullable P firstValue) {
         this.firstValue = firstValue;
     }
 
-    public void setSecondValue(S secondValue) {
+    public void setSecondValue(@Nullable S secondValue) {
         this.secondValue = secondValue;
     }
 
