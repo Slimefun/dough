@@ -1,5 +1,7 @@
 package io.github.thebusybiscuit.dough.versions;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.Validate;
@@ -38,6 +40,20 @@ public class PrefixedVersion implements Version {
     @Override
     public @Nonnull String getAsString() {
         return prefix + version;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(prefix, version);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Version) {
+            return isEqualTo((Version) obj);
+        } else {
+            return false;
+        }
     }
 
     // TODO Unit tests

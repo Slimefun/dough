@@ -45,7 +45,7 @@
         <!-- Implementing modules -->
         <module>dough-config</module>
         <module>dough-chat</module>
-        <!-- <module>dough-data</module> -->
+        <module>dough-data</module>
         <module>dough-skins</module>
         <module>dough-items</module>
         <module>dough-inventories</module>
