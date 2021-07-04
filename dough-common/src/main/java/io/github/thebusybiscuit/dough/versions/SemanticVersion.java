@@ -1,9 +1,22 @@
 package io.github.thebusybiscuit.dough.versions;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.Validate;
 
+/**
+ * A {@link SemanticVersion} follows the semantic version convention.
+ * The version itself consists of three components, a major version number,
+ * a minor version number and a patch version number.
+ * <p>
+ * The components are read and compared in that exact order.
+ * If the patch version number is zero, it may be omitted from the version string.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public class SemanticVersion implements Version {
 
     private final int majorVersion;
@@ -20,15 +33,15 @@ public class SemanticVersion implements Version {
         this.patchVersion = patch;
     }
 
-    public int getMajorVersion() {
+    public final int getMajorVersion() {
         return majorVersion;
     }
 
-    public int getMinorVersion() {
+    public final int getMinorVersion() {
         return minorVersion;
     }
 
-    public int getPatchVersion() {
+    public final int getPatchVersion() {
         return patchVersion;
     }
 
@@ -60,6 +73,20 @@ public class SemanticVersion implements Version {
             return majorVersion + "." + minorVersion + "." + patchVersion;
         } else {
             return majorVersion + "." + minorVersion;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(majorVersion, minorVersion, patchVersion);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Version) {
+            return isEqualTo((Version) obj);
+        } else {
+            return false;
         }
     }
 
