@@ -32,7 +32,7 @@ public final class InvUtils {
      * @return Whether an empty slot exists
      */
     public static boolean hasEmptySlot(@Nonnull Inventory inv) {
-        return inv.firstEmpty() != 1;
+        return inv.firstEmpty() != -1;
     }
 
     /**
@@ -125,7 +125,7 @@ public final class InvUtils {
         for (int slot : slots) {
             ItemStack stack = inv.getItem(slot);
 
-            if (stack == null || stack.getType() == Material.AIR) {
+            if (stack == null || stack.getType().isAir()) {
                 return true;
             }
 
@@ -165,15 +165,14 @@ public final class InvUtils {
 
         Map<Integer, ItemStack> cache = new HashMap<>();
 
-        for (int i = 0; i < items.length; i++) {
-            ItemStack item = items[i];
+        for (ItemStack item : items) {
             boolean resolved = false;
 
             for (int slot : slots) {
                 ItemStack stack = cache.getOrDefault(slot, inv.getItem(slot));
 
                 if (stack == null || stack.getType() == Material.AIR) {
-                    cache.put(slot, items[i]);
+                    cache.put(slot, item);
                     resolved = true;
                 } else if (isValidStackSize(stack, item, inv) && ItemUtils.canStack(stack, item)) {
                     ItemStack clone = stack.clone();

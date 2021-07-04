@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -425,10 +424,8 @@ public class ChestMenu implements Cloneable, Iterable<ItemStack> {
         if (inv == null)
             return;
 
-        Iterator<HumanEntity> iterator = new ArrayList<>(inv.getViewers()).iterator();
-
-        while (iterator.hasNext()) {
-            iterator.next().closeInventory();
+        for (final HumanEntity entity : inv.getViewers()) {
+            entity.closeInventory();
         }
     }
 

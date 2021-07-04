@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +13,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 class ChestMenuListener implements Listener {
@@ -28,70 +30,75 @@ class ChestMenuListener implements Listener {
     }
 
     @EventHandler
-    public void onDisable(PluginDisableEvent e) {
-        if (e.getPlugin() == plugin) {
+    public void onDisable(PluginDisableEvent event) {
+        if (event.getPlugin() == plugin) {
             ChestMenu.listener = null;
         }
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent e) {
-        if (menus.containsKey(e.getWhoClicked().getUniqueId())) {
-            ChestMenu menu = menus.get(e.getWhoClicked().getUniqueId());
+    public void onClick(InventoryClickEvent event) {
+        HumanEntity entity = event.getWhoClicked();
+        if (!menus.containsKey(entity.getUniqueId())) {
+            return;
+        }
+        Inventory inventory = entity.getInventory();
+        ChestMenu menu = menus.get(entity.getUniqueId());
+        ItemStack currentItem = event.getCurrentItem();
+        ItemStack cursorItem = event.getCursor();
 
-            if (menu.preventsItems(e.getCurrentItem()) || menu.preventsItems(e.getCursor()) || (e.getHotbarButton() != -1 && menu.preventsItems(e.getWhoClicked().getInventory().getItem(e.getHotbarButton())))) {
-                e.setCancelled(true);
+        if (menu.preventsItems(currentItem) || menu.preventsItems(cursorItem) || (event.getHotbarButton() != -1 && menu.preventsItems(inventory.getItem(event.getHotbarButton())))) {
+            event.setCancelled(true);
+            return;
+        }
+        MenuClickHandler handler = null;
+        Inventory eventInventory = event.getInventory();
+        if (event.getRawSlot() < eventInventory.getSize()) {
+            handler = menu.getMenuClickHandler(event.getSlot());
+
+            if (handler == null) {
+                event.setCancelled(!menu.areEmptySlotsClickable() && (currentItem == null || currentItem.getType().isAir()));
             } else {
-                MenuClickHandler handler = null;
-
-                if (e.getRawSlot() < e.getInventory().getSize()) {
-                    handler = menu.getMenuClickHandler(e.getSlot());
-
-                    if (handler == null) {
-                        e.setCancelled(!menu.areEmptySlotsClickable() && (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR));
-                    } else {
-                        e.setCancelled(!handler.onClick((Player) e.getWhoClicked(), e.getSlot(), e.getCurrentItem(), e.getCursor(), getClickAction(e)));
-                    }
-                } else {
-                    e.setCancelled(!menu.getPlayerInventoryClickHandler().onClick((Player) e.getWhoClicked(), e.getSlot(), e.getCurrentItem(), e.getCursor(), getClickAction(e)));
-                }
-
-                if (handler == null) {
-                    boolean clicked = !(e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR);
-                    boolean cursor = !(e.getCursor() == null || e.getCursor().getType() == Material.AIR);
-
-                    if (clicked || cursor)
-                        menu.markDirty();
-                }
+                event.setCancelled(!handler.onClick((Player) entity, event.getSlot(), currentItem, event.getCursor(), getClickAction(event)));
             }
+        } else {
+            event.setCancelled(!menu.getPlayerInventoryClickHandler().onClick((Player) entity, event.getSlot(), currentItem, event.getCursor(), getClickAction(event)));
+        }
+
+        if (handler == null) {
+            boolean clicked = currentItem != null && currentItem.getType().isAir();
+            boolean cursor = cursorItem != null && cursorItem.getType().isAir();
+
+            if (clicked || cursor)
+                menu.markDirty();
         }
     }
 
     @EventHandler
-    public void onClose(InventoryCloseEvent e) {
-        ChestMenu menu = menus.get(e.getPlayer().getUniqueId());
+    public void onClose(InventoryCloseEvent event) {
+        ChestMenu menu = menus.get(event.getPlayer().getUniqueId());
 
         if (menu != null) {
-            menu.onClose((Player) e.getPlayer());
-            menus.remove(e.getPlayer().getUniqueId());
+            menu.onClose((Player) event.getPlayer());
+            menus.remove(event.getPlayer().getUniqueId());
         }
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent e) {
-        menus.remove(e.getPlayer().getUniqueId());
+    public void onLeave(PlayerQuitEvent event) {
+        menus.remove(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
-    public void onKick(PlayerKickEvent e) {
-        menus.remove(e.getPlayer().getUniqueId());
+    public void onKick(PlayerKickEvent event) {
+        menus.remove(event.getPlayer().getUniqueId());
     }
 
-    private ClickAction getClickAction(InventoryClickEvent e) {
-        if (e.isRightClick()) {
-            return e.isShiftClick() ? ClickAction.SHIFT_RIGHT_CLICK : ClickAction.RIGHT_CLICK;
+    private ClickAction getClickAction(InventoryClickEvent event) {
+        if (event.isRightClick()) {
+            return event.isShiftClick() ? ClickAction.SHIFT_RIGHT_CLICK : ClickAction.RIGHT_CLICK;
         } else {
-            return e.isShiftClick() ? ClickAction.SHIFT_LEFT_CLICK : ClickAction.LEFT_CLICK;
+            return event.isShiftClick() ? ClickAction.SHIFT_LEFT_CLICK : ClickAction.LEFT_CLICK;
         }
     }
 
