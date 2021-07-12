@@ -1,29 +1,37 @@
 package io.github.thebusybiscuit.dough.inventory.builders;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import org.apache.commons.lang.Validate;
 
 import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
 public class InventoryLayoutBuilder {
 
-    private final int size;
+    protected final int size;
+    protected final Set<SlotGroup> groups = new HashSet<>();
 
     public InventoryLayoutBuilder(int size) {
-        // TODO: Validate size input
+        Validate.isTrue(size > 0, "The size must be greater than 0.");
+        Validate.isTrue(size % 9 == 0, "The size must be a multiple of 9.");
+        Validate.isTrue(size <= 54, "The size must not be greater than 54.");
+
         this.size = size;
     }
 
     @ParametersAreNonnullByDefault
     public @Nonnull InventoryLayoutBuilder addSlotGroup(SlotGroup group) {
-        // TODO: Create slot group
+        groups.add(group);
         return this;
     }
 
     public @Nonnull InventoryLayout build() {
-        // TODO: Implement builder
-        return null;
+        return new InventoryLayoutBuilderResult(this);
     }
 
 }

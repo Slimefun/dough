@@ -1,18 +1,25 @@
 package io.github.thebusybiscuit.dough.inventory.builders;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.apache.commons.lang.Validate;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
 public class SlotGroupBuilder {
 
-    private final char identifier;
-    private final String name;
+    protected final char identifier;
+    protected final String name;
+    protected final Set<Integer> slots = new HashSet<>();
 
-    private boolean interactable = false;
+    protected ItemStack defaultItem = new ItemStack(Material.AIR);
+    protected boolean interactable = false;
 
     @ParametersAreNonnullByDefault
     public SlotGroupBuilder(char identifier, String name) {
@@ -26,23 +33,30 @@ public class SlotGroupBuilder {
     }
 
     public @Nonnull SlotGroupBuilder withSlot(int slot) {
-        // TODO: add slot
+        this.slots.add(slot);
         return this;
     }
 
     public @Nonnull SlotGroupBuilder withSlots(int... slots) {
-        // TODO: add slots
+        for (int slot : slots) {
+            this.slots.add(slot);
+        }
         return this;
     }
 
     public @Nonnull SlotGroupBuilder withDefaultItem(@Nonnull ItemStack item) {
-        // TODO: Set default item
+        Validate.notNull(item, "The item cannot be null.");
+        this.defaultItem = item;
         return this;
     }
 
     public @Nonnull SlotGroup build() {
-        // TODO: Implement builder
-        return null;
+        Validate.notNull(identifier, "The char identifier may not be null.");
+        Validate.notNull(name, "The name may not be null.");
+        Validate.notNull(defaultItem, "The default item may not be null.");
+        Validate.notEmpty(slots, "A SlotGroup must have at least one slot.");
+
+        return new SlotGroupBuilderResult(this);
     }
 
 }

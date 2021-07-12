@@ -20,7 +20,7 @@ public final class Inventories {
     }
 
     static @Nonnull CustomInventory createInventory(@Nonnull InventoryLayout layout) {
-        Inventory inv = Bukkit.createInventory(layout, layout.getSize());
+//        Inventory inv = Bukkit.createInventory(layout, layout.getSize());
 
         // TODO Wrap Inventory using CustomInventory
 

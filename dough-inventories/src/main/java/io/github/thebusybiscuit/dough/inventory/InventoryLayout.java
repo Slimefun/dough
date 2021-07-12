@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-public interface InventoryLayout extends InventoryHolder {
+public interface InventoryLayout {
 
     @Nonnull
     Set<SlotGroup> getSlotGroups();

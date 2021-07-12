@@ -50,10 +50,19 @@ public interface SlotGroup {
      * This method returns an array containing all the individual slots of
      * this {@link SlotGroup}.
      * 
-     * @return An array with all slots of this {@link SlotGroup}.
+     * @return An array with all slots of this {@link SlotGroup}
      */
     @Nonnull
     int[] getSlots();
+
+    /**
+     * This returns the size of this {@link SlotGroup}.
+     * 
+     * @return The size of this {@link SlotGroup}
+     */
+    default int size() {
+        return getSlots().length;
+    }
 
     /**
      * This returns the default {@link ItemStack} for this {@link SlotGroup}.
