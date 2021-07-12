@@ -31,6 +31,8 @@ public class InventoryLayoutBuilder {
     }
 
     public @Nonnull InventoryLayout build() {
+        Validate.notEmpty(groups, "There are no SlotGroups defined.");
+
         return new InventoryLayoutBuilderResult(this);
     }
 

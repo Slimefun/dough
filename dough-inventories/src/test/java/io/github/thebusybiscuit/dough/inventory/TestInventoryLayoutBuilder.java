@@ -6,23 +6,42 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import io.github.thebusybiscuit.dough.inventory.builders.InventoryLayoutBuilder;
 import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
 
+import be.seeseemelk.mockbukkit.MockBukkit;
+
 class TestInventoryLayoutBuilder {
+
+    @BeforeAll
+    static void setup() {
+        MockBukkit.mock();
+    }
+
+    @AfterAll
+    static void teardown() {
+        MockBukkit.unmock();
+    }
 
     @Test
     void testSlotGroups() {
@@ -31,19 +50,23 @@ class TestInventoryLayoutBuilder {
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .interactable(false)
-                    .withSlots(1, 2, 3)
+                    .withSlot(1)
+                    .withSlot(2)
+                    .withSlot(3)
                     .build()
             )
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test2")
                     .interactable(true)
                     .withSlots(0, 4, 5, 6, 7, 8)
+                    .withDefaultItem(new ItemStack(Material.DIAMOND))
                     .build()
             )
             .build();
         // @formatter:on
 
         assertNotNull(layout);
+        assertEquals(9, layout.getSize());
 
         SlotGroup group = layout.getGroup('x');
 
@@ -62,6 +85,79 @@ class TestInventoryLayoutBuilder {
         assertNotEquals(group, group2);
         assertEquals(6, group2.size());
         assertSame(group2, layout.getGroup(0));
+        assertEquals(new ItemStack(Material.DIAMOND), group2.getDefaultItemStack());
+
+        Set<SlotGroup> groups = layout.getSlotGroups();
+        assertEquals(2, groups.size());
+        assertTrue(groups.contains(group));
+        assertTrue(groups.contains(group2));
+    }
+
+    @Test
+    void testSlotGroupOverlapping() {
+        // @formatter:off
+        InventoryLayoutBuilder builder = new InventoryLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlot(1)
+                    .build()
+            )
+            .addSlotGroup(
+                new SlotGroupBuilder('y', "test2")
+                    .withSlot(1)
+                    .build()
+            );
+        // @formatter:on
+
+        assertThrows(IllegalStateException.class, builder::build);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { -1, 10 })
+    void testOutsideSlotGroups(int slot) {
+        // @formatter:off
+        InventoryLayoutBuilder builder = new InventoryLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlot(slot)
+                    .build()
+            );
+        // @formatter:on
+
+        assertThrows(IllegalArgumentException.class, builder::build);
+    }
+
+    @Test
+    void testUnknownSlotGroups() {
+        // @formatter:off
+        InventoryLayout layout = new InventoryLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
+                    .build()
+            )
+            .build();
+        // @formatter:on
+
+        assertThrows(IllegalArgumentException.class, () -> layout.getGroup(-1));
+        assertThrows(IllegalArgumentException.class, () -> layout.getGroup(10));
+        assertThrows(IllegalArgumentException.class, () -> layout.getGroup('a'));
+        assertThrows(IllegalArgumentException.class, () -> layout.getGroup("Walshy"));
+        assertThrows(IllegalArgumentException.class, () -> layout.getGroup(null));
+    }
+
+    @Test
+    void testIncompleteSlotGroups() {
+        // @formatter:off
+        InventoryLayoutBuilder builder = new InventoryLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlots(1, 2, 3, 4, 5, 6, 7, 8)
+                    .build()
+            );
+        // @formatter:on
+
+        assertThrows(IllegalStateException.class, builder::build);
     }
 
     @ParameterizedTest(name = "{0} is not a valid inventory size.")
