@@ -14,7 +14,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -135,18 +134,17 @@ class TestInventoryCreation {
     }
 
     @Test
-    @Disabled("Not yet implemented")
     void testAddItem() {
         // @formatter:off
         InventoryLayout layout = new InventoryLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3)
+                    .withSlots(0, 1, 2, 3, 4, 5)
                     .build()
             )
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test2")
-                    .withSlots(4, 5, 6, 7, 8)
+                    .withSlots(6, 7, 8)
                     .build()
             )
             .build();
@@ -155,18 +153,29 @@ class TestInventoryCreation {
         CustomInventory inv = layout.createInventory();
         SlotGroup group = layout.getGroup('y');
 
+        inv.setItem(6, new ItemStack(Material.AIR));
+
         ItemStack item = new ItemStack(Material.EMERALD);
         inv.addItem(group, item);
 
         assertNull(inv.getItem(0));
-        assertEquals(item, inv.getItem(4));
+        assertEquals(item, inv.getItem(6));
 
         inv.addItem(group, item);
-        assertEquals(2, inv.getItem(4).getAmount());
+        assertEquals(2, inv.getItem(6).getAmount());
 
         inv.addItem(group, new ItemStack(Material.EMERALD, 63));
-        assertEquals(64, inv.getItem(4).getAmount());
-        assertEquals(item, inv.getItem(5));
+        assertEquals(64, inv.getItem(6).getAmount());
+        assertEquals(item, inv.getItem(7));
+
+        inv.addItem(group, item);
+        assertEquals(2, inv.getItem(7).getAmount());
+
+        inv.addItem(group, new ItemStack(Material.DIAMOND));
+        assertEquals(new ItemStack(Material.DIAMOND), inv.getItem(8));
+
+        ItemStack cantFit = new ItemStack(Material.GOLDEN_APPLE);
+        assertEquals(cantFit, inv.addItem(group, cantFit));
     }
 
 }

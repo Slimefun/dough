@@ -68,23 +68,36 @@ class CustomInventoryImpl implements CustomInventory {
 
     @Override
     @ParametersAreNonnullByDefault
-    public boolean addItem(SlotGroup group, ItemStack item) {
+    public @Nullable ItemStack addItem(SlotGroup group, ItemStack item) {
         Validate.notNull(group, "The Slot group cannot be null!");
         Validate.notNull(item, "The Item cannot be null!");
         validate();
 
         for (int slot : group) {
-            ItemStack stack = getItem(slot);
+            ItemStack itemInSlot = getItem(slot);
 
-            if (stack == null || stack.getType().isAir()) {
+            if (itemInSlot == null || itemInSlot.getType().isAir()) {
                 setItem(slot, item);
-                return true;
+                return null;
             } else {
-                // TODO: Implement partial stack matching and stack overflowing
+                int currentAmount = itemInSlot.getAmount();
+                int maxStackSize = itemInSlot.getType().getMaxStackSize();
+
+                if (currentAmount < maxStackSize && itemInSlot.isSimilar(item)) {
+                    int amount = currentAmount + item.getAmount();
+
+                    if (amount > maxStackSize) {
+                        item.setAmount(amount - maxStackSize);
+                        itemInSlot.setAmount(maxStackSize);
+                    } else {
+                        itemInSlot.setAmount(Math.min(amount, maxStackSize));
+                        return null;
+                    }
+                }
             }
         }
 
-        return false;
+        return item;
     }
 
     @Override

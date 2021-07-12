@@ -25,7 +25,8 @@ public interface CustomInventory extends InventoryHolder {
     void setAll(@Nonnull SlotGroup group, @Nullable ItemStack item);
 
     @ParametersAreNonnullByDefault
-    boolean addItem(SlotGroup group, ItemStack item);
+    @Nullable
+    ItemStack addItem(SlotGroup group, ItemStack item);
 
     void setItem(int slot, @Nullable ItemStack item);
 
