@@ -1,12 +1,14 @@
 package io.github.thebusybiscuit.dough.inventory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 // TODO: Rename this class
-public interface CustomInventory {
+public interface CustomInventory extends InventoryHolder {
 
     /**
      * This returns the {@link InventoryLayout} which was used to create
@@ -17,16 +19,21 @@ public interface CustomInventory {
     @Nonnull
     InventoryLayout getLayout();
 
-    @ParametersAreNonnullByDefault
-    void setAll(SlotGroup group, ItemStack item);
+    @Nullable
+    String getTitle();
+
+    void setAll(@Nonnull SlotGroup group, @Nullable ItemStack item);
 
     @ParametersAreNonnullByDefault
     boolean addItem(SlotGroup group, ItemStack item);
 
-    @ParametersAreNonnullByDefault
-    void setItem(int slot, ItemStack item);
+    void setItem(int slot, @Nullable ItemStack item);
 
-    @Nonnull
+    @Nullable
     ItemStack getItem(int slot);
+
+    default int getSize() {
+        return getInventory().getSize();
+    }
 
 }

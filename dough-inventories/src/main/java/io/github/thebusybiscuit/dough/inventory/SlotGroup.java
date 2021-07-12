@@ -1,6 +1,9 @@
 package io.github.thebusybiscuit.dough.inventory;
 
+import java.util.Iterator;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -13,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
  * @author TheBusyBiscuit
  *
  */
-public interface SlotGroup {
+public interface SlotGroup extends Iterable<Integer> {
 
     /**
      * This returns the unique identifier for this {@link SlotGroup},
@@ -70,7 +73,12 @@ public interface SlotGroup {
      * 
      * @return The default {@link ItemStack}
      */
-    @Nonnull
+    @Nullable
     ItemStack getDefaultItemStack();
+
+    @Override
+    default @Nonnull Iterator<Integer> iterator() {
+        return new SlotGroupIterator(this);
+    }
 
 }

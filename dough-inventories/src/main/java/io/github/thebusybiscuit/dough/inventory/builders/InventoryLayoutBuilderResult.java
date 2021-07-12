@@ -17,10 +17,12 @@ import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 class InventoryLayoutBuilderResult implements InventoryLayout {
 
     private final int size;
+    private final String title;
     private final Set<SlotGroup> groups = new HashSet<>();
 
     InventoryLayoutBuilderResult(@Nonnull InventoryLayoutBuilder builder) {
         this.size = builder.size;
+        this.title = builder.title;
         this.groups.addAll(builder.groups);
 
         Set<Integer> slots = new HashSet<>();
@@ -28,7 +30,7 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
         for (SlotGroup group : groups) {
             Validate.notNull(group, "SlotGroups cannot be null.");
 
-            for (int slot : group.getSlots()) {
+            for (int slot : group) {
                 Validate.isTrue(slot >= 0 && slot < size, "Slot " + slot + " is outside the bounds of this inventory (0 - " + size + ')');
 
                 if (!slots.add(slot)) {
@@ -53,6 +55,11 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
     }
 
     @Override
+    public @Nullable String getTitle() {
+        return title;
+    }
+    
+    @Override
     public @Nonnull SlotGroup getGroup(char identifier) {
         SlotGroup result = findGroup(group -> group.getCharIdentifier() == identifier);
 
@@ -66,7 +73,7 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
     @Override
     public @Nonnull SlotGroup getGroup(int slot) {
         SlotGroup result = findGroup(group -> {
-            for (int groupSlot : group.getSlots()) {
+            for (int groupSlot : group) {
                 if (groupSlot == slot) {
                     return true;
                 }

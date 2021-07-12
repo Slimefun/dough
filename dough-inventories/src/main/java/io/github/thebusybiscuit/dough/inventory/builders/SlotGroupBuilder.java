@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.apache.commons.lang.Validate;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
@@ -18,7 +18,7 @@ public class SlotGroupBuilder {
     protected final String name;
     protected final Set<Integer> slots = new HashSet<>();
 
-    protected ItemStack defaultItem = new ItemStack(Material.AIR);
+    protected ItemStack defaultItem = null;
     protected boolean interactable = false;
 
     @ParametersAreNonnullByDefault
@@ -44,8 +44,7 @@ public class SlotGroupBuilder {
         return this;
     }
 
-    public @Nonnull SlotGroupBuilder withDefaultItem(@Nonnull ItemStack item) {
-        Validate.notNull(item, "The item cannot be null.");
+    public @Nonnull SlotGroupBuilder withDefaultItem(@Nullable ItemStack item) {
         this.defaultItem = item;
         return this;
     }
@@ -53,7 +52,6 @@ public class SlotGroupBuilder {
     public @Nonnull SlotGroup build() {
         Validate.notNull(identifier, "The char identifier may not be null.");
         Validate.notNull(name, "The name may not be null.");
-        Validate.notNull(defaultItem, "The default item may not be null.");
         Validate.notEmpty(slots, "A SlotGroup must have at least one slot.");
 
         return new SlotGroupBuilderResult(this);
