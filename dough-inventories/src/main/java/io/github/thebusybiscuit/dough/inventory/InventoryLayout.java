@@ -7,8 +7,6 @@ import javax.annotation.Nonnull;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import io.github.thebusybiscuit.dough.inventory.implementation.Inventories;
-
 public interface InventoryLayout extends InventoryHolder {
 
     @Nonnull

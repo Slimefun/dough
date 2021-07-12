@@ -23,4 +23,10 @@ public interface CustomInventory {
     @ParametersAreNonnullByDefault
     boolean addItem(SlotGroup group, ItemStack item);
 
+    @ParametersAreNonnullByDefault
+    void setItem(int slot, ItemStack item);
+
+    @Nonnull
+    ItemStack getItem(int slot);
+
 }
