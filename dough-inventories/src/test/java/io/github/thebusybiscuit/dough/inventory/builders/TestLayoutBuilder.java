@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.dough.inventory;
+package io.github.thebusybiscuit.dough.inventory.builders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -26,8 +26,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import io.github.thebusybiscuit.dough.inventory.builders.MenuLayoutBuilder;
-import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
+import io.github.thebusybiscuit.dough.inventory.MenuLayout;
+import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 
@@ -105,6 +105,44 @@ class TestLayoutBuilder {
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test2")
                     .withSlot(1)
+                    .build()
+            );
+        // @formatter:on
+
+        assertThrows(IllegalStateException.class, builder::build);
+    }
+
+    @Test
+    void testSlotGroupIdentifierCollision() {
+        // @formatter:off
+        MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlots(0, 1, 2, 3)
+                    .build()
+            )
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test2")
+                    .withSlots(4, 5, 6, 7, 8)
+                    .build()
+            );
+        // @formatter:on
+
+        assertThrows(IllegalStateException.class, builder::build);
+    }
+
+    @Test
+    void testSlotGroupNameCollision() {
+        // @formatter:off
+        MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlots(0, 1, 2, 3)
+                    .build()
+            )
+            .addSlotGroup(
+                new SlotGroupBuilder('y', "test")
+                    .withSlots(4, 5, 6, 7, 8)
                     .build()
             );
         // @formatter:on

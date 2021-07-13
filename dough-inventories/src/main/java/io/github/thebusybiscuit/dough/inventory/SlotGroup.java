@@ -27,7 +27,7 @@ public interface SlotGroup extends Iterable<Integer> {
      * @return The unique identifier of this {@link SlotGroup}
      */
     @Nonnull
-    char getCharIdentifier();
+    char getIdentifier();
 
     /**
      * This method returns whether this {@link SlotGroup} is interactable.

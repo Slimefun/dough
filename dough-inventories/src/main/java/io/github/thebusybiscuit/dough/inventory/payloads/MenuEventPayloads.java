@@ -8,9 +8,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import io.github.thebusybiscuit.dough.inventory.Menu;
 
-public class Payloads {
+/**
+ * Utility class for constructing an event payload for menu handlers.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
+public class MenuEventPayloads {
 
-    private Payloads() {}
+    private MenuEventPayloads() {}
 
     @ParametersAreNonnullByDefault
     public static @Nonnull MenuClickPayload create(Menu inv, InventoryClickEvent e) {

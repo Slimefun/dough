@@ -55,7 +55,7 @@ class TestMenuCreation {
             .build();
         // @formatter:on
 
-        Menu inv = factory.createInventory(layout);
+        Menu inv = factory.createMenu(layout);
 
         assertNotNull(inv);
         assertEquals(layout, inv.getLayout());
@@ -127,7 +127,7 @@ class TestMenuCreation {
             .build();
         // @formatter:on
 
-        Menu inv = factory.createInventory(layout);
+        Menu inv = factory.createMenu(layout);
 
         assertEquals(new ItemStack(Material.APPLE), inv.getItem(0));
         assertEquals(new ItemStack(Material.APPLE), inv.getItem(1));
@@ -157,7 +157,7 @@ class TestMenuCreation {
             .build();
         // @formatter:on
 
-        Menu inv = factory.createInventory(layout);
+        Menu inv = factory.createMenu(layout);
         SlotGroup group = layout.getGroup('y');
 
         inv.setItem(6, new ItemStack(Material.AIR));

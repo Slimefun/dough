@@ -45,7 +45,7 @@ class TestMenuClosing {
             .build();
         // @formatter:on
 
-        Menu inv = factory.createInventory(layout);
+        Menu inv = factory.createMenu(layout);
 
         Player player = server.addPlayer();
         InventoryView view = inv.open(player);

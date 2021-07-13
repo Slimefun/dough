@@ -9,7 +9,7 @@ import org.bukkit.inventory.InventoryHolder;
 
 import io.github.thebusybiscuit.dough.inventory.Menu;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
-import io.github.thebusybiscuit.dough.inventory.payloads.Payloads;
+import io.github.thebusybiscuit.dough.inventory.payloads.MenuEventPayloads;
 
 class MenuListener implements Listener {
 
@@ -42,7 +42,7 @@ class MenuListener implements Listener {
                 e.setCancelled(true);
             }
 
-            slotGroup.getClickHandler().onClick(Payloads.create(inv, e));
+            slotGroup.getClickHandler().onClick(MenuEventPayloads.create(inv, e));
         }
     }
 

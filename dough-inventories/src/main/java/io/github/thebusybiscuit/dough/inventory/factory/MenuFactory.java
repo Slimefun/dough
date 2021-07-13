@@ -31,7 +31,7 @@ public class MenuFactory {
     }
 
     @OverridingMethodsMustInvokeSuper
-    public @Nonnull Menu createInventory(@Nonnull MenuLayout layout) {
+    public @Nonnull Menu createMenu(@Nonnull MenuLayout layout) {
         MenuImpl impl = new MenuImpl(this, layout);
         String title = layout.getTitle();
         Inventory inv;

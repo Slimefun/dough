@@ -82,7 +82,7 @@ class TestMenuClicking {
 
         assertListenerRegistered();
 
-        Menu inv = factory.createInventory(layout);
+        Menu inv = factory.createMenu(layout);
         Player player = server.addPlayer();
         int slot = 1;
 
@@ -122,8 +122,8 @@ class TestMenuClicking {
             .build();
         // @formatter:on
 
-        Menu inv = factory.createInventory(layout);
-        Menu inv2 = factory2.createInventory(layout);
+        Menu inv = factory.createMenu(layout);
+        Menu inv2 = factory2.createMenu(layout);
 
         simulateClickEvents(inv, 2);
         simulateClickEvents(inv2, 4);

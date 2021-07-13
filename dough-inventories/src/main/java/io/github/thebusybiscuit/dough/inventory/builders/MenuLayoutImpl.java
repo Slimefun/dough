@@ -28,15 +28,27 @@ class MenuLayoutImpl implements MenuLayout {
         this.groups.addAll(builder.groups);
         this.groupsBySlot = new SlotGroup[size];
 
-        Set<Integer> slots = new HashSet<>();
+        Set<Character> uniqueCharacters = new HashSet<>();
+        Set<String> uniqueNames = new HashSet<>();
+        Set<Integer> coveredSlots = new HashSet<>();
 
         for (SlotGroup group : groups) {
             Validate.notNull(group, "SlotGroups cannot be null.");
 
-            for (int slot : group) {
-                Validate.isTrue(slot >= 0 && slot < size, "Slot " + slot + " is outside the bounds of this inventory (0 - " + size + ')');
+            // Check for duplicate identifiers
+            if (!uniqueCharacters.add(group.getIdentifier())) {
+                throw new IllegalStateException("Identifier '" + group.getIdentifier() + "' is used more than once!");
+            }
 
-                if (!slots.add(slot)) {
+            // Check for duplicate names
+            if (!uniqueNames.add(group.getName())) {
+                throw new IllegalStateException("Name '" + group.getName() + "' is used more than once!");
+            }
+
+            for (int slot : group) {
+                Validate.isTrue(slot >= 0 && slot < size, "The slot " + slot + " is outside the bounds of this inventory (0 - " + size + ')');
+
+                if (!coveredSlots.add(slot)) {
                     throw new IllegalStateException("Slot " + slot + " is defined by multiple slot groups.");
                 }
 
@@ -44,8 +56,8 @@ class MenuLayoutImpl implements MenuLayout {
             }
         }
 
-        if (slots.size() != size) {
-            throw new IllegalStateException("Only " + slots.size() + " / " + size + " slots are covered by slot groups.");
+        if (coveredSlots.size() != size) {
+            throw new IllegalStateException("Only " + coveredSlots.size() + " / " + size + " slots are covered by slot groups.");
         }
     }
 
@@ -66,7 +78,7 @@ class MenuLayoutImpl implements MenuLayout {
 
     @Override
     public @Nonnull SlotGroup getGroup(char identifier) {
-        SlotGroup result = findGroup(group -> group.getCharIdentifier() == identifier);
+        SlotGroup result = findGroup(group -> group.getIdentifier() == identifier);
 
         if (result != null) {
             return result;

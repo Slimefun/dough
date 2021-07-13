@@ -38,7 +38,7 @@ class SlotGroupImpl implements SlotGroup {
     }
 
     @Override
-    public char getCharIdentifier() {
+    public char getIdentifier() {
         return identifier;
     }
 

@@ -18,6 +18,12 @@ import io.github.thebusybiscuit.dough.inventory.factory.MenuFactory;
 
 public interface Menu extends InventoryHolder {
 
+    /**
+     * This method returns the {@link MenuFactory} which was used
+     * to create this {@link Menu}.
+     * 
+     * @return The original {@link MenuFactory}
+     */
     @Nonnull
     MenuFactory getFactory();
 
