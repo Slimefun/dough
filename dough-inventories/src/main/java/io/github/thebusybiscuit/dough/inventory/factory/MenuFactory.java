@@ -1,6 +1,7 @@
 package io.github.thebusybiscuit.dough.inventory.factory;
 
 import java.util.function.BiFunction;
+import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -20,6 +21,8 @@ public class MenuFactory {
     private final Plugin plugin;
 
     public MenuFactory(@Nonnull Plugin plugin) {
+        Validate.notNull(plugin, "The plugin instance cannot be null.");
+
         this.plugin = plugin;
         registerListener(plugin);
     }
@@ -30,8 +33,23 @@ public class MenuFactory {
         return listener;
     }
 
+    /**
+     * This returns the {@link Plugin} which instantiated this {@link MenuFactory}.
+     * 
+     * @return The {@link Plugin} instance
+     */
     public final @Nonnull Plugin getPlugin() {
         return plugin;
+    }
+
+    /**
+     * Shortcut method for getting the {@link Logger} from
+     * {@link #getPlugin()}.
+     * 
+     * @return The {@link Logger} of our {@link Plugin}
+     */
+    public final @Nonnull Logger getLogger() {
+        return plugin.getLogger();
     }
 
     @OverridingMethodsMustInvokeSuper

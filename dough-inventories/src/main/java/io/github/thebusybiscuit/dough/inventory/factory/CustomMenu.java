@@ -128,4 +128,9 @@ public class CustomMenu implements Menu {
         return inventory.getItem(slot);
     }
 
+    @Override
+    public @Nonnull String toString() {
+        return getClass().getSimpleName() + " [size: " + layout.getSize() + ", title=" + title + "]";
+    }
+
 }

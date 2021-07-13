@@ -156,7 +156,7 @@ class TestMenuClicking {
                 Listener clickListener = listener.getListener();
     
                 if (plugin.equals(factory.getPlugin()) && clickListener instanceof MenuListener) {
-                    return factory.equals(((MenuListener) clickListener).getInventoryFactory());
+                    return factory.equals(((MenuListener) clickListener).getFactory());
                 } else {
                     return false;
                 }
