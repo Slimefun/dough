@@ -19,7 +19,7 @@
             "name" : "input_background",
             "interactable" : false,
             "item" : {
-                "material" : "minecraft:cyan_stained_gl ass_pane",
+                "material" : "minecraft:cyan_stained_glass_pane",
                 "name" : ""
             }
         },

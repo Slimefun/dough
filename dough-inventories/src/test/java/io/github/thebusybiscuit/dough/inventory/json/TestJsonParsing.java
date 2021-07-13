@@ -1,21 +1,57 @@
 package io.github.thebusybiscuit.dough.inventory.json;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.InputStream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.junit.jupiter.api.Test;
 
 import io.github.thebusybiscuit.dough.inventory.MenuLayout;
+import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
 class TestJsonParsing {
 
     @Test
     void testValidFile() {
         assertDoesNotThrow(() -> parse("valid1"));
+    }
+
+    @Test
+    void testCorrectSlotGroups() throws InvalidLayoutException {
+        MenuLayout layout = parse("valid2");
+
+        assertEquals(27, layout.getSize());
+        assertEquals(3, layout.getSlotGroups().size());
+
+        assertSlotGroup(layout, 0, '*', "background", false);
+        assertSlotGroup(layout, 13, '*', "background", false);
+        assertSlotGroup(layout, 26, '*', "background", false);
+
+        assertSlotGroup(layout, 10, '+', "input", true);
+        assertSlotGroup(layout, 11, '+', "input", true);
+
+        assertSlotGroup(layout, 14, '-', "output", true);
+        assertSlotGroup(layout, 17, '-', "output", true);
+    }
+
+    @ParametersAreNonnullByDefault
+    private void assertSlotGroup(MenuLayout layout, int slot, char identifier, String name, boolean interactable) {
+        SlotGroup group1 = layout.getGroup(slot);
+        SlotGroup group2 = layout.getGroup(identifier);
+        SlotGroup group3 = layout.getGroup(name);
+
+        assertSame(group1, group2);
+        assertSame(group1, group3);
+        assertSame(group2, group3);
+
+        // All three are the same, so this should apply to all of them.
+        assertEquals(interactable, group1.isInteractable());
     }
 
     @Test
