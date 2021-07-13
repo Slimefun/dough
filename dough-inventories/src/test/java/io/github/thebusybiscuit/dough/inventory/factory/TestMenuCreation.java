@@ -18,22 +18,22 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import io.github.thebusybiscuit.dough.inventory.CustomInventory;
-import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
+import io.github.thebusybiscuit.dough.inventory.Menu;
+import io.github.thebusybiscuit.dough.inventory.MenuLayout;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
-import io.github.thebusybiscuit.dough.inventory.builders.InventoryLayoutBuilder;
+import io.github.thebusybiscuit.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 
-class TestInventoryCreation {
+class TestMenuCreation {
 
-    private static CustomInventoryFactory factory;
+    private static MenuFactory factory;
 
     @BeforeAll
     static void setup() {
         MockBukkit.mock();
-        factory = new MockInventoryFactory();
+        factory = new MockMenuFactory();
     }
 
     @AfterAll
@@ -45,7 +45,7 @@ class TestInventoryCreation {
     @ValueSource(ints = { 9, 18, 27, 36, 45, 54 })
     void testCreationWithSize(int size) {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(size)
+        MenuLayout layout = new MenuLayoutBuilder(size)
             .title("Awesome Inventory!")
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
@@ -55,7 +55,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = factory.createInventory(layout);
+        Menu inv = factory.createInventory(layout);
 
         assertNotNull(inv);
         assertEquals(layout, inv.getLayout());
@@ -70,7 +70,7 @@ class TestInventoryCreation {
     @Test
     void testInventoryValidation() {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(IntStream.range(0, 9).toArray())
@@ -79,7 +79,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = new CustomInventoryImpl(factory, layout);
+        Menu inv = new MenuImpl(factory, layout);
 
         assertThrows(UnsupportedOperationException.class, () -> inv.getInventory());
     }
@@ -87,7 +87,7 @@ class TestInventoryCreation {
     @Test
     void testInventoryHolderValidation() {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(IntStream.range(0, 9).toArray())
@@ -96,7 +96,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventoryImpl inv = new CustomInventoryImpl(factory, layout);
+        MenuImpl inv = new MenuImpl(factory, layout);
 
         // InventoryHolder == null
         Inventory inventory = Bukkit.createInventory(null, 9);
@@ -112,7 +112,7 @@ class TestInventoryCreation {
     @Test
     void testDefaultItem() {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(0, 1)
@@ -127,7 +127,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = factory.createInventory(layout);
+        Menu inv = factory.createInventory(layout);
 
         assertEquals(new ItemStack(Material.APPLE), inv.getItem(0));
         assertEquals(new ItemStack(Material.APPLE), inv.getItem(1));
@@ -143,7 +143,7 @@ class TestInventoryCreation {
     @Test
     void testAddItem() {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(0, 1, 2, 3, 4, 5)
@@ -157,7 +157,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = factory.createInventory(layout);
+        Menu inv = factory.createInventory(layout);
         SlotGroup group = layout.getGroup('y');
 
         inv.setItem(6, new ItemStack(Material.AIR));

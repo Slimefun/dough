@@ -8,18 +8,18 @@ import javax.annotation.Nullable;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
-import io.github.thebusybiscuit.dough.inventory.handlers.CustomInventoryClickHandler;
+import io.github.thebusybiscuit.dough.inventory.handlers.MenuClickHandler;
 
-class SlotGroupBuilderResult implements SlotGroup {
+class SlotGroupImpl implements SlotGroup {
 
     private final char identifier;
     private final String name;
     private final boolean interactable;
     private final ItemStack defaultItem;
-    private final CustomInventoryClickHandler clickHandler;
+    private final MenuClickHandler clickHandler;
     private final int[] slots;
 
-    SlotGroupBuilderResult(@Nonnull SlotGroupBuilder builder) {
+    SlotGroupImpl(@Nonnull SlotGroupBuilder builder) {
         this.identifier = builder.identifier;
         this.name = builder.name;
         this.interactable = builder.interactable;
@@ -63,7 +63,7 @@ class SlotGroupBuilderResult implements SlotGroup {
     }
 
     @Override
-    public @Nonnull CustomInventoryClickHandler getClickHandler() {
+    public @Nonnull MenuClickHandler getClickHandler() {
         return clickHandler;
     }
 

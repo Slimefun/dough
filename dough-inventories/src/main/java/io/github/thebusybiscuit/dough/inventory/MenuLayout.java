@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.inventory.Inventory;
 
-public interface InventoryLayout {
+public interface MenuLayout {
 
     @Nonnull
     Set<SlotGroup> getSlotGroups();

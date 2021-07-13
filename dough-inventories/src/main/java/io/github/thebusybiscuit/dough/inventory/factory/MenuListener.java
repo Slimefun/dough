@@ -7,19 +7,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 
-import io.github.thebusybiscuit.dough.inventory.CustomInventory;
+import io.github.thebusybiscuit.dough.inventory.Menu;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 import io.github.thebusybiscuit.dough.inventory.payloads.Payloads;
 
-class CustomInventoryListener implements Listener {
+class MenuListener implements Listener {
 
-    private final CustomInventoryFactory factory;
+    private final MenuFactory factory;
 
-    CustomInventoryListener(@Nonnull CustomInventoryFactory factory) {
+    MenuListener(@Nonnull MenuFactory factory) {
         this.factory = factory;
     }
 
-    public @Nonnull CustomInventoryFactory getInventoryFactory() {
+    public @Nonnull MenuFactory getInventoryFactory() {
         return factory;
     }
 
@@ -27,8 +27,8 @@ class CustomInventoryListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         InventoryHolder holder = e.getInventory().getHolder();
 
-        if (holder instanceof CustomInventory) {
-            CustomInventory inv = (CustomInventory) holder;
+        if (holder instanceof Menu) {
+            Menu inv = (Menu) holder;
 
             if (!inv.getFactory().equals(factory)) {
                 // Not one of our inventories - abort

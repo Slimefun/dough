@@ -7,21 +7,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
-import io.github.thebusybiscuit.dough.inventory.CustomInventory;
-import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
+import io.github.thebusybiscuit.dough.inventory.Menu;
+import io.github.thebusybiscuit.dough.inventory.MenuLayout;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
-public class CustomInventoryFactory {
+public class MenuFactory {
 
     private final Plugin plugin;
 
-    public CustomInventoryFactory(@Nonnull Plugin plugin) {
+    public MenuFactory(@Nonnull Plugin plugin) {
         this.plugin = plugin;
         registerListener(plugin);
     }
 
-    private @Nonnull CustomInventoryListener registerListener(@Nonnull Plugin plugin) {
-        CustomInventoryListener listener = new CustomInventoryListener(this);
+    private @Nonnull MenuListener registerListener(@Nonnull Plugin plugin) {
+        MenuListener listener = new MenuListener(this);
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
         return listener;
     }
@@ -31,8 +31,8 @@ public class CustomInventoryFactory {
     }
 
     @OverridingMethodsMustInvokeSuper
-    public @Nonnull CustomInventory createInventory(@Nonnull InventoryLayout layout) {
-        CustomInventoryImpl impl = new CustomInventoryImpl(this, layout);
+    public @Nonnull Menu createInventory(@Nonnull MenuLayout layout) {
+        MenuImpl impl = new MenuImpl(this, layout);
         String title = layout.getTitle();
         Inventory inv;
 

@@ -8,19 +8,19 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.thebusybiscuit.dough.inventory.CustomInventory;
-import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
+import io.github.thebusybiscuit.dough.inventory.Menu;
+import io.github.thebusybiscuit.dough.inventory.MenuLayout;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
-class CustomInventoryImpl implements CustomInventory {
+class MenuImpl implements Menu {
 
-    private final CustomInventoryFactory factory;
-    private final InventoryLayout layout;
+    private final MenuFactory factory;
+    private final MenuLayout layout;
     private final String title;
     private Inventory inventory;
 
     @ParametersAreNonnullByDefault
-    CustomInventoryImpl(CustomInventoryFactory factory, InventoryLayout layout) {
+    MenuImpl(MenuFactory factory, MenuLayout layout) {
         Validate.notNull(layout, "The layout cannot be null.");
 
         this.factory = factory;
@@ -43,7 +43,7 @@ class CustomInventoryImpl implements CustomInventory {
     }
 
     @Override
-    public @Nonnull CustomInventoryFactory getFactory() {
+    public @Nonnull MenuFactory getFactory() {
         validate();
 
         return factory;
@@ -57,7 +57,7 @@ class CustomInventoryImpl implements CustomInventory {
     }
 
     @Override
-    public @Nonnull InventoryLayout getLayout() {
+    public @Nonnull MenuLayout getLayout() {
         validate();
 
         return layout;

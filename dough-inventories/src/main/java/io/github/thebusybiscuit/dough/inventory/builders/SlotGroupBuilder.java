@@ -11,7 +11,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
-import io.github.thebusybiscuit.dough.inventory.handlers.CustomInventoryClickHandler;
+import io.github.thebusybiscuit.dough.inventory.handlers.MenuClickHandler;
 
 public class SlotGroupBuilder {
 
@@ -19,7 +19,7 @@ public class SlotGroupBuilder {
     protected final String name;
     protected final Set<Integer> slots = new HashSet<>();
 
-    protected CustomInventoryClickHandler clickHandler = null;
+    protected MenuClickHandler clickHandler = null;
     protected ItemStack defaultItem = null;
     protected boolean interactable = false;
 
@@ -51,7 +51,7 @@ public class SlotGroupBuilder {
         return this;
     }
 
-    public @Nonnull SlotGroupBuilder onClick(@Nullable CustomInventoryClickHandler clickHandler) {
+    public @Nonnull SlotGroupBuilder onClick(@Nullable MenuClickHandler clickHandler) {
         this.clickHandler = clickHandler;
         return this;
     }
@@ -61,7 +61,7 @@ public class SlotGroupBuilder {
         Validate.notNull(name, "The name may not be null.");
         Validate.notEmpty(slots, "A SlotGroup must have at least one slot.");
 
-        return new SlotGroupBuilderResult(this);
+        return new SlotGroupImpl(this);
     }
 
 }

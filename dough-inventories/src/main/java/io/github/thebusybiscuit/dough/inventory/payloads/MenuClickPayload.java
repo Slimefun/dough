@@ -6,16 +6,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.thebusybiscuit.dough.inventory.CustomInventory;
+import io.github.thebusybiscuit.dough.inventory.Menu;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
-public class InventoryClickPayload extends AbstractInventoryPayload {
+public class MenuClickPayload extends AbstractMenuPayload {
 
     private final Player player;
     private final int slot;
 
     @ParametersAreNonnullByDefault
-    InventoryClickPayload(CustomInventory inventory, Player player, int slot) {
+    MenuClickPayload(Menu inventory, Player player, int slot) {
         super(inventory);
 
         this.player = player;

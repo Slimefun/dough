@@ -30,26 +30,26 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import io.github.thebusybiscuit.dough.inventory.CustomInventory;
-import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
-import io.github.thebusybiscuit.dough.inventory.builders.InventoryLayoutBuilder;
+import io.github.thebusybiscuit.dough.inventory.Menu;
+import io.github.thebusybiscuit.dough.inventory.MenuLayout;
+import io.github.thebusybiscuit.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
-import io.github.thebusybiscuit.dough.inventory.payloads.InventoryClickPayload;
+import io.github.thebusybiscuit.dough.inventory.payloads.MenuClickPayload;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 
-class TestClickEvents {
+class TestMenuClicking {
 
     private static ServerMock server;
-    private static CustomInventoryFactory factory;
-    private static CustomInventoryFactory factory2;
+    private static MenuFactory factory;
+    private static MenuFactory factory2;
 
     @BeforeAll
     static void setup() {
         server = MockBukkit.mock();
-        factory = new MockInventoryFactory();
-        factory2 = new MockInventoryFactory();
+        factory = new MockMenuFactory();
+        factory2 = new MockMenuFactory();
     }
 
     @AfterAll
@@ -60,10 +60,10 @@ class TestClickEvents {
     @ParameterizedTest
     @ValueSource(booleans = { true, false })
     void testClickItemInSlot(boolean interactable) {
-        AtomicReference<InventoryClickPayload> payloadRef = new AtomicReference<>();
+        AtomicReference<MenuClickPayload> payloadRef = new AtomicReference<>();
 
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(0, 1)
@@ -82,7 +82,7 @@ class TestClickEvents {
 
         assertListenerRegistered();
 
-        CustomInventory inv = factory.createInventory(layout);
+        Menu inv = factory.createInventory(layout);
         Player player = server.addPlayer();
         int slot = 1;
 
@@ -90,7 +90,7 @@ class TestClickEvents {
         InventoryClickEvent event = new InventoryClickEvent(view, SlotType.CONTAINER, slot, ClickType.LEFT, InventoryAction.PICKUP_ONE);
 
         Bukkit.getPluginManager().callEvent(event);
-        InventoryClickPayload payload = payloadRef.get();
+        MenuClickPayload payload = payloadRef.get();
 
         assertNotNull(payload);
         assertSame(inv, payload.getInventory());
@@ -105,16 +105,16 @@ class TestClickEvents {
 
     @Test
     void testMultipleFactories() {
-        Map<CustomInventoryFactory, Integer> eventsFired = new HashMap<>();
+        Map<MenuFactory, Integer> eventsFired = new HashMap<>();
 
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
                     .interactable(true)
                     .onClick(payload -> {
-                        CustomInventoryFactory factory = payload.getInventory().getFactory();
+                        MenuFactory factory = payload.getInventory().getFactory();
                         eventsFired.merge(factory, 1, Integer::sum);
                     })
                     .build()
@@ -122,8 +122,8 @@ class TestClickEvents {
             .build();
         // @formatter:on
 
-        CustomInventory inv = factory.createInventory(layout);
-        CustomInventory inv2 = factory2.createInventory(layout);
+        Menu inv = factory.createInventory(layout);
+        Menu inv2 = factory2.createInventory(layout);
 
         simulateClickEvents(inv, 2);
         simulateClickEvents(inv2, 4);
@@ -133,7 +133,7 @@ class TestClickEvents {
     }
 
     @ParametersAreNonnullByDefault
-    private void simulateClickEvents(CustomInventory inv, int amount) {
+    private void simulateClickEvents(Menu inv, int amount) {
         for (int i = 0; i < amount; i++) {
             Player player = server.addPlayer();
             InventoryView view = inv.open(player);
@@ -145,7 +145,7 @@ class TestClickEvents {
     }
 
     /**
-     * This method asserts that the {@link Listener} for our {@link CustomInventoryFactory}
+     * This method asserts that the {@link Listener} for our {@link MenuFactory}
      * is properly registered to the {@link Server} and listens to the {@link InventoryClickEvent}.
      */
     private void assertListenerRegistered() {
@@ -155,8 +155,8 @@ class TestClickEvents {
                 Plugin plugin = listener.getPlugin();
                 Listener clickListener = listener.getListener();
     
-                if (plugin.equals(factory.getPlugin()) && clickListener instanceof CustomInventoryListener) {
-                    return factory.equals(((CustomInventoryListener) clickListener).getInventoryFactory());
+                if (plugin.equals(factory.getPlugin()) && clickListener instanceof MenuListener) {
+                    return factory.equals(((MenuListener) clickListener).getInventoryFactory());
                 } else {
                     return false;
                 }

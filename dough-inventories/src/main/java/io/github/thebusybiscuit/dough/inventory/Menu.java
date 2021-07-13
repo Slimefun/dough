@@ -14,22 +14,21 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.thebusybiscuit.dough.inventory.factory.CustomInventoryFactory;
+import io.github.thebusybiscuit.dough.inventory.factory.MenuFactory;
 
-// TODO: Rename this class
-public interface CustomInventory extends InventoryHolder {
+public interface Menu extends InventoryHolder {
 
     @Nonnull
-    CustomInventoryFactory getFactory();
+    MenuFactory getFactory();
 
     /**
-     * This returns the {@link InventoryLayout} which was used to create
-     * this {@link CustomInventory}.
+     * This returns the {@link MenuLayout} which was used to create
+     * this {@link Menu}.
      * 
-     * @return The {@link InventoryLayout}
+     * @return The {@link MenuLayout}
      */
     @Nonnull
-    InventoryLayout getLayout();
+    MenuLayout getLayout();
 
     @Nullable
     String getTitle();

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import io.github.thebusybiscuit.dough.inventory.handlers.CustomInventoryClickHandler;
+import io.github.thebusybiscuit.dough.inventory.handlers.MenuClickHandler;
 
 /**
  * A {@link SlotGroup} groups slots together and divides an {@link Inventory}
@@ -79,7 +79,7 @@ public interface SlotGroup extends Iterable<Integer> {
     ItemStack getDefaultItemStack();
 
     @Nullable
-    CustomInventoryClickHandler getClickHandler();
+    MenuClickHandler getClickHandler();
 
     @Override
     default @Nonnull Iterator<Integer> iterator() {

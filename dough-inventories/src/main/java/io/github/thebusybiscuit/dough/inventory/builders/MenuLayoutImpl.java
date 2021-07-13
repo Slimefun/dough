@@ -11,10 +11,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.apache.commons.lang.Validate;
 
-import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
+import io.github.thebusybiscuit.dough.inventory.MenuLayout;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
-class InventoryLayoutBuilderResult implements InventoryLayout {
+class MenuLayoutImpl implements MenuLayout {
 
     private final int size;
     private final String title;
@@ -22,7 +22,7 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
     private final Set<SlotGroup> groups = new HashSet<>();
     private final SlotGroup[] groupsBySlot;
 
-    InventoryLayoutBuilderResult(@Nonnull InventoryLayoutBuilder builder) {
+    MenuLayoutImpl(@Nonnull MenuLayoutBuilder builder) {
         this.size = builder.size;
         this.title = builder.title;
         this.groups.addAll(builder.groups);

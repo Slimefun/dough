@@ -9,23 +9,23 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import io.github.thebusybiscuit.dough.inventory.CustomInventory;
-import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
-import io.github.thebusybiscuit.dough.inventory.builders.InventoryLayoutBuilder;
+import io.github.thebusybiscuit.dough.inventory.Menu;
+import io.github.thebusybiscuit.dough.inventory.MenuLayout;
+import io.github.thebusybiscuit.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 
-class TestInventoryClosing {
+class TestMenuClosing {
 
-    private static CustomInventoryFactory factory;
+    private static MenuFactory factory;
     private static ServerMock server;
 
     @BeforeAll
     static void setup() {
         server = MockBukkit.mock();
-        factory = new MockInventoryFactory();
+        factory = new MockMenuFactory();
     }
 
     @AfterAll
@@ -36,7 +36,7 @@ class TestInventoryClosing {
     @Test
     void testCloseAll() {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
@@ -45,7 +45,7 @@ class TestInventoryClosing {
             .build();
         // @formatter:on
 
-        CustomInventory inv = factory.createInventory(layout);
+        Menu inv = factory.createInventory(layout);
 
         Player player = server.addPlayer();
         InventoryView view = inv.open(player);

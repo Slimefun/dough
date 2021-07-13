@@ -26,12 +26,12 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import io.github.thebusybiscuit.dough.inventory.builders.InventoryLayoutBuilder;
+import io.github.thebusybiscuit.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 
-class TestInventoryLayoutBuilder {
+class TestLayoutBuilder {
 
     @BeforeAll
     static void setup() {
@@ -46,7 +46,7 @@ class TestInventoryLayoutBuilder {
     @Test
     void testSlotGroups() {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .interactable(false)
@@ -96,7 +96,7 @@ class TestInventoryLayoutBuilder {
     @Test
     void testSlotGroupOverlapping() {
         // @formatter:off
-        InventoryLayoutBuilder builder = new InventoryLayoutBuilder(9)
+        MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlot(1)
@@ -116,7 +116,7 @@ class TestInventoryLayoutBuilder {
     @ValueSource(ints = { -1, 10 })
     void testOutsideSlotGroups(int slot) {
         // @formatter:off
-        InventoryLayoutBuilder builder = new InventoryLayoutBuilder(9)
+        MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlot(slot)
@@ -130,7 +130,7 @@ class TestInventoryLayoutBuilder {
     @Test
     void testUnknownSlotGroups() {
         // @formatter:off
-        InventoryLayout layout = new InventoryLayoutBuilder(9)
+        MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
@@ -149,7 +149,7 @@ class TestInventoryLayoutBuilder {
     @Test
     void testIncompleteSlotGroups() {
         // @formatter:off
-        InventoryLayoutBuilder builder = new InventoryLayoutBuilder(9)
+        MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
                     .withSlots(1, 2, 3, 4, 5, 6, 7, 8)
@@ -163,7 +163,7 @@ class TestInventoryLayoutBuilder {
     @ParameterizedTest(name = "{0} is not a valid inventory size.")
     @MethodSource("getIllegalInventorySizes")
     void testIllegalInventorySizes(int size) {
-        assertThrows(IllegalArgumentException.class, () -> new InventoryLayoutBuilder(size));
+        assertThrows(IllegalArgumentException.class, () -> new MenuLayoutBuilder(size));
     }
 
     private static @Nonnull Stream<Arguments> getIllegalInventorySizes() {
