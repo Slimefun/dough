@@ -36,6 +36,12 @@ public interface Menu extends InventoryHolder {
     @Nonnull
     MenuLayout getLayout();
 
+    /**
+     * This returns the title of this {@link Menu}.
+     * If no title was set, null will be returned.
+     * 
+     * @return The title of this {@link Menu} or null
+     */
     @Nullable
     String getTitle();
 
@@ -64,6 +70,11 @@ public interface Menu extends InventoryHolder {
         }
     }
 
+    /**
+     * This returns the size of this {@link Menu}.
+     * 
+     * @return The size of the {@link Menu}.
+     */
     default int getSize() {
         return getInventory().getSize();
     }

@@ -3,13 +3,17 @@ package io.github.thebusybiscuit.dough.inventory.factory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Handler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.bukkit.Bukkit;
@@ -21,6 +25,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -101,6 +106,70 @@ class TestMenuClicking {
         assertEquals(new ItemStack(Material.APPLE), payload.getClickedItemStack());
 
         assertNotEquals(interactable, event.isCancelled());
+    }
+
+    @Test
+    void testOtherInventoriesAreIgnored() {
+        AtomicReference<MenuClickPayload> payloadRef = new AtomicReference<>();
+
+        // @formatter:off
+        MenuLayout layout = new MenuLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
+                    .onClick(payloadRef::set)
+                    .build()
+            )
+            .build();
+        // @formatter:on
+
+        factory.createMenu(layout);
+
+        Player player = server.addPlayer();
+        Inventory inv = Bukkit.createInventory(null, 9);
+        InventoryView view = player.openInventory(inv);
+        InventoryClickEvent event = new InventoryClickEvent(view, SlotType.CONTAINER, 1, ClickType.LEFT, InventoryAction.PICKUP_ONE);
+
+        Bukkit.getPluginManager().callEvent(event);
+
+        // Make sure our listener ignored this inventory
+        assertNull(payloadRef.get());
+    }
+
+    @Test
+    void testExceptionHandling() {
+        // @formatter:off
+        MenuLayout layout = new MenuLayoutBuilder(9)
+            .addSlotGroup(
+                new SlotGroupBuilder('x', "test")
+                    .withSlots(0, 1, 2)
+                    .onClick(payload -> {
+                        throw new NullPointerException("NPE was thrown.");
+                    })
+                    .build()
+            )
+            .addSlotGroup(
+                new SlotGroupBuilder('y', "test2")
+                    .withSlots(3, 4, 5, 6, 7, 8)
+                    .build()
+            )
+            .build();
+        // @formatter:on
+
+        Menu inv = factory.createMenu(layout);
+        assertExceptionCaughtOnClick(inv);
+    }
+
+    private void assertExceptionCaughtOnClick(@Nonnull Menu inv) {
+        AtomicReference<Throwable> thrownException = new AtomicReference<>();
+        Handler handler = new MockExceptionHandler(thrownException);
+
+        factory.getLogger().addHandler(handler);
+        simulateClickEvents(inv, 1);
+        factory.getLogger().removeHandler(handler);
+
+        assertNotNull(thrownException.get());
+        assertTrue(thrownException.get() instanceof NullPointerException);
     }
 
     @Test
