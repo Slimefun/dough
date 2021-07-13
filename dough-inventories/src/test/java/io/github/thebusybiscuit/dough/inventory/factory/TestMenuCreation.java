@@ -79,7 +79,7 @@ class TestMenuCreation {
             .build();
         // @formatter:on
 
-        Menu inv = new MenuImpl(factory, layout);
+        Menu inv = new CustomMenu(factory, layout);
 
         assertThrows(UnsupportedOperationException.class, () -> inv.getInventory());
     }
@@ -96,7 +96,7 @@ class TestMenuCreation {
             .build();
         // @formatter:on
 
-        MenuImpl inv = new MenuImpl(factory, layout);
+        CustomMenu inv = new CustomMenu(factory, layout);
 
         // InventoryHolder == null
         Inventory inventory = Bukkit.createInventory(null, 9);

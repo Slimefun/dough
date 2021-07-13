@@ -1,8 +1,12 @@
 package io.github.thebusybiscuit.dough.inventory.factory;
 
+import java.util.function.BiFunction;
+
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
@@ -32,24 +36,32 @@ public class MenuFactory {
 
     @OverridingMethodsMustInvokeSuper
     public @Nonnull Menu createMenu(@Nonnull MenuLayout layout) {
-        MenuImpl impl = new MenuImpl(this, layout);
+        return createMenu(layout, CustomMenu::new);
+    }
+
+    @ParametersAreNonnullByDefault
+    public @Nonnull <T extends CustomMenu> T createMenu(MenuLayout layout, BiFunction<MenuFactory, MenuLayout, T> constructor) {
+        Validate.notNull(layout, "The menu layout cannot be null!");
+        Validate.notNull(constructor, "The provided constructor is not allowed to be null!");
+
+        T menu = constructor.apply(this, layout);
         String title = layout.getTitle();
         Inventory inv;
 
         if (title == null) {
-            inv = Bukkit.createInventory(impl, layout.getSize());
+            inv = Bukkit.createInventory(menu, layout.getSize());
         } else {
-            inv = Bukkit.createInventory(impl, layout.getSize(), title);
+            inv = Bukkit.createInventory(menu, layout.getSize(), title);
         }
 
-        impl.setInventory(inv);
+        menu.setInventory(inv);
 
         // Set all default items
         for (SlotGroup group : layout.getSlotGroups()) {
-            impl.setAll(group, group.getDefaultItemStack());
+            menu.setAll(group, group.getDefaultItemStack());
         }
 
-        return impl;
+        return menu;
     }
 
 }

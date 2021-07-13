@@ -12,7 +12,7 @@ import io.github.thebusybiscuit.dough.inventory.Menu;
 import io.github.thebusybiscuit.dough.inventory.MenuLayout;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
-class MenuImpl implements Menu {
+public class CustomMenu implements Menu {
 
     private final MenuFactory factory;
     private final MenuLayout layout;
@@ -20,7 +20,8 @@ class MenuImpl implements Menu {
     private Inventory inventory;
 
     @ParametersAreNonnullByDefault
-    MenuImpl(MenuFactory factory, MenuLayout layout) {
+    protected CustomMenu(MenuFactory factory, MenuLayout layout) {
+        Validate.notNull(factory, "The factory cannot be null.");
         Validate.notNull(layout, "The layout cannot be null.");
 
         this.factory = factory;
@@ -28,7 +29,7 @@ class MenuImpl implements Menu {
         this.title = layout.getTitle();
     }
 
-    void setInventory(@Nonnull Inventory inventory) {
+    final void setInventory(@Nonnull Inventory inventory) {
         Validate.notNull(inventory, "The Inventory must not be null.");
         Validate.isTrue(inventory.getSize() == layout.getSize(), "The inventory has a different size.");
         Validate.isTrue(inventory.getHolder() == this, "The Inventory does not seem to belong here. Holder: " + inventory.getHolder());
@@ -38,26 +39,26 @@ class MenuImpl implements Menu {
 
     private void validate() {
         if (inventory == null) {
-            throw new UnsupportedOperationException("No inventory has been set yet.");
+            throw new UnsupportedOperationException("No inventory found! Menus must be created using MenuFactory#createMenu(...)");
         }
     }
 
     @Override
-    public @Nonnull MenuFactory getFactory() {
+    public final @Nonnull MenuFactory getFactory() {
         validate();
 
         return factory;
     }
 
     @Override
-    public @Nonnull Inventory getInventory() {
+    public final @Nonnull Inventory getInventory() {
         validate();
 
         return inventory;
     }
 
     @Override
-    public @Nonnull MenuLayout getLayout() {
+    public final @Nonnull MenuLayout getLayout() {
         validate();
 
         return layout;
