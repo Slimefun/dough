@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.dough.inventory;
+package io.github.thebusybiscuit.dough.inventory.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,6 +18,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import io.github.thebusybiscuit.dough.inventory.CustomInventory;
+import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
+import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 import io.github.thebusybiscuit.dough.inventory.builders.InventoryLayoutBuilder;
 import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
 
@@ -25,9 +28,12 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 
 class TestInventoryCreation {
 
+    private static CustomInventoryFactory factory;
+
     @BeforeAll
     static void setup() {
         MockBukkit.mock();
+        factory = new MockInventoryFactory();
     }
 
     @AfterAll
@@ -37,7 +43,7 @@ class TestInventoryCreation {
 
     @ParameterizedTest
     @ValueSource(ints = { 9, 18, 27, 36, 45, 54 })
-    void testInventorySize(int size) {
+    void testCreationWithSize(int size) {
         // @formatter:off
         InventoryLayout layout = new InventoryLayoutBuilder(size)
             .title("Awesome Inventory!")
@@ -49,10 +55,11 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = layout.createInventory();
+        CustomInventory inv = factory.createInventory(layout);
 
         assertNotNull(inv);
         assertEquals(layout, inv.getLayout());
+        assertEquals(factory, inv.getFactory());
         assertEquals(layout.getTitle(), inv.getTitle());
         assertEquals(layout.getSize(), inv.getSize());
 
@@ -72,7 +79,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = new CustomInventoryImpl(layout);
+        CustomInventory inv = new CustomInventoryImpl(factory, layout);
 
         assertThrows(UnsupportedOperationException.class, () -> inv.getInventory());
     }
@@ -89,7 +96,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventoryImpl inv = new CustomInventoryImpl(layout);
+        CustomInventoryImpl inv = new CustomInventoryImpl(factory, layout);
 
         // InventoryHolder == null
         Inventory inventory = Bukkit.createInventory(null, 9);
@@ -120,7 +127,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = layout.createInventory();
+        CustomInventory inv = factory.createInventory(layout);
 
         assertEquals(new ItemStack(Material.APPLE), inv.getItem(0));
         assertEquals(new ItemStack(Material.APPLE), inv.getItem(1));
@@ -150,7 +157,7 @@ class TestInventoryCreation {
             .build();
         // @formatter:on
 
-        CustomInventory inv = layout.createInventory();
+        CustomInventory inv = factory.createInventory(layout);
         SlotGroup group = layout.getGroup('y');
 
         inv.setItem(6, new ItemStack(Material.AIR));

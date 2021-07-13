@@ -18,12 +18,15 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
 
     private final int size;
     private final String title;
+
     private final Set<SlotGroup> groups = new HashSet<>();
+    private final SlotGroup[] groupsBySlot;
 
     InventoryLayoutBuilderResult(@Nonnull InventoryLayoutBuilder builder) {
         this.size = builder.size;
         this.title = builder.title;
         this.groups.addAll(builder.groups);
+        this.groupsBySlot = new SlotGroup[size];
 
         Set<Integer> slots = new HashSet<>();
 
@@ -36,6 +39,8 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
                 if (!slots.add(slot)) {
                     throw new IllegalStateException("Slot " + slot + " is defined by multiple slot groups.");
                 }
+
+                groupsBySlot[slot] = group;
             }
         }
 
@@ -58,7 +63,7 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
     public @Nullable String getTitle() {
         return title;
     }
-    
+
     @Override
     public @Nonnull SlotGroup getGroup(char identifier) {
         SlotGroup result = findGroup(group -> group.getCharIdentifier() == identifier);
@@ -72,21 +77,15 @@ class InventoryLayoutBuilderResult implements InventoryLayout {
 
     @Override
     public @Nonnull SlotGroup getGroup(int slot) {
-        SlotGroup result = findGroup(group -> {
-            for (int groupSlot : group) {
-                if (groupSlot == slot) {
-                    return true;
-                }
-            }
+        Validate.isTrue(slot >= 0, "Slot cannot be a negative number: " + slot);
+        Validate.isTrue(slot < size, "Slot " + slot + " is not within the inventory size of " + size);
 
-            return false;
-        });
-
-        if (result != null) {
-            return result;
-        } else {
-            throw new IllegalArgumentException("Could not find a SlotGroup at slot: '" + slot + "'");
-        }
+        /*
+         * Using an Array makes this much faster.
+         * And since this method will be used for the click events, some
+         * optimization here will be good to have.
+         */
+        return groupsBySlot[slot];
     }
 
     @Override

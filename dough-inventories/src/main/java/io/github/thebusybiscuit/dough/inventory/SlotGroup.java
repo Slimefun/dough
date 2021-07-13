@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.thebusybiscuit.dough.inventory.handlers.CustomInventoryClickHandler;
+
 /**
  * A {@link SlotGroup} groups slots together and divides an {@link Inventory}
  * into distinct regions which can be used for easy access.
@@ -75,6 +77,9 @@ public interface SlotGroup extends Iterable<Integer> {
      */
     @Nullable
     ItemStack getDefaultItemStack();
+
+    @Nullable
+    CustomInventoryClickHandler getClickHandler();
 
     @Override
     default @Nonnull Iterator<Integer> iterator() {

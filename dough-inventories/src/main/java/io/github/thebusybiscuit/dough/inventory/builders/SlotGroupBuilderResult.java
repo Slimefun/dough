@@ -3,10 +3,12 @@ package io.github.thebusybiscuit.dough.inventory.builders;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
+import io.github.thebusybiscuit.dough.inventory.handlers.CustomInventoryClickHandler;
 
 class SlotGroupBuilderResult implements SlotGroup {
 
@@ -14,6 +16,7 @@ class SlotGroupBuilderResult implements SlotGroup {
     private final String name;
     private final boolean interactable;
     private final ItemStack defaultItem;
+    private final CustomInventoryClickHandler clickHandler;
     private final int[] slots;
 
     SlotGroupBuilderResult(@Nonnull SlotGroupBuilder builder) {
@@ -22,6 +25,7 @@ class SlotGroupBuilderResult implements SlotGroup {
         this.interactable = builder.interactable;
         this.defaultItem = builder.defaultItem;
         this.slots = convertSlots(builder.slots);
+        this.clickHandler = builder.clickHandler;
     }
 
     private @Nonnull int[] convertSlots(@Nonnull Set<Integer> slots) {
@@ -44,18 +48,23 @@ class SlotGroupBuilderResult implements SlotGroup {
     }
 
     @Override
-    public String getName() {
+    public @Nonnull String getName() {
         return name;
     }
 
     @Override
-    public int[] getSlots() {
+    public @Nonnull int[] getSlots() {
         return slots;
     }
 
     @Override
-    public ItemStack getDefaultItemStack() {
+    public @Nullable ItemStack getDefaultItemStack() {
         return defaultItem;
+    }
+
+    @Override
+    public @Nonnull CustomInventoryClickHandler getClickHandler() {
+        return clickHandler;
     }
 
 }

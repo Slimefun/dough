@@ -1,4 +1,4 @@
-package io.github.thebusybiscuit.dough.inventory;
+package io.github.thebusybiscuit.dough.inventory.factory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -8,16 +8,22 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.thebusybiscuit.dough.inventory.CustomInventory;
+import io.github.thebusybiscuit.dough.inventory.InventoryLayout;
+import io.github.thebusybiscuit.dough.inventory.SlotGroup;
+
 class CustomInventoryImpl implements CustomInventory {
 
+    private final CustomInventoryFactory factory;
     private final InventoryLayout layout;
     private final String title;
     private Inventory inventory;
 
     @ParametersAreNonnullByDefault
-    CustomInventoryImpl(InventoryLayout layout) {
+    CustomInventoryImpl(CustomInventoryFactory factory, InventoryLayout layout) {
         Validate.notNull(layout, "The layout cannot be null.");
 
+        this.factory = factory;
         this.layout = layout;
         this.title = layout.getTitle();
     }
@@ -34,6 +40,13 @@ class CustomInventoryImpl implements CustomInventory {
         if (inventory == null) {
             throw new UnsupportedOperationException("No inventory has been set yet.");
         }
+    }
+
+    @Override
+    public @Nonnull CustomInventoryFactory getFactory() {
+        validate();
+
+        return factory;
     }
 
     @Override

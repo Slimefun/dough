@@ -11,6 +11,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
+import io.github.thebusybiscuit.dough.inventory.handlers.CustomInventoryClickHandler;
 
 public class SlotGroupBuilder {
 
@@ -18,6 +19,7 @@ public class SlotGroupBuilder {
     protected final String name;
     protected final Set<Integer> slots = new HashSet<>();
 
+    protected CustomInventoryClickHandler clickHandler = null;
     protected ItemStack defaultItem = null;
     protected boolean interactable = false;
 
@@ -46,6 +48,11 @@ public class SlotGroupBuilder {
 
     public @Nonnull SlotGroupBuilder withDefaultItem(@Nullable ItemStack item) {
         this.defaultItem = item;
+        return this;
+    }
+
+    public @Nonnull SlotGroupBuilder onClick(@Nullable CustomInventoryClickHandler clickHandler) {
+        this.clickHandler = clickHandler;
         return this;
     }
 
