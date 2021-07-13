@@ -72,21 +72,17 @@ class MenuListener implements Listener {
             Menu inv = (Menu) holder;
 
             try {
-                // Check if this was created by our factory
-                if (!inv.getFactory().equals(factory)) {
-                    // Not one of our inventories - abort
-                    return;
+                // Check if this was created by our factory and the clicked slot is within the upper inventory
+                if (inv.getFactory().equals(factory) && e.getRawSlot() < e.getInventory().getSize()) {
+                    SlotGroup slotGroup = inv.getLayout().getGroup(e.getSlot());
+
+                    if (!slotGroup.isInteractable()) {
+                        e.setCancelled(true);
+                    }
+
+                    // Fire the click handler
+                    slotGroup.getClickHandler().onClick(MenuEventPayloads.create(inv, e));
                 }
-
-                // TODO: Check if the clicked slot is within that inventory
-                SlotGroup slotGroup = inv.getLayout().getGroup(e.getSlot());
-
-                if (!slotGroup.isInteractable()) {
-                    e.setCancelled(true);
-                }
-
-                // Fire the click handler
-                slotGroup.getClickHandler().onClick(MenuEventPayloads.create(inv, e));
             } catch (Exception | LinkageError x) {
                 factory.getLogger().log(Level.SEVERE, x, () -> "Could not pass click event for " + inv + " (slot: " + e.getSlot() + ", player:" + e.getWhoClicked().getName() + ")");
             }

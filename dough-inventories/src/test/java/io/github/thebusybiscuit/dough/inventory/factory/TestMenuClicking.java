@@ -149,6 +149,9 @@ class TestMenuClicking {
      * is properly registered to the {@link Server} and listens to the {@link InventoryClickEvent}.
      */
     private void assertListenerRegistered() {
+        assertNotNull(factory.getPlugin());
+        assertNotNull(factory.getLogger());
+
         // @formatter:off
         assertEquals(1,Arrays.stream(InventoryClickEvent.getHandlerList().getRegisteredListeners())
             .filter(listener -> {
