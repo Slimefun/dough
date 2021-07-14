@@ -10,9 +10,9 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 
-class MockMenuFactory extends MenuFactory {
+public class MockMenuFactory extends MenuFactory {
 
-    MockMenuFactory() {
+    public MockMenuFactory() {
         // @formatter:off
         super(MockBukkit.loadWith(MockJavaPlugin.class, new PluginDescriptionFile(
             "MockPlugin",

@@ -29,6 +29,10 @@ public class SlotGroupBuilder {
         this.name = name;
     }
 
+    public @Nonnull String name() {
+        return name;
+    }
+
     public @Nonnull SlotGroupBuilder interactable(boolean interactable) {
         this.interactable = interactable;
         return this;

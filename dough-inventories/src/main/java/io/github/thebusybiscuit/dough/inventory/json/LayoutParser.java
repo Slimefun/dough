@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -25,36 +26,46 @@ import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 import io.github.thebusybiscuit.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.thebusybiscuit.dough.inventory.builders.SlotGroupBuilder;
 
-public class MenuLayoutParser {
+public class LayoutParser {
 
-    private MenuLayoutParser() {}
+    private LayoutParser() {}
 
     @ParametersAreNonnullByDefault
-    public static @Nonnull MenuLayout parseStream(InputStream stream) throws InvalidLayoutException {
+    public static @Nonnull MenuLayout parseStream(InputStream stream, Consumer<SlotGroupBuilder> slotGroups) throws InvalidLayoutException {
         Validate.notNull(stream, "InputStream must not be null");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
-            return parseString(reader.lines().collect(Collectors.joining("")));
+            return parseString(reader.lines().collect(Collectors.joining("")), slotGroups);
         } catch (IOException x) {
             throw new InvalidLayoutException(x);
         }
     }
 
     @ParametersAreNonnullByDefault
-    public static @Nonnull MenuLayout parseString(String string) throws InvalidLayoutException {
+    public static @Nonnull MenuLayout parseStream(InputStream stream) throws InvalidLayoutException {
+        return parseStream(stream, builder -> {});
+    }
+
+    @ParametersAreNonnullByDefault
+    public static @Nonnull MenuLayout parseString(String string, Consumer<SlotGroupBuilder> slotGroups) throws InvalidLayoutException {
         Validate.notNull(string, "String must not be null");
 
         try {
             JsonParser parser = new JsonParser();
             JsonObject root = parser.parse(string).getAsJsonObject();
-            return parseJson(root);
+            return parseJson(root, slotGroups);
         } catch (IllegalStateException | JsonParseException x) {
             throw new InvalidLayoutException(x);
         }
     }
 
     @ParametersAreNonnullByDefault
-    public static @Nonnull MenuLayout parseJson(JsonObject json) throws InvalidLayoutException {
+    public static @Nonnull MenuLayout parseString(String string) throws InvalidLayoutException {
+        return parseString(string, builder -> {});
+    }
+
+    @ParametersAreNonnullByDefault
+    public static @Nonnull MenuLayout parseJson(JsonObject json, Consumer<SlotGroupBuilder> slotGroups) throws InvalidLayoutException {
         Validate.notNull(json, "JsonObject must not be null");
 
         try {
@@ -62,13 +73,18 @@ public class MenuLayoutParser {
             MenuLayoutBuilder builder = new MenuLayoutBuilder(shape.getSize());
 
             for (Map.Entry<Character, Set<Integer>> entry : shape.getGroups().entrySet()) {
-                builder.addSlotGroup(parseGroup(json, entry.getKey(), entry.getValue()));
+                builder.addSlotGroup(parseGroup(json, entry.getKey(), entry.getValue(), slotGroups));
             }
 
             return builder.build();
         } catch (Exception x) {
             throw new InvalidLayoutException(x);
         }
+    }
+
+    @ParametersAreNonnullByDefault
+    public static @Nonnull MenuLayout parseJson(JsonObject json) throws InvalidLayoutException {
+        return parseJson(json, builder -> {});
     }
 
     @ParametersAreNonnullByDefault
@@ -100,7 +116,7 @@ public class MenuLayoutParser {
     }
 
     @ParametersAreNonnullByDefault
-    private static @Nonnull SlotGroup parseGroup(JsonObject json, char identifier, Set<Integer> slots) throws InvalidLayoutException {
+    private static @Nonnull SlotGroup parseGroup(JsonObject json, char identifier, Set<Integer> slots, Consumer<SlotGroupBuilder> consumer) throws InvalidLayoutException {
         String attribute = "groups";
 
         if (!json.has(attribute) || !json.get(attribute).isJsonObject()) {
@@ -132,6 +148,7 @@ public class MenuLayoutParser {
         }
 
         builder.withSlots(slots.stream().mapToInt(Integer::intValue).toArray());
+        consumer.accept(builder);
 
         return builder.build();
     }

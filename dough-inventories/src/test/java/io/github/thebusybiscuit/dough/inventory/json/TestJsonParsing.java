@@ -61,7 +61,7 @@ class TestJsonParsing {
 
     @Test
     void testMalformedJson() {
-        assertThrows(InvalidLayoutException.class, () -> MenuLayoutParser.parseString("{ Is this \"\" how ] you json...?: false,"));
+        assertThrows(InvalidLayoutException.class, () -> LayoutParser.parseString("{ Is this \"\" how ] you json...?: false,"));
     }
 
     @Test
@@ -130,7 +130,7 @@ class TestJsonParsing {
 
     private @Nonnull MenuLayout parse(@Nonnull String name) throws InvalidLayoutException {
         InputStream inputStream = getClass().getResourceAsStream("/" + name + ".json");
-        return MenuLayoutParser.parseStream(inputStream);
+        return LayoutParser.parseStream(inputStream);
     }
 
 }

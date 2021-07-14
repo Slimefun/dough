@@ -47,6 +47,10 @@ public interface Menu extends InventoryHolder {
 
     void setAll(@Nonnull SlotGroup group, @Nullable ItemStack item);
 
+    default void clear(@Nonnull SlotGroup group) {
+        setAll(group, null);
+    }
+
     @ParametersAreNonnullByDefault
     @Nullable
     ItemStack addItem(SlotGroup group, ItemStack item);
