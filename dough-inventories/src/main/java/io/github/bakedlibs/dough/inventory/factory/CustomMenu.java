@@ -75,8 +75,13 @@ public class CustomMenu implements Menu {
     public void setAll(SlotGroup group, ItemStack item) {
         validate();
 
-        for (int slot : group) {
-            setItem(slot, item);
+        if (group.size() == 1) {
+            // Little optimization, we don't need to create an Iterator for this
+            setItem(group.getSlots()[0], item);
+        } else {
+            for (int slot : group) {
+                setItem(slot, item);
+            }
         }
     }
 
