@@ -29,8 +29,6 @@ import io.github.bakedlibs.dough.inventory.MenuLayout;
 import io.github.bakedlibs.dough.inventory.builders.SlotGroupBuilder;
 import io.github.bakedlibs.dough.inventory.factory.MenuFactory;
 import io.github.bakedlibs.dough.inventory.factory.MockMenuFactory;
-import io.github.bakedlibs.dough.inventory.json.InvalidLayoutException;
-import io.github.bakedlibs.dough.inventory.json.LayoutParser;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;

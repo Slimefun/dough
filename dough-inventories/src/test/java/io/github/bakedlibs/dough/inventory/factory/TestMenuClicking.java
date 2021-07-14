@@ -39,8 +39,6 @@ import io.github.bakedlibs.dough.inventory.Menu;
 import io.github.bakedlibs.dough.inventory.MenuLayout;
 import io.github.bakedlibs.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.bakedlibs.dough.inventory.builders.SlotGroupBuilder;
-import io.github.bakedlibs.dough.inventory.factory.MenuFactory;
-import io.github.bakedlibs.dough.inventory.factory.MenuListener;
 import io.github.bakedlibs.dough.inventory.payloads.MenuClickPayload;
 
 import be.seeseemelk.mockbukkit.MockBukkit;

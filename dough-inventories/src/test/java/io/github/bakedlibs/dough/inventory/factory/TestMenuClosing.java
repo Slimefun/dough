@@ -13,7 +13,6 @@ import io.github.bakedlibs.dough.inventory.Menu;
 import io.github.bakedlibs.dough.inventory.MenuLayout;
 import io.github.bakedlibs.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.bakedlibs.dough.inventory.builders.SlotGroupBuilder;
-import io.github.bakedlibs.dough.inventory.factory.MenuFactory;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;

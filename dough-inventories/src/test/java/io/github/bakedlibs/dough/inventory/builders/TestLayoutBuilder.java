@@ -28,8 +28,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import io.github.bakedlibs.dough.inventory.MenuLayout;
 import io.github.bakedlibs.dough.inventory.SlotGroup;
-import io.github.bakedlibs.dough.inventory.builders.MenuLayoutBuilder;
-import io.github.bakedlibs.dough.inventory.builders.SlotGroupBuilder;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 

@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import io.github.bakedlibs.dough.inventory.MenuLayout;
 import io.github.bakedlibs.dough.inventory.SlotGroup;
-import io.github.bakedlibs.dough.inventory.json.InvalidLayoutException;
-import io.github.bakedlibs.dough.inventory.json.LayoutParser;
 
 class TestJsonParsing {
 

@@ -8,7 +8,6 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.bakedlibs.dough.inventory.SlotGroup;
 import io.github.bakedlibs.dough.inventory.builders.SlotGroupBuilder;
 
 class TestSlotGroupIterator {

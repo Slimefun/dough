@@ -8,8 +8,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
-import io.github.bakedlibs.dough.inventory.factory.MenuFactory;
-
 import be.seeseemelk.mockbukkit.MockBukkit;
 
 public class MockMenuFactory extends MenuFactory {
