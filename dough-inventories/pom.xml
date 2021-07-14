@@ -10,7 +10,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>dough-bakedlibs</artifactId>
+    <artifactId>dough-inventories</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
