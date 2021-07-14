@@ -14,6 +14,7 @@ import org.bukkit.inventory.InventoryHolder;
 
 import io.github.thebusybiscuit.dough.inventory.Menu;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
+import io.github.thebusybiscuit.dough.inventory.handlers.MenuClickHandler;
 import io.github.thebusybiscuit.dough.inventory.payloads.MenuEventPayloads;
 
 /**
@@ -76,12 +77,17 @@ class MenuListener implements Listener {
                 if (inv.getFactory().equals(factory) && e.getRawSlot() < e.getInventory().getSize()) {
                     SlotGroup slotGroup = inv.getLayout().getGroup(e.getSlot());
 
+                    // Cancel the interaction if that slot is not interactable
                     if (!slotGroup.isInteractable()) {
                         e.setCancelled(true);
                     }
 
                     // Fire the click handler
-                    slotGroup.getClickHandler().onClick(MenuEventPayloads.create(inv, e));
+                    MenuClickHandler clickHandler = slotGroup.getClickHandler();
+
+                    if (clickHandler != null) {
+                        clickHandler.onClick(MenuEventPayloads.create(inv, e));
+                    }
                 }
             } catch (Exception | LinkageError x) {
                 factory.getLogger().log(Level.SEVERE, x, () -> "Could not pass click event for " + inv + " (slot: " + e.getSlot() + ", player:" + e.getWhoClicked().getName() + ")");
