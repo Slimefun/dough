@@ -73,7 +73,7 @@ public final class InvUtils {
     /**
      * This checks if a given {@link InventoryType} accepts items of the given {@link Material}
      * 
-     * @param item
+     * @param itemType
      *            The {@link Material} of the {@link ItemStack}
      * @param inventoryType
      *            The {@link InventoryType}
