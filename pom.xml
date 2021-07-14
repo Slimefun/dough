@@ -10,6 +10,7 @@
 
     <packaging>pom</packaging>
     <url>https://github.com/baked-libs/dough</url>
+    <description>Dough is a powerful library for the everyday Spigot developer</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +30,12 @@
         <url>https://github.com/baked-libs/dough/issues</url>
     </issueManagement>
 
+    <scm>
+        <connection>scm:git:git://github.com/baked-libs/dough.git</connection>
+        <developerConnection>scm:git:ssh://github.com/baked-libs/dough.git</developerConnection>
+        <url>https://github.com/baked-libs/dough/tree/main</url>
+    </scm>
+
     <licenses>
         <license>
             <name>MIT License</name>
@@ -36,6 +43,21 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    
+    <developers>
+        <developer>
+            <name>TheBusyBiscuit</name>
+            <url>https://github.com/TheBusyBiscuit</url>
+        </developer>
+        <developer>
+            <name>WalshyDev</name>
+            <url>https://github.com/WalshyDev</url>
+        </developer>
+        <developer>
+            <name>md5sha256</name>
+            <url>https://github.com/md5sha256</url>
+        </developer>
+    </developers>
 
     <modules>
         <!-- Shared base modules -->
