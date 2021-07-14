@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.baked-libs</groupId>
+        <artifactId>dough</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>dough-api</artifactId>
+    <packaging>jar</packaging>
+
+    <description>This is the complete API of dough.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-reflection</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-config</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-chat</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-skins</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-items</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-inventories</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-protection</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-recipes</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-updater</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-scheduling</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.baked-libs</groupId>
+            <artifactId>dough-tags</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -5,27 +5,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.github.bakedlibs</groupId>
+        <groupId>io.github.baked-libs</groupId>
         <artifactId>dough</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>dough-bakedlibs</artifactId>
+    <artifactId>dough-inventories</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>io.github.bakedlibs</groupId>
+            <groupId>io.github.baked-libs</groupId>
             <artifactId>dough-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.bakedlibs</groupId>
+            <groupId>io.github.baked-libs</groupId>
             <artifactId>dough-reflection</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.github.bakedlibs</groupId>
+            <groupId>io.github.baked-libs</groupId>
             <artifactId>dough-items</artifactId>
             <version>${project.version}</version>
         </dependency>

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.github.bakedlibs</groupId>
+        <groupId>io.github.baked-libs</groupId>
         <artifactId>dough</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -50,7 +50,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.bakedlibs</groupId>
+            <groupId>io.github.baked-libs</groupId>
             <artifactId>dough-common</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
@@ -167,7 +167,7 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.17.1</version>
+            <version>1.16.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

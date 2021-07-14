@@ -37,8 +37,9 @@ public class CustomMaterialTag implements Tag<Material> {
 
     /**
      * This constructs a new {@link CustomMaterialTag}.
-     * The {@link NamespacedKey} will be automatically inferred using
-     * {@link Slimefun} and {@link #name()}.
+     * 
+     * @param key
+     *            The {@link NamespacedKey}
      */
     public CustomMaterialTag(@Nonnull NamespacedKey key) {
         this.key = key;
