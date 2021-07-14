@@ -89,7 +89,6 @@
         <module>dough-recipes</module>
         <module>dough-updater</module>
         <module>dough-scheduling</module>
-        <module>dough-tags</module>
 
         <!-- Aggregating modules -->
         <module>dough-api</module>
