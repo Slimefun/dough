@@ -43,7 +43,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
+
     <developers>
         <developer>
             <name>TheBusyBiscuit</name>
@@ -76,6 +76,9 @@
         <module>dough-updater</module>
         <module>dough-scheduling</module>
         <module>dough-tags</module>
+
+        <!-- Aggregating modules -->
+        <module>dough-api</module>
     </modules>
 
     <build>
