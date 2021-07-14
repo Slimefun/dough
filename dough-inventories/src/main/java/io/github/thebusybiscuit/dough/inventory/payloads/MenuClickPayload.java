@@ -11,19 +11,13 @@ import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
 public class MenuClickPayload extends AbstractMenuPayload {
 
-    private final Player player;
     private final int slot;
 
     @ParametersAreNonnullByDefault
     MenuClickPayload(Menu inventory, Player player, int slot) {
-        super(inventory);
+        super(inventory, player);
 
-        this.player = player;
         this.slot = slot;
-    }
-
-    public @Nonnull Player getPlayer() {
-        return player;
     }
 
     public int getClickedSlot() {
@@ -31,11 +25,11 @@ public class MenuClickPayload extends AbstractMenuPayload {
     }
 
     public @Nonnull ItemStack getClickedItemStack() {
-        return getInventory().getItem(getClickedSlot());
+        return getMenu().getItem(getClickedSlot());
     }
 
     public @Nonnull SlotGroup getClickedSlotGroup() {
-        return getInventory().getLayout().getGroup(getClickedSlot());
+        return getMenu().getLayout().getGroup(getClickedSlot());
     }
 
 }

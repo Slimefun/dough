@@ -19,6 +19,12 @@ public interface MenuLayout {
      */
     int getSize();
 
+    /**
+     * This returns the title to be set for the resulting {@link Menu}.
+     * If no title was set, this will return null.
+     * 
+     * @return The title or null
+     */
     @Nullable
     String getTitle();
 

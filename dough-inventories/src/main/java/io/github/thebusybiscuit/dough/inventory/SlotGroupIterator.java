@@ -5,11 +5,24 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nonnull;
 
+/**
+ * This {@link Iterator} implementation iterates through all slots within a {@link SlotGroup}.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 class SlotGroupIterator implements Iterator<Integer> {
 
     private final int[] slots;
     private int index = 0;
 
+    /**
+     * This creates a new {@link SlotGroupIterator} for the given
+     * {@link SlotGroup}.
+     * 
+     * @param slotGroup
+     *            The {@link SlotGroup}
+     */
     SlotGroupIterator(@Nonnull SlotGroup slotGroup) {
         this.slots = slotGroup.getSlots();
     }

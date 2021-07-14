@@ -9,6 +9,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
@@ -16,18 +19,43 @@ import io.github.thebusybiscuit.dough.inventory.Menu;
 import io.github.thebusybiscuit.dough.inventory.MenuLayout;
 import io.github.thebusybiscuit.dough.inventory.SlotGroup;
 
+/**
+ * The {@link MenuFactory} is the core of this system, this is where everything
+ * starts. You can use this {@link MenuFactory} to create {@link Menu}s from a
+ * {@link MenuLayout}.
+ * <p>
+ * This class also handles the registration of our {@link Listener}.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public class MenuFactory {
 
+    /**
+     * Our {@link Plugin} instance.
+     */
     private final Plugin plugin;
 
+    /**
+     * This constructs a new {@link MenuFactory} for the given {@link Plugin}.
+     * 
+     * @param plugin
+     *            The {@link Plugin} instance
+     */
     public MenuFactory(@Nonnull Plugin plugin) {
         Validate.notNull(plugin, "The plugin instance cannot be null.");
 
         this.plugin = plugin;
-        registerListener(plugin);
+        registerListener();
     }
 
-    private @Nonnull MenuListener registerListener(@Nonnull Plugin plugin) {
+    /**
+     * This method registers our {@link MenuListener} to the {@link Server}.
+     * This way, we can listen to and handle {@link InventoryClickEvent}s and alike.
+     * 
+     * @return Our registered {@link MenuListener}
+     */
+    private @Nonnull MenuListener registerListener() {
         MenuListener listener = new MenuListener(this);
         plugin.getServer().getPluginManager().registerEvents(listener, plugin);
         return listener;

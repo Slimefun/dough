@@ -1,19 +1,54 @@
 package io.github.thebusybiscuit.dough.inventory.payloads;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
+import org.bukkit.entity.Player;
 
 import io.github.thebusybiscuit.dough.inventory.Menu;
 
+/**
+ * An abstract super class for our menu event payloads.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 abstract class AbstractMenuPayload {
 
-    private final Menu inventory;
+    private final Menu menu;
+    private final Player player;
 
-    AbstractMenuPayload(@Nonnull Menu inventory) {
-        this.inventory = inventory;
+    /**
+     * This constructs a new {@link AbstractMenuPayload} for the given {@link Menu}
+     * and {@link Player}.
+     * 
+     * @param menu
+     *            The {@link Menu}
+     * @param player
+     *            The {@link Player}
+     */
+    @ParametersAreNonnullByDefault
+    AbstractMenuPayload(Menu menu, Player player) {
+        this.menu = menu;
+        this.player = player;
     }
 
-    public @Nonnull Menu getInventory() {
-        return inventory;
+    /**
+     * This returns the {@link Menu} from this payload.
+     * 
+     * @return The {@link Menu}
+     */
+    public @Nonnull Menu getMenu() {
+        return menu;
+    }
+
+    /**
+     * This returns the {@link Player} who triggered this payload.
+     * 
+     * @return The {@link Player}
+     */
+    public @Nonnull Player getPlayer() {
+        return player;
     }
 
 }

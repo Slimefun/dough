@@ -98,7 +98,7 @@ class TestMenuClicking {
         MenuClickPayload payload = payloadRef.get();
 
         assertNotNull(payload);
-        assertSame(inv, payload.getInventory());
+        assertSame(inv, payload.getMenu());
         assertSame(player, payload.getPlayer());
 
         assertEquals(slot, payload.getClickedSlot());
@@ -183,7 +183,7 @@ class TestMenuClicking {
                     .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
                     .interactable(true)
                     .onClick(payload -> {
-                        MenuFactory factory = payload.getInventory().getFactory();
+                        MenuFactory factory = payload.getMenu().getFactory();
                         eventsFired.merge(factory, 1, Integer::sum);
                     })
                     .build()
