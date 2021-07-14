@@ -26,8 +26,7 @@ import io.github.bakedlibs.dough.protection.modules.GriefPreventionProtectionMod
 import io.github.bakedlibs.dough.protection.modules.LWCProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LandsProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LocketteProtectionModule;
-import io.github.bakedlibs.dough.protection.modules.PlotSquared4ProtectionModule;
-import io.github.bakedlibs.dough.protection.modules.PlotSquared5ProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.PlotSquaredProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
@@ -74,16 +73,7 @@ public final class ProtectionManager {
         registerModule(server, "ChestProtect", plugin -> new ChestProtectProtectionModule(plugin));
         registerModule(server, "Factions", plugin -> new FactionsUUIDProtectionModule(plugin));
         registerModule(server, "FunnyGuilds", plugin -> new FunnyGuildsProtectionModule(plugin));
-
-        if (server.getPluginManager().isPluginEnabled("PlotSquared")) {
-            Plugin plotSquared = server.getPluginManager().getPlugin("PlotSquared");
-
-            if (plotSquared.getDescription().getVersion().startsWith("4.")) {
-                registerModule(plotSquared, plugin -> new PlotSquared4ProtectionModule(plugin));
-            } else {
-                registerModule(plotSquared, plugin -> new PlotSquared5ProtectionModule(plugin));
-            }
-        }
+        registerModule(server, "PlotSquared", plugin -> new PlotSquaredProtectionModule(plugin));
 
         /*
          * The following Plugins are logging plugins, not protection plugins
