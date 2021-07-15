@@ -108,6 +108,8 @@
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
+                                <phase>package</phase>
+
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
@@ -121,13 +123,17 @@
                         <version>3.3.0</version>
 
                         <configuration>
-                            <includeDependencySources>true</includeDependencySources>
-                            <dependencySourceIncludes>io.github.baked-libs:*</dependencySourceIncludes>
+                            <includeDependencySources>false</includeDependencySources>
+
+                            <links>
+                                <link>https://hub.spigotmc.org/javadocs/spigot/</link>
+                            </links>
                         </configuration>
 
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
+
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>

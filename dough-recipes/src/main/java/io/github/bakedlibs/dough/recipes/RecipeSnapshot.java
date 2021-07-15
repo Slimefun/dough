@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -233,7 +232,7 @@ public class RecipeSnapshot {
     /**
      * This method will return a {@link Recipe} based on the provided {@link NamespacedKey}
      * (if that {@link Recipe} is of type {@link Keyed})
-     * The method works similar to {@link Bukkit#getRecipe(NamespacedKey)}, though it is significantly
+     * The method works similar to {@code Bukkit.getRecipe(NamespacedKey)}, though it is significantly
      * faster since we operate on a cached {@link HashMap} and don't have to perform any data
      * conversion.
      * 
