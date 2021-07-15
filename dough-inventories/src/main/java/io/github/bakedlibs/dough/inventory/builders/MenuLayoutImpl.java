@@ -61,21 +61,33 @@ class MenuLayoutImpl implements MenuLayout {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull Set<SlotGroup> getSlotGroups() {
         return Collections.unmodifiableSet(groups);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getSize() {
         return size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nullable String getTitle() {
         return title;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull SlotGroup getGroup(char identifier) {
         SlotGroup result = findGroup(group -> group.getIdentifier() == identifier);
@@ -87,6 +99,9 @@ class MenuLayoutImpl implements MenuLayout {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull SlotGroup getGroup(int slot) {
         Validate.isTrue(slot >= 0, "Slot cannot be a negative number: " + slot);
@@ -100,6 +115,9 @@ class MenuLayoutImpl implements MenuLayout {
         return groupsBySlot[slot];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull SlotGroup getGroup(@Nonnull String name) {
         SlotGroup result = findGroup(group -> group.getName().equals(name));

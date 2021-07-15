@@ -15,7 +15,7 @@ import org.bukkit.inventory.InventoryHolder;
 import io.github.bakedlibs.dough.inventory.Menu;
 import io.github.bakedlibs.dough.inventory.SlotGroup;
 import io.github.bakedlibs.dough.inventory.handlers.MenuClickHandler;
-import io.github.bakedlibs.dough.inventory.payloads.MenuEventPayloads;
+import io.github.bakedlibs.dough.inventory.payloads.MenuPayloads;
 
 /**
  * The {@link MenuListener} is responsible for handling any
@@ -86,7 +86,7 @@ class MenuListener implements Listener {
                     MenuClickHandler clickHandler = slotGroup.getClickHandler();
 
                     if (clickHandler != null) {
-                        clickHandler.onClick(MenuEventPayloads.create(inv, e));
+                        clickHandler.onClick(MenuPayloads.create(inv, e));
                     }
                 }
             } catch (Exception | LinkageError x) {

@@ -26,6 +26,13 @@ import io.github.bakedlibs.dough.inventory.SlotGroup;
 import io.github.bakedlibs.dough.inventory.builders.MenuLayoutBuilder;
 import io.github.bakedlibs.dough.inventory.builders.SlotGroupBuilder;
 
+/**
+ * This class allows you to parse {@link JsonObject}s, {@link String}s or {@link InputStream}s
+ * into a {@link MenuLayout}, given they follow our format.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public class LayoutParser {
 
     private LayoutParser() {}

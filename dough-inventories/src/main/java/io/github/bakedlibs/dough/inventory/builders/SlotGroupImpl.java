@@ -28,6 +28,14 @@ class SlotGroupImpl implements SlotGroup {
         this.clickHandler = builder.clickHandler;
     }
 
+    /**
+     * This method converts our {@link Set} of slots into a sorted array.
+     * 
+     * @param slots
+     *            The slots
+     * 
+     * @return A sorted array of our slots
+     */
     private @Nonnull int[] convertSlots(@Nonnull Set<Integer> slots) {
         // @formatter:off
         return slots.stream()
@@ -37,31 +45,49 @@ class SlotGroupImpl implements SlotGroup {
         // @formatter:on
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public char getIdentifier() {
         return identifier;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isInteractable() {
         return interactable;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull int[] getSlots() {
         return slots;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nullable ItemStack getDefaultItemStack() {
         return defaultItem;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull MenuClickHandler getClickHandler() {
         return clickHandler;

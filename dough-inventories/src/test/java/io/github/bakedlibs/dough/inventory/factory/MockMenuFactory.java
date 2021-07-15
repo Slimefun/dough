@@ -17,7 +17,7 @@ public class MockMenuFactory extends MenuFactory {
         super(MockBukkit.loadWith(MockJavaPlugin.class, new PluginDescriptionFile(
             "MockPlugin",
             "1.0.0",
-            "io.github.thebusybiscuit.dough.inventory.MockInventoryFactory.MockJavaPlugin")
+            MockJavaPlugin.class.getName())
         ));
         // @formatter:on
     }

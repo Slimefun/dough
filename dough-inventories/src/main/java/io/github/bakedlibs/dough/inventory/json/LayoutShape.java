@@ -9,7 +9,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.inventory.Inventory;
 
+import io.github.bakedlibs.dough.inventory.SlotGroup;
+
+/**
+ * Little helper class to transition a {@link String} array into
+ * a {@link SlotGroup}-like map.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 class LayoutShape {
 
     private final Map<Character, Set<Integer>> groups = new HashMap<>();
@@ -36,10 +46,22 @@ class LayoutShape {
         }
     }
 
+    /**
+     * This returns the size of this {@link LayoutShape}, aka the size of the
+     * corresponding {@link Inventory}.
+     * 
+     * @return The size of this {@link LayoutShape}
+     */
     public int getSize() {
         return size;
     }
 
+    /**
+     * This returns the {@link SlotGroup}-ready representation of this shape.
+     * Grouped by their unique character keys.
+     * 
+     * @return The "{@link SlotGroup} map".
+     */
     public @Nonnull Map<Character, Set<Integer>> getGroups() {
         return groups;
     }
