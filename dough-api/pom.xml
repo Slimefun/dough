@@ -44,6 +44,7 @@
 
                 <configuration>
                     <includeDependencySources>true</includeDependencySources>
+                    <dependencySourceIncludes>io.github.baked-libs:*</dependencySourceIncludes>
                 </configuration>
 
                 <executions>
