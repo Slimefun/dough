@@ -42,11 +42,11 @@ public class PrefixedVersion implements Version {
         return prefix + version;
     }
 
-    public @Nonnull String getPrefix() {
+    public final @Nonnull String getPrefix() {
         return prefix;
     }
 
-    public @Nonnull int getNumericVersion() {
+    public final @Nonnull int getNumericVersion() {
         return version;
     }
 

@@ -45,7 +45,14 @@ public class SemanticVersion implements Version {
         return patchVersion;
     }
 
-    public boolean isPatch() {
+    /**
+     * This method returns whether this is a patch version.
+     * A {@link SemanticVersion} is considered a "patch" when their
+     * last component ({@link #getPatchVersion()}) is greater than zero.
+     * 
+     * @return Whether this is a patch version
+     */
+    public final boolean isPatch() {
         return getPatchVersion() > 0;
     }
 
