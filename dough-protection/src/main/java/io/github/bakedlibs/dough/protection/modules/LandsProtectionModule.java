@@ -9,10 +9,11 @@ import org.bukkit.plugin.Plugin;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
 
+import me.angeschossen.lands.api.flags.Flags;
+import me.angeschossen.lands.api.flags.types.RoleFlag;
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import me.angeschossen.lands.api.land.Area;
 import me.angeschossen.lands.api.land.LandWorld;
-import me.angeschossen.lands.api.role.enums.RoleSetting;
 
 public class LandsProtectionModule implements ProtectionModule {
 
@@ -42,26 +43,25 @@ public class LandsProtectionModule implements ProtectionModule {
         }
 
         Area area = landWorld.getArea(l);
-        return area == null || area.canSetting(p.getUniqueId(), convert(action));
+        return area == null || area.hasFlag(p.getUniqueId(), convert(action));
     }
 
-    @Nonnull
-    private RoleSetting convert(@Nonnull Interaction protectableAction) {
+    private @Nonnull RoleFlag convert(@Nonnull Interaction protectableAction) {
         switch (protectableAction) {
             case PLACE_BLOCK:
-                return RoleSetting.BLOCK_PLACE;
+                return Flags.BLOCK_PLACE;
             case BREAK_BLOCK:
-                return RoleSetting.BLOCK_BREAK;
+                return Flags.BLOCK_BREAK;
             case ATTACK_PLAYER:
-                return RoleSetting.ATTACK_PLAYER;
+                return Flags.ATTACK_PLAYER;
             case INTERACT_BLOCK:
-                return RoleSetting.INTERACT_CONTAINER;
+                return Flags.INTERACT_CONTAINER;
             case INTERACT_ENTITY:
-                return RoleSetting.INTERACT_VILLAGER;
+                return Flags.INTERACT_VILLAGER;
             case ATTACK_ENTITY:
-                return RoleSetting.ATTACK_ANIMAL;
+                return Flags.ATTACK_ANIMAL;
             default:
-                return RoleSetting.BLOCK_BREAK;
+                return Flags.BLOCK_BREAK;
         }
     }
 }

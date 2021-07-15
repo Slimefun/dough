@@ -1,5 +1,7 @@
 package io.github.bakedlibs.dough.protection.modules;
 
+import javax.annotation.Nonnull;
+
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
@@ -10,8 +12,6 @@ import io.github.bakedlibs.dough.protection.ProtectionModule;
 
 import me.angeschossen.chestprotect.api.addons.ChestProtectAddon;
 import me.angeschossen.chestprotect.api.objects.BlockProtection;
-
-import javax.annotation.Nonnull;
 
 public class ChestProtectProtectionModule implements ProtectionModule {
 
@@ -28,6 +28,7 @@ public class ChestProtectProtectionModule implements ProtectionModule {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void load() {
         this.chestProtect = new ChestProtectAddon(plugin, false);
     }

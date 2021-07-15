@@ -89,7 +89,6 @@
         <module>dough-recipes</module>
         <module>dough-updater</module>
         <module>dough-scheduling</module>
-        <module>dough-tags</module>
 
         <!-- Aggregating modules -->
         <module>dough-api</module>
@@ -146,7 +145,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
+                        <version>1.6.8</version>
                         <extensions>true</extensions>
 
                         <configuration>
@@ -159,7 +158,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>3.0.1</version>
 
                         <executions>
                             <execution>

@@ -1,25 +1,26 @@
 package io.github.bakedlibs.dough.protection.modules;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.Plugin;
 
-import com.github.intellectualsites.plotsquared.plot.config.Captions;
-import com.github.intellectualsites.plotsquared.plot.object.Location;
-import com.github.intellectualsites.plotsquared.plot.object.Plot;
-import com.github.intellectualsites.plotsquared.plot.object.PlotPlayer;
-import com.github.intellectualsites.plotsquared.plot.util.Permissions;
+import com.plotsquared.core.location.Location;
+import com.plotsquared.core.permissions.Permission;
+import com.plotsquared.core.player.PlotPlayer;
+import com.plotsquared.core.plot.Plot;
+import com.plotsquared.core.util.Permissions;
 
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
 
-import javax.annotation.Nonnull;
-
-public class PlotSquared4ProtectionModule implements ProtectionModule {
+public class PlotSquaredProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public PlotSquared4ProtectionModule(@Nonnull Plugin plugin) {
+    public PlotSquaredProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -36,8 +37,7 @@ public class PlotSquared4ProtectionModule implements ProtectionModule {
     @Override
     public boolean hasPermission(OfflinePlayer p, org.bukkit.Location l, Interaction action) {
         Block b = l.getBlock();
-
-        Location location = new Location(b.getWorld().getName(), b.getX(), b.getY(), b.getZ());
+        Location location = Location.at(b.getWorld().getName(), b.getX(), b.getY(), b.getZ());
 
         if (location.isPlotRoad()) {
             return check(p, action);
@@ -47,18 +47,18 @@ public class PlotSquared4ProtectionModule implements ProtectionModule {
         return plot == null || plot.isAdded(p.getUniqueId()) || check(p, action);
     }
 
+    @ParametersAreNonnullByDefault
     private boolean check(OfflinePlayer p, Interaction action) {
+        PlotPlayer<OfflinePlayer> player = PlotPlayer.from(p);
+
         switch (action) {
             case INTERACT_BLOCK:
-                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_INTERACT_UNOWNED);
-            case INTERACT_ENTITY:
-            case ATTACK_ENTITY:
-                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.FLAG_ANIMAL_INTERACT);
+                return Permissions.hasPermission(player, Permission.PERMISSION_ADMIN_INTERACT_UNOWNED);
             case ATTACK_PLAYER:
-                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.FLAG_PVP);
+                return Permissions.hasPermission(player, Permission.PERMISSION_ADMIN_PVP);
             case PLACE_BLOCK:
             default:
-                return Permissions.hasPermission(PlotPlayer.wrap(p), Captions.PERMISSION_ADMIN_BUILD_UNOWNED);
+                return Permissions.hasPermission(player, Permission.PERMISSION_ADMIN_BUILD_UNOWNED);
         }
     }
 }

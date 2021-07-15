@@ -15,6 +15,25 @@
 
     <description>This is the complete API of dough.</description>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>io.github.baked-libs</groupId>
@@ -75,11 +94,6 @@
         <dependency>
             <groupId>io.github.baked-libs</groupId>
             <artifactId>dough-scheduling</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.baked-libs</groupId>
-            <artifactId>dough-tags</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
