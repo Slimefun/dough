@@ -42,6 +42,14 @@ public class PrefixedVersion implements Version {
         return prefix + version;
     }
 
+    public @Nonnull String getPrefix() {
+        return prefix;
+    }
+
+    public @Nonnull int getNumericVersion() {
+        return version;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(prefix, version);
