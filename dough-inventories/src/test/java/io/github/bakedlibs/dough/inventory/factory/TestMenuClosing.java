@@ -39,7 +39,7 @@ class TestMenuClosing {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
+                    .withSlotRange(0, 8)
                     .build()
             )
             .build();

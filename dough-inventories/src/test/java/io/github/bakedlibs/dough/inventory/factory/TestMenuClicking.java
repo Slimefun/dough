@@ -79,7 +79,7 @@ class TestMenuClicking {
             )
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test2")
-                    .withSlots(2, 3, 4, 5, 6, 7, 8)
+                    .withSlotRange(2, 8)
                     .build()
             )
             .build();
@@ -116,7 +116,7 @@ class TestMenuClicking {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
+                    .withSlotRange(0, 8)
                     .onClick(payloadRef::set)
                     .build()
             )
@@ -142,15 +142,15 @@ class TestMenuClicking {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2)
+                    .withSlotRange(0, 2)
                     .onClick(payload -> {
-                        throw new NullPointerException("NPE was thrown.");
+                        throw new NullPointerException("NPE was thrown | This is expected!");
                     })
                     .build()
             )
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test2")
-                    .withSlots(3, 4, 5, 6, 7, 8)
+                    .withSlotRange(3, 8)
                     .build()
             )
             .build();
@@ -180,7 +180,7 @@ class TestMenuClicking {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
+                    .withSlotRange(0, 8)
                     .interactable(true)
                     .onClick(payload -> {
                         MenuFactory factory = payload.getMenu().getFactory();

@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.stream.IntStream;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -49,7 +47,7 @@ class TestMenuCreation {
             .title("Awesome Inventory!")
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(IntStream.range(0, size).toArray())
+                    .withSlotRange(0, size - 1)
                     .build()
             )
             .build();
@@ -73,7 +71,7 @@ class TestMenuCreation {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(IntStream.range(0, 9).toArray())
+                    .withSlotRange(0, 8)
                     .build()
             )
             .build();
@@ -90,7 +88,7 @@ class TestMenuCreation {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(IntStream.range(0, 9).toArray())
+                    .withSlotRange(0, 8)
                     .build()
             )
             .build();
@@ -121,7 +119,7 @@ class TestMenuCreation {
             )
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test2")
-                    .withSlots(2, 3, 4, 5, 6, 7, 8)
+                    .withSlotRange(2, 8)
                     .build()
             )
             .build();
@@ -146,12 +144,12 @@ class TestMenuCreation {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3, 4, 5)
+                    .withSlotRange(0, 5)
                     .build()
             )
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test2")
-                    .withSlots(6, 7, 8)
+                    .withSlotRange(6, 8)
                     .build()
             )
             .build();

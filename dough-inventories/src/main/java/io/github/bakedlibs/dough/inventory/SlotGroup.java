@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.bakedlibs.dough.inventory.builders.SlotGroupBuilder;
 import io.github.bakedlibs.dough.inventory.handlers.MenuClickHandler;
 
 /**
@@ -16,6 +17,9 @@ import io.github.bakedlibs.dough.inventory.handlers.MenuClickHandler;
  * into distinct regions which can be used for easy access.
  * 
  * @author TheBusyBiscuit
+ * 
+ * @see MenuLayout
+ * @see SlotGroupBuilder
  *
  */
 public interface SlotGroup extends Iterable<Integer> {
@@ -71,16 +75,25 @@ public interface SlotGroup extends Iterable<Integer> {
 
     /**
      * This returns the default {@link ItemStack} for this {@link SlotGroup}.
-     * The item will be <code>Material.AIR</code> by default and never null.
      * 
-     * @return The default {@link ItemStack}
+     * @return The default {@link ItemStack}, can be null
      */
     @Nullable
     ItemStack getDefaultItemStack();
 
+    /**
+     * This method returns the {@link MenuClickHandler} belonging to this {@link SlotGroup}.
+     * If no {@link MenuClickHandler} was added, this will return null.
+     * 
+     * @return The {@link MenuClickHandler} or null
+     */
     @Nullable
     MenuClickHandler getClickHandler();
 
+    /**
+     * This returns an {@link Iterator} allowing you to iterate through
+     * all slots within this {@link SlotGroup}.
+     */
     @Override
     default @Nonnull Iterator<Integer> iterator() {
         return new SlotGroupIterator(this);

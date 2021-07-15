@@ -118,12 +118,12 @@ class TestLayoutBuilder {
         MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3)
+                    .withSlotRange(0, 3)
                     .build()
             )
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test2")
-                    .withSlots(4, 5, 6, 7, 8)
+                    .withSlotRange(4, 8)
                     .build()
             );
         // @formatter:on
@@ -137,12 +137,12 @@ class TestLayoutBuilder {
         MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3)
+                    .withSlotRange(0, 3)
                     .build()
             )
             .addSlotGroup(
                 new SlotGroupBuilder('y', "test")
-                    .withSlots(4, 5, 6, 7, 8)
+                    .withSlotRange(4, 8)
                     .build()
             );
         // @formatter:on
@@ -171,7 +171,7 @@ class TestLayoutBuilder {
         MenuLayout layout = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(0, 1, 2, 3, 4, 5, 6, 7, 8)
+                    .withSlotRange(0, 8)
                     .build()
             )
             .build();
@@ -190,7 +190,7 @@ class TestLayoutBuilder {
         MenuLayoutBuilder builder = new MenuLayoutBuilder(9)
             .addSlotGroup(
                 new SlotGroupBuilder('x', "test")
-                    .withSlots(1, 2, 3, 4, 5, 6, 7, 8)
+                    .withSlotRange(1, 8)
                     .build()
             );
         // @formatter:on
