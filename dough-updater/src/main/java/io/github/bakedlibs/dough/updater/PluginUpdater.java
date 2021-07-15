@@ -9,7 +9,7 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.bakedlibs.dough.versions.Version;
 
-public interface PluginUpdater {
+public interface PluginUpdater<V extends Version> {
 
     @Nonnull
     Plugin getPlugin();
@@ -18,10 +18,10 @@ public interface PluginUpdater {
     File getFile();
 
     @Nonnull
-    Version getCurrentVersion();
+    V getCurrentVersion();
 
     @Nonnull
-    CompletableFuture<Version> getLatestVersion();
+    CompletableFuture<V> getLatestVersion();
 
     int getConnectionTimeout();
 

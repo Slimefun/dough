@@ -15,9 +15,8 @@ import com.google.gson.JsonParser;
 
 import io.github.bakedlibs.dough.common.CommonPatterns;
 import io.github.bakedlibs.dough.versions.PrefixedVersion;
-import io.github.bakedlibs.dough.versions.Version;
 
-public class GitHubBuildsUpdater extends AbstractPluginUpdater {
+public class GitHubBuildsUpdater extends AbstractPluginUpdater<PrefixedVersion> {
 
     private static final String API_URL = "https://thebusybiscuit.github.io/builds/";
 
@@ -36,7 +35,7 @@ public class GitHubBuildsUpdater extends AbstractPluginUpdater {
     }
 
     @ParametersAreNonnullByDefault
-    private static @Nonnull Version extractBuild(String prefix, Plugin plugin) {
+    private static @Nonnull PrefixedVersion extractBuild(String prefix, Plugin plugin) {
         String pluginVersion = plugin.getDescription().getVersion();
 
         if (pluginVersion.startsWith(prefix)) {
@@ -52,7 +51,7 @@ public class GitHubBuildsUpdater extends AbstractPluginUpdater {
         try {
             URL versionsURL = new URL(API_URL + repository + "/builds.json");
 
-            scheduleAsyncUpdateTask(new UpdaterTask(this, versionsURL) {
+            scheduleAsyncUpdateTask(new UpdaterTask<PrefixedVersion>(this, versionsURL) {
 
                 @Override
                 public UpdateInfo parse(String result) throws MalformedURLException {
