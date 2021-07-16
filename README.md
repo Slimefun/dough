@@ -5,6 +5,9 @@
     <a href="https://github.com/baked-libs/dough/actions">
         <img alt="Build Status" src="https://github.com/baked-libs/dough/actions/workflows/maven.yml/badge.svg?event=push" />
     </a>
+    <a href="https://javadoc.io/doc/io.github.baked-libs/dough-api">
+	<img alt="javadocs" src="https://javadoc.io/badge2/io.github.baked-libs/dough-api/javadoc.svg" />
+    </a>
     <a href="https://search.maven.org/search?q=baked-libs">
         <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.baked-libs/dough?color=1074ad&logo=apache-maven" />
     </a>
@@ -88,7 +91,7 @@ To shadow dough and relocate it:
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-shade-plugin</artifactId>
-      <version>3.2.1</version>
+      <version>3.2.4</version>
 
       <configuration>
         <relocations>

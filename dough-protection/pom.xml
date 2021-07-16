@@ -92,7 +92,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>19.5</version>
+            <version>20.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -198,7 +198,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.10</version>
+            <version>1.10.1</version>
             <scope>provided</scope>
         </dependency>
 
