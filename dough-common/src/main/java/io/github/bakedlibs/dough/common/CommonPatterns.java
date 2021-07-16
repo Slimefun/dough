@@ -2,6 +2,8 @@ package io.github.bakedlibs.dough.common;
 
 import java.util.regex.Pattern;
 
+import io.github.bakedlibs.dough.versions.SemanticVersion;
+
 /**
  * This class is created for common-use patterns used in things such as {@link String#split(String)}. <br>
  * Every time something like {@link String#split(String)} is called it will compile a {@link Pattern},
@@ -75,4 +77,13 @@ public final class CommonPatterns {
      * {@link Pattern} for {@literal 'minecraft:[a-z_]+'}
      */
     public static final Pattern MINECRAFT_NAMESPACEDKEY = Pattern.compile("minecraft:[a-z_]+");
+
+    /**
+     * {@link Pattern} for matching {@link SemanticVersion}s.
+     * This {@link Pattern} will yield three matching groups, each corresponding to the
+     * corresponding {@link SemanticVersion} component.
+     * <p>
+     * {@link Pattern}: {@literal ([0-9]+)\.([0-9]+)(?:\.([0-9]+))?}
+     */
+    public static final Pattern SEMANTIC_VERSIONS = Pattern.compile("([0-9]+)\\.([0-9]+)(?:\\.([0-9]+))?");
 }

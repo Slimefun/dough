@@ -1,10 +1,14 @@
 package io.github.bakedlibs.dough.versions;
 
 import java.util.Objects;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
 
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.Validate;
+
+import io.github.bakedlibs.dough.common.CommonPatterns;
 
 /**
  * A {@link SemanticVersion} follows the semantic version convention.
@@ -56,24 +60,100 @@ public class SemanticVersion implements Version {
         return getPatchVersion() > 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isSimilar(Version version) {
+        return version instanceof SemanticVersion;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isNewerThan(@Nonnull Version version) {
-        // TODO Implement semver check
-        return false;
+        if (isSimilar(version)) {
+            SemanticVersion semver = (SemanticVersion) version;
+            int major = semver.getMajorVersion();
+
+            if (getMajorVersion() > major) {
+                return true;
+            } else if (major > getMajorVersion()) {
+                return false;
+            }
+
+            int minor = semver.getMinorVersion();
+
+            if (getMinorVersion() > minor) {
+                return true;
+            } else if (minor > getMinorVersion()) {
+                return false;
+            }
+
+            return getPatchVersion() > semver.getPatchVersion();
+        } else {
+            throw new IncomparableVersionsException(this, version);
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEqualTo(@Nonnull Version version) {
-        // TODO Implement semver check
-        return false;
+        if (isSimilar(version)) {
+            SemanticVersion semver = (SemanticVersion) version;
+            int major = semver.getMajorVersion();
+
+            if (major != getMajorVersion()) {
+                return false;
+            }
+
+            int minor = semver.getMinorVersion();
+
+            if (minor != getMinorVersion()) {
+                return false;
+            }
+
+            return getPatchVersion() == semver.getPatchVersion();
+        } else {
+            throw new IncomparableVersionsException(this, version);
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isOlderThan(@Nonnull Version version) {
-        // TODO Implement semver check
-        return false;
+        if (isSimilar(version)) {
+            SemanticVersion semver = (SemanticVersion) version;
+            int major = semver.getMajorVersion();
+
+            if (major > getMajorVersion()) {
+                return true;
+            } else if (getMajorVersion() > major) {
+                return false;
+            }
+
+            int minor = semver.getMinorVersion();
+
+            if (minor > getMinorVersion()) {
+                return true;
+            } else if (getMinorVersion() > minor) {
+                return false;
+            }
+
+            return semver.getPatchVersion() > getPatchVersion();
+        } else {
+            throw new IncomparableVersionsException(this, version);
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public @Nonnull String getAsString() {
         if (isPatch()) {
@@ -83,11 +163,17 @@ public class SemanticVersion implements Version {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(majorVersion, minorVersion, patchVersion);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Version) {
@@ -97,11 +183,36 @@ public class SemanticVersion implements Version {
         }
     }
 
-    public static @Nonnull SemanticVersion parse(@Nonnull String version) {
-        // TODO Implement version parser
-        return null;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "SemanticVersion [" + getAsString() + "]";
     }
 
-    // TODO Unit tests
+    public static @Nonnull SemanticVersion parse(@Nonnull String version) {
+        Validate.notNull(version, "The version should not be null.");
+
+        Matcher matcher = CommonPatterns.SEMANTIC_VERSIONS.matcher(version);
+
+        if (matcher.matches()) {
+            MatchResult result = matcher.toMatchResult();
+
+            // Matcher groups start at 1. Group 0 is the "global" match.
+            int majorVersion = Integer.parseInt(result.group(1), 10);
+            int minorVersion = Integer.parseInt(result.group(2), 10);
+            int patchVersion = 0;
+
+            // Check if a patch version was provided.
+            if (result.group(3) != null) {
+                patchVersion = Integer.parseInt(result.group(3), 10);
+            }
+
+            return new SemanticVersion(majorVersion, minorVersion, patchVersion);
+        } else {
+            throw new IllegalArgumentException("Could not parse \"" + version + "\" as a semantic version.");
+        }
+    }
 
 }

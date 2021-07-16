@@ -86,6 +86,18 @@ public interface Version extends Comparable<Version> {
     }
 
     /**
+     * This returns whether this {@link Version} is "similar" to the given {@link Version}.
+     * Two {@link Version}s are considered "similar" when they can be compared to each other
+     * without causing an {@link IncomparableVersionsException}.
+     * 
+     * @param version
+     *            The {@link Version} to check
+     * 
+     * @return Whether the two {@link Version}s can be compared.
+     */
+    boolean isSimilar(@Nonnull Version version);
+
+    /**
      * This method returns this {@link Version} as a human-readable format.
      * Example: {@code 1.4.2}.
      * 
