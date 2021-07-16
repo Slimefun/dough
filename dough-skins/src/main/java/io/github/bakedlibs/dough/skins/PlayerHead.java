@@ -20,6 +20,7 @@ import com.mojang.authlib.GameProfile;
 
 import io.github.bakedlibs.dough.common.DoughLogger;
 import io.github.bakedlibs.dough.reflection.ReflectionUtils;
+import io.github.bakedlibs.dough.versions.MinecraftVersion;
 
 public final class PlayerHead {
 
@@ -33,7 +34,7 @@ public final class PlayerHead {
         try {
             handle = ReflectionUtils.getOBCClass("CraftWorld").getMethod("getHandle");
 
-            if (ReflectionUtils.getMajorVersion() >= 17) {
+            if (MinecraftVersion.get().isAtLeast(1, 17)) {
                 setGameProfile = ReflectionUtils.getNetMinecraftClass("world.level.block.entity.TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
 
                 Class<?> blockPosition = ReflectionUtils.getNetMinecraftClass("core.BlockPosition");
@@ -46,7 +47,7 @@ public final class PlayerHead {
                 newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
                 getTileEntity = ReflectionUtils.getNMSClass("WorldServer").getMethod("getTileEntity", blockPosition);
             }
-        } catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+        } catch (Exception e) {
             DoughLogger logger = new DoughLogger("skins");
             logger.log(Level.SEVERE, "Failed to detect skull nbt methods", e);
         }

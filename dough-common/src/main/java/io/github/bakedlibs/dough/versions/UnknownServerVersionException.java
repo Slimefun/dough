@@ -8,7 +8,7 @@ public class UnknownServerVersionException extends Exception {
 
     @ParametersAreNonnullByDefault
     UnknownServerVersionException(String version, Exception x) {
-        super("Cold not recognize version string: " + version, x);
+        super("Could not recognize version string: " + version, x);
     }
 
 }

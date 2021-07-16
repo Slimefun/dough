@@ -1,8 +1,11 @@
 package io.github.bakedlibs.dough.versions;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.Server;
 
 import io.github.bakedlibs.dough.common.CommonPatterns;
@@ -66,8 +69,33 @@ public class MinecraftVersion extends SemanticVersion {
             // Parse this like any other semantic version
             return new MinecraftVersion(SemanticVersion.parse(minecraftVersion));
         } catch (Exception x) {
+            // Something failed.
             throw new UnknownServerVersionException(bukkitVersion, x);
         }
+    }
+
+    /**
+     * This attempts to get the {@link MinecraftVersion} on which the current {@link Server}
+     * is running on.
+     * 
+     * @return The current {@link MinecraftVersion}
+     * 
+     * @throws UnknownServerVersionException
+     *             This exception is thrown when the {@link Server} version could not be identified
+     */
+    public static @Nonnull MinecraftVersion get() throws UnknownServerVersionException {
+        return of(Bukkit.getServer());
+    }
+
+    /**
+     * This checks if the current Server instance is a mock (MockBukkit) and
+     * whether we are in a Unit Test environment.
+     * 
+     * @return Whether the current Server instance is a mock
+     */
+    public static boolean isMocked() {
+        String serverClassName = Bukkit.getServer().getClass().getName();
+        return serverClassName.toLowerCase(Locale.ROOT).contains("mockbukkit");
     }
 
     /**

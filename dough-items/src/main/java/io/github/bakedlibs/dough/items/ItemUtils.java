@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import io.github.bakedlibs.dough.common.DoughLogger;
 import io.github.bakedlibs.dough.reflection.ReflectionUtils;
+import io.github.bakedlibs.dough.versions.MinecraftVersion;
 
 /**
  * A utility class providing some methods to handle {@link ItemStack}s.
@@ -35,9 +36,9 @@ public final class ItemUtils {
         DoughLogger logger = new DoughLogger("items");
 
         try {
-            if (ReflectionUtils.isUnitTestEnvironment()) {
+            if (MinecraftVersion.isMocked()) {
                 logger.log(Level.WARNING, "MockBukkit detected! Cannot access NMS ItemStack API.");
-            } else if (ReflectionUtils.getMajorVersion() >= 17) {
+            } else if (MinecraftVersion.get().isAtLeast(1, 17)) {
                 copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
                 getName = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("world.item.ItemStack"), "getName");
                 toString = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("network.chat.IChatBaseComponent"), "getString");
