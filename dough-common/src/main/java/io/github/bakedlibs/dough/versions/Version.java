@@ -122,10 +122,13 @@ public interface Version extends Comparable<Version> {
             return 1;
         } else if (this.isOlderThan(version)) {
             return -1;
+        } else {
+            /*
+             * (should theoretically never be reached)
+             * The two versions cannot be compared.
+             */
+            throw new IncomparableVersionsException(this, version);
         }
-
-        // The two versions cannot be compared.
-        throw new IncomparableVersionsException(this, version);
     }
 
 }

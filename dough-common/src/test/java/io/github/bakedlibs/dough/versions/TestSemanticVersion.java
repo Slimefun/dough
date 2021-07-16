@@ -13,7 +13,7 @@ class TestSemanticVersion {
 
     @Test
     void testConstructor() {
-        SemanticVersion version = new SemanticVersion(1, 2, 0);
+        SemanticVersion version = new SemanticVersion(1, 2);
 
         assertEquals(1, version.getMajorVersion());
         assertEquals(2, version.getMinorVersion());
@@ -38,10 +38,12 @@ class TestSemanticVersion {
 
     @Test
     void testParsing() {
-        SemanticVersion version = new SemanticVersion(1, 4, 0);
+        SemanticVersion version = new SemanticVersion(1, 4);
+        SemanticVersion version2 = new SemanticVersion(1, 4, 0);
 
         assertEquals(version, SemanticVersion.parse("1.4.0"));
         assertEquals(version, SemanticVersion.parse("1.4"));
+        assertEquals(version, version2);
     }
 
     @Test
@@ -83,6 +85,28 @@ class TestSemanticVersion {
         SemanticVersion version = new SemanticVersion(1, 0, 4);
 
         assertFalse(version.isSimilar(null));
+    }
+
+    @Test
+    void testEqualsIgnorePatch() {
+        SemanticVersion version = new SemanticVersion(1, 0, 4);
+        SemanticVersion version2 = new SemanticVersion(1, 0, 2);
+        SemanticVersion version3 = new SemanticVersion(1, 0, 8);
+
+        assertTrue(version.equalsIgnorePatch(1, 0));
+        assertTrue(version.equalsIgnorePatch(version2));
+        assertTrue(version.equalsIgnorePatch(version3));
+    }
+
+    @Test
+    void testEqualsIgnorePatchNotMatching() {
+        SemanticVersion version = new SemanticVersion(1, 2, 4);
+        SemanticVersion version2 = new SemanticVersion(1, 3, 2);
+        SemanticVersion version3 = new SemanticVersion(1, 1, 8);
+
+        assertFalse(version.equalsIgnorePatch(2, 0));
+        assertFalse(version.equalsIgnorePatch(version2));
+        assertFalse(version.equalsIgnorePatch(version3));
     }
 
     @Test
@@ -152,6 +176,31 @@ class TestSemanticVersion {
     }
 
     @Test
+    void testAtLeastVersion() {
+        SemanticVersion version = new SemanticVersion(1, 2, 5);
+        SemanticVersion version2 = new SemanticVersion(1, 2, 5);
+        SemanticVersion version3 = new SemanticVersion(1, 2);
+
+        assertTrue(version.isAtLeast(version2));
+        assertTrue(version.isAtLeast(version3));
+    }
+
+    @Test
+    void testAtLeastNumeric() {
+        SemanticVersion version = new SemanticVersion(1, 2, 5);
+
+        assertTrue(version.isAtLeast(0, 1));
+        assertTrue(version.isAtLeast(1, 2));
+        assertTrue(version.isAtLeast(1, 2, 1));
+        assertTrue(version.isAtLeast(1, 2, 5));
+
+        assertFalse(version.isAtLeast(2, 0));
+        assertFalse(version.isAtLeast(2, 1, 2));
+        assertFalse(version.isAtLeast(1, 2, 6));
+        assertFalse(version.isAtLeast(1, 4));
+    }
+
+    @Test
     void testInvalidEqualTo() {
         SemanticVersion version = new SemanticVersion(1, 12, 4);
         PrefixedVersion version2 = new PrefixedVersion("DEV #", 120);
@@ -206,6 +255,22 @@ class TestSemanticVersion {
 
         assertNotEquals(version, otherObject);
         assertNotEquals(version, version2);
+    }
+
+    @Test
+    void testCompare() {
+        SemanticVersion version = new SemanticVersion(1, 14);
+        SemanticVersion version2 = new SemanticVersion(1, 15);
+        SemanticVersion version3 = new SemanticVersion(1, 13);
+        PrefixedVersion version4 = new PrefixedVersion("TEST #", 5);
+
+        assertThrows(NullPointerException.class, () -> version.compareTo(null));
+
+        assertEquals(0, version.compareTo(version));
+        assertEquals(-1, version.compareTo(version2));
+        assertEquals(1, version.compareTo(version3));
+
+        assertThrows(IncomparableVersionsException.class, () -> version.compareTo(version4));
     }
 
 }

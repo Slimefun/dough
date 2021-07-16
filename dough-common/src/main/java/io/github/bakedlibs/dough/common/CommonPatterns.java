@@ -61,12 +61,12 @@ public final class CommonPatterns {
     /**
      * {@link Pattern} for {@literal '[A-Fa-f0-9]+'}
      */
-    public static final Pattern HEXADECIMAL = Pattern.compile("[A-Fa-f0-9]+");
+    public static final Pattern HEXADECIMAL = Pattern.compile("[A-Fa-f\\d]+");
 
     /**
      * {@link Pattern} for {@literal '[0-9]+'}
      */
-    public static final Pattern NUMERIC = Pattern.compile("[0-9]+");
+    public static final Pattern NUMERIC = Pattern.compile("\\d+");
 
     /**
      * {@link Pattern} for {@literal '[,.]'}
@@ -83,7 +83,7 @@ public final class CommonPatterns {
      * This {@link Pattern} will yield three matching groups, each corresponding to the
      * corresponding {@link SemanticVersion} component.
      * <p>
-     * {@link Pattern}: {@literal ([0-9]+)\.([0-9]+)(?:\.([0-9]+))?}
+     * {@link Pattern}: {@literal (\\d+)\.(\\d+)(?:\.(\\d+))?}
      */
-    public static final Pattern SEMANTIC_VERSIONS = Pattern.compile("([0-9]+)\\.([0-9]+)(?:\\.([0-9]+))?");
+    public static final Pattern SEMANTIC_VERSIONS = Pattern.compile("(\\d+)\\.(\\d+)(?:\\.(\\d+))?");
 }

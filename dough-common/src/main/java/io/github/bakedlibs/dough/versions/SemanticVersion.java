@@ -37,6 +37,10 @@ public class SemanticVersion implements Version {
         this.patchVersion = patch;
     }
 
+    public SemanticVersion(int major, int minor) {
+        this(major, minor, 0);
+    }
+
     public final int getMajorVersion() {
         return majorVersion;
     }
@@ -58,6 +62,14 @@ public class SemanticVersion implements Version {
      */
     public final boolean isPatch() {
         return getPatchVersion() > 0;
+    }
+
+    public boolean isAtLeast(int major, int minor, int patch) {
+        return isAtLeast(new SemanticVersion(major, minor, patch));
+    }
+
+    public boolean isAtLeast(int major, int minor) {
+        return isAtLeast(major, minor, 0);
     }
 
     /**
@@ -191,11 +203,58 @@ public class SemanticVersion implements Version {
         return "SemanticVersion [" + getAsString() + "]";
     }
 
+    /**
+     * This method returns whether this {@link SemanticVersion} equals the provided version
+     * in all aspects except their patch number.
+     * <p>
+     * This will only compare the major and minor versions.
+     * 
+     * @param version
+     *            The {@link SemanticVersion} to compare this to
+     * 
+     * @return Whether the two versions are equal (ignoring their patch version)
+     */
+    public boolean equalsIgnorePatch(@Nonnull SemanticVersion version) {
+        Validate.notNull(version, "Version cannot be null.");
+        return equalsIgnorePatch(version.getMajorVersion(), version.getMinorVersion());
+    }
+
+    /**
+     * This method returns whether this {@link SemanticVersion} equals the provided version
+     * numbers (ignoring the patch version of this {@link SemanticVersion}).
+     * 
+     * @param majorVersion
+     *            The major version
+     * @param minorVersion
+     *            The minor version
+     * 
+     * @return Whether the two versions are equal (ignoring their patch version)
+     */
+    public boolean equalsIgnorePatch(int majorVersion, int minorVersion) {
+        return this.majorVersion == majorVersion && this.minorVersion == minorVersion;
+    }
+
+    /**
+     * This method attempts to parse the given {@link String} as a {@link SemanticVersion}.
+     * If the {@link String} could not be parsed effectively, an {@link IllegalArgumentException}
+     * will be thrown.
+     * <p>
+     * Note that the String should follow the {@link SemanticVersion} convention, such as
+     * {@literal "1.0.2"}, {@literal "1.2.10"}, {@literal "1.3.0"} or {@literal "1.1"} to name
+     * a few examples.
+     * 
+     * @param version
+     *            The version string to parse
+     * 
+     * @return The resulting {@link SemanticVersion}
+     */
     public static @Nonnull SemanticVersion parse(@Nonnull String version) {
         Validate.notNull(version, "The version should not be null.");
 
+        // Create a Matcher from our semver regex
         Matcher matcher = CommonPatterns.SEMANTIC_VERSIONS.matcher(version);
 
+        // Check if the Matcher has found a match
         if (matcher.matches()) {
             MatchResult result = matcher.toMatchResult();
 

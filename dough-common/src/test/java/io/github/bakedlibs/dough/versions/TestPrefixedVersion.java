@@ -147,4 +147,20 @@ class TestPrefixedVersion {
         assertNotEquals(version, otherObject);
         assertNotEquals(version, version2);
     }
+
+    @Test
+    void testCompare() {
+        PrefixedVersion version = new PrefixedVersion("TEST #", 6);
+        PrefixedVersion version2 = new PrefixedVersion("TEST #", 10);
+        PrefixedVersion version3 = new PrefixedVersion("TEST #", 3);
+        SemanticVersion version4 = new SemanticVersion(1, 2);
+
+        assertThrows(NullPointerException.class, () -> version.compareTo(null));
+
+        assertEquals(0, version.compareTo(version));
+        assertEquals(-1, version.compareTo(version2));
+        assertEquals(1, version.compareTo(version3));
+
+        assertThrows(IncomparableVersionsException.class, () -> version.compareTo(version4));
+    }
 }
