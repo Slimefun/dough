@@ -28,10 +28,62 @@
 
                         <configuration>
                             <includeDependencySources>true</includeDependencySources>
+                            <detectOfflineLinks>false</detectOfflineLinks>
 
                             <dependencySourceIncludes>
                                 <dependencySourceInclude>io.github.baked-libs:*</dependencySourceInclude>
                             </dependencySourceIncludes>
+
+                            <groups>
+                                <group>
+                                    <title>Module "dough-common"</title>
+                                    <packages>io.github.bakedlibs.dough.common:io.github.bakedlibs.dough.versions</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-reflection"</title>
+                                    <packages>io.github.bakedlibs.dough.reflection</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-data"</title>
+                                    <packages>io.github.bakedlibs.dough.data*:io.github.bakedlibs.dough.blocks*:io.github.bakedlibs.dough.collections*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-config"</title>
+                                    <packages>io.github.bakedlibs.dough.config*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-chat"</title>
+                                    <packages>io.github.bakedlibs.dough.chat*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-items"</title>
+                                    <packages>io.github.bakedlibs.dough.items*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-inventories"</title>
+                                    <packages>io.github.bakedlibs.dough.inventory*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-recipes"</title>
+                                    <packages>io.github.bakedlibs.dough.recipes*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-scheduling"</title>
+                                    <packages>io.github.bakedlibs.dough.scheduling*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-skins"</title>
+                                    <packages>io.github.bakedlibs.dough.skins*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-updater"</title>
+                                    <packages>io.github.bakedlibs.dough.updater*</packages>
+                                </group>
+                                <group>
+                                    <title>Module "dough-protection"</title>
+                                    <packages>io.github.bakedlibs.dough.protection*</packages>
+                                </group>
+                            </groups>
                         </configuration>
 
                         <executions>
