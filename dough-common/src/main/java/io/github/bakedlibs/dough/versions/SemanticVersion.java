@@ -176,7 +176,7 @@ public class SemanticVersion implements Version {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Version) {
+        if (obj instanceof SemanticVersion) {
             return isEqualTo((Version) obj);
         } else {
             return false;

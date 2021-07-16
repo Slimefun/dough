@@ -141,8 +141,10 @@ class TestPrefixedVersion {
     @Test
     void testInvalidEquals() {
         PrefixedVersion version = new PrefixedVersion("TEST #", 10);
+        SemanticVersion version2 = new SemanticVersion(2, 0, 5);
         Object otherObject = "TEST #10";
 
         assertNotEquals(version, otherObject);
+        assertNotEquals(version, version2);
     }
 }
