@@ -29,17 +29,17 @@ public final class ReflectionUtils {
     private static final Pattern versionPattern = Pattern.compile("v\\d_(\\d+)_R\\d");
 
     static {
-        CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName()
-            .substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
+        if (Bukkit.getServer() != null) {
+            CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
 
-        Matcher matcher = versionPattern.matcher(CURRENT_VERSION);
-        if (matcher.matches()) {
-            MAJOR_VERSION = Integer.parseInt(matcher.group(1));
-        } else {
-            MAJOR_VERSION = 0;
+            Matcher matcher = versionPattern.matcher(CURRENT_VERSION);
+            if (matcher.matches()) {
+                MAJOR_VERSION = Integer.parseInt(matcher.group(1));
+            } else {
+                MAJOR_VERSION = 0;
+            }
         }
     }
-
 
     /**
      * Returns a certain Method in the specified Class
@@ -146,9 +146,7 @@ public final class ReflectionUtils {
      *             If the field could not be modified.
      */
     public static <T> void setFieldValue(@Nonnull T object, @Nonnull String field, @Nullable Object value) throws NoSuchFieldException, IllegalAccessException {
-        Field f = getField(object.getClass(), field);
-        f.setAccessible(true);
-        f.set(object, value);
+        setFieldValue(object, object.getClass(), field, value);
     }
 
     /**
@@ -182,37 +180,13 @@ public final class ReflectionUtils {
      * 
      * @return An Array of primitive Types
      */
-    @Nonnull
-    public static Class<?>[] toPrimitiveTypeArray(@Nonnull Class<?>[] classes) {
+    public static @Nonnull Class<?>[] toPrimitiveTypeArray(@Nonnull Class<?>[] classes) {
         int size = classes.length;
 
         Class<?>[] types = new Class[size];
 
         for (int i = 0; i < size; i++) {
             types[i] = PrimitiveTypeConversion.convertIfNecessary(classes[i]);
-        }
-
-        return types;
-    }
-
-    /**
-     * Converts the Classes of the specified Objects
-     * to a Primitive Type Array
-     * in order to be used as paramaters
-     *
-     * @param objects
-     *            The Types you want to convert
-     * 
-     * @return An Array of primitive Types
-     */
-    @Nonnull
-    public static Class<?>[] toPrimitiveTypeArray(@Nonnull Object[] objects) {
-        int size = objects.length;
-
-        Class<?>[] types = new Class[size];
-
-        for (int i = 0; i < size; i++) {
-            types[i] = PrimitiveTypeConversion.convertIfNecessary(objects[i].getClass());
         }
 
         return types;
@@ -229,9 +203,8 @@ public final class ReflectionUtils {
      *            The Parameters for that Constructor
      * @return The Constructor for that Class
      */
-    @Nullable
     @SuppressWarnings("unchecked")
-    public static <T> Constructor<T> getConstructor(@Nonnull Class<T> c, Class<?>... paramTypes) {
+    public static @Nullable <T> Constructor<T> getConstructor(@Nonnull Class<T> c, Class<?>... paramTypes) {
         Class<?>[] t = toPrimitiveTypeArray(paramTypes);
 
         for (Constructor<?> constructor : c.getConstructors()) {
@@ -266,9 +239,11 @@ public final class ReflectionUtils {
     /**
      * Returns a `net.minecraft` class via Reflection.
      *
-     * @param name The class name of which to fetch
+     * @param name
+     *            The class name of which to fetch
      * @return The `net.minecraft` class.
-     * @throws ClassNotFoundException If the class does not exist
+     * @throws ClassNotFoundException
+     *             If the class does not exist
      */
     public static Class<?> getNetMinecraftClass(@Nonnull String name) throws ClassNotFoundException {
         return Class.forName("net.minecraft." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
