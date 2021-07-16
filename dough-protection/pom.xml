@@ -92,7 +92,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>19.5</version>
+            <version>20.0</version>
             <scope>provided</scope>
         </dependency>
 
