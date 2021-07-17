@@ -15,7 +15,7 @@ class TestSimpleNumericVersion {
     void testConstructor() {
         SimpleNumericVersion version = new SimpleNumericVersion(4);
 
-        assertEquals(4, version.asInteger());
+        assertEquals(4, version.getVersionNumber());
         assertEquals("4", version.getAsString());
         assertNotNull(version.toString());
     }

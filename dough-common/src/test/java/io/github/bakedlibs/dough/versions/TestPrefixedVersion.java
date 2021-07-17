@@ -16,7 +16,7 @@ class TestPrefixedVersion {
         PrefixedVersion version = new PrefixedVersion("TEST #", 12);
 
         assertEquals("TEST #", version.getPrefix());
-        assertEquals(12, version.getNumericVersion());
+        assertEquals(12, version.getVersionNumber());
         assertEquals("TEST #12", version.getAsString());
         assertNotNull(version.toString());
     }

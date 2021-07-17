@@ -14,17 +14,28 @@ import org.apache.commons.lang.Validate;
  * @author TheBusyBiscuit
  *
  */
-public class PrefixedVersion implements Version {
+public class PrefixedVersion extends SimpleNumericVersion {
 
+    /**
+     * The prefix of this {@link PrefixedVersion}.
+     */
     private final String prefix;
-    private final int numericVersion;
 
+    /**
+     * This constructs a new {@link PrefixedVersion} with the given prefix and version number.
+     * The version number cannot be negative.
+     * 
+     * @param prefix
+     *            The prefix
+     * @param version
+     *            The version number
+     */
     public PrefixedVersion(@Nonnull String prefix, int version) {
+        super(version);
+
         Validate.notNull(prefix, "The prefix cannot be null.");
-        Validate.isTrue(version > 0, "The version must be a positive number.");
 
         this.prefix = prefix;
-        this.numericVersion = version;
     }
 
     /**
@@ -39,52 +50,17 @@ public class PrefixedVersion implements Version {
      * {@inheritDoc}
      */
     @Override
-    public boolean isNewerThan(@Nonnull Version version) {
-        if (isSimilar(version)) {
-            return getNumericVersion() > ((PrefixedVersion) version).getNumericVersion();
-        } else {
-            throw new IncomparableVersionsException(this, version);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEqualTo(@Nonnull Version version) {
-        if (isSimilar(version)) {
-            return getNumericVersion() == ((PrefixedVersion) version).getNumericVersion();
-        } else {
-            throw new IncomparableVersionsException(this, version);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isOlderThan(@Nonnull Version version) {
-        if (isSimilar(version)) {
-            return getNumericVersion() < ((PrefixedVersion) version).getNumericVersion();
-        } else {
-            throw new IncomparableVersionsException(this, version);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public @Nonnull String getAsString() {
-        return prefix + numericVersion;
+        return prefix + getVersionNumber();
     }
 
+    /**
+     * This returns the prefix for this {@link PrefixedVersion}.
+     * 
+     * @return The prefix
+     */
     public final @Nonnull String getPrefix() {
         return prefix;
-    }
-
-    public final @Nonnull int getNumericVersion() {
-        return numericVersion;
     }
 
     /**
@@ -92,7 +68,7 @@ public class PrefixedVersion implements Version {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(prefix, numericVersion);
+        return Objects.hash(prefix, getVersionNumber());
     }
 
     /**
@@ -100,11 +76,7 @@ public class PrefixedVersion implements Version {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Version && isSimilar((Version) obj)) {
-            return isEqualTo((Version) obj);
-        } else {
-            return false;
-        }
+        return super.equals(obj);
     }
 
     /**

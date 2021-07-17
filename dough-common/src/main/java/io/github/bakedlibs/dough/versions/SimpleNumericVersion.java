@@ -12,8 +12,18 @@ import org.apache.commons.lang.Validate;
  */
 public class SimpleNumericVersion implements Version {
 
+    /**
+     * The version number.
+     */
     private final int versionNumber;
 
+    /**
+     * This constructs a new {@link SimpleNumericVersion} with the given version number.
+     * The version number cannot be negative.
+     * 
+     * @param version
+     *            The version number
+     */
     public SimpleNumericVersion(int version) {
         Validate.isTrue(version > 0, "The version must be a positive number.");
 
@@ -34,7 +44,7 @@ public class SimpleNumericVersion implements Version {
     @Override
     public boolean isNewerThan(@Nonnull Version version) {
         if (isSimilar(version)) {
-            return asInteger() > ((SimpleNumericVersion) version).asInteger();
+            return getVersionNumber() > ((SimpleNumericVersion) version).getVersionNumber();
         } else {
             throw new IncomparableVersionsException(this, version);
         }
@@ -46,7 +56,7 @@ public class SimpleNumericVersion implements Version {
     @Override
     public boolean isEqualTo(@Nonnull Version version) {
         if (isSimilar(version)) {
-            return asInteger() == ((SimpleNumericVersion) version).asInteger();
+            return getVersionNumber() == ((SimpleNumericVersion) version).getVersionNumber();
         } else {
             throw new IncomparableVersionsException(this, version);
         }
@@ -58,7 +68,7 @@ public class SimpleNumericVersion implements Version {
     @Override
     public boolean isOlderThan(@Nonnull Version version) {
         if (isSimilar(version)) {
-            return asInteger() < ((SimpleNumericVersion) version).asInteger();
+            return getVersionNumber() < ((SimpleNumericVersion) version).getVersionNumber();
         } else {
             throw new IncomparableVersionsException(this, version);
         }
@@ -72,7 +82,12 @@ public class SimpleNumericVersion implements Version {
         return String.valueOf(versionNumber);
     }
 
-    public final int asInteger() {
+    /**
+     * This method returns the version number which this numeric {@link Version} represents.
+     * 
+     * @return The version number
+     */
+    public final int getVersionNumber() {
         return versionNumber;
     }
 
