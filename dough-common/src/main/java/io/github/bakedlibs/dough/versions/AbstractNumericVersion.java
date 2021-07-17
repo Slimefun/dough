@@ -44,6 +44,7 @@ abstract class AbstractNumericVersion implements Version {
      */
     @Override
     public boolean isSimilar(Version version) {
+        // This SHOULD be overridden.
         return version instanceof AbstractNumericVersion;
     }
 

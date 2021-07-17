@@ -1,7 +1,5 @@
 package io.github.bakedlibs.dough.versions;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.Validate;
@@ -91,11 +89,50 @@ public class MinecraftVersion extends SemanticVersion {
      * This checks if the current Server instance is a mock (MockBukkit) and
      * whether we are in a Unit Test environment.
      * 
+     * @param server
+     *            The {@link Server} implementation to investigate
+     * 
+     * @return Whether the current Server instance is a mock
+     */
+    public static boolean isMocked(@Nonnull Server server) {
+        /**
+         * We start our search with the current Server class.
+         */
+        Class<?> clazz = server.getClass();
+
+        /*
+         * Loop through the entire class hierarchy.
+         * As of MockBukkit-1.15 v0.30 MockBukkit allows you to
+         * pass your custom ServerMock class into MockBukkit.mock().
+         * 
+         * That's why checking the Server implementation class alone isn't
+         * enough, the custom class could be located anywhere and named anything.
+         * So we start iterating through the entire class hierarchy to see
+         * if we find our ServerMock class within this hierarchy.
+         */
+        while (clazz != null) {
+            // We only check the last part here in case the package name changes.
+            if (clazz.getName().endsWith("mockbukkit.ServerMock")) {
+                // We found our MockBukkit class
+                return true;
+            } else {
+                // Advance to the next node
+                clazz = clazz.getSuperclass();
+            }
+        }
+
+        // No MockBukkit classes present in the type hierarchy.
+        return false;
+    }
+
+    /**
+     * This checks if the current Server instance is a mock (MockBukkit) and
+     * whether we are in a Unit Test environment.
+     * 
      * @return Whether the current Server instance is a mock
      */
     public static boolean isMocked() {
-        String serverClassName = Bukkit.getServer().getClass().getName();
-        return serverClassName.toLowerCase(Locale.ROOT).contains("mockbukkit");
+        return isMocked(Bukkit.getServer());
     }
 
     /**
