@@ -14,7 +14,7 @@ import org.apache.commons.lang.Validate;
  * @author TheBusyBiscuit
  *
  */
-public class PrefixedVersion extends SimpleNumericVersion {
+public class PrefixedVersion extends AbstractNumericVersion {
 
     /**
      * The prefix of this {@link PrefixedVersion}.
@@ -76,7 +76,11 @@ public class PrefixedVersion extends SimpleNumericVersion {
      */
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (obj instanceof Version && isSimilar((Version) obj)) {
+            return isEqualTo((Version) obj);
+        } else {
+            return false;
+        }
     }
 
     /**
