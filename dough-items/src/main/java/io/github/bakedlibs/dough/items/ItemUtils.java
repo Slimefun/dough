@@ -1,8 +1,6 @@
 package io.github.bakedlibs.dough.items;
 
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,9 +12,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import io.github.bakedlibs.dough.common.DoughLogger;
-import io.github.bakedlibs.dough.reflection.ReflectionUtils;
-import io.github.bakedlibs.dough.versions.MinecraftVersion;
+import io.github.bakedlibs.dough.items.nms.ItemNameAdapter;
 
 /**
  * A utility class providing some methods to handle {@link ItemStack}s.
@@ -26,31 +22,9 @@ import io.github.bakedlibs.dough.versions.MinecraftVersion;
  */
 public final class ItemUtils {
 
+    private static final ItemNameAdapter adapter = ItemNameAdapter.get();
+
     private ItemUtils() {}
-
-    private static Method copy;
-    private static Method getName;
-    private static Method toString;
-
-    static {
-        DoughLogger logger = new DoughLogger("items");
-
-        try {
-            if (MinecraftVersion.isMocked()) {
-                logger.log(Level.WARNING, "MockBukkit detected! Cannot access NMS ItemStack API.");
-            } else if (MinecraftVersion.get().isAtLeast(1, 17)) {
-                copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
-                getName = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("world.item.ItemStack"), "getName");
-                toString = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("network.chat.IChatBaseComponent"), "getString");
-            } else {
-                copy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
-                getName = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("ItemStack"), "getName");
-                toString = ReflectionUtils.getMethod(ReflectionUtils.getNMSClass("IChatBaseComponent"), "getString");
-            }
-        } catch (Exception x) {
-            logger.log(Level.SEVERE, "Failed to detect item nbt methods", x);
-        }
-    }
 
     /**
      * This method returns a human-readable version of this item's name.
@@ -62,20 +36,20 @@ public final class ItemUtils {
      * 
      * @return The formatted Item Name
      */
-    @Nonnull
-    public static String getItemName(@Nullable ItemStack item) {
+    public static @Nonnull String getItemName(@Nullable ItemStack item) {
         if (item == null) {
             return "null";
         } else if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
             return item.getItemMeta().getDisplayName();
-        }
-
-        try {
-            Object instance = copy.invoke(null, item);
-            return (String) toString.invoke(getName.invoke(instance));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "ERROR";
+        } else if (adapter != null) {
+            try {
+                return adapter.getName(item);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "ERROR";
+            }
+        } else {
+            return "unknown";
         }
     }
 
