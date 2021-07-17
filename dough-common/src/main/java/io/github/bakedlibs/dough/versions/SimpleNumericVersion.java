@@ -1,30 +1,23 @@
 package io.github.bakedlibs.dough.versions;
 
-import java.util.Objects;
-
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang.Validate;
 
 /**
- * This {@link Version} implementation consists of two components.
- * A prefix, e.g. "DEV #" or "pre-" and a numeric version component.
- * Only {@link PrefixedVersion}s with the same prefix can be compared.
+ * This {@link Version} implementation consists of only one component, the version number.
  * 
  * @author TheBusyBiscuit
  *
  */
-public class PrefixedVersion implements Version {
+public class SimpleNumericVersion implements Version {
 
-    private final String prefix;
-    private final int numericVersion;
+    private final int versionNumber;
 
-    public PrefixedVersion(@Nonnull String prefix, int version) {
-        Validate.notNull(prefix, "The prefix cannot be null.");
+    public SimpleNumericVersion(int version) {
         Validate.isTrue(version > 0, "The version must be a positive number.");
 
-        this.prefix = prefix;
-        this.numericVersion = version;
+        this.versionNumber = version;
     }
 
     /**
@@ -32,7 +25,7 @@ public class PrefixedVersion implements Version {
      */
     @Override
     public boolean isSimilar(@Nonnull Version version) {
-        return version instanceof PrefixedVersion && prefix.equals(((PrefixedVersion) version).getPrefix());
+        return version instanceof SimpleNumericVersion;
     }
 
     /**
@@ -41,7 +34,7 @@ public class PrefixedVersion implements Version {
     @Override
     public boolean isNewerThan(@Nonnull Version version) {
         if (isSimilar(version)) {
-            return getNumericVersion() > ((PrefixedVersion) version).getNumericVersion();
+            return asInteger() > ((SimpleNumericVersion) version).asInteger();
         } else {
             throw new IncomparableVersionsException(this, version);
         }
@@ -53,7 +46,7 @@ public class PrefixedVersion implements Version {
     @Override
     public boolean isEqualTo(@Nonnull Version version) {
         if (isSimilar(version)) {
-            return getNumericVersion() == ((PrefixedVersion) version).getNumericVersion();
+            return asInteger() == ((SimpleNumericVersion) version).asInteger();
         } else {
             throw new IncomparableVersionsException(this, version);
         }
@@ -65,7 +58,7 @@ public class PrefixedVersion implements Version {
     @Override
     public boolean isOlderThan(@Nonnull Version version) {
         if (isSimilar(version)) {
-            return getNumericVersion() < ((PrefixedVersion) version).getNumericVersion();
+            return asInteger() < ((SimpleNumericVersion) version).asInteger();
         } else {
             throw new IncomparableVersionsException(this, version);
         }
@@ -76,15 +69,11 @@ public class PrefixedVersion implements Version {
      */
     @Override
     public @Nonnull String getAsString() {
-        return prefix + numericVersion;
+        return String.valueOf(versionNumber);
     }
 
-    public final @Nonnull String getPrefix() {
-        return prefix;
-    }
-
-    public final @Nonnull int getNumericVersion() {
-        return numericVersion;
+    public final int asInteger() {
+        return versionNumber;
     }
 
     /**
@@ -92,7 +81,7 @@ public class PrefixedVersion implements Version {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(prefix, numericVersion);
+        return versionNumber;
     }
 
     /**
@@ -112,6 +101,6 @@ public class PrefixedVersion implements Version {
      */
     @Override
     public String toString() {
-        return "PrefixedVersion [" + getAsString() + "]";
+        return "NumericVersion [" + getAsString() + "]";
     }
 }
