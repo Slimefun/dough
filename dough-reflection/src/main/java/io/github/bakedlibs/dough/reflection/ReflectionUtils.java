@@ -5,13 +5,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
+
+import io.github.bakedlibs.dough.versions.MinecraftVersion;
+import io.github.bakedlibs.dough.versions.UnknownServerVersionException;
 
 /**
  * This class provides some useful static methods to perform reflection.
@@ -24,21 +25,11 @@ public final class ReflectionUtils {
 
     private ReflectionUtils() {}
 
-    private static int MAJOR_VERSION;
-    private static String CURRENT_VERSION;
-    private static final Pattern versionPattern = Pattern.compile("v\\d_(\\d+)_R\\d");
+    private static final String CURRENT_VERSION;
 
     static {
-        if (Bukkit.getServer() != null) {
-            CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
-
-            Matcher matcher = versionPattern.matcher(CURRENT_VERSION);
-            if (matcher.matches()) {
-                MAJOR_VERSION = Integer.parseInt(matcher.group(1));
-            } else {
-                MAJOR_VERSION = 0;
-            }
-        }
+        String packageName = Bukkit.getServer().getClass().getPackage().getName();
+        CURRENT_VERSION = packageName.substring(packageName.lastIndexOf('.') + 1);
     }
 
     /**
@@ -230,9 +221,11 @@ public final class ReflectionUtils {
      *             If the class could not be found.
      * 
      * @return The Class in your specified Class
+     * @throws UnknownServerVersionException
+     *             If the {@link MinecraftVersion} was unable to be determined
      */
     @Nonnull
-    public static Class<?> getInnerNMSClass(@Nonnull String name, @Nonnull String subname) throws ClassNotFoundException {
+    public static Class<?> getInnerNMSClass(@Nonnull String name, @Nonnull String subname) throws ClassNotFoundException, UnknownServerVersionException {
         return getNMSClass(name + '$' + subname);
     }
 
@@ -244,9 +237,13 @@ public final class ReflectionUtils {
      * @return The `net.minecraft` class.
      * @throws ClassNotFoundException
      *             If the class does not exist
+     * @throws UnknownServerVersionException
+     *             If the {@link MinecraftVersion} was unable to be determined
      */
-    public static Class<?> getNetMinecraftClass(@Nonnull String name) throws ClassNotFoundException {
-        return Class.forName("net.minecraft." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
+    public static Class<?> getNetMinecraftClass(@Nonnull String name) throws ClassNotFoundException, UnknownServerVersionException {
+        MinecraftVersion version = MinecraftVersion.of(Bukkit.getServer());
+        String suffix = version.isAtLeast(1, 17) ? "" : CURRENT_VERSION + '.';
+        return Class.forName("net.minecraft." + suffix + name);
     }
 
     /**
@@ -255,14 +252,18 @@ public final class ReflectionUtils {
      * @param name
      *            The Name of the Class you are looking for
      * 
+     * @return The Class in that Package
+     * 
      * @throws ClassNotFoundException
      *             If the class could not be found.
-     * 
-     * @return The Class in that Package
+     * @throws UnknownServerVersionException
+     *             If the {@link MinecraftVersion} was not able to be determined.
      */
     @Nonnull
-    public static Class<?> getNMSClass(@Nonnull String name) throws ClassNotFoundException {
-        return Class.forName("net.minecraft.server." + (MAJOR_VERSION <= 16 ? getVersion() + '.' : "") + name);
+    public static Class<?> getNMSClass(@Nonnull String name) throws ClassNotFoundException, UnknownServerVersionException {
+        MinecraftVersion version = MinecraftVersion.of(Bukkit.getServer());
+        String suffix = version.isAtLeast(1, 17) ? "" : CURRENT_VERSION + '.';
+        return Class.forName("net.minecraft.server." + suffix + name);
     }
 
     /**
@@ -296,38 +297,7 @@ public final class ReflectionUtils {
      */
     @Nonnull
     public static Class<?> getOBCClass(@Nonnull String name) throws ClassNotFoundException {
-        return Class.forName("org.bukkit.craftbukkit." + getVersion() + '.' + name);
-    }
-
-    /**
-     * Returns the formatted Server Version usable for Reflection
-     *
-     * @return The formatted Server Version
-     */
-    @Nonnull
-    private static String getVersion() {
-        if (CURRENT_VERSION == null) {
-            CURRENT_VERSION = Bukkit.getServer().getClass().getPackage().getName().substring(Bukkit.getServer().getClass().getPackage().getName().lastIndexOf('.') + 1);
-        }
-
-        return CURRENT_VERSION;
-    }
-
-    /**
-     * Return the Minecraft Major Version (15, 16, 17).
-     */
-    public static int getMajorVersion() {
-        return MAJOR_VERSION;
-    }
-
-    /**
-     * This checks if the current Server instance is a mock (MockBukkit) and
-     * whether we are in a Unit Test environment.
-     * 
-     * @return Whether the current Server instance is a mock
-     */
-    public static boolean isUnitTestEnvironment() {
-        return getVersion().equals("mockbukkit");
+        return Class.forName("org.bukkit.craftbukkit." + CURRENT_VERSION + '.' + name);
     }
 
     /**
