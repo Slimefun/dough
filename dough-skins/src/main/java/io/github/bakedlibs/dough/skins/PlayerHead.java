@@ -1,10 +1,7 @@
 package io.github.bakedlibs.dough.skins;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.function.Consumer;
-import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -18,39 +15,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import com.mojang.authlib.GameProfile;
 
-import io.github.bakedlibs.dough.common.DoughLogger;
-import io.github.bakedlibs.dough.reflection.ReflectionUtils;
+import io.github.bakedlibs.dough.skins.nms.PlayerHeadAdapter;
 
 public final class PlayerHead {
 
-    private static Constructor<?> newPosition;
-
-    private static Method handle;
-    private static Method getTileEntity;
-    private static Method setGameProfile;
-
-    static {
-        try {
-            handle = ReflectionUtils.getOBCClass("CraftWorld").getMethod("getHandle");
-
-            if (ReflectionUtils.getMajorVersion() >= 17) {
-                setGameProfile = ReflectionUtils.getNetMinecraftClass("world.level.block.entity.TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
-
-                Class<?> blockPosition = ReflectionUtils.getNetMinecraftClass("core.BlockPosition");
-                newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
-                getTileEntity = ReflectionUtils.getNMSClass("level.WorldServer").getMethod("getTileEntity", blockPosition);
-            } else {
-                setGameProfile = ReflectionUtils.getNMSClass("TileEntitySkull").getMethod("setGameProfile", GameProfile.class);
-
-                Class<?> blockPosition = ReflectionUtils.getNMSClass("BlockPosition");
-                newPosition = ReflectionUtils.getConstructor(blockPosition, int.class, int.class, int.class);
-                getTileEntity = ReflectionUtils.getNMSClass("WorldServer").getMethod("getTileEntity", blockPosition);
-            }
-        } catch (NoSuchMethodException | SecurityException | ClassNotFoundException e) {
-            DoughLogger logger = new DoughLogger("skins");
-            logger.log(Level.SEVERE, "Failed to detect skull nbt methods", e);
-        }
-    }
+    private static final PlayerHeadAdapter adapter = PlayerHeadAdapter.get();
 
     private PlayerHead() {}
 
@@ -98,6 +67,10 @@ public final class PlayerHead {
 
     @ParametersAreNonnullByDefault
     public static void setSkin(Block block, PlayerSkin skin, boolean sendBlockUpdate) {
+        if (adapter == null) {
+            throw new UnsupportedOperationException("Cannot update skin texture, no adapter found");
+        }
+
         Material material = block.getType();
 
         if (material != Material.PLAYER_HEAD && material != Material.PLAYER_WALL_HEAD) {
@@ -106,13 +79,10 @@ public final class PlayerHead {
 
         try {
             GameProfile profile = skin.getProfile();
-            Object world = handle.invoke(block.getWorld());
-
-            Object position = newPosition.newInstance(block.getX(), block.getY(), block.getZ());
-            Object tileEntity = getTileEntity.invoke(world, position);
+            Object tileEntity = adapter.getTileEntity(block);
 
             if (tileEntity != null) {
-                setGameProfile.invoke(tileEntity, profile);
+                adapter.setGameProfile(tileEntity, profile);
 
                 if (sendBlockUpdate) {
                     block.getState().update(true, false);
