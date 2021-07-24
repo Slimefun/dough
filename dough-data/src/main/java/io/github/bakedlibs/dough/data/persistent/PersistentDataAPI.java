@@ -377,7 +377,8 @@ public final class PersistentDataAPI {
      * @return An Optional describing the result
      */
     public static Optional<Boolean> getOptionalBoolean(PersistentDataHolder holder, NamespacedKey key) {
-        return !hasBoolean(holder, key) ? Optional.empty() : Optional.of(getBoolean(holder, key));
+        Byte b = holder.getPersistentDataContainer().get(key, PersistentDataType.BYTE);
+        return b == null ? Optional.empty() : Optional.of(b == 1);
     }
 
     /**
