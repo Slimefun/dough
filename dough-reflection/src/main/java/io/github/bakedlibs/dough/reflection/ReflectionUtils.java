@@ -356,7 +356,7 @@ public final class ReflectionUtils {
      * 
      * @return An ArrayList of all Enum Constants in that Enum
      */
-    public static @Nonnull <T> List<T> getEnumConstants(@Nonnull Class<T> c) {
+    public static @Nonnull <T extends Enum<T>> List<T> getEnumConstants(@Nonnull Class<T> c) {
         return Arrays.asList(c.getEnumConstants());
     }
 
@@ -373,7 +373,7 @@ public final class ReflectionUtils {
      * @return The found Enum Constant
      */
     @ParametersAreNonnullByDefault
-    public static @Nullable <T> T getEnumConstant(Class<T> c, String name) {
+    public static @Nullable <T extends Enum<T>> T getEnumConstant(Class<T> c, String name) {
         for (T field : c.getEnumConstants()) {
             if (field.toString().equals(name)) {
                 return field;
