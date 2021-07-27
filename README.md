@@ -53,14 +53,14 @@ repositories {
 }
 
 dependencies {
-	compileOnly 'io.github.baked-libs:dough-api:[DOUGH VERSION]'
+	implementation 'io.github.baked-libs:dough-api:[DOUGH VERSION]'
 }
 ```
 
 To shadow dough and relocate it:
 ```gradle
 plugins {
-  id "com.github.johnrengelman.shadow" version "6.1.0"
+  id "com.github.johnrengelman.shadow" version "7.0.0"
 }
 
 shadowJar {
