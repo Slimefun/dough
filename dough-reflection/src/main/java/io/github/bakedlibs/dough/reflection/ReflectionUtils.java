@@ -70,8 +70,9 @@ public final class ReflectionUtils {
      */
     public static @Nullable Method getMethod(@Nonnull Class<?> c, @Nonnull String method) {
         for (Method m : c.getMethods()) {
-            if (m.getName().equals(method))
+            if (m.getName().equals(method)) {
                 return m;
+            }
         }
 
         return null;
@@ -89,12 +90,12 @@ public final class ReflectionUtils {
      * @return The found Method
      */
     public static @Nullable Method getMethod(@Nonnull Class<?> c, @Nonnull String method, Class<?>... paramTypes) {
-        Class<?>[] t = toPrimitiveTypeArray(paramTypes);
+        Class<?>[] expectParamTypes = toPrimitiveTypeArray(paramTypes);
 
         for (Method m : c.getMethods()) {
-            Class<?>[] types = toPrimitiveTypeArray(m.getParameterTypes());
+            Class<?>[] methodParameters = toPrimitiveTypeArray(m.getParameterTypes());
 
-            if ((m.getName().equals(method)) && (equalsTypeArray(types, t))) {
+            if ((m.getName().equals(method)) && (equalsTypeArray(methodParameters, expectParamTypes))) {
                 return m;
             }
         }
@@ -197,7 +198,6 @@ public final class ReflectionUtils {
      */
     public static @Nonnull Class<?>[] toPrimitiveTypeArray(@Nonnull Class<?>[] classes) {
         int size = classes.length;
-
         Class<?>[] types = new Class[size];
 
         for (int i = 0; i < size; i++) {
@@ -216,16 +216,17 @@ public final class ReflectionUtils {
      *            The Class containing the Constructor
      * @param paramTypes
      *            The Parameters for that Constructor
+     * 
      * @return The Constructor for that Class
      */
     @SuppressWarnings("unchecked")
     public static @Nullable <T> Constructor<T> getConstructor(@Nonnull Class<T> c, Class<?>... paramTypes) {
-        Class<?>[] t = toPrimitiveTypeArray(paramTypes);
+        Class<?>[] expectedParamTypes = toPrimitiveTypeArray(paramTypes);
 
         for (Constructor<?> constructor : c.getConstructors()) {
-            Class<?>[] types = toPrimitiveTypeArray(constructor.getParameterTypes());
+            Class<?>[] constructorTypes = toPrimitiveTypeArray(constructor.getParameterTypes());
 
-            if (equalsTypeArray(types, t)) {
+            if (equalsTypeArray(constructorTypes, expectedParamTypes)) {
                 return (Constructor<T>) constructor;
             }
         }
@@ -327,18 +328,18 @@ public final class ReflectionUtils {
      *
      * @param a
      *            The first Array for comparison
-     * @param o
-     *            All following Arrays you want to compare
+     * @param b
+     *            All following Array you want to compare
      * 
      * @return Whether they equal each other
      */
-    private static boolean equalsTypeArray(@Nonnull Class<?>[] a, Class<?>... o) {
-        if (a.length != o.length) {
+    private static boolean equalsTypeArray(@Nonnull Class<?>[] a, Class<?>[] b) {
+        if (a.length != b.length) {
             return false;
         }
 
         for (int i = 0; i < a.length; i++) {
-            if ((!a[i].equals(o[i])) && (!a[i].isAssignableFrom(o[i]))) {
+            if ((!a[i].equals(b[i])) && (!a[i].isAssignableFrom(b[i]))) {
                 return false;
             }
         }
