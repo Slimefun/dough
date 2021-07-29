@@ -2,7 +2,7 @@ package io.github.bakedlibs.dough.collections;
 
 import javax.annotation.Nonnull;
 
-public class DummyData implements Cloneable {
+class DummyData implements Cloneable {
 
     private final int value;
 
