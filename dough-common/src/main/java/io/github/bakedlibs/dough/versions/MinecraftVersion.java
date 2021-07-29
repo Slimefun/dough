@@ -14,7 +14,7 @@ import io.github.bakedlibs.dough.common.CommonPatterns;
  * 
  * @author TheBusyBiscuit
  * 
- * @see {@link SemanticVersion}
+ * @see SemanticVersion
  *
  */
 public class MinecraftVersion extends SemanticVersion {

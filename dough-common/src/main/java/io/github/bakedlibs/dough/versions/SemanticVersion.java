@@ -27,6 +27,16 @@ public class SemanticVersion implements Version {
     private final int minorVersion;
     private final int patchVersion;
 
+    /**
+     * This creates a new {@link SemanticVersion} instance with the given components.
+     * 
+     * @param major
+     *            The major version
+     * @param minor
+     *            The minor version
+     * @param patch
+     *            The patch version
+     */
     public SemanticVersion(int major, int minor, int patch) {
         Validate.isTrue(major >= 0, "Major version must be positive or zero.");
         Validate.isTrue(minor >= 0, "Minor version must be positive or zero.");
@@ -37,18 +47,43 @@ public class SemanticVersion implements Version {
         this.patchVersion = patch;
     }
 
+    /**
+     * This creates a new {@link SemanticVersion} instance with the given components.
+     * <p>
+     * The patch version will be automatically assumed to be zero.
+     * 
+     * @param major
+     *            The major version
+     * @param minor
+     *            The minor version
+     */
     public SemanticVersion(int major, int minor) {
         this(major, minor, 0);
     }
 
+    /**
+     * This returns the "major" version component of this {@link SemanticVersion}.
+     * 
+     * @return The major version
+     */
     public final int getMajorVersion() {
         return majorVersion;
     }
 
+    /**
+     * This returns the "minor" version component of this {@link SemanticVersion}.
+     * 
+     * @return The minor version
+     */
     public final int getMinorVersion() {
         return minorVersion;
     }
 
+    /**
+     * This returns the "patch" version component of this {@link SemanticVersion}.
+     * 
+     * @return The patch version
+     */
     public final int getPatchVersion() {
         return patchVersion;
     }
