@@ -5,18 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.github.thebusybiscuit</groupId>
+        <groupId>io.github.baked-libs</groupId>
         <artifactId>dough</artifactId>
-        <version>1.0</version>
+        <version>1.0.2</version>
     </parent>
 
     <artifactId>dough-chat</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>io.github.thebusybiscuit</groupId>
+            <groupId>io.github.baked-libs</groupId>
             <artifactId>dough-common</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>

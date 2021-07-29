@@ -6,4 +6,7 @@
 **/target
 
 *.iml
+
+**pom.xml.versionsBackup
 dependency-reduced-pom.xml
+publish.bat
