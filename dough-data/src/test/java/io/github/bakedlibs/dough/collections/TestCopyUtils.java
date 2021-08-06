@@ -14,58 +14,43 @@ import java.util.Objects;
 
 class TestCopyUtils {
 
-    private static <T> boolean haveSameElements(@Nonnull Collection<T> c1, @Nonnull Collection<T> c2) {
-        if (c1.size() != c2.size()) {
-            return false;
-        }
-        return c1.containsAll(c2);
+    private static <T> void assertHaveEqualElements(@Nonnull Collection<T> c1, @Nonnull Collection<T> c2) {
+        Assertions.assertEquals(c1.size(), c2.size());
+        Assertions.assertTrue(c1.containsAll(c2));
     }
 
-    private static <K, V> boolean haveSameElements(@Nonnull Map<K, V> m1, @Nonnull Map<K, V> m2) {
-        if (m1.size() != m2.size()) {
-            return false;
-        }
+    private static <K, V> void assertHaveEqualElements(@Nonnull Map<K, V> m1, @Nonnull Map<K, V> m2) {
+        Assertions.assertEquals(m1.size(), m2.size());
         for (Map.Entry<K, V> entry : m1.entrySet()) {
-            if (!Objects.equals(m2.get(entry.getKey()), entry.getValue())) {
-                return false;
-            }
+            Assertions.assertEquals(m2.get(entry.getKey()), entry.getValue());
         }
-        return true;
     }
 
-    private static <T> boolean haveClonedElements(@Nonnull Collection<T> c1, @Nonnull Collection<T> c2) {
-        if (c1.size() != c2.size()) {
-            return false;
-        }
+    private static <T> void assertHaveClonedElements(@Nonnull Collection<T> c1, @Nonnull Collection<T> c2) {
+        Assertions.assertEquals(c1.size(), c2.size());
         for (T t1 : c1) {
             for (T t2 : c2) {
                 // If they are the same, it did not clone and thus we fail.
-                if (t1 == t2) {
-                    return false;
-                } else if (t1.equals(t2)) {
+                Assertions.assertNotSame(t1, t2);
+                if (t1.equals(t2)) {
                     // If they are equal, the element has been cloned, thus, we break and check the next element.
                     break;
                 }
             }
         }
-        return true;
     }
 
-    private static <K, V> boolean haveClonedElements(@Nonnull Map<K, V> m1, @Nonnull Map<K, V> m2) {
-        if (m1.size() != m2.size()) {
-            return false;
-        }
+    private static <K, V> void assertHaveClonedElements(@Nonnull Map<K, V> m1, @Nonnull Map<K, V> m2) {
+        Assertions.assertEquals(m1.size(), m2.size());
         for (Map.Entry<K, V> entry : m1.entrySet()) {
             V otherValue = m2.get(entry.getKey());
             // If they are the same, it did not clone and thus we fail.
-            if (entry.getValue() == otherValue) {
-                return false;
-            } else if (entry.getValue().equals(otherValue)) {
+            Assertions.assertNotSame(entry.getValue(), otherValue);
+            if (entry.getValue().equals(otherValue)) {
                 // If they are equal, the element has been cloned, thus, we break and check the next element.
                 break;
             }
         }
-        return true;
     }
 
 
@@ -76,8 +61,8 @@ class TestCopyUtils {
             Arrays.asList(new DummyData(1), new DummyData(2), new DummyData(3));
         Collection<DummyData> clonedCollection =
             CopyUtils.deepCopy(dummyCollection, DummyData::clone, ArrayList::new);
-        Assertions.assertTrue(haveSameElements(dummyCollection, clonedCollection));
-        Assertions.assertTrue(haveClonedElements(dummyCollection, clonedCollection));
+        assertHaveEqualElements(dummyCollection, clonedCollection);
+        assertHaveClonedElements(dummyCollection, clonedCollection);
     }
 
     @Test
@@ -88,14 +73,14 @@ class TestCopyUtils {
         dummyMap.put(2, new DummyData(2));
         dummyMap.put(3, new DummyData(3));
         Map<Integer, DummyData> clonedMap = CopyUtils.deepCopy(dummyMap, DummyData::clone, HashMap::new);
-        Assertions.assertTrue(haveSameElements(dummyMap, clonedMap));
-        Assertions.assertTrue(haveClonedElements(dummyMap, clonedMap));
+        assertHaveEqualElements(dummyMap, clonedMap);
+        assertHaveClonedElements(dummyMap, clonedMap);
         // We first perform a shallow copy from clonedMap
         Map<Integer, DummyData> clonedMapDeepCopy = new HashMap<>(clonedMap);
         // We then mutate the shallow copy and turn it into a deep copy.
         CopyUtils.deepCopy(clonedMapDeepCopy, DummyData::clone);
-        Assertions.assertTrue(haveSameElements(clonedMap, clonedMapDeepCopy));
-        Assertions.assertTrue(haveClonedElements(clonedMap, clonedMapDeepCopy));
+        assertHaveEqualElements(clonedMap, clonedMapDeepCopy);
+        assertHaveClonedElements(clonedMap, clonedMapDeepCopy);
     }
 
     @Test
@@ -103,12 +88,12 @@ class TestCopyUtils {
     void testCloningArrays() {
         DummyData[] dummyArray = new DummyData[]{new DummyData(1), new DummyData(2), new DummyData(3)};
         DummyData[] clonedArray = CopyUtils.deepCopy(dummyArray, DummyData::clone, DummyData[]::new);
-        Assertions.assertTrue(haveSameElements(Arrays.asList(dummyArray), Arrays.asList(clonedArray)));
-        Assertions.assertTrue(haveClonedElements(Arrays.asList(dummyArray), Arrays.asList(clonedArray)));
+        assertHaveEqualElements(Arrays.asList(dummyArray), Arrays.asList(clonedArray));
+        assertHaveClonedElements(Arrays.asList(dummyArray), Arrays.asList(clonedArray));
         DummyData[] deepClonedArray =  new DummyData[clonedArray.length];
         CopyUtils.deepCopy(clonedArray, DummyData::clone, deepClonedArray);
-        Assertions.assertTrue(haveSameElements(Arrays.asList(dummyArray), Arrays.asList(deepClonedArray)));
-        Assertions.assertTrue(haveClonedElements(Arrays.asList(dummyArray), Arrays.asList(deepClonedArray)));
+        assertHaveEqualElements(Arrays.asList(dummyArray), Arrays.asList(deepClonedArray));
+        assertHaveClonedElements(Arrays.asList(dummyArray), Arrays.asList(deepClonedArray));
         // Cannot clone if the length of the sink < length of source
         DummyData[] invalidArray = new DummyData[clonedArray.length - 1];
         Assertions.assertThrows(IllegalArgumentException.class, () -> CopyUtils.deepCopy(dummyArray, DummyData::clone, invalidArray));
