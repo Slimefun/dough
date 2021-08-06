@@ -54,4 +54,10 @@ public class TestLoopIterator {
         Assertions.assertTrue(iterator.find(i -> i <= 10 && i > 0).isPresent());
         Assertions.assertFalse(iterator.find(i -> i > 10 || i < 1).isPresent());
     }
+
+    @Test
+    void testEmptyIterator() {
+        LoopIterator<Object> emptyIterator = new LoopIterator<>(Collections.emptyList());
+        Assertions.assertFalse(emptyIterator.find(x -> true).isPresent());
+    }
 }
