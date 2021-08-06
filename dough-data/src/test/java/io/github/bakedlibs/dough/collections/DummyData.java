@@ -6,7 +6,7 @@ class DummyData implements Cloneable {
 
     private final int value;
 
-    public DummyData(int value) {
+    DummyData(int value) {
         this.value = value;
     }
 
