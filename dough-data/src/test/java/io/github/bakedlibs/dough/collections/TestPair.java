@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.AbstractMap;
 import java.util.Map;
 
-public class TestPair {
+class TestPair {
 
     @Test
     void testGettersAndSetters() {
