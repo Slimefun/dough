@@ -51,6 +51,8 @@ class TestOptionalMap {
         map.remove(1);
         Assertions.assertThrows(RuntimeException.class,
                 () -> map.ifAbsent(1, v -> {
+                    // The value passed here must always be null
+                    Assertions.assertNull(v);
                     throw new RuntimeException("Value not found!");
                 }), "Value not found!");
         Assertions.assertEquals(2, map.computeIfAbsent(2, k -> k));
