@@ -8,7 +8,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestPersistentYAML {
+class TestPersistentYAML {
 
     @Test
     @SuppressWarnings("deprecation")
