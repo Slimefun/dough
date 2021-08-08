@@ -46,7 +46,7 @@ public final class PersistentUUIDDataType implements PersistentDataType<int[], U
         Validate.notNull(ints, "The provided integer array cannot be null!");
         Validate.isTrue(ints.length == 4, "The integer array must have a length of 4.");
 
-        return new UUID(ints[0] | ints[1] & 0xFFFFFFFFL, ints[2] | ints[3] & 0xFFFFFFFFL);
+        return new UUID(((long) ints[0] << 32) | ints[1] & 0xFFFFFFFFL, ((long) ints[2] << 32) | ints[3] & 0xFFFFFFFFL);
     }
 
     public static @Nonnull int[] toIntArray(@Nonnull UUID uuid) {
