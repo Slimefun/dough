@@ -23,4 +23,18 @@ class TestPersistentUUID {
 
     }
 
+    @Test
+    void testInvalidCases() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> PersistentUUIDDataType.fromIntArray(null), "The provided integer array cannot be null!");
+        int[] invalidData = new int[0];
+        Assertions.assertThrows(IllegalArgumentException.class, () -> PersistentUUIDDataType.fromIntArray(invalidData), "The integer array must have a length of 4.");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> PersistentUUIDDataType.toIntArray(null), "The provided uuid cannot be null!");
+    }
+
+    @Test
+    void testTypeInformation() {
+        Assertions.assertEquals(UUID.class, PersistentUUIDDataType.TYPE.getComplexType());
+        Assertions.assertEquals(int[].class, PersistentUUIDDataType.TYPE.getPrimitiveType());
+    }
+
 }
