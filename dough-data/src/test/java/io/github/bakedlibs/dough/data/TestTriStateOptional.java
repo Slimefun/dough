@@ -1,6 +1,5 @@
-package io.github.bakedlibs.dough.collections;
+package io.github.bakedlibs.dough.data;
 
-import io.github.bakedlibs.dough.data.TriStateOptional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
