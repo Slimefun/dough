@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestKeyMap {
+class TestKeyMap {
 
     @Test
     @DisplayName("Test if the add method uses the correct key")

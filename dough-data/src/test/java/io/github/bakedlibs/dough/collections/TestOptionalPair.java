@@ -48,7 +48,7 @@ class TestOptionalPair {
         Assertions.assertEquals(optionalPair.hashCode(), optionalPairFromPair.hashCode());
         Assertions.assertEquals(optionalPair, optionalPair);
 
-        Assertions.assertNotEquals(optionalPair, null);
+        Assertions.assertNotEquals(null, optionalPair);
         Assertions.assertEquals(optionalPair, new OptionalPair<>(primary, secondary));
         Assertions.assertNotEquals(optionalPair, new OptionalPair<>(primary, null));
         Assertions.assertNotEquals(optionalPair, new OptionalPair<>(null, secondary));

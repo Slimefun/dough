@@ -4,7 +4,7 @@ import io.github.bakedlibs.dough.data.TriStateOptional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestTriStateOptional {
+class TestTriStateOptional {
 
     @Test
     void testEmpty() {

@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.junit.jupiter.api.*;
 
-public class TestChunkPosition {
+class TestChunkPosition {
 
     @BeforeAll
     static void init() {
@@ -62,7 +62,7 @@ public class TestChunkPosition {
     @Test
     void testInvalidEquality() {
         World world = new WorldMock();
-        Assertions.assertNotEquals(new ChunkPosition(world, 1, 1), 1);
+        Assertions.assertNotEquals(1, new ChunkPosition(world, 1, 1));
     }
 
     @Test

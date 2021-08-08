@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.junit.jupiter.api.*;
 
-public class TestBlockPosition {
+class TestBlockPosition {
 
     @BeforeAll
     static void init() {
@@ -69,7 +69,7 @@ public class TestBlockPosition {
     @Test
     void testInvalidEquality() {
         World world = new WorldMock();
-        Assertions.assertNotEquals(new BlockPosition(world, 1, 1, 1), 1);
+        Assertions.assertNotEquals(1, new BlockPosition(world, 1, 1, 1));
     }
 
     @Test

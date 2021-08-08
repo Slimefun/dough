@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-public class TestLoopIterator {
+class TestLoopIterator {
 
     @Test
     void testLooping() {

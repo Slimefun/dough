@@ -50,7 +50,7 @@ class TestPair {
         Assertions.assertEquals(pair.hashCode(), pairFromOptional.hashCode());
         Assertions.assertEquals(pair, pair);
 
-        Assertions.assertNotEquals(pair, null);
+        Assertions.assertNotEquals(null, pair);
         Assertions.assertEquals(pair, new Pair<>(primary, secondary));
         Assertions.assertNotEquals(pair, new Pair<>(primary, new Object()));
         Assertions.assertNotEquals(pair, new Pair<>(new Object(), secondary));
