@@ -317,7 +317,7 @@ public final class ReflectionUtils {
      */
     public static @Nonnull Class<?> getOBCClass(@Nonnull String name) throws ClassNotFoundException {
         try {
-            return Class.forName("org.bukkit.craftbukkit." + getVersionSpecificPackage(false) + '.' + name);
+            return Class.forName("org.bukkit.craftbukkit." + getVersionSpecificPackage(false) + name);
         } catch (UnknownServerVersionException e) {
             throw new IllegalStateException("No version check should be performed here.", e);
         }
