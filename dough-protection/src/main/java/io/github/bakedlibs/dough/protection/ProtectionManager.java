@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
+import io.github.bakedlibs.dough.protection.modules.ShopChestProtectionModule;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -74,6 +75,7 @@ public final class ProtectionManager {
         registerModule(server, "Factions", plugin -> new FactionsUUIDProtectionModule(plugin));
         registerModule(server, "FunnyGuilds", plugin -> new FunnyGuildsProtectionModule(plugin));
         registerModule(server, "PlotSquared", plugin -> new PlotSquaredProtectionModule(plugin));
+        registerModule(server, "ShopChest", plugin -> new ShopChestProtectionModule(plugin));
 
         /*
          * The following Plugins are logging plugins, not protection plugins
