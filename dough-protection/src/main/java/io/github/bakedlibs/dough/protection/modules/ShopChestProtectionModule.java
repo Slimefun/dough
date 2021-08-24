@@ -32,9 +32,9 @@ public class ShopChestProtectionModule implements ProtectionModule {
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, Interaction action) {
         if (action == Interaction.BREAK_BLOCK) {
-                return !shopChest.getShopUtils().isShop(l);
+            return !shopChest.getShopUtils().isShop(l);
         } else {
-                return true;
+            return true;
         }
     }
 }
