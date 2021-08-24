@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
-import io.github.bakedlibs.dough.protection.modules.ShopChestProtectionModule;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
@@ -30,6 +29,7 @@ import io.github.bakedlibs.dough.protection.modules.LocketteProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PlotSquaredProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.ShopChestProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.WorldGuardProtectionModule;
 
