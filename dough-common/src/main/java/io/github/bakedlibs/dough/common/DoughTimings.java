@@ -1,12 +1,14 @@
 package io.github.bakedlibs.dough.common;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 public class DoughTimings {
@@ -28,11 +30,7 @@ public class DoughTimings {
         this.steps.add(System.nanoTime());
     }
 
-    public void printTimings() {
-        this.printTimings(true);
-    }
-
-    public void printTimings(boolean clearTimings) {
+    public @Nonnull String buildTimings(boolean clearTimings) {
         final StringBuilder sb = new StringBuilder("-- Timings " + this.name
                 + " (" + this.steps.size() + ") --");
 
@@ -57,5 +55,23 @@ public class DoughTimings {
         if (clearTimings) {
             this.steps.clear();
         }
+        return sb.toString();
     }
+
+    public void logTimings() {
+        this.printTimings(true, logger::info);
+    }
+
+    public void logTimings(boolean clearTimings) {
+        printTimings(clearTimings, logger::info);
+    }
+
+    private void printTimings(boolean clearTimings, @Nonnull Consumer<String> printer) {
+        printer.accept(buildTimings(clearTimings));
+    }
+
+    public void printTimings(boolean clearTimings, @Nonnull CommandSender sender) {
+        printTimings(clearTimings, sender::sendMessage);
+    }
+
 }
