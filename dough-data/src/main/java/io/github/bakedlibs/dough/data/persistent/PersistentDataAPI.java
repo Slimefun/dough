@@ -594,8 +594,6 @@ public final class PersistentDataAPI {
      *            The key of the data to retrieve
      * @param defaultVal
      *            The default value to use if no key is found
-     * @param defaultVal
-     *            The default value to use if no key is found
      * @return The float associated with this key or the default value if it doesn't exist
      */
     public static float getFloat(PersistentDataHolder holder, NamespacedKey key, float defaultVal) {
