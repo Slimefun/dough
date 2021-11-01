@@ -50,8 +50,8 @@ public final class ProtectionManager {
      *
      * @param server
      *            The Server your plugin is running on.
-     * @param plugin The plugin that uses dough.
-     *
+     * @param plugin
+     *            The plugin that uses dough.
      */
     @SuppressWarnings("java:S1612")
     public ProtectionManager(@Nonnull Server server, @Nonnull Plugin plugin) {
