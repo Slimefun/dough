@@ -51,16 +51,16 @@ public class LandsProtectionModule implements ProtectionModule {
         switch (protectableAction) {
             case PLACE_BLOCK:
                 return Flags.BLOCK_PLACE;
-            case ATTACK_PLAYER:
-                return Flags.ATTACK_PLAYER;
+            case BREAK_BLOCK:
+                return Flags.BLOCK_BREAK;
             case INTERACT_BLOCK:
                 return Flags.INTERACT_CONTAINER;
-            case INTERACT_ENTITY:
-                return Flags.INTERACT_VILLAGER;
+            case ATTACK_PLAYER:
+                return Flags.ATTACK_PLAYER;
             case ATTACK_ENTITY:
                 return Flags.ATTACK_ANIMAL;
             default:
-                return Flags.BLOCK_BREAK;
+                return Flags.INTERACT_VILLAGER;
         }
     }
 }
