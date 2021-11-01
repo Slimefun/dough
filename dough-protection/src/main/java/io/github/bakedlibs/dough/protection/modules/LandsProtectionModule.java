@@ -18,7 +18,8 @@ import me.angeschossen.lands.api.land.LandWorld;
 public class LandsProtectionModule implements ProtectionModule {
 
     private LandsIntegration landsIntegration;
-    private final Plugin lands, plugin;
+    private final Plugin lands;
+    private final Plugin plugin;
 
     public LandsProtectionModule(@Nonnull Plugin lands, @Nonnull Plugin plugin) {
         this.lands = lands;
