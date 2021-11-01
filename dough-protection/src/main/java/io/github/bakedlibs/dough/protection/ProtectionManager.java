@@ -50,30 +50,32 @@ public final class ProtectionManager {
      *
      * @param server
      *            The Server your plugin is running on.
+     * @param plugin The plugin that uses dough.
+     *
      */
     @SuppressWarnings("java:S1612")
-    public ProtectionManager(@Nonnull Server server) {
+    public ProtectionManager(@Nonnull Server server, @Nonnull Plugin plugin) {
         logger = new DoughLogger(server, "protection");
 
         logger.log(Level.INFO, "Loading Protection Modules...");
         logger.log(Level.INFO, "This may happen more than once.");
 
         // We sadly cannot use ModuleName::new as this would load the class into memory prematurely
-        registerModule(server, "WorldGuard", plugin -> new WorldGuardProtectionModule(plugin));
-        registerModule(server, "Towny", plugin -> new TownyProtectionModule(plugin));
-        registerModule(server, "GriefPrevention", plugin -> new GriefPreventionProtectionModule(plugin));
-        registerModule(server, "LWC", plugin -> new LWCProtectionModule(plugin));
-        registerModule(server, "PreciousStones", plugin -> new PreciousStonesProtectionModule(plugin));
-        registerModule(server, "Lockette", plugin -> new LocketteProtectionModule(plugin));
+        registerModule(server, "WorldGuard", modulePlugin -> new WorldGuardProtectionModule(modulePlugin));
+        registerModule(server, "Towny", modulePlugin -> new TownyProtectionModule(modulePlugin));
+        registerModule(server, "GriefPrevention", modulePlugin -> new GriefPreventionProtectionModule(modulePlugin));
+        registerModule(server, "LWC", modulePlugin -> new LWCProtectionModule(modulePlugin));
+        registerModule(server, "PreciousStones", modulePlugin -> new PreciousStonesProtectionModule(modulePlugin));
+        registerModule(server, "Lockette", modulePlugin -> new LocketteProtectionModule(modulePlugin));
 
-        registerModule(server, "RedProtect", plugin -> new RedProtectProtectionModule(plugin));
-        registerModule(server, "BentoBox", plugin -> new BentoBoxProtectionModule(plugin));
-        registerModule(server, "BlockLocker", plugin -> new BlockLockerProtectionModule(plugin));
-        registerModule(server, "Lands", plugin -> new LandsProtectionModule(plugin));
-        registerModule(server, "ChestProtect", plugin -> new ChestProtectProtectionModule(plugin));
-        registerModule(server, "Factions", plugin -> new FactionsUUIDProtectionModule(plugin));
-        registerModule(server, "FunnyGuilds", plugin -> new FunnyGuildsProtectionModule(plugin));
-        registerModule(server, "PlotSquared", plugin -> new PlotSquaredProtectionModule(plugin));
+        registerModule(server, "RedProtect", modulePlugin -> new RedProtectProtectionModule(modulePlugin));
+        registerModule(server, "BentoBox", modulePlugin -> new BentoBoxProtectionModule(modulePlugin));
+        registerModule(server, "BlockLocker", modulePlugin -> new BlockLockerProtectionModule(modulePlugin));
+        registerModule(server, "Lands", modulePlugin -> new LandsProtectionModule(modulePlugin, plugin));
+        registerModule(server, "ChestProtect", modulePlugin -> new ChestProtectProtectionModule(modulePlugin));
+        registerModule(server, "Factions", modulePlugin -> new FactionsUUIDProtectionModule(modulePlugin));
+        registerModule(server, "FunnyGuilds", modulePlugin -> new FunnyGuildsProtectionModule(modulePlugin));
+        registerModule(server, "PlotSquared", modulePlugin -> new PlotSquaredProtectionModule(modulePlugin));
 
         /*
          * The following Plugins are logging plugins, not protection plugins

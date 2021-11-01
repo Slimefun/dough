@@ -18,15 +18,16 @@ import me.angeschossen.lands.api.land.LandWorld;
 public class LandsProtectionModule implements ProtectionModule {
 
     private LandsIntegration landsIntegration;
-    private final Plugin plugin;
+    private final Plugin lands, plugin;
 
-    public LandsProtectionModule(@Nonnull Plugin plugin) {
+    public LandsProtectionModule(@Nonnull Plugin lands, @Nonnull Plugin plugin) {
+        this.lands = lands;
         this.plugin = plugin;
     }
 
     @Override
     public Plugin getPlugin() {
-        return plugin;
+        return lands;
     }
 
     @Override
@@ -50,8 +51,6 @@ public class LandsProtectionModule implements ProtectionModule {
         switch (protectableAction) {
             case PLACE_BLOCK:
                 return Flags.BLOCK_PLACE;
-            case BREAK_BLOCK:
-                return Flags.BLOCK_BREAK;
             case ATTACK_PLAYER:
                 return Flags.ATTACK_PLAYER;
             case INTERACT_BLOCK:
