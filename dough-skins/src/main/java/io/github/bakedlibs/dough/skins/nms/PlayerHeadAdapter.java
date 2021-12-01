@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import io.github.bakedlibs.dough.versions.Version;
 import org.bukkit.block.Block;
 
 import com.mojang.authlib.GameProfile;
@@ -26,9 +27,12 @@ public interface PlayerHeadAdapter {
         try {
             MinecraftVersion version = MinecraftVersion.get();
 
-            if (version.isAtLeast(1, 17)) {
-                // 1.17+ mappings
+            if (version.getMajorVersion() == 1 && version.getMinorVersion() == 17) {
+                // 1.17 mappings
                 return new PlayerHeadAdapter17();
+            } else if (version.isAtLeast(1, 18)) {
+                // 1.18 mappings
+                return new PlayerHeadAdapter18();
             } else {
                 // Old mappings
                 return new PlayerHeadAdapterBefore17();
