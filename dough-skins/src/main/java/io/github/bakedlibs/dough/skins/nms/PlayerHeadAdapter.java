@@ -6,7 +6,6 @@ import java.util.logging.Level;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import io.github.bakedlibs.dough.versions.Version;
 import org.bukkit.block.Block;
 
 import com.mojang.authlib.GameProfile;
