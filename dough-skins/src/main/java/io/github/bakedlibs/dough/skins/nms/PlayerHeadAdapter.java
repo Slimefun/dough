@@ -28,7 +28,7 @@ public interface PlayerHeadAdapter {
 
             if (version.isAtLeast(1, 17)) {
                 // 1.17+ mappings
-                return new PlayerHeadAdapterAfter17();
+                return new PlayerHeadAdapter17();
             } else {
                 // Old mappings
                 return new PlayerHeadAdapterBefore17();
