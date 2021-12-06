@@ -24,7 +24,7 @@
         </repository>
         <repository>
             <id>preciousstones-repo</id>
-            <url>http://maven.elmakers.com/repository/</url>
+            <url>https://maven.elmakers.com/repository/</url>
         </repository>
         <repository>
             <id>coreprotect-repo</id>
