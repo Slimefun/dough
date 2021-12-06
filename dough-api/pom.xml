@@ -148,10 +148,6 @@
             <url>https://jitpack.io/</url>
         </repository>
         <repository>
-            <id>preciousstones-repo</id>
-            <url>https://maven.elmakers.com/repository/</url>
-        </repository>
-        <repository>
             <id>coreprotect-repo</id>
             <url>https://maven.playpro.com/</url>
         </repository>
@@ -273,9 +269,9 @@
 
         <!-- PreciousStones -->
         <dependency>
-            <groupId>net.sacredlabyrinth.Phaed</groupId>
-            <artifactId>PreciousStones</artifactId>
-            <version>15.0</version>
+            <groupId>com.github.marcelo-mason</groupId>
+            <artifactId>preciousstones</artifactId>
+            <version>24e3d4bf67</version>
             <scope>provided</scope>
         </dependency>
 
