@@ -1,6 +1,6 @@
 package io.github.bakedlibs.dough.protection.modules;
 
-import net.dzikoysk.funnyguilds.system.protection.ProtectionSystem;
+import net.dzikoysk.funnyguilds.feature.protection.ProtectionSystem;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
