@@ -82,9 +82,9 @@
 
         <!-- PreciousStones -->
         <dependency>
-            <groupId>com.github.marcelo-mason</groupId>
-            <artifactId>preciousstones</artifactId>
-            <version>24e3d4bf67</version>
+            <groupId>com.github.elBukkit</groupId>
+            <artifactId>PreciousStones</artifactId>
+            <version>1.16.5</version>
             <scope>provided</scope>
         </dependency>
 
