@@ -12,6 +12,9 @@ jobs:
 
     name: SonarCloud Scanner
     runs-on: ubuntu-latest
+    
+    ## Do not run this on forks, it will fail ._.
+    if: ${{ github.repository_owner == 'baked-libs' }}
 
     steps:
       - name: Checkout repository
