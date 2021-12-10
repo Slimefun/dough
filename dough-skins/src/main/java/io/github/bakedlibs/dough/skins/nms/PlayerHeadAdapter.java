@@ -28,10 +28,10 @@ public interface PlayerHeadAdapter {
 
             if (version.isAtLeast(1, 18)) {
                 // 1.18 mappings
-                return new PlayerHeadAdapter17();
+                return new PlayerHeadAdapter18();
             } else if (version.isAtLeast(1, 17)) {
                 // 1.17 mappings
-                return new PlayerHeadAdapter18();
+                return new PlayerHeadAdapter17();
             } else {
                 // Old mappings
                 return new PlayerHeadAdapterBefore17();
