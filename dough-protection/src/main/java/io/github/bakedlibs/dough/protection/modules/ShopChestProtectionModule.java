@@ -11,6 +11,11 @@ import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Provides protection handling for ShopChest
+ *
+ * @author EpicPlayerA10
+ */
 public class ShopChestProtectionModule implements ProtectionModule {
     private ShopChest shopChest;
     private final Plugin plugin;
