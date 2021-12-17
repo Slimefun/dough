@@ -279,7 +279,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>20.1</version>
+            <version>20.2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -349,7 +349,7 @@
         <dependency>
             <groupId>com.plotsquared</groupId>
             <artifactId>PlotSquared-Core</artifactId>
-            <version>6.1.4</version>
+            <version>6.2.1</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -377,7 +377,7 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.17.3</version>
+            <version>1.19.0</version>
             <scope>provided</scope>
         </dependency>
 
