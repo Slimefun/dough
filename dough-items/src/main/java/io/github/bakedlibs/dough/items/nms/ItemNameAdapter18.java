@@ -10,17 +10,17 @@ import org.bukkit.inventory.ItemStack;
 import io.github.bakedlibs.dough.reflection.ReflectionUtils;
 import io.github.bakedlibs.dough.versions.UnknownServerVersionException;
 
-class ItemNameAdapterAfter17 implements ItemNameAdapter {
+class ItemNameAdapter18 implements ItemNameAdapter {
 
     private final Method getCopy;
     private final Method getName;
     private final Method toString;
 
-    ItemNameAdapterAfter17() throws NoSuchMethodException, SecurityException, ClassNotFoundException, UnknownServerVersionException {
+    ItemNameAdapter18() throws NoSuchMethodException, SecurityException, ClassNotFoundException, UnknownServerVersionException {
         super();
 
         getCopy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
-        getName = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("world.item.ItemStack"), "getName");
+        getName = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("world.item.ItemStack"), "getDisplayName");
         toString = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("network.chat.IChatBaseComponent"), "getString");
     }
 
