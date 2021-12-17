@@ -296,8 +296,8 @@
 
         <dependency>
             <groupId>com.github.seeseemelk</groupId>
-            <artifactId>MockBukkit-v1.16</artifactId>
-            <version>1.5.2</version>
+            <artifactId>MockBukkit-v1.18</artifactId>
+            <version>1.14.0</version>
             <scope>test</scope>
 
             <exclusions>
