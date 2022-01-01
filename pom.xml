@@ -6,7 +6,7 @@
 
     <groupId>io.github.baked-libs</groupId>
     <artifactId>dough</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <packaging>pom</packaging>
 
@@ -100,7 +100,6 @@
 
             <build>
                 <plugins>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -109,6 +108,8 @@
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
+                                <phase>package</phase>
+
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
@@ -119,11 +120,20 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.3.0</version>
+                        <version>3.3.1</version>
+
+                        <configuration>
+                            <includeDependencySources>false</includeDependencySources>
+
+                            <links>
+                                <link>https://hub.spigotmc.org/javadocs/spigot/</link>
+                            </links>
+                        </configuration>
 
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
+
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
@@ -151,7 +161,7 @@
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
 
@@ -207,7 +217,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.9.0.2155</version>
+                <version>3.9.1.2184</version>
             </plugin>
 
             <plugin>
@@ -259,7 +269,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17-R0.1-SNAPSHOT</version>
+            <version>1.18.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -273,14 +283,21 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.7.2</version>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.2.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.github.seeseemelk</groupId>
-            <artifactId>MockBukkit-v1.16</artifactId>
-            <version>1.5.0</version>
+            <artifactId>MockBukkit-v1.18</artifactId>
+            <version>1.15.0</version>
             <scope>test</scope>
 
             <exclusions>

@@ -19,23 +19,65 @@ import org.bukkit.block.Block;
  */
 public final class BlockPosition {
 
+    /**
+     * A {@link WeakReference} to our {@link World}.
+     * This allows the Java GC to clear the {@link World} object from
+     * memory when the {@link World} is unloaded, we do not want to keep
+     * this in memory unnecessarily.
+     */
     private final WeakReference<World> world;
+
+    /**
+     * The encoded coordinates of this {@link BlockPosition}.
+     */
     private final long position;
 
+    /**
+     * This creates a new {@link BlockPosition} from the given position and {@link World}.
+     * 
+     * @param world
+     *            The {@link World}
+     * @param position
+     *            The {@link BlockPosition} (as a long)
+     */
     public BlockPosition(@Nonnull World world, long position) {
         this.world = new WeakReference<>(world);
         this.position = position;
     }
 
+    /**
+     * This creates a new {@link BlockPosition} for the given position.
+     * 
+     * @param world
+     *            The {@link World}
+     * @param x
+     *            The x coordinate
+     * @param y
+     *            The y coordinate
+     * @param z
+     *            The z coordinate
+     */
     public BlockPosition(@Nonnull World world, int x, int y, int z) {
         this.world = new WeakReference<>(world);
         this.position = getAsLong(x, y, z);
     }
 
+    /**
+     * This creates a new {@link BlockPosition} for the given {@link Block}s position.
+     * 
+     * @param b
+     *            The {@link Block}
+     */
     public BlockPosition(@Nonnull Block b) {
         this(b.getWorld(), b.getX(), b.getY(), b.getZ());
     }
 
+    /**
+     * This creates a new {@link BlockPosition} for the given {@link Location}
+     * 
+     * @param l
+     *            The {@link Location}
+     */
     public BlockPosition(@Nonnull Location l) {
         this(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
     }
@@ -47,8 +89,9 @@ public final class BlockPosition {
      *
      * @return The {@link World} for this block.
      */
-    public World getWorld() {
-        final World ref = this.world.get();
+    public @Nonnull World getWorld() {
+        World ref = this.world.get();
+
         if (ref == null) {
             throw new IllegalStateException("The reference of this BlockPositions world has been cleared");
         }
@@ -99,7 +142,7 @@ public final class BlockPosition {
      *
      * @return The {@link Block} at this location.
      */
-    public Block getBlock() {
+    public @Nonnull Block getBlock() {
         return getChunk().getBlock((getX() & 0xF), getY(), (getZ() & 0xF));
     }
 
@@ -108,8 +151,8 @@ public final class BlockPosition {
      *
      * @return This blocks {@link Chunk}.
      */
-    public Chunk getChunk() {
-        final World ref = this.world.get();
+    public @Nonnull Chunk getChunk() {
+        World ref = this.world.get();
 
         if (ref == null) {
             throw new IllegalStateException("Cannot get Chunk when the world isn't loaded");
@@ -141,7 +184,7 @@ public final class BlockPosition {
      *
      * @return A Bukkit {@link Location}.
      */
-    public Location toLocation() {
+    public @Nonnull Location toLocation() {
         return new Location(this.world.get(), getX(), getY(), getZ());
     }
 
@@ -181,7 +224,7 @@ public final class BlockPosition {
     @Override
     public boolean equals(Object o) {
         if (o instanceof BlockPosition) {
-            final BlockPosition pos = (BlockPosition) o;
+            BlockPosition pos = (BlockPosition) o;
 
             if (pos.world.get() == null) {
                 return false;
@@ -198,8 +241,8 @@ public final class BlockPosition {
      */
     @Override
     public int hashCode() {
-        final int prime = 31;
-        final World ref = this.world.get();
+        int prime = 31;
+        World ref = this.world.get();
 
         int result = 0;
         result += prime * (ref == null ? 0 : ref.hashCode());
@@ -214,7 +257,7 @@ public final class BlockPosition {
     @Override
     public String toString() {
         World w = this.world.get();
-        final String worldName = w != null ? w.getName() : "<no reference>";
+        String worldName = w != null ? w.getName() : "<no reference>";
 
         return String.format("BlockPosition(world=%s, x=%d, y=%d, z=%d, position=%d)", worldName, getX(), getY(), getZ(), getPosition());
     }

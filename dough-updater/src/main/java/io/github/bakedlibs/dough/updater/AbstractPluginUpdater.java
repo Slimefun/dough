@@ -13,18 +13,18 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.bakedlibs.dough.versions.Version;
 
-abstract class AbstractPluginUpdater implements PluginUpdater {
+abstract class AbstractPluginUpdater<V extends Version> implements PluginUpdater<V> {
 
     private final Plugin plugin;
     private final File file;
 
     private int connectionTimeout = 9000;
 
-    protected final Version currentVersion;
-    protected final CompletableFuture<Version> latestVersion = new CompletableFuture<>();
+    protected final V currentVersion;
+    protected final CompletableFuture<V> latestVersion = new CompletableFuture<>();
 
     @ParametersAreNonnullByDefault
-    protected AbstractPluginUpdater(Plugin plugin, File file, Version currentVersion) {
+    protected AbstractPluginUpdater(Plugin plugin, File file, V currentVersion) {
         Validate.notNull(plugin, "The plugin cannot be null.");
         Validate.notNull(file, "The plugin file cannot be null.");
         Validate.notNull(currentVersion, "The current version cannot be null.");
@@ -67,15 +67,15 @@ abstract class AbstractPluginUpdater implements PluginUpdater {
     }
 
     @Override
-    public @Nonnull Version getCurrentVersion() {
+    public @Nonnull V getCurrentVersion() {
         return currentVersion;
     }
 
-    public @Nonnull CompletableFuture<Version> getLatestVersion() {
+    public @Nonnull CompletableFuture<V> getLatestVersion() {
         return latestVersion;
     }
 
-    protected void scheduleAsyncUpdateTask(@Nonnull UpdaterTask task) {
+    protected void scheduleAsyncUpdateTask(@Nonnull UpdaterTask<V> task) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, task);
     }
 

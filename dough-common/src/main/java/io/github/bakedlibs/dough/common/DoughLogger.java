@@ -1,7 +1,6 @@
 package io.github.bakedlibs.dough.common;
 
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
@@ -31,12 +30,6 @@ public class DoughLogger extends Logger {
 
     public DoughLogger(@Nonnull String name) {
         this(Bukkit.getServer(), name);
-    }
-
-    @Override
-    public void log(@Nonnull LogRecord logRecord) {
-        logRecord.setMessage(logRecord.getMessage());
-        super.log(logRecord);
     }
 
 }

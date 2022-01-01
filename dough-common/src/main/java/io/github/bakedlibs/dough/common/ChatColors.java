@@ -4,6 +4,12 @@ import javax.annotation.Nonnull;
 
 import org.bukkit.ChatColor;
 
+/**
+ * This class contains some utilities related to {@link ChatColor}.
+ * 
+ * @author TheBusyBiscuit
+ *
+ */
 public final class ChatColors {
 
     private ChatColors() {}

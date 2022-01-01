@@ -20,15 +20,15 @@ import org.bukkit.plugin.Plugin;
 
 import io.github.bakedlibs.dough.versions.Version;
 
-abstract class UpdaterTask implements Runnable {
+abstract class UpdaterTask<V extends Version> implements Runnable {
 
     private final Plugin plugin;
     private final File file;
     private final URL url;
     private final int timeout;
-    private final Version currentVersion;
+    private final V currentVersion;
 
-    UpdaterTask(@Nonnull PluginUpdater updater, @Nonnull URL url) {
+    UpdaterTask(@Nonnull PluginUpdater<V> updater, @Nonnull URL url) {
         this.plugin = updater.getPlugin();
         this.file = updater.getFile();
         this.url = url;
