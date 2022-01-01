@@ -105,7 +105,7 @@ public class SlotGroupBuilder {
     }
 
     /**
-     * This method adds all slot within the given range to this {@link SlotGroup}.
+     * This method adds all slots within the given range to this {@link SlotGroup}.
      * Note that both parameters are inclusive.
      * 
      * @param from
