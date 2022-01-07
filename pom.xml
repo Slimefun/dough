@@ -6,7 +6,7 @@
 
     <groupId>io.github.baked-libs</groupId>
     <artifactId>dough</artifactId>
-    <version>1.0.3</version>
+    <version>1.1.1</version>
 
     <packaging>pom</packaging>
 
@@ -269,7 +269,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17-R0.1-SNAPSHOT</version>
+            <version>1.18.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -290,14 +290,14 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.1.0</version>
+            <version>4.2.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.github.seeseemelk</groupId>
-            <artifactId>MockBukkit-v1.16</artifactId>
-            <version>1.5.2</version>
+            <artifactId>MockBukkit-v1.18</artifactId>
+            <version>1.15.0</version>
             <scope>test</scope>
 
             <exclusions>

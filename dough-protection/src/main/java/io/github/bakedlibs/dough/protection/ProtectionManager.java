@@ -31,6 +31,7 @@ import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModu
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.WorldGuardProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.HuskTownsProtectionModule;
 
 /**
  * This Class provides a nifty API for plugins to query popular protection plugins.
@@ -76,6 +77,7 @@ public final class ProtectionManager {
         registerModule(server, "Factions", modulePlugin -> new FactionsUUIDProtectionModule(modulePlugin));
         registerModule(server, "FunnyGuilds", modulePlugin -> new FunnyGuildsProtectionModule(modulePlugin));
         registerModule(server, "PlotSquared", modulePlugin -> new PlotSquaredProtectionModule(modulePlugin));
+        registerModule(server, "HuskTowns", modulePlugin -> new HuskTownsProtectionModule(modulePlugin));
 
         /*
          * The following Plugins are logging plugins, not protection plugins
