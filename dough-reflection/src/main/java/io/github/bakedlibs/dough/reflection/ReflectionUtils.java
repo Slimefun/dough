@@ -17,7 +17,7 @@ import io.github.bakedlibs.dough.versions.UnknownServerVersionException;
 
 /**
  * This class provides some useful static methods to perform reflection.
- * 
+ *
  * @author TheBusyBiscuit
  *
  */
@@ -33,12 +33,12 @@ public final class ReflectionUtils {
      * <br>
      * If the minecraft version check is enabled, then this will return an empty
      * {@link String} for Minecraft versions 1.17 or later.
-     * 
+     *
      * @param checkMinecraftVersion
      *            Whether the {@link MinecraftVersion} should be checked
-     * 
+     *
      * @return The version-specific package name
-     * 
+     *
      * @throws UnknownServerVersionException
      *             If the {@link MinecraftVersion} could not be determined successfully
      */
@@ -148,7 +148,7 @@ public final class ReflectionUtils {
      *            The Name of that Field
      * @param value
      *            The Value for that Field
-     * 
+     *
      * @throws NoSuchFieldException
      *             If the field could not be found.
      * @throws IllegalAccessException
@@ -171,7 +171,7 @@ public final class ReflectionUtils {
      *            The Name of that Field
      * @param value
      *            The Value for that Field
-     * 
+     *
      * @throws NoSuchFieldException
      *             If the field could not be found.
      * @throws IllegalAccessException
@@ -188,12 +188,12 @@ public final class ReflectionUtils {
      *            The Object containing the Field
      * @param field
      *            The Name of that Field
-     * 
+     *
      * @throws NoSuchFieldException
      *             If the field could not be found.
      * @throws IllegalAccessException
      *             If the field could not be queried.
-     * 
+     *
      * @return The Value of a Field
      */
     @ParametersAreNonnullByDefault
@@ -209,7 +209,7 @@ public final class ReflectionUtils {
      *
      * @param classes
      *            The Types you want to convert
-     * 
+     *
      * @return An Array of primitive Types
      */
     public static @Nonnull Class<?>[] toPrimitiveTypeArray(@Nonnull Class<?>[] classes) {
@@ -232,7 +232,7 @@ public final class ReflectionUtils {
      *            The Class containing the Constructor
      * @param paramTypes
      *            The Parameters for that Constructor
-     * 
+     *
      * @return The Constructor for that Class
      */
     @SuppressWarnings("unchecked")
@@ -257,12 +257,12 @@ public final class ReflectionUtils {
      *            The Name of the Class your Inner class is located in
      * @param subname
      *            The Name of the inner Class you are looking for
-     * 
+     *
      * @throws ClassNotFoundException
      *             If the class could not be found.
-     * 
+     *
      * @return The Class in your specified Class
-     * 
+     *
      * @throws UnknownServerVersionException
      *             If the {@link MinecraftVersion} was unable to be determined
      */
@@ -290,9 +290,9 @@ public final class ReflectionUtils {
      *
      * @param name
      *            The Name of the Class you are looking for
-     * 
+     *
      * @return The Class in that Package
-     * 
+     *
      * @throws ClassNotFoundException
      *             If the class could not be found.
      * @throws UnknownServerVersionException
@@ -309,10 +309,10 @@ public final class ReflectionUtils {
      *            The Name of the Class your Inner class is located in
      * @param subname
      *            The Name of the inner Class you are looking for
-     * 
+     *
      * @throws ClassNotFoundException
      *             If the class could not be found.
-     * 
+     *
      * @return The Class in your specified Class
      */
     @ParametersAreNonnullByDefault
@@ -325,10 +325,10 @@ public final class ReflectionUtils {
      *
      * @param name
      *            The Name of the Class you are looking for
-     * 
+     *
      * @throws ClassNotFoundException
      *             If the class could not be found.
-     * 
+     *
      * @return The Class in that Package
      */
     public static @Nonnull Class<?> getOBCClass(@Nonnull String name) throws ClassNotFoundException {
@@ -346,7 +346,7 @@ public final class ReflectionUtils {
      *            The first Array for comparison
      * @param b
      *            All following Array you want to compare
-     * 
+     *
      * @return Whether they equal each other
      */
     private static boolean equalsTypeArray(@Nonnull Class<?>[] a, Class<?>[] b) {
@@ -370,7 +370,7 @@ public final class ReflectionUtils {
      *            The Type argument of the enum we are querying
      * @param c
      *            The Enum you are targeting
-     * 
+     *
      * @return An ArrayList of all Enum Constants in that Enum
      */
     public static @Nonnull <T extends Enum<T>> List<T> getEnumConstants(@Nonnull Class<T> c) {
@@ -386,7 +386,7 @@ public final class ReflectionUtils {
      *            The Enum you are targeting
      * @param name
      *            The Name of the Constant you are targeting
-     * 
+     *
      * @return The found Enum Constant
      */
     @ParametersAreNonnullByDefault

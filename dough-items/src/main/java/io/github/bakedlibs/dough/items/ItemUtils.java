@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -156,6 +157,7 @@ public final class ItemUtils {
      *            Whether the Unbreaking Enchantment should be ignored
      */
     public static void damageItem(@Nonnull ItemStack item, boolean ignoreEnchantments) {
+        Validate.notNull(item, "The item cannot be null");
         damageItem(item, 1, ignoreEnchantments);
     }
 
@@ -171,6 +173,8 @@ public final class ItemUtils {
      *            Whether the Unbreaking Enchantment should be ignored
      */
     public static void damageItem(@Nonnull ItemStack item, int damage, boolean ignoreEnchantments) {
+        Validate.notNull(item, "The item cannot be null");
+
         if (item.getType() != Material.AIR && item.getAmount() > 0) {
             int remove = damage;
 
@@ -207,6 +211,7 @@ public final class ItemUtils {
      *            {@link ItemUtils#consumeItem(ItemStack, int, boolean)}
      */
     public static void consumeItem(@Nonnull ItemStack item, boolean replaceConsumables) {
+        Validate.notNull(item, "The item cannot be null");
         consumeItem(item, 1, replaceConsumables);
     }
 
@@ -231,6 +236,8 @@ public final class ItemUtils {
      *            Whether Items should be replaced with their "empty" version
      */
     public static void consumeItem(@Nonnull ItemStack item, int amount, boolean replaceConsumables) {
+        Validate.notNull(item, "The item cannot be null");
+
         if (item.getType() != Material.AIR && item.getAmount() > 0) {
             if (replaceConsumables) {
                 switch (item.getType()) {

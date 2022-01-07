@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -44,6 +45,8 @@ public class ItemMetaSnapshot {
     }
 
     public ItemMetaSnapshot(@Nonnull ItemMeta meta) {
+        Validate.notNull(meta, "The ItemMeta cannot be null");
+
         this.displayName = meta.hasDisplayName() ? Optional.of(meta.getDisplayName()) : Optional.empty();
         this.lore = meta.hasLore() ? Optional.of(Collections.unmodifiableList(meta.getLore())) : Optional.empty();
         this.customModelData = meta.hasCustomModelData() ? OptionalInt.of(meta.getCustomModelData()) : OptionalInt.empty();
@@ -73,6 +76,8 @@ public class ItemMetaSnapshot {
     }
 
     public boolean isSimilar(@Nonnull ItemMetaSnapshot snapshot) {
+        Validate.notNull(snapshot, "The snapshot cannot be null");
+
         if (snapshot.displayName.isPresent() != displayName.isPresent()) {
             return false;
         } else if (snapshot.displayName.isPresent() && displayName.isPresent() && !snapshot.displayName.get().equals(displayName.get())) {
@@ -85,6 +90,8 @@ public class ItemMetaSnapshot {
     }
 
     public boolean isSimilar(@Nonnull ItemMeta meta) {
+        Validate.notNull(meta, "The ItemMeta cannot be null");
+
         boolean hasDisplayName = meta.hasDisplayName();
 
         if (hasDisplayName != displayName.isPresent()) {

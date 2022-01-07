@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -42,6 +43,8 @@ public class RecipeSnapshot {
      *            The Plugin running on the Server that serves as the Snapshot's source.
      */
     public RecipeSnapshot(@Nonnull Plugin plugin) {
+        Validate.notNull(plugin, "The plugin cannot be null");
+
         Iterator<Recipe> iterator = plugin.getServer().recipeIterator();
 
         plugin.getLogger().log(Level.INFO, "Collecting Snapshots of all Recipes...");
@@ -87,6 +90,7 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public <T extends Recipe> Set<T> getRecipes(@Nonnull Class<T> recipeClass) {
+        Validate.notNull(recipeClass, "The recipe class cannot be null");
         return stream(recipeClass).collect(Collectors.toSet());
     }
 
@@ -103,6 +107,7 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public <T extends Recipe> Stream<T> stream(@Nonnull Class<T> recipeClass) {
+        Validate.notNull(recipeClass, "The recipe class cannot be null");
         return recipes.entrySet().stream().filter(entry -> recipeClass.isAssignableFrom(entry.getKey())).flatMap(entry -> entry.getValue().stream()).map(recipeClass::cast);
     }
 
@@ -121,6 +126,8 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public <T extends Recipe> RecipeChoice[] getRecipeInput(@Nonnull MinecraftRecipe<? super T> recipeType, @Nonnull T recipe) {
+        Validate.notNull(recipeType, "The recipe type cannot be null");
+        Validate.notNull(recipe, "The recipe cannot be null");
         return recipeType.getInputs(recipe);
     }
 
@@ -141,6 +148,8 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public <T extends Recipe> RecipeChoice[] getRecipeInput(@Nonnull T recipe) {
+        Validate.notNull(recipe, "The recipe cannot be null");
+
         Optional<MinecraftRecipe<? super T>> type = MinecraftRecipe.of(recipe);
 
         if (type.isPresent()) {
@@ -167,6 +176,8 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public <T extends Recipe> Optional<ItemStack> getRecipeOutput(@Nonnull MinecraftRecipe<T> recipeType, ItemStack... inputs) {
+        Validate.notNull(recipeType, "The recipe type cannot be null");
+
         if (recipeType.validate(inputs)) {
             return recipeType.getOutput(stream(recipeType.getRecipeClass()), inputs);
         } else {
@@ -184,6 +195,7 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public Set<Recipe> getRecipes(@Nonnull Predicate<Recipe> predicate) {
+        Validate.notNull(predicate, "The predicate cannot be null");
         return streamAllRecipes().filter(predicate).collect(Collectors.toSet());
     }
 
@@ -198,6 +210,7 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public Set<Recipe> getRecipesFor(@Nonnull Material type) {
+        Validate.notNull(type, "The type cannot be null");
         return getRecipes(recipe -> recipe.getResult().getType() == type);
     }
 
@@ -211,6 +224,7 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public Set<Recipe> getRecipesFor(@Nonnull ItemStack item) {
+        Validate.notNull(item, "The item cannot be null");
         return getRecipes(recipe -> recipe.getResult().isSimilar(item));
     }
 
@@ -226,6 +240,7 @@ public class RecipeSnapshot {
      */
     @Nonnull
     public Set<Recipe> getRecipesWith(@Nonnull ItemStack item) {
+        Validate.notNull(item, "The item cannot be null");
         return getRecipes(recipe -> Arrays.stream(getRecipeInput(recipe)).anyMatch(choice -> choice.test(item)));
     }
 
@@ -243,6 +258,7 @@ public class RecipeSnapshot {
      */
     @Nullable
     public Recipe getRecipe(@Nonnull NamespacedKey key) {
+        Validate.notNull(key, "The key cannot be null");
         return keyedRecipes.get(key);
     }
 

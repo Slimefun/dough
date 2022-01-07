@@ -2,6 +2,7 @@ package io.github.bakedlibs.dough.common;
 
 import javax.annotation.Nonnull;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 
 /**
@@ -24,6 +25,7 @@ public final class ChatColors {
      * @return The colored String
      */
     public static @Nonnull String color(@Nonnull String input) {
+        Validate.notNull(input, "The input cannot be null");
         return ChatColor.translateAlternateColorCodes('&', input);
     }
 
@@ -40,6 +42,7 @@ public final class ChatColors {
      * @return The colored String
      */
     public static @Nonnull String alternating(@Nonnull String text, ChatColor... colors) {
+        Validate.notNull(text, "The text cannot be null");
         int i = 0;
         StringBuilder builder = new StringBuilder(text.length() * 3);
 

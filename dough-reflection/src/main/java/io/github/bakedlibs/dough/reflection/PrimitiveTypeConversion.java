@@ -1,5 +1,7 @@
 package io.github.bakedlibs.dough.reflection;
 
+import org.apache.commons.lang.Validate;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,10 +26,12 @@ final class PrimitiveTypeConversion {
     private PrimitiveTypeConversion() {}
 
     static @Nullable Class<?> convert(@Nonnull Class<?> boxedClassType) {
+        Validate.notNull(boxedClassType, "The boxed class type cannot be null");
         return primitiveTypes.get(boxedClassType);
     }
 
     static @Nonnull Class<?> convertIfNecessary(@Nonnull Class<?> boxedClassType) {
+        Validate.notNull(boxedClassType, "The boxed class type cannot be null");
         Class<?> primitiveType = convert(boxedClassType);
         return primitiveType != null ? primitiveType : boxedClassType;
     }
