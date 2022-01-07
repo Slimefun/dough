@@ -39,9 +39,14 @@ public final class ItemUtils {
     public static @Nonnull String getItemName(@Nullable ItemStack item) {
         if (item == null) {
             return "null";
-        } else if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-            return item.getItemMeta().getDisplayName();
-        } else if (adapter != null) {
+        } else if (item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta.hasDisplayName()) {
+                return meta.getDisplayName();
+            }
+        }
+
+        if (adapter != null) {
             try {
                 return adapter.getName(item);
             } catch (Exception e) {

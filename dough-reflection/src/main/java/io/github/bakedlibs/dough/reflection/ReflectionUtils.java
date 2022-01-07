@@ -79,6 +79,22 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Returns a certain Method in the specified Class
+     *
+     * @param c
+     *            The Class in which the Method is in
+     * @param method
+     *            The Method you are looking for
+     * @param alternative
+     *            The alternative Method you are looking for
+     * @return The found Method
+     */
+    public static @Nullable Method getMethodOrAlternative(@Nonnull Class<?> c, @Nonnull String method, @Nonnull String alternative) {
+        Method mainMethod = getMethod(c, method);
+        return mainMethod != null ? mainMethod : getMethod(c, alternative);
+    }
+
+    /**
      * Returns the Method with certain Parameters
      *
      * @param c
@@ -317,7 +333,7 @@ public final class ReflectionUtils {
      */
     public static @Nonnull Class<?> getOBCClass(@Nonnull String name) throws ClassNotFoundException {
         try {
-            return Class.forName("org.bukkit.craftbukkit." + getVersionSpecificPackage(false) + '.' + name);
+            return Class.forName("org.bukkit.craftbukkit." + getVersionSpecificPackage(false) + name);
         } catch (UnknownServerVersionException e) {
             throw new IllegalStateException("No version check should be performed here.", e);
         }
