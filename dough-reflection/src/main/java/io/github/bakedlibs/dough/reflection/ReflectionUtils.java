@@ -79,6 +79,22 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Returns a certain Method in the specified Class
+     *
+     * @param c
+     *            The Class in which the Method is in
+     * @param method
+     *            The Method you are looking for
+     * @param alternative
+     *            The alternative Method you are looking for
+     * @return The found Method
+     */
+    public static @Nullable Method getMethodOrAlternative(@Nonnull Class<?> c, @Nonnull String method, @Nonnull String alternative) {
+        Method mainMethod = getMethod(c, method);
+        return mainMethod != null ? mainMethod : getMethod(c, alternative);
+    }
+
+    /**
      * Returns the Method with certain Parameters
      *
      * @param c
