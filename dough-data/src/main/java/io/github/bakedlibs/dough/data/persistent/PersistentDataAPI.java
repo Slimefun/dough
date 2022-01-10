@@ -118,7 +118,6 @@ public final class PersistentDataAPI {
      * @param obj
      *            The object to put in the container
      */
-
     @ParametersAreNonnullByDefault
     public static <T, Z> void setCustom(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type, Z obj) {
         holder.getPersistentDataContainer().set(key, type, obj);
@@ -344,7 +343,6 @@ public final class PersistentDataAPI {
      *            The key to check for
      * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
      */
-
     @ParametersAreNonnullByDefault
     public static <T, Z> boolean hasCustom(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
         return holder.getPersistentDataContainer().has(key, type);
