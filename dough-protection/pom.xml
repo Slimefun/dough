@@ -50,6 +50,10 @@
             <id>funnyguilds-repo</id>
             <url>https://repo.panda-lang.org/releases</url>
         </repository>
+        <repository>
+            <id>logblock-repo</id>
+            <url>https://www.iani.de/nexus/content/repositories/snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -98,9 +102,9 @@
 
         <!-- LogBlock -->
         <dependency>
-            <groupId>com.github.LogBlock</groupId>
-            <artifactId>LogBlock</artifactId>
-            <version>d98d46d0c9</version>
+            <groupId>de.diddiz</groupId>
+            <artifactId>logblock</artifactId>
+            <version>1.17.0.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -162,7 +166,7 @@
         <dependency>
             <groupId>com.plotsquared</groupId>
             <artifactId>PlotSquared-Core</artifactId>
-            <version>6.2.1</version>
+            <version>6.2.2</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
