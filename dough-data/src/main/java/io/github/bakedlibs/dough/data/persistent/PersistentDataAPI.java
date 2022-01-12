@@ -119,7 +119,7 @@ public final class PersistentDataAPI {
      *            The object to put in the container
      */
     @ParametersAreNonnullByDefault
-    public static <T, Z> void setCustom(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type, Z obj) {
+    public static <T, Z> void set(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type, Z obj) {
         holder.getPersistentDataContainer().set(key, type, obj);
     }
 
@@ -344,7 +344,7 @@ public final class PersistentDataAPI {
      * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
      */
     @ParametersAreNonnullByDefault
-    public static <T, Z> boolean hasCustom(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
+    public static <T, Z> boolean has(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
         return holder.getPersistentDataContainer().has(key, type);
     }
 
@@ -996,7 +996,7 @@ public final class PersistentDataAPI {
      */
     @Nullable
     @ParametersAreNonnullByDefault
-    public static <T, Z> Z getCustom(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
+    public static <T, Z> Z get(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
         return holder.getPersistentDataContainer().get(key, type);
     }
 
@@ -1013,7 +1013,7 @@ public final class PersistentDataAPI {
      */
     @Nonnull
     @ParametersAreNonnullByDefault
-    public static <T, Z> Z getCustom(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type, Z defaultVal) {
+    public static <T, Z> Z get(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type, Z defaultVal) {
         return holder.getPersistentDataContainer().getOrDefault(key, type, defaultVal);
     }
 
@@ -1033,7 +1033,7 @@ public final class PersistentDataAPI {
      * This method returns an {@link Optional} describing the object defined by the {@link PersistentDataType}
      * found under the given key. An empty {@link Optional} will be returned if no value has been found.
      *
-     * @see PersistentDataAPI#getCustom(PersistentDataHolder, NamespacedKey, PersistentDataType)
+     * @see PersistentDataAPI#get(PersistentDataHolder, NamespacedKey, PersistentDataType)
      *
      * @param holder
      *            The {@link PersistentDataHolder} to retrieve the data from
@@ -1043,7 +1043,7 @@ public final class PersistentDataAPI {
      */
     @Nonnull
     @ParametersAreNonnullByDefault
-    public static <T, Z> Optional<Z> getOptionalCustom(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
-        return Optional.ofNullable(getCustom(holder, key, type));
+    public static <T, Z> Optional<Z> getOptional(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
+        return Optional.ofNullable(get(holder, key, type));
     }
 }
