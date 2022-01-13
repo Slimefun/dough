@@ -224,7 +224,7 @@ public final class InvUtils {
     }
 
     /**
-     * Fills the borders with an {@link Inventory}
+     * Fills the borders of an {@link Inventory}
      *
      * @param inv The target {@link Inventory}
      * @param item Item to use for filling
@@ -258,7 +258,7 @@ public final class InvUtils {
      * Fills a row in an {@link Inventory}
      *
      * @param inventory The target {@link Inventory}
-     * @param rowIndex Index of the row to fill (0 - 6)
+     * @param rowIndex Index of the row to fill (1 - 6)
      * @param item The {@link ItemStack} to use for filling
      * @param onlyEmpty If only empty slots should be filled
      */
