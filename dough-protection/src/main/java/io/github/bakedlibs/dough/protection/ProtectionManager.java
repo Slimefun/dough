@@ -50,10 +50,8 @@ public final class ProtectionManager {
      * This creates a new instance of {@link ProtectionManager}, you can see this
      * as a "Snapshot" of your plugins too.
      *
-     * @param server
-     *            The Server your plugin is running on.
      * @param plugin
-     *            The plugin that uses dough.
+     *            The plugin instance that integrates dough.
      */
     public ProtectionManager(@Nonnull Plugin plugin) {
         logger = new DoughLogger(plugin.getServer(), "protection");
