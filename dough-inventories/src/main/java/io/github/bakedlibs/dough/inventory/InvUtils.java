@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.apache.commons.lang.Validate;
 
 import io.github.bakedlibs.dough.items.ItemUtils;
 
@@ -229,7 +230,10 @@ public final class InvUtils {
      * @param inv The target {@link Inventory}
      * @param item Item to use for filling
      */
-    public static void fillBorder(Inventory inv, ItemStack item) {
+    public static void fillBorder(@Nonnull Inventory inv, @Nonnull ItemStack item) {
+        Validate.notNull(inv, "Inventory must not be null");
+        Validate.notNull(item, "Item must not be null");
+
         int size = inv.getSize();
         int rows = (size + 1) / 9;
 
@@ -262,7 +266,10 @@ public final class InvUtils {
      * @param item The {@link ItemStack} to use for filling
      * @param onlyEmpty If only empty slots should be filled
      */
-    public static void fillRow(Inventory inventory, int rowIndex, ItemStack item, boolean onlyEmpty) {
+    public static void fillRow(@Nonnull Inventory inventory, int rowIndex, @Nonnull ItemStack item, boolean onlyEmpty) {
+        Validate.notNull(inventory, "Inventory must not be null");
+        Validate.notNull(item, "Item must not be null");
+
         int x = rowIndex * 9;
         for (int i = 0; i < 9; i++) {
             int slot = x + i;
@@ -285,7 +292,10 @@ public final class InvUtils {
      * @param item The {@link ItemStack} used for filling empty slots
      * @param onlyEmpty If only empty slots should be filled
      */
-    public static void fill(Inventory inventory, ItemStack item, boolean onlyEmpty) {
+    public static void fill(@Nonnull Inventory inventory, @Nonnull ItemStack item, boolean onlyEmpty) {
+        Validate.notNull(inventory, "Inventory must not be null");
+        Validate.notNull(item, "Item must not be null");
+
         for (int i = 0; i < inventory.getSize(); i++) {
             if (!onlyEmpty) {
                 inventory.setItem(i, item);
