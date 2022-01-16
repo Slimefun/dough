@@ -416,6 +416,14 @@
             <version>4.10.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- HuskTowns -->
+        <dependency>
+            <groupId>com.github.WiIIiam278</groupId>
+            <artifactId>HuskTowns</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
