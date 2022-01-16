@@ -251,9 +251,8 @@ public final class InvUtils {
 
             // Fill sides
             for (int i = 2; i <= rows - 1; i++) {
-                int[] slots = new int[]{i * 9 - 1, (i - 1) * 9};
-                inv.setItem(slots[0], item);
-                inv.setItem(slots[1], item);
+                inv.setItem(i * 9 - 1, item);
+                inv.setItem((i - 1) * 9, item);
             }
         }
     }
