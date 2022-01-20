@@ -53,11 +53,9 @@ public class WorldGuardProtectionModule implements ProtectionModule {
         com.sk89q.worldedit.world.World world = BukkitAdapter.adapt(l.getWorld());
         LocalPlayer player = worldguard.wrapOfflinePlayer(p);
 
-        /*
-         * if (platform.getSessionManager().hasBypass(player, world)) {
-         * return true;
-         * }
-         */
+        if (platform.getSessionManager().hasBypass(player, world)) {
+            return true;
+        }
 
         if (action.getType() != ActionType.BLOCK) {
             Set<ProtectedRegion> regions = container.get(world).getApplicableRegions(BlockVector3.at(l.getX(), l.getY(), l.getZ())).getRegions();
