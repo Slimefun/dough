@@ -37,7 +37,8 @@ public class HuskTownsProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, Interaction action) {
-        final UUID playerUUID = p.getUniqueId(); // Get UUID of online/offline player
+        // Get UUID of online/offline player
+        final UUID playerUUID = p.getUniqueId();
 
         // Convert the dough interaction to HuskTowns' ActionType and check via the API
         return huskTownsAPI.canPerformAction(playerUUID, l, getHuskTownsAction(action));
@@ -46,10 +47,12 @@ public class HuskTownsProtectionModule implements ProtectionModule {
     /**
      * Returns the corresponding HuskTowns {@link ActionType} from the dough {@link Interaction}
      *
-     * @param doughAction The dough {@link Interaction}
+     * @param doughAction
+     *            The dough {@link Interaction}
+     * 
      * @return The corresponding HuskTowns {@link ActionType}
      */
-    public ActionType getHuskTownsAction(Interaction doughAction) {
+    public @Nonnull ActionType getHuskTownsAction(@Nonnull Interaction doughAction) {
         switch (doughAction) {
             case BREAK_BLOCK:
                 return ActionType.BREAK_BLOCK;
