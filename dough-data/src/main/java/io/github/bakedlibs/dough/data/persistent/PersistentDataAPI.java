@@ -106,6 +106,23 @@ public final class PersistentDataAPI {
         holder.getPersistentDataContainer().set(key, PersistentUUIDDataType.TYPE, uuid);
     }
 
+    /**
+     * Set a custom object based on the given {@link PersistentDataType} in a {@link PersistentDataContainer}
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to add the data to
+     * @param key
+     *            The key of the data to set
+     * @param type
+     *            The {@link PersistentDataType} to be used.
+     * @param obj
+     *            The object to put in the container
+     */
+    @ParametersAreNonnullByDefault
+    public static <T, Z> void set(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type, Z obj) {
+        holder.getPersistentDataContainer().set(key, type, obj);
+    }
+
     /////////////////////////////////////
     // Has
     /////////////////////////////////////
@@ -314,6 +331,21 @@ public final class PersistentDataAPI {
      */
     public static boolean hasUUID(@Nonnull PersistentDataHolder holder, @Nonnull NamespacedKey key) {
         return holder.getPersistentDataContainer().has(key, PersistentUUIDDataType.TYPE);
+    }
+
+    /**
+     * Checks if the specified {@link PersistentDataHolder} has a {@link PersistentDataContainer} with the specified
+     * key.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to check
+     * @param key
+     *            The key to check for
+     * @return {@code true} if the holder has a {@link PersistentDataContainer} with the specified key.
+     */
+    @ParametersAreNonnullByDefault
+    public static <T, Z> boolean has(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
+        return holder.getPersistentDataContainer().has(key, type);
     }
 
     /////////////////////////////////////
@@ -562,8 +594,6 @@ public final class PersistentDataAPI {
      *            The {@link PersistentDataHolder} to retrieve the data from
      * @param key
      *            The key of the data to retrieve
-     * @param defaultVal
-     *            The default value to use if no key is found
      * @param defaultVal
      *            The default value to use if no key is found
      * @return The float associated with this key or the default value if it doesn't exist
@@ -956,8 +986,40 @@ public final class PersistentDataAPI {
     }
 
     /**
+     * Get an object based on the provided {@link PersistentDataType} in a {@link PersistentDataContainer}, if the key doesn't exist it returns null.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return An object associated with this key or null if it doesn't exist
+     */
+    @Nullable
+    @ParametersAreNonnullByDefault
+    public static <T, Z> Z get(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
+        return holder.getPersistentDataContainer().get(key, type);
+    }
+
+    /**
+     * Get an object based on the provided {@link PersistentDataType} in a {@link PersistentDataContainer} or the default value if the key doesn't exist.
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @param defaultVal
+     *            The default value to use if no key is found
+     * @return The object associated with this key or the default value if it doesn't exist
+     */
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static <T, Z> Z get(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type, Z defaultVal) {
+        return holder.getPersistentDataContainer().getOrDefault(key, type, defaultVal);
+    }
+
+    /**
      * This removes the data stored with the given key on the given data holder
-     * 
+     *
      * @param holder
      *            The {@link PersistentDataHolder} to remove the data from
      * @param key
@@ -965,5 +1027,23 @@ public final class PersistentDataAPI {
      */
     public static void remove(PersistentDataHolder holder, NamespacedKey key) {
         holder.getPersistentDataContainer().remove(key);
+    }
+
+    /**
+     * This method returns an {@link Optional} describing the object defined by the {@link PersistentDataType}
+     * found under the given key. An empty {@link Optional} will be returned if no value has been found.
+     *
+     * @see PersistentDataAPI#get(PersistentDataHolder, NamespacedKey, PersistentDataType)
+     *
+     * @param holder
+     *            The {@link PersistentDataHolder} to retrieve the data from
+     * @param key
+     *            The key of the data to retrieve
+     * @return An {@link Optional} describing the result
+     */
+    @Nonnull
+    @ParametersAreNonnullByDefault
+    public static <T, Z> Optional<Z> getOptional(PersistentDataHolder holder, NamespacedKey key, PersistentDataType<T, Z> type) {
+        return Optional.ofNullable(get(holder, key, type));
     }
 }
