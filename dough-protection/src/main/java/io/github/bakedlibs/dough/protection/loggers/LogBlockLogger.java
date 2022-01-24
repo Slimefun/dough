@@ -9,7 +9,7 @@ import io.github.bakedlibs.dough.protection.ProtectionLogger;
 import de.diddiz.LogBlock.Actor;
 import de.diddiz.LogBlock.Consumer;
 import de.diddiz.LogBlock.LogBlock;
-import de.diddiz.util.LoggingUtil;
+import de.diddiz.LogBlock.util.LoggingUtil;
 
 public class LogBlockLogger implements ProtectionLogger {
 

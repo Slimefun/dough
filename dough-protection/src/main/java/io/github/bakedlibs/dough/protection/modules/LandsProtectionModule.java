@@ -18,15 +18,17 @@ import me.angeschossen.lands.api.land.LandWorld;
 public class LandsProtectionModule implements ProtectionModule {
 
     private LandsIntegration landsIntegration;
+    private final Plugin lands;
     private final Plugin plugin;
 
-    public LandsProtectionModule(@Nonnull Plugin plugin) {
+    public LandsProtectionModule(@Nonnull Plugin lands, @Nonnull Plugin plugin) {
+        this.lands = lands;
         this.plugin = plugin;
     }
 
     @Override
     public Plugin getPlugin() {
-        return plugin;
+        return lands;
     }
 
     @Override
@@ -52,16 +54,14 @@ public class LandsProtectionModule implements ProtectionModule {
                 return Flags.BLOCK_PLACE;
             case BREAK_BLOCK:
                 return Flags.BLOCK_BREAK;
-            case ATTACK_PLAYER:
-                return Flags.ATTACK_PLAYER;
             case INTERACT_BLOCK:
                 return Flags.INTERACT_CONTAINER;
-            case INTERACT_ENTITY:
-                return Flags.INTERACT_VILLAGER;
+            case ATTACK_PLAYER:
+                return Flags.ATTACK_PLAYER;
             case ATTACK_ENTITY:
                 return Flags.ATTACK_ANIMAL;
             default:
-                return Flags.BLOCK_BREAK;
+                return Flags.INTERACT_VILLAGER;
         }
     }
 }
