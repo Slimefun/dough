@@ -26,18 +26,18 @@ public class ShopChestProtectionModule implements ProtectionModule {
 
     @Override
     public void load() {
-        shopChest = ShopChest.getInstance();
+        this.shopChest = ShopChest.getInstance();
     }
 
     @Override
     public Plugin getPlugin() {
-        return plugin;
+        return this.plugin;
     }
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, Interaction action) {
         if (action == Interaction.BREAK_BLOCK) {
-            return !shopChest.getShopUtils().isShop(l);
+            return !this.shopChest.getShopUtils().isShop(l);
         } else {
             return true;
         }
