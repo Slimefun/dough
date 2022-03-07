@@ -26,7 +26,7 @@ public interface ItemNameAdapter {
                 // Special case for MockBukkit
                 return new ItemNameAdapterMockBukkit();
             } else if (version.isAtLeast(1, 18, 2)) {
-                return new ItemNameAdapter18_2();
+                return new ItemNameAdapter18v2();
             } else if (version.isAtLeast(1, 18)) {
                 // 1.18+ mappings
                 return new ItemNameAdapter18();
