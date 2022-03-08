@@ -194,7 +194,7 @@
         <dependency>
             <groupId>world.bentobox</groupId>
             <artifactId>bentobox</artifactId>
-            <version>1.19.0</version>
+            <version>1.20.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -202,7 +202,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.10.3</version>
+            <version>1.10.4</version>
             <scope>provided</scope>
         </dependency>
 
