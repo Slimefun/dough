@@ -92,7 +92,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>20.4</version>
+            <version>21.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -162,7 +162,7 @@
         <dependency>
             <groupId>com.plotsquared</groupId>
             <artifactId>PlotSquared-Core</artifactId>
-            <version>6.6.0</version>
+            <version>6.6.1</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
