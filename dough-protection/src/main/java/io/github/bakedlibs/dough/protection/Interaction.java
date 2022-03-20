@@ -57,6 +57,12 @@ public enum Interaction {
 
     private final ActionType type;
 
+    /**
+     * This constructs a new {@link Interaction}.
+     * 
+     * @param type
+     *            The type of action that this should cover.
+     */
     Interaction(@Nonnull ActionType type) {
         this.type = type;
     }
