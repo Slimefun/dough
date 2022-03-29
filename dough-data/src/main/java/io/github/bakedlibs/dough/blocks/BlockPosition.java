@@ -124,7 +124,7 @@ public final class BlockPosition {
      * @return This blocks y coordinate.
      */
     public int getY() {
-        return (int) (this.position & 0xFFF);
+        return (int) (this.position << 52 >> 52);
     }
 
     /**
