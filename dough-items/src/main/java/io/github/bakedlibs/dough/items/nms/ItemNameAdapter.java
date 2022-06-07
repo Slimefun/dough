@@ -28,7 +28,7 @@ public interface ItemNameAdapter {
             } else if (version.isAtLeast(1, 19)) {
                 return new ItemNameAdapter19();
             } else if (version.isAtLeast(1, 18, 2)) {
-                return new ItemNameAdapter18_2();
+                return new ItemNameAdapter18v2();
             } else if (version.isAtLeast(1, 18)) {
                 // 1.18+ mappings
                 return new ItemNameAdapter18();
