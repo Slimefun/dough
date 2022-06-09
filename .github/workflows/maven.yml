@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3.0.0
+      uses: actions/checkout@v3.0.2
 
     - name: Set up JDK 17
       uses: actions/setup-java@v3.0.0
@@ -27,7 +27,7 @@ jobs:
         architecture: x64
 
     - name: Cache Maven packages
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
