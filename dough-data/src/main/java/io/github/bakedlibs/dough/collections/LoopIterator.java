@@ -101,7 +101,7 @@ public class LoopIterator<T> implements Iterator<T>, Streamable<T> {
         int start = index;
 
         T current = next();
-        while (index != start || predicate.test(current)) {
+        while (index != start && !predicate.test(current)) {
             current = next();
         }
 
