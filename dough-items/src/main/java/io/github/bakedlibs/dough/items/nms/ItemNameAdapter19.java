@@ -8,7 +8,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ItemNameAdapter19 implements ItemNameAdapter {
+class ItemNameAdapter19 implements ItemNameAdapter {
 
     private final Method getCopy;
     private final Method getName;
