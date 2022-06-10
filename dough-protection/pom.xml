@@ -222,7 +222,7 @@
         <dependency>
             <groupId>net.dzikoysk.funnyguilds</groupId>
             <artifactId>plugin</artifactId>
-            <version>4.10.0</version>
+            <version>4.10.1</version>
             <scope>provided</scope>
         </dependency>
 
