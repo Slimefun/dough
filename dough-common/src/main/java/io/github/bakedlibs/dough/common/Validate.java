@@ -272,8 +272,6 @@ public class Validate {
      * @return the validated character sequence (never {@code null} method for chaining)
      * @throws NullPointerException if the character sequence is {@code null}
      * @throws IllegalArgumentException if the character sequence is blank
-     *
-     * @since 3.0
      */
     public static <T extends CharSequence> T notBlank(final T chars, final String message, final Object... values) {
         Objects.requireNonNull(chars, () -> String.format(message, values));
@@ -443,8 +441,6 @@ public class Validate {
      * @return the validated character sequence (never {@code null} for method chaining)
      * @throws NullPointerException if the character sequence is {@code null}
      * @throws IndexOutOfBoundsException if the index is invalid
-     *
-     * @since 3.0
      */
     public static <T extends CharSequence> T validIndex(final T chars, final int index, final String message, final Object... values) {
         notNull(chars, "CharSequence cannot be null");
@@ -469,8 +465,6 @@ public class Validate {
      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
      * @param values  the optional values for the formatted exception message, null array not recommended
      * @throws IllegalStateException if expression is {@code false}
-     *
-     * @since 3.0
      */
     public static void validState(final boolean expression, final String message, final Object... values) {
         if (!expression) {
@@ -494,8 +488,6 @@ public class Validate {
      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
      * @param values  the optional values for the formatted exception message, null array not recommended
      * @throws IllegalArgumentException if the character sequence does not match the pattern
-     *
-     * @since 3.0
      */
     public static void matchesPattern(final CharSequence input, final String pattern, final String message, final Object... values) {
         // TODO when breaking BC, consider returning input
@@ -517,8 +509,6 @@ public class Validate {
      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
      * @param values  the optional values for the formatted exception message
      * @throws IllegalArgumentException if the value is not a number
-     *
-     * @since 3.5
      */
     public static void notNaN(final double value, final String message, final Object... values) {
         if (Double.isNaN(value)) {
@@ -539,8 +529,6 @@ public class Validate {
      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
      * @param values  the optional values for the formatted exception message
      * @throws IllegalArgumentException if the value is infinite or {@code NaN}
-     *
-     * @since 3.5
      */
     public static void finite(final double value, final String message, final Object... values) {
         if (Double.isNaN(value) || Double.isInfinite(value)) {
@@ -565,8 +553,6 @@ public class Validate {
      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
      * @param values  the optional values for the formatted exception message, null array not recommended
      * @throws IllegalArgumentException if the value falls outside the boundaries
-     *
-     * @since 3.0
      */
     public static <T> void inclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
         // TODO when breaking BC, consider returning value
@@ -588,8 +574,6 @@ public class Validate {
      * @param message the exception message if invalid, not null
      *
      * @throws IllegalArgumentException if the value falls outside the boundaries
-     *
-     * @since 3.3
      */
     public static void inclusiveBetween(final long start, final long end, final long value, final String message) {
         // TODO when breaking BC, consider returning value
@@ -611,8 +595,6 @@ public class Validate {
      * @param message the exception message if invalid, not null
      *
      * @throws IllegalArgumentException if the value falls outside the boundaries
-     *
-     * @since 3.3
      */
     public static void inclusiveBetween(final double start, final double end, final double value, final String message) {
         // TODO when breaking BC, consider returning value
@@ -638,8 +620,6 @@ public class Validate {
      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
      * @param values  the optional values for the formatted exception message, null array not recommended
      * @throws IllegalArgumentException if the value falls outside the boundaries
-     *
-     * @since 3.0
      */
     public static <T> void exclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
         // TODO when breaking BC, consider returning value
@@ -661,8 +641,6 @@ public class Validate {
      * @param message the exception message if invalid, not null
      *
      * @throws IllegalArgumentException if the value falls outside the boundaries
-     *
-     * @since 3.3
      */
     public static void exclusiveBetween(final long start, final long end, final long value, final String message) {
         // TODO when breaking BC, consider returning value
@@ -684,8 +662,6 @@ public class Validate {
      * @param message the exception message if invalid, not null
      *
      * @throws IllegalArgumentException if the value falls outside the boundaries
-     *
-     * @since 3.3
      */
     public static void exclusiveBetween(final double start, final double end, final double value, final String message) {
         // TODO when breaking BC, consider returning value
@@ -710,8 +686,6 @@ public class Validate {
      * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
      * @param values  the optional values for the formatted exception message, null array not recommended
      * @throws IllegalArgumentException if argument is not of specified class
-     *
-     * @since 3.0
      */
     public static void isInstanceOf(final Class<?> type, final Object obj, final String message, final Object... values) {
         // TODO when breaking BC, consider returning obj
