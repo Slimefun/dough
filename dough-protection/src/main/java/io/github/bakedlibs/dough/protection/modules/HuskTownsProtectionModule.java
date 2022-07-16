@@ -2,8 +2,8 @@ package io.github.bakedlibs.dough.protection.modules;
 
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
-import me.william278.husktowns.HuskTownsAPI;
-import me.william278.husktowns.listener.ActionType;
+import net.william278.husktowns.HuskTownsAPI;
+import net.william278.husktowns.listener.ActionType;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
