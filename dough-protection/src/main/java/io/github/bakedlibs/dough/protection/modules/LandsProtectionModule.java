@@ -2,16 +2,17 @@ package io.github.bakedlibs.dough.protection.modules;
 
 import javax.annotation.Nonnull;
 
+import me.angeschossen.lands.api.LandsIntegration;
+import me.angeschossen.lands.api.flags.type.Flags;
+import me.angeschossen.lands.api.flags.type.RoleFlag;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
 
-import me.angeschossen.lands.api.flags.Flags;
-import me.angeschossen.lands.api.flags.types.RoleFlag;
-import me.angeschossen.lands.api.integration.LandsIntegration;
 import me.angeschossen.lands.api.land.Area;
 import me.angeschossen.lands.api.land.LandWorld;
 
@@ -33,12 +34,12 @@ public class LandsProtectionModule implements ProtectionModule {
 
     @Override
     public void load() {
-        this.landsIntegration = new LandsIntegration(plugin);
+        this.landsIntegration = LandsIntegration.of(plugin);
     }
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, Interaction action) {
-        LandWorld landWorld = landsIntegration.getLandWorld(l.getWorld());
+        LandWorld landWorld = landsIntegration.getWorld(l.getWorld());
 
         if (landWorld == null) {
             return true;
