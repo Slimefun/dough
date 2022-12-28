@@ -46,7 +46,7 @@ public class LandsProtectionModule implements ProtectionModule {
         }
 
         Area area = landWorld.getArea(l);
-        return area == null || area.hasFlag(p.getUniqueId(), convert(action));
+        return area == null || area.hasRoleFLag(p.getUniqueId(), convert(action));
     }
 
     private @Nonnull RoleFlag convert(@Nonnull Interaction protectableAction) {
