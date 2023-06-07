@@ -18,7 +18,6 @@ class ItemNameAdapter20 implements ItemNameAdapter {
         super();
 
         getCopy = ReflectionUtils.getOBCClass("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class);
-        // Spigot has changed the obf again for 1.19, so we have to adapt with it.
         getName = ReflectionUtils.getMethodOrAlternative(ReflectionUtils.getNetMinecraftClass("world.item.ItemStack"), "getDisplayName", "J");
         toString = ReflectionUtils.getMethod(ReflectionUtils.getNetMinecraftClass("network.chat.IChatBaseComponent"), "getString");
     }
