@@ -25,6 +25,8 @@ public interface ItemNameAdapter {
             if (MinecraftVersion.isMocked()) {
                 // Special case for MockBukkit
                 return new ItemNameAdapterMockBukkit();
+            } else if (version.isAtLeast(1, 20)) {
+                return new ItemNameAdapter20();
             } else if (version.isAtLeast(1, 19)) {
                 return new ItemNameAdapter19();
             } else if (version.isAtLeast(1, 18, 2)) {
