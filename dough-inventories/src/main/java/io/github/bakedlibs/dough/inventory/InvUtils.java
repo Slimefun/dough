@@ -202,6 +202,7 @@ public final class InvUtils {
      *            Whether to replace consumables, e.g. turn potions into glass bottles etc...
      * @param predicate
      *            The Predicate that tests the item
+     * 
      * @return Whether the operation was successful
      */
     public static boolean removeItem(@Nonnull Inventory inv, int amount, boolean replaceConsumables, @Nonnull Predicate<ItemStack> predicate) {

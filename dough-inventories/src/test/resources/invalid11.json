@@ -1,0 +1,24 @@
+{
+    "layout" : [
+        "*********",
+        "*********",
+        "++++*----",
+        "++++*----",
+        "*********",
+        "*********"
+    ],
+    "groups" : {
+        "*" : {
+            "name" : "background",
+            "interactable" : 1
+        },
+        "+" : {
+            "name" : "test1",
+            "interactable" : 2
+        },
+        "-" : {
+            "name" : "test2",
+            "interactable" : 3
+        }
+    }
+}

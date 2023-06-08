@@ -1,0 +1,21 @@
+{
+    "layout" : [
+        "*********",
+        "++++*----",
+        "*********"
+    ],
+    "groups" : {
+        "*" : {
+            "name" : "background",
+            "interactable" : false
+        },
+        "+" : {
+            "name" : "input",
+            "interactable" : true
+        },
+        "-" : {
+            "name" : "output",
+            "interactable" : true
+        }
+    }
+}

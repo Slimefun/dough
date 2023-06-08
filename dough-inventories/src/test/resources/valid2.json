@@ -1,0 +1,25 @@
+{
+    "layout" : [
+        "*********",
+        "++++*----",
+        "*********"
+    ],
+    "groups" : {
+        "*" : {
+            "name" : "background",
+            "interactable" : false,
+            "item" : {
+                "material" : "minecraft:gray_stained_glass_pane",
+                "name" : ""
+            }
+        },
+        "+" : {
+            "name" : "input",
+            "interactable" : true
+        },
+        "-" : {
+            "name" : "output",
+            "interactable" : true
+        }
+    }
+}

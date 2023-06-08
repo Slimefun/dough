@@ -1,0 +1,51 @@
+{
+    "layout" : [
+        "*********",
+        "++++*----",
+        "+ii+P-oo-",
+        "++++*----",
+        "*********"
+    ],
+    "groups" : {
+        "*" : {
+            "name" : "background",
+            "interactable" : false,
+            "item" : {
+                "material" : "minecraft:gray_stained_glass_pane",
+                "name" : ""
+            }
+        },
+        "+" : {
+            "name" : "input_background",
+            "interactable" : false,
+            "item" : {
+                "material" : "minecraft:cyan_stained_glass_pane",
+                "name" : ""
+            }
+        },
+        "-" : {
+            "name" : "output_background",
+            "interactable" : false,
+            "item" : {
+                "material" : "minecraft:orange_stained_glass_pane",
+                "name" : ""
+            }
+        },
+        "P" : {
+            "name" : "progress_bar",
+            "interactable" : false,
+            "item" : {
+                "material" : "minecraft:black_stained_glass_pane",
+                "name" : ""
+            }
+        },
+        "i" : {
+            "name" : "input",
+            "interactable" : true
+        },
+        "o" : {
+            "name" : "output",
+            "interactable" : true
+        }
+    }
+}
