@@ -32,8 +32,8 @@ public class UUIDLookup {
     private static final JsonParser JSON_PARSER = new JsonParser();
     private static final String ERROR_TOKEN = "error";
     private static final Pattern NAME_PATTERN = Pattern.compile("[\\w]+");
-    private final HttpClient client = HttpClient.newHttpClient();
-    
+    private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
+
     private UUIDLookup() {}
 
     /**
@@ -61,7 +61,7 @@ public class UUIDLookup {
                 .GET()
                 .build();
 
-        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+        return HTTP_CLIENT.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .thenApply(s -> JSON_PARSER.parse(s).getAsJsonObject())
                 .thenApply(jsonObject -> {
