@@ -32,7 +32,8 @@ public class UUIDLookup {
     private static final JsonParser JSON_PARSER = new JsonParser();
     private static final String ERROR_TOKEN = "error";
     private static final Pattern NAME_PATTERN = Pattern.compile("[\\w]+");
-
+    private final HttpClient client = HttpClient.newHttpClient();
+    
     private UUIDLookup() {}
 
     /**
@@ -53,7 +54,6 @@ public class UUIDLookup {
 
         String targetUrl = "https://playerdb.co/api/player/minecraft/" + name;
 
-        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(targetUrl))
                 .timeout(Duration.ofMinutes(2))
