@@ -25,6 +25,9 @@ public interface ItemNameAdapter {
             if (MinecraftVersion.isMocked()) {
                 // Special case for MockBukkit
                 return new ItemNameAdapterMockBukkit();
+            }else if(ItemNameAdapterPaper.canUse()) {
+                //when mcpaper or like are present then rely on paperAPI rather then deep diving into NMS
+                return new ItemNameAdapterPaper();
             } else if (version.isAtLeast(1, 20)) {
                 return new ItemNameAdapter20();
             } else if (version.isAtLeast(1, 19)) {

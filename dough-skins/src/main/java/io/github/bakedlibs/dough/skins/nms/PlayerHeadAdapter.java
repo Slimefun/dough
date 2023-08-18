@@ -1,29 +1,23 @@
 package io.github.bakedlibs.dough.skins.nms;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
+import com.mojang.authlib.GameProfile;
+import io.github.bakedlibs.dough.common.DoughLogger;
+import io.github.bakedlibs.dough.versions.MinecraftVersion;
+import org.bukkit.block.Block;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import org.bukkit.block.Block;
-
-import com.mojang.authlib.GameProfile;
-
-import io.github.bakedlibs.dough.common.DoughLogger;
-import io.github.bakedlibs.dough.versions.MinecraftVersion;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
 
 public interface PlayerHeadAdapter {
 
-    @ParametersAreNonnullByDefault
-    @Nullable
-    Object getTileEntity(Block block) throws IllegalAccessException, InvocationTargetException, InstantiationException;
-
-    @ParametersAreNonnullByDefault
-    void setGameProfile(Object tileEntity, GameProfile profile) throws IllegalAccessException, InvocationTargetException;
-
     public static @Nullable PlayerHeadAdapter get() {
         try {
+            if (PlayerHeadAdapterPaper.canApply()) {
+                return new PlayerHeadAdapterPaper();
+            }
+
             MinecraftVersion version = MinecraftVersion.get();
 
             if (version.isAtLeast(1, 18)) {
@@ -43,4 +37,11 @@ public interface PlayerHeadAdapter {
         }
 
     }
+
+    @ParametersAreNonnullByDefault
+    @Nullable
+    Object getTileEntity(Block block) throws IllegalAccessException, InvocationTargetException, InstantiationException;
+
+    @ParametersAreNonnullByDefault
+    void setGameProfile(Object tileEntity, GameProfile profile) throws IllegalAccessException, InvocationTargetException;
 }
