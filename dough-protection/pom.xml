@@ -230,7 +230,7 @@
         <dependency>
             <groupId>net.william278</groupId>
             <artifactId>HuskTowns</artifactId>
-            <version>1.8</version>
+            <version>2.5.3</version>
             <scope>provided</scope>
         </dependency>
 
