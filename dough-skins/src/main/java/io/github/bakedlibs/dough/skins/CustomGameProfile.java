@@ -12,6 +12,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
 import io.github.bakedlibs.dough.reflection.ReflectionUtils;
+import io.github.bakedlibs.dough.versions.MinecraftVersion;
+import io.github.bakedlibs.dough.versions.UnknownServerVersionException;
 
 final class CustomGameProfile extends GameProfile {
 
@@ -34,11 +36,16 @@ final class CustomGameProfile extends GameProfile {
         }
     }
 
-    void apply(@Nonnull SkullMeta meta) throws NoSuchFieldException, IllegalAccessException {
+    void apply(@Nonnull SkullMeta meta) throws NoSuchFieldException, IllegalAccessException, UnknownServerVersionException {
         ReflectionUtils.setFieldValue(meta, "profile", this);
 
         // Forces SkullMeta to properly deserialize and serialize the profile
-        meta.setOwnerProfile(Bukkit.createPlayerProfile(meta.getOwningPlayer().getUniqueId(), PLAYER_NAME));
+        // setOwnerProfile was added in 1.18, but setOwningPlayer throws a NullPointerException since 1.20.2
+        if (MinecraftVersion.get().isAtLeast(MinecraftVersion.parse("1.20"))) {
+            meta.setOwnerProfile(Bukkit.createPlayerProfile(meta.getOwningPlayer().getUniqueId(), PLAYER_NAME));
+        } else {
+            meta.setOwningPlayer(meta.getOwningPlayer());
+        }
 
         // Now override the texture again
         ReflectionUtils.setFieldValue(meta, "profile", this);
