@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.apache.commons.lang.Validate;
 
 import io.github.bakedlibs.dough.items.ItemUtils;
 
@@ -221,6 +222,89 @@ public final class InvUtils {
         }
 
         return false;
+    }
+
+    /**
+     * Fills the borders of an {@link Inventory}
+     *
+     * @param inv The target {@link Inventory}
+     * @param item Item to use for filling
+     */
+    public static void fillBorder(@Nonnull Inventory inv, @Nonnull ItemStack item) {
+        Validate.notNull(inv, "Inventory must not be null");
+        Validate.notNull(item, "Item must not be null");
+
+        int size = inv.getSize();
+        int rows = (size + 1) / 9;
+
+        // Fill top
+        for (int i = 0; i < 9; i++) {
+            inv.setItem(i, item);
+        }
+
+        // If inventory is only one row, no need for anything else
+        if (size > 9) {
+            // Fill bottom
+            for (int i = size - 9; i < size; i++) {
+                inv.setItem(i, item);
+            }
+
+            // Fill sides
+            for (int i = 2; i <= rows - 1; i++) {
+                inv.setItem(i * 9 - 1, item);
+                inv.setItem((i - 1) * 9, item);
+            }
+        }
+    }
+
+    /**
+     * Fills a row in an {@link Inventory}
+     *
+     * @param inventory The target {@link Inventory}
+     * @param rowIndex Index of the row to fill (1 - 6)
+     * @param item The {@link ItemStack} to use for filling
+     * @param onlyEmpty If only empty slots should be filled
+     */
+    public static void fillRow(@Nonnull Inventory inventory, int rowIndex, @Nonnull ItemStack item, boolean onlyEmpty) {
+        Validate.notNull(inventory, "Inventory must not be null");
+        Validate.notNull(item, "Item must not be null");
+
+        int x = rowIndex * 9;
+        for (int i = 0; i < 9; i++) {
+            int slot = x + i;
+
+            if (!onlyEmpty) {
+                inventory.setItem(slot, item);
+            } else {
+                ItemStack slotItem = inventory.getItem(i);
+                if (slotItem == null || slotItem.getType().isAir()) {
+                    inventory.setItem(slot, item);
+                }
+            }
+        }
+    }
+
+    /**
+     * Fills an inventory
+     *
+     * @param inventory The target {@link Inventory}
+     * @param item The {@link ItemStack} used for filling empty slots
+     * @param onlyEmpty If only empty slots should be filled
+     */
+    public static void fill(@Nonnull Inventory inventory, @Nonnull ItemStack item, boolean onlyEmpty) {
+        Validate.notNull(inventory, "Inventory must not be null");
+        Validate.notNull(item, "Item must not be null");
+
+        for (int i = 0; i < inventory.getSize(); i++) {
+            if (!onlyEmpty) {
+                inventory.setItem(i, item);
+            } else {
+                ItemStack slotItem = inventory.getItem(i);
+                if (slotItem == null || slotItem.getType().isAir()) {
+                    inventory.setItem(i, item);
+                }
+            }
+        }
     }
 
 }
