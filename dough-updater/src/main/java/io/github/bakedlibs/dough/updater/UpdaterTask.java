@@ -65,7 +65,7 @@ abstract class UpdaterTask<V extends Version> implements Runnable {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
                 return parse(reader.readLine());
             }
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             plugin.getLogger().log(Level.WARNING, "Could not connect to the updating site, is it down?", e);
             return null;
         }
