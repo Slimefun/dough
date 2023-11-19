@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
@@ -37,7 +38,7 @@ abstract class UpdaterTask<V extends Version> implements Runnable {
     }
 
     @Nullable
-    public abstract UpdateInfo parse(String result) throws MalformedURLException;
+    public abstract UpdateInfo parse(String result) throws MalformedURLException, URISyntaxException;
 
     @Override
     public void run() {
