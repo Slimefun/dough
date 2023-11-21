@@ -50,8 +50,9 @@ public class BlobBuildUpdater extends AbstractPluginUpdater<PrefixedVersion> {
                         return null;
                     }
 
-                    int latestVersion = json.get("build_id").getAsInt();
-                    URL downloadURL = new URI(json.get("file_download_url").getAsString()).toURL();
+                    JsonObject data = json.getAsJsonObject("data");
+                    int latestVersion = data.get("build_id").getAsInt();
+                    URL downloadURL = new URI(data.get("file_download_url").getAsString()).toURL();
 
                     return new UpdateInfo(downloadURL, new PrefixedVersion(releaseChannel, latestVersion));
                 }
