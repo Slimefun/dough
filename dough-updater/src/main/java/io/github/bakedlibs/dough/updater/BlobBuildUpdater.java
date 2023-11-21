@@ -13,9 +13,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 
-//TODO add a way to get the current version.
-//TODO checksum checking.
+// TODO: add a way to get the current version.
+// TODO: checksum checking.
 public class BlobBuildUpdater extends AbstractPluginUpdater<PrefixedVersion> {
+
     private static final String SITE_URL = "https://blob.build";
     private static final String API_URL = SITE_URL + "/api/projects";
 
@@ -54,7 +55,6 @@ public class BlobBuildUpdater extends AbstractPluginUpdater<PrefixedVersion> {
 
                     return new UpdateInfo(downloadURL, new PrefixedVersion(releaseChannel, latestVersion));
                 }
-
             });
         } catch (MalformedURLException | URISyntaxException e ) {
             getLogger().log(Level.SEVERE, "Auto-Updater URL is malformed", e);
