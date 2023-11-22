@@ -1,5 +1,6 @@
 package io.github.bakedlibs.dough.skins;
 
+import java.net.URL;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -14,6 +15,8 @@ import com.mojang.authlib.properties.Property;
 import io.github.bakedlibs.dough.reflection.ReflectionUtils;
 import io.github.bakedlibs.dough.versions.MinecraftVersion;
 import io.github.bakedlibs.dough.versions.UnknownServerVersionException;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
 
 final class CustomGameProfile extends GameProfile {
 
@@ -28,8 +31,11 @@ final class CustomGameProfile extends GameProfile {
      */
     static final String PROPERTY_KEY = "textures";
 
-    CustomGameProfile(@Nonnull UUID uuid, @Nullable String texture) {
+    private final URL skinUrl;
+
+    CustomGameProfile(@Nonnull UUID uuid, @Nullable String texture, @Nonnull URL url) {
         super(uuid, PLAYER_NAME);
+        this.skinUrl = url;
 
         if (texture != null) {
             getProperties().put(PROPERTY_KEY, new Property(PROPERTY_KEY, texture));
@@ -42,7 +48,11 @@ final class CustomGameProfile extends GameProfile {
         // Forces SkullMeta to properly deserialize and serialize the profile
         // setOwnerProfile was added in 1.18, but setOwningPlayer throws a NullPointerException since 1.20.2
         if (MinecraftVersion.get().isAtLeast(MinecraftVersion.parse("1.20"))) {
-            meta.setOwnerProfile(Bukkit.createPlayerProfile(meta.getOwningPlayer().getUniqueId(), PLAYER_NAME));
+            PlayerProfile playerProfile = Bukkit.createPlayerProfile(meta.getOwningPlayer().getUniqueId(), PLAYER_NAME);
+            PlayerTextures playerTextures = playerProfile.getTextures();
+            playerTextures.setSkin(this.skinUrl);
+            playerProfile.setTextures(playerTextures);
+            meta.setOwnerProfile(playerProfile);
         } else {
             meta.setOwningPlayer(meta.getOwningPlayer());
         }
