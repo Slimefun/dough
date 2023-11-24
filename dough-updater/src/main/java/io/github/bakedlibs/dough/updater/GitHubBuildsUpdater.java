@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
 
 import org.bukkit.plugin.Plugin;
 
@@ -32,18 +31,6 @@ public class GitHubBuildsUpdater extends AbstractPluginUpdater<PrefixedVersion> 
 
         this.repository = repo;
         this.prefix = prefix;
-    }
-
-    @ParametersAreNonnullByDefault
-    private static @Nonnull PrefixedVersion extractBuild(String prefix, Plugin plugin) {
-        String pluginVersion = plugin.getDescription().getVersion();
-
-        if (pluginVersion.startsWith(prefix)) {
-            int version = Integer.parseInt(pluginVersion.substring(prefix.length()).split(" ")[0], 10);
-            return new PrefixedVersion(prefix, version);
-        } else {
-            throw new IllegalArgumentException("Not a valid build version: " + pluginVersion);
-        }
     }
 
     @Override
