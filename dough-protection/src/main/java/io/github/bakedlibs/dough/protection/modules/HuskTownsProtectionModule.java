@@ -2,14 +2,16 @@ package io.github.bakedlibs.dough.protection.modules;
 
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
-import net.william278.husktowns.HuskTownsAPI;
-import net.william278.husktowns.listener.ActionType;
+import net.william278.husktowns.api.HuskTownsAPI;
+import net.william278.husktowns.claim.Position;
+import net.william278.husktowns.claim.World;
+import net.william278.husktowns.listener.Operation;
+import net.william278.husktowns.user.OnlineUser;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
-import java.util.UUID;
 
 /**
  * Protection handling module for HuskTowns
@@ -37,35 +39,45 @@ public class HuskTownsProtectionModule implements ProtectionModule {
 
     @Override
     public boolean hasPermission(OfflinePlayer p, Location l, Interaction action) {
-        // Get UUID of online/offline player
-        final UUID playerUUID = p.getUniqueId();
+        // Offline player have no permissions
+        if (!p.isOnline()) {
+            return false;
+        }
 
         // Convert the dough interaction to HuskTowns' ActionType and check via the API
-        return huskTownsAPI.canPerformAction(playerUUID, l, getHuskTownsAction(action));
+        return huskTownsAPI.isOperationAllowed(Operation.of(
+                getOnlineUser(p), getHuskTownsAction(action), getPosition(l)));
+    }
+
+    private OnlineUser getOnlineUser(OfflinePlayer p) {
+        return huskTownsAPI.getOnlineUser(p.getPlayer());
+    }
+
+    private Position getPosition(Location l) {
+        org.bukkit.World w = l.getWorld();
+        return Position.at(l.getX(), l.getY(), l.getZ(), World.of(w.getUID(), w.getName(), w.getEnvironment().name()));
     }
 
     /**
-     * Returns the corresponding HuskTowns {@link ActionType} from the dough {@link Interaction}
+     * Returns the corresponding HuskTowns {@link Operation.Type} from the dough {@link Interaction}
      *
-     * @param doughAction
-     *            The dough {@link Interaction}
-     * 
-     * @return The corresponding HuskTowns {@link ActionType}
+     * @param doughAction The dough {@link Interaction}
+     * @return The corresponding HuskTowns {@link Operation.Type}
      */
-    public @Nonnull ActionType getHuskTownsAction(@Nonnull Interaction doughAction) {
+    public @Nonnull Operation.Type getHuskTownsAction(@Nonnull Interaction doughAction) {
         switch (doughAction) {
             case BREAK_BLOCK:
-                return ActionType.BREAK_BLOCK;
+                return Operation.Type.BLOCK_BREAK;
             case PLACE_BLOCK:
-                return ActionType.PLACE_BLOCK;
+                return Operation.Type.BLOCK_PLACE;
             case ATTACK_ENTITY:
-                return ActionType.PVE;
+                return Operation.Type.PLAYER_DAMAGE_ENTITY;
             case ATTACK_PLAYER:
-                return ActionType.PVP;
+                return Operation.Type.PLAYER_DAMAGE_PLAYER;
             case INTERACT_BLOCK:
-                return ActionType.INTERACT_BLOCKS;
+                return Operation.Type.BLOCK_INTERACT;
             default:
-                return ActionType.ENTITY_INTERACTION;
+                return Operation.Type.ENTITY_INTERACT;
         }
     }
 }
