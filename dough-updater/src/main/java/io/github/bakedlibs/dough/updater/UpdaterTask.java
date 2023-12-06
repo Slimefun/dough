@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.logging.Level;
 
 import javax.annotation.Nonnull;
@@ -18,6 +19,8 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+
+import com.google.common.hash.Hashing;
 
 import io.github.bakedlibs.dough.versions.Version;
 
@@ -83,7 +86,8 @@ abstract class UpdaterTask<V extends Version> implements Runnable {
         plugin.getLogger().log(Level.INFO, "{0} is outdated!", plugin.getName());
         plugin.getLogger().log(Level.INFO, "Downloading {0}, version: {1}", new Object[] { plugin.getName(), info.getVersion() });
 
-        try (BufferedInputStream input = new BufferedInputStream(info.getUrl().openStream()); FileOutputStream output = new FileOutputStream(new File("plugins/" + Bukkit.getUpdateFolder(), file.getName()))) {
+        File outputFile = new File("plugins/" + Bukkit.getUpdateFolder(), file.getName());
+        try (BufferedInputStream input = new BufferedInputStream(info.getUrl().openStream()); FileOutputStream output = new FileOutputStream(outputFile)) {
             byte[] data = new byte[1024];
             int read;
 
@@ -93,6 +97,20 @@ abstract class UpdaterTask<V extends Version> implements Runnable {
         } catch (Exception x) {
             plugin.getLogger().log(Level.SEVERE, x, () -> "Failed to auto-update " + plugin.getName());
         } finally {
+            try {
+                // Check the checksum
+                byte[] fileBytes = Files.readAllBytes(outputFile.toPath());
+                String checksum = Hashing.sha256().hashBytes(fileBytes).toString();
+
+                if (!checksum.equals(info.getChecksum())) {
+                    plugin.getLogger().log(Level.SEVERE, "The downloaded file is corrupted or was tampered with.");
+                    return;
+                }
+            } catch(Exception e) {
+                plugin.getLogger().log(Level.SEVERE, "Failed to verify checksum", e);
+                return;
+            }
+
             plugin.getLogger().log(Level.INFO, " ");
             plugin.getLogger().log(Level.INFO, "#################### - UPDATE - ####################");
             plugin.getLogger().log(Level.INFO, "{0} was successfully updated ({1} -> {2})", new Object[] { plugin.getName(), currentVersion, info.getVersion() });
