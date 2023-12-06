@@ -65,7 +65,7 @@ public class UUIDLookup {
                 .thenApply(HttpResponse::body)
                 .thenApply(s -> JSON_PARSER.parse(s).getAsJsonObject())
                 .thenApply(jsonObject -> {
-                    if (jsonObject.get("code").getAsString().equals("player.found")) {
+                    if (jsonObject.get("success").getAsBoolean()) {
                         JsonObject data = jsonObject.getAsJsonObject("data");
                         JsonObject player = data.getAsJsonObject("player");
                         return UUID.fromString(player.get("id").getAsString());
