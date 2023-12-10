@@ -39,17 +39,16 @@ public class LocketteProtectionModule implements ProtectionModule {
         }
 
         Block b = l.getBlock();
-
         if (Lockette.isProtected(b)) {
             BlockState state = b.getState();
-
             if (state instanceof Sign) {
                 return !Lockette.isOwner((Sign) state, p);
             } else {
                 return !Lockette.isOwner(b, p);
             }
-        } else
-            return false;
+        }
+
+        return true;
     }
 
 }
