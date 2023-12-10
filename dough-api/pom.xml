@@ -349,6 +349,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- LockettePro -->
+        <dependency>
+            <groupId>com.github.NyaaCat</groupId>
+            <artifactId>LockettePro</artifactId>
+            <version>1.19-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- PlotSquared -->
         <dependency>
             <groupId>com.plotsquared</groupId>
