@@ -179,6 +179,10 @@
             <id>logblock-repo</id>
             <url>https://www.iani.de/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>lockettepro-repo</id>
+            <url>https://ci.nyaacat.com/maven/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -351,9 +355,9 @@
 
         <!-- LockettePro -->
         <dependency>
-            <groupId>com.github.NyaaCat</groupId>
-            <artifactId>LockettePro</artifactId>
-            <version>1.19-SNAPSHOT</version>
+            <groupId>me.crafter.mc</groupId>
+            <artifactId>lockettepro</artifactId>
+            <version>2.13-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
