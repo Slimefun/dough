@@ -35,7 +35,7 @@ public final class PlayerSkin {
         this.profile = new CustomGameProfile(uuid, base64skinTexture, url);
     }
 
-    final @Nonnull CustomGameProfile getProfile() {
+    public final @Nonnull CustomGameProfile getProfile() {
         return profile;
     }
     
