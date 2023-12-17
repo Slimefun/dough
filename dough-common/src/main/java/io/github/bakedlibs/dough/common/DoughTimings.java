@@ -59,19 +59,18 @@ public class DoughTimings {
     }
 
     public void logTimings() {
-        this.printTimings(true, logger::info);
+        this.logTimings(true, logger::info);
     }
 
     public void logTimings(boolean clearTimings) {
-        printTimings(clearTimings, logger::info);
+        this.logTimings(clearTimings, logger::info);
     }
 
-    private void printTimings(boolean clearTimings, @Nonnull Consumer<String> printer) {
+    public void logTimings(boolean clearTimings, @Nonnull CommandSender sender) {
+        this.logTimings(clearTimings, sender::sendMessage);
+    }
+
+    private void logTimings(boolean clearTimings, @Nonnull Consumer<String> printer) {
         printer.accept(buildTimings(clearTimings));
     }
-
-    public void printTimings(boolean clearTimings, @Nonnull CommandSender sender) {
-        printTimings(clearTimings, sender::sendMessage);
-    }
-
 }
