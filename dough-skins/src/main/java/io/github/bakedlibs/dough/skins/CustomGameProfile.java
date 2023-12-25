@@ -18,7 +18,7 @@ import io.github.bakedlibs.dough.versions.UnknownServerVersionException;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
-final class CustomGameProfile extends GameProfile {
+public final class CustomGameProfile extends GameProfile {
 
     /**
      * The player name for this profile.
@@ -61,4 +61,13 @@ final class CustomGameProfile extends GameProfile {
         ReflectionUtils.setFieldValue(meta, "profile", this);
     }
 
+    /**
+     * Get the base64 encoded texture from the underline GameProfile.
+     *
+     * @return the base64 encoded texture.
+     */
+    @Nullable
+    public String getBase64Texture() {
+        return getProperties().get(PROPERTY_KEY).iterator().next().getValue();
+    }
 }
