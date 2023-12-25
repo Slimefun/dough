@@ -32,10 +32,12 @@ public final class CustomGameProfile extends GameProfile {
     static final String PROPERTY_KEY = "textures";
 
     private final URL skinUrl;
+    private final String texture;
 
     CustomGameProfile(@Nonnull UUID uuid, @Nullable String texture, @Nonnull URL url) {
         super(uuid, PLAYER_NAME);
         this.skinUrl = url;
+        this.texture = texture;
 
         if (texture != null) {
             getProperties().put(PROPERTY_KEY, new Property(PROPERTY_KEY, texture));
@@ -68,6 +70,6 @@ public final class CustomGameProfile extends GameProfile {
      */
     @Nullable
     public String getBase64Texture() {
-        return getProperties().get(PROPERTY_KEY).iterator().next().getValue();
+        return this.texture;
     }
 }
