@@ -78,6 +78,7 @@ public final class ProtectionManager {
 
         // We sadly cannot use ModuleName::new as this would load the class into memory prematurely
         registerModule(pm, "WorldGuard", worldGuard -> new WorldGuardProtectionModule(worldGuard));
+        registerModule(pm, "Quarters", quarters -> new QuartersProtectionModule(quarters));
         registerModule(pm, "Towny", towny -> new TownyProtectionModule(towny));
         registerModule(pm, "GriefPrevention", griefPrevention -> new GriefPreventionProtectionModule(griefPrevention));
         registerModule(pm, "LWC", lwc -> new LWCProtectionModule(lwc));
@@ -92,7 +93,6 @@ public final class ProtectionManager {
         registerModule(pm, "FunnyGuilds", funnyGuilds -> new FunnyGuildsProtectionModule(funnyGuilds));
         registerModule(pm, "PlotSquared", plotSquared -> new PlotSquaredProtectionModule(plotSquared));
         registerModule(pm, "HuskTowns", huskTowns -> new HuskTownsProtectionModule(huskTowns));
-        registerModule(pm, "Quarters", quarters -> new QuartersProtectionModule(quarters));
 
         /*
          * The following Plugins work by utilising one of the above listed

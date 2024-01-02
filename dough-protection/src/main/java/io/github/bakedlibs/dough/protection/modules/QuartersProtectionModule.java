@@ -1,8 +1,10 @@
 package io.github.bakedlibs.dough.protection.modules;
 
 import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.PlayerCache;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
+import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
 import net.earthmc.quarters.api.QuartersAPI;
@@ -16,7 +18,7 @@ import javax.annotation.Nonnull;
 
 
 /**
- * Protection handling module for Quarters
+ * Protection handling module for Quarters, a Towny add-on.
  *
  * @author Fruitloopins
  * @author galacticwarrior9
@@ -46,7 +48,27 @@ public class QuartersProtectionModule implements ProtectionModule {
         }
 
         Player player = (Player) p;
-        return isInteractionAllowed(player, convert(action), l);
+        ActionType townyAction = convert(action);
+        PlayerCache cache = PlayerCacheUtil.getCache(player);
+        boolean allowed = isInteractionAllowed(player, townyAction, l);
+
+        // Update Towny's permission cache, or else the Towny ProtectionModule may override.
+        switch (townyAction) {
+            case BUILD:
+                cache.setBuildPermission(l.getBlock().getType(), allowed);
+                break;
+            case SWITCH:
+                cache.setSwitchPermission(l.getBlock().getType(), allowed);
+                break;
+            case DESTROY:
+                cache.setDestroyPermission(l.getBlock().getType(), allowed);
+                break;
+            case ITEM_USE:
+                cache.setItemUsePermission(l.getBlock().getType(), allowed);
+                break;
+        }
+
+        return allowed;
     }
 
     private boolean isInteractionAllowed(Player player, ActionType type, Location l) {
