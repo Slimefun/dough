@@ -179,6 +179,10 @@
             <id>logblock-repo</id>
             <url>https://www.iani.de/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>towny-repo</id>
+            <url>https://repo.glaremasters.me/repository/towny/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -335,9 +339,9 @@
 
         <!-- Towny -->
         <dependency>
-            <groupId>com.github.LlmDl</groupId>
-            <artifactId>Towny</artifactId>
-            <version>1b86d017c5</version>
+            <groupId>com.palmergames.bukkit.towny</groupId>
+            <artifactId>towny</artifactId>
+            <version>0.100.0.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -422,6 +426,14 @@
             <groupId>com.github.WiIIiam278</groupId>
             <artifactId>HuskTowns</artifactId>
             <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Quarters -->
+        <dependency>
+            <groupId>com.github.Fruitloopins</groupId>
+            <artifactId>Quarters</artifactId>
+            <version>-69bf391439-1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -33,6 +33,7 @@ import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModu
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.WorldGuardProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.QuartersProtectionModule;
 
 /**
  * This Class provides a nifty API for plugins to query popular protection plugins.
@@ -91,6 +92,7 @@ public final class ProtectionManager {
         registerModule(pm, "FunnyGuilds", funnyGuilds -> new FunnyGuildsProtectionModule(funnyGuilds));
         registerModule(pm, "PlotSquared", plotSquared -> new PlotSquaredProtectionModule(plotSquared));
         registerModule(pm, "HuskTowns", huskTowns -> new HuskTownsProtectionModule(huskTowns));
+        registerModule(pm, "Quarters", quarters -> new QuartersProtectionModule(quarters));
 
         /*
          * The following Plugins work by utilising one of the above listed
