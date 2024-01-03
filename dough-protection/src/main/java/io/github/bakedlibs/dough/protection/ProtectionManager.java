@@ -78,8 +78,12 @@ public final class ProtectionManager {
 
         // We sadly cannot use ModuleName::new as this would load the class into memory prematurely
         registerModule(pm, "WorldGuard", worldGuard -> new WorldGuardProtectionModule(worldGuard));
-        registerModule(pm, "Quarters", quarters -> new QuartersProtectionModule(quarters));
-        registerModule(pm, "Towny", towny -> new TownyProtectionModule(towny));
+        // Only load the pure Towny module if Quarters is not present on the server.
+        if (pm.isPluginEnabled("Quarters")) {
+            registerModule(pm, "Quarters", quarters -> new QuartersProtectionModule(quarters));
+        } else {
+            registerModule(pm, "Towny", towny -> new TownyProtectionModule(towny));
+        }
         registerModule(pm, "GriefPrevention", griefPrevention -> new GriefPreventionProtectionModule(griefPrevention));
         registerModule(pm, "LWC", lwc -> new LWCProtectionModule(lwc));
         registerModule(pm, "PreciousStones", preciousStones -> new PreciousStonesProtectionModule(preciousStones));

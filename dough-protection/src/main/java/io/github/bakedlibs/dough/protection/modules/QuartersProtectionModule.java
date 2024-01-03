@@ -51,21 +51,22 @@ public class QuartersProtectionModule implements ProtectionModule {
         ActionType townyAction = convert(action);
         PlayerCache cache = PlayerCacheUtil.getCache(player);
         boolean allowed = isInteractionAllowed(player, townyAction, l);
-
         // Update Towny's permission cache, or else the Towny ProtectionModule may override.
-        switch (townyAction) {
-            case BUILD:
-                cache.setBuildPermission(l.getBlock().getType(), allowed);
-                break;
-            case SWITCH:
-                cache.setSwitchPermission(l.getBlock().getType(), allowed);
-                break;
-            case DESTROY:
-                cache.setDestroyPermission(l.getBlock().getType(), allowed);
-                break;
-            case ITEM_USE:
-                cache.setItemUsePermission(l.getBlock().getType(), allowed);
-                break;
+        if (allowed) {
+            switch (townyAction) {
+                case BUILD:
+                    cache.setBuildPermission(l.getBlock().getType(), true);
+                    break;
+                case SWITCH:
+                    cache.setSwitchPermission(l.getBlock().getType(), true);
+                    break;
+                case DESTROY:
+                    cache.setDestroyPermission(l.getBlock().getType(), true);
+                    break;
+                case ITEM_USE:
+                    cache.setItemUsePermission(l.getBlock().getType(), true);
+                    break;
+            }
         }
 
         return allowed;
@@ -74,12 +75,12 @@ public class QuartersProtectionModule implements ProtectionModule {
     private boolean isInteractionAllowed(Player player, ActionType type, Location l) {
         Quarter quarter = QuartersAPI.getInstance().getQuarter(l);
         if (quarter == null) {
-            return false;
+            return PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), type);
         }
 
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null) {
-            return false;
+            return PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), type);
         }
 
         if (quarter.getOwnerResident().equals(resident) || quarter.getTrustedResidents().contains(resident)) {
