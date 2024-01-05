@@ -13,11 +13,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 
-// TODO: checksum checking.
 public class BlobBuildUpdater extends AbstractPluginUpdater<PrefixedVersion> {
 
     private static final String SITE_URL = "https://blob.build";
-    private static final String API_URL = SITE_URL + "/api/projects";
+    private static final String API_URL = SITE_URL + "/api/builds";
 
     private final String project;
     private final String releaseChannel;
