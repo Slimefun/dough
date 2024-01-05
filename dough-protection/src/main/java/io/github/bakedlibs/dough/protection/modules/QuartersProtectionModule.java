@@ -1,7 +1,6 @@
 package io.github.bakedlibs.dough.protection.modules;
 
 import com.palmergames.bukkit.towny.TownyAPI;
-import com.palmergames.bukkit.towny.object.PlayerCache;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
@@ -19,6 +18,8 @@ import javax.annotation.Nonnull;
 
 /**
  * Protection handling module for Quarters, a Towny add-on.
+ * If Quarters is installed on a server, this module must be enabled
+ * in lieu of the Towny module.
  *
  * @author Fruitloopins
  * @author galacticwarrior9
@@ -46,44 +47,26 @@ public class QuartersProtectionModule implements ProtectionModule {
         if (!(p instanceof Player)) {
             return false;
         }
-
-        Player player = (Player) p;
-        ActionType townyAction = convert(action);
-        PlayerCache cache = PlayerCacheUtil.getCache(player);
-        boolean allowed = isInteractionAllowed(player, townyAction, l);
-        // Update Towny's permission cache, or else the Towny ProtectionModule may override.
-        if (allowed) {
-            switch (townyAction) {
-                case BUILD:
-                    cache.setBuildPermission(l.getBlock().getType(), true);
-                    break;
-                case SWITCH:
-                    cache.setSwitchPermission(l.getBlock().getType(), true);
-                    break;
-                case DESTROY:
-                    cache.setDestroyPermission(l.getBlock().getType(), true);
-                    break;
-                case ITEM_USE:
-                    cache.setItemUsePermission(l.getBlock().getType(), true);
-                    break;
-            }
-        }
-
-        return allowed;
+        return isInteractionAllowed((Player) p, convert(action), l);
     }
 
     private boolean isInteractionAllowed(Player player, ActionType type, Location l) {
+        boolean allowedInUnderlyingPlot = PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), type);
+        if (allowedInUnderlyingPlot) {
+            return true;
+        }
+
         Quarter quarter = QuartersAPI.getInstance().getQuarter(l);
         if (quarter == null) {
-            return PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), type);
+            return false;
         }
 
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
         if (resident == null) {
-            return PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), type);
+            return false;
         }
 
-        if (quarter.getOwnerResident().equals(resident) || quarter.getTrustedResidents().contains(resident)) {
+        if (resident.equals(quarter.getOwnerResident()) || quarter.getTrustedResidents().contains(resident)) {
             return true;
         }
 
