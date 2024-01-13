@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.authlib.properties.PropertyMap;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -45,22 +46,24 @@ public final class CustomGameProfile extends GameProfile {
     }
 
     void apply(@Nonnull SkullMeta meta) throws NoSuchFieldException, IllegalAccessException, UnknownServerVersionException {
-        ReflectionUtils.setFieldValue(meta, "profile", this);
 
         // Forces SkullMeta to properly deserialize and serialize the profile
         // setOwnerProfile was added in 1.18, but setOwningPlayer throws a NullPointerException since 1.20.2
         if (MinecraftVersion.get().isAtLeast(MinecraftVersion.parse("1.20"))) {
-            PlayerProfile playerProfile = Bukkit.createPlayerProfile(meta.getOwningPlayer().getUniqueId(), PLAYER_NAME);
+            PlayerProfile playerProfile = Bukkit.createPlayerProfile(UUID.randomUUID(), PLAYER_NAME);
             PlayerTextures playerTextures = playerProfile.getTextures();
             playerTextures.setSkin(this.skinUrl);
             playerProfile.setTextures(playerTextures);
             meta.setOwnerProfile(playerProfile);
         } else {
+            ReflectionUtils.setFieldValue(meta, "profile", this);
+
             meta.setOwningPlayer(meta.getOwningPlayer());
+
+            // Now override the texture again
+            ReflectionUtils.setFieldValue(meta, "profile", this);
         }
 
-        // Now override the texture again
-        ReflectionUtils.setFieldValue(meta, "profile", this);
     }
 
     /**
