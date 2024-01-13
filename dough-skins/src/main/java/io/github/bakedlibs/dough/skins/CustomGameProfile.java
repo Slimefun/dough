@@ -62,7 +62,6 @@ public final class CustomGameProfile extends GameProfile {
 
             // Now override the texture again
             ReflectionUtils.setFieldValue(meta, "profile", this);
-
         }
 
     }
