@@ -25,7 +25,7 @@ import com.google.gson.JsonParser;
 
 import io.github.bakedlibs.dough.common.DoughLogger;
 
-public final class PlayerSkin {
+public class PlayerSkin {
 
     private static final String ERROR_TOKEN = "error";
 
