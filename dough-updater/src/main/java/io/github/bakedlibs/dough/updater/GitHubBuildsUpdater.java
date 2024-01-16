@@ -51,8 +51,10 @@ public class GitHubBuildsUpdater extends AbstractPluginUpdater<PrefixedVersion> 
 
                     int latestVersion = json.get("last_successful").getAsInt();
                     URL downloadURL = new URL(API_URL + repository + '/' + CommonPatterns.SLASH.split(repository)[1] + '-' + latestVersion + ".jar");
+                    PrefixedVersion latest = new PrefixedVersion(prefix, latestVersion);
+                    getLatestVersion().complete(latest);
 
-                    return new UpdateInfo(downloadURL, new PrefixedVersion(prefix, latestVersion));
+                    return new UpdateInfo(downloadURL, latest);
                 }
 
             });

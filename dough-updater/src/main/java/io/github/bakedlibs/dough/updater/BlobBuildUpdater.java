@@ -52,8 +52,10 @@ public class BlobBuildUpdater extends AbstractPluginUpdater<PrefixedVersion> {
                     int latestVersion = data.get("buildId").getAsInt();
                     URL downloadURL = new URI(data.get("fileDownloadUrl").getAsString()).toURL();
                     String checksum = data.get("checksum").getAsString();
+                    PrefixedVersion latest = new PrefixedVersion(releaseChannel + " - ", latestVersion);
+                    getLatestVersion().complete(latest);
 
-                    return new UpdateInfo(downloadURL, new PrefixedVersion(releaseChannel + " - ", latestVersion), checksum);
+                    return new UpdateInfo(downloadURL, latest, checksum);
                 }
             });
         } catch (MalformedURLException | URISyntaxException e ) {
