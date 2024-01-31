@@ -9,7 +9,15 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 
+import io.github.bakedlibs.dough.common.DoughLogger;
+import io.github.bakedlibs.dough.protection.loggers.CoreProtectLogger;
+import io.github.bakedlibs.dough.protection.loggers.LogBlockLogger;
 import io.github.bakedlibs.dough.protection.modules.BentoBoxProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.BlockLockerProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.ChestProtectProtectionModule;
@@ -26,15 +34,6 @@ import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModu
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.WorldGuardProtectionModule;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.block.Block;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-
-import io.github.bakedlibs.dough.common.DoughLogger;
-import io.github.bakedlibs.dough.protection.loggers.CoreProtectLogger;
-import io.github.bakedlibs.dough.protection.loggers.LogBlockLogger;
 
 /**
  * This Class provides a nifty API for plugins to query popular protection plugins.
