@@ -9,7 +9,23 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import io.github.bakedlibs.dough.protection.modules.*;
+
+import io.github.bakedlibs.dough.protection.modules.BentoBoxProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.BlockLockerProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.ChestProtectProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.FactionsUUIDProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.FunnyGuildsProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.GriefPreventionProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.HuskTownsProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.HuskClaimsProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.LWCProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.LandsProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.LocketteProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.PlotSquaredProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.WorldGuardProtectionModule;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
