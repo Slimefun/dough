@@ -1,6 +1,5 @@
 package io.github.bakedlibs.dough.protection.modules;
 
-import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -11,6 +10,7 @@ import org.bukkit.plugin.Plugin;
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
 
+import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 
@@ -48,10 +48,12 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
     public boolean hasPermission(OfflinePlayer p, Location l, Interaction action) {
         World world = l.getWorld();
 
+        // Check if GP is handling the world at all.
         if (world == null || !griefPrevention.claimsEnabledForWorld(world)) {
             return true;
         }
 
+        // Fetch claim. Using player's cached claim is unlikely to speed up the process for a generalized check.
         Claim claim = griefPrevention.dataStore.getClaimAt(l, true, null);
 
         if (claim == null) {
@@ -63,9 +65,11 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
         }
 
         if (useClaimPermission) {
+            // If Claim#checkPermission is available, prefer it.
             return checkPermission(claim, p, action);
         }
 
+        // Otherwise, legacy method requires an online player.
         if (!(p instanceof Player)) {
             return false;
         }
@@ -74,8 +78,9 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
     }
 
     private boolean checkPermission(@Nonnull Claim claim, @Nonnull OfflinePlayer offline, @Nonnull Interaction action) {
+        // Do our best to translate Interaction to ClaimPermission.
         ClaimPermission permission;
-        if (action == Interaction.INTERACT_BLOCK) {
+        if (action == Interaction.INTERACT_BLOCK || action == Interaction.ATTACK_ENTITY) {
             permission = ClaimPermission.Inventory;
         } else if (action == Interaction.BREAK_BLOCK || action == Interaction.PLACE_BLOCK) {
             permission = ClaimPermission.Build;
@@ -83,10 +88,12 @@ public class GriefPreventionProtectionModule implements ProtectionModule {
             permission = ClaimPermission.Access;
         }
 
+        // If the player is online, support permission-based allowance.
         if (offline instanceof Player) {
             return claim.checkPermission((Player) offline, permission, null) == null;
         }
 
+        // Fall through to explicit allowance for offline players.
         return claim.checkPermission(offline.getUniqueId(), permission, null) == null;
     }
 
