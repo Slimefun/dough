@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.github.baked-libs</groupId>
         <artifactId>dough</artifactId>
-        <version>1.3.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>dough-data</artifactId>
