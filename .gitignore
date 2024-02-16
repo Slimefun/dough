@@ -10,3 +10,4 @@
 **pom.xml.versionsBackup
 dependency-reduced-pom.xml
 publish.bat
+.ci-friendly-pom.xml
