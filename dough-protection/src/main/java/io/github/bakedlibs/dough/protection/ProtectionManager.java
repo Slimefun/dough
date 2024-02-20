@@ -28,6 +28,7 @@ import io.github.bakedlibs.dough.protection.modules.HuskTownsProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LWCProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LandsProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LocketteProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.LocketteProProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PlotSquaredProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
@@ -82,6 +83,7 @@ public final class ProtectionManager {
         registerModule(pm, "LWC", lwc -> new LWCProtectionModule(lwc));
         registerModule(pm, "PreciousStones", preciousStones -> new PreciousStonesProtectionModule(preciousStones));
         registerModule(pm, "Lockette", lockette -> new LocketteProtectionModule(lockette));
+        registerModule(pm, "LockettePro", lockettePro -> new LocketteProProtectionModule(lockettePro));
         registerModule(pm, "RedProtect", redProtect -> new RedProtectProtectionModule(redProtect));
         registerModule(pm, "BentoBox", bentoBox -> new BentoBoxProtectionModule(bentoBox));
         registerModule(pm, "BlockLocker", blockLocker -> new BlockLockerProtectionModule(blockLocker));

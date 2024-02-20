@@ -6,7 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.plugin.Plugin;
-import org.yi.acru.bukkit.Lockette.Lockette;
+import me.crafter.mc.lockettepro.LocketteProAPI;
 
 import io.github.bakedlibs.dough.protection.ActionType;
 import io.github.bakedlibs.dough.protection.Interaction;
@@ -14,11 +14,11 @@ import io.github.bakedlibs.dough.protection.ProtectionModule;
 
 import javax.annotation.Nonnull;
 
-public class LocketteProtectionModule implements ProtectionModule {
+public class LocketteProProtectionModule implements ProtectionModule {
 
     private final Plugin plugin;
 
-    public LocketteProtectionModule(@Nonnull Plugin plugin) {
+    public LocketteProProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -39,12 +39,12 @@ public class LocketteProtectionModule implements ProtectionModule {
         }
 
         Block b = l.getBlock();
-        if (Lockette.isProtected(b)) {
+        if (LocketteProAPI.isProtected(b)) {
             BlockState state = b.getState();
             if (state instanceof Sign) {
-                return Lockette.isOwner((Sign) state, p);
+                return LocketteProAPI.isOwner((Sign) state, p);
             } else {
-                return Lockette.isOwner(b, p);
+                return LocketteProAPI.isOwner(b, p);
             }
         }
 
