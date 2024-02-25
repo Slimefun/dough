@@ -92,7 +92,7 @@ public final class ProtectionManager {
         registerModule(pm, "FunnyGuilds", funnyGuilds -> new FunnyGuildsProtectionModule(funnyGuilds));
         registerModule(pm, "PlotSquared", plotSquared -> new PlotSquaredProtectionModule(plotSquared));
         registerModule(pm, "HuskTowns", huskTowns -> new HuskTownsProtectionModule(huskTowns));
-        registerModule(pm, "HuskTowns", huskTowns -> new HuskClaimsProtectionModule(huskTowns));
+        registerModule(pm, "HuskClaims", huskClaims -> new HuskClaimsProtectionModule(huskClaims));
 
         /*
          * The following Plugins work by utilising one of the above listed
