@@ -54,12 +54,12 @@ public class PlotSquaredProtectionModule implements ProtectionModule {
 
         switch (action) {
             case INTERACT_BLOCK:
-                return BukkitUtil.adapt((Player) player).hasPermission(Permission.PERMISSION_ADMIN_INTERACT_UNOWNED);
+                return player.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_UNOWNED);
             case ATTACK_PLAYER:
-                return BukkitUtil.adapt((Player) player).hasPermission(Permission.PERMISSION_ADMIN_PVP);
+                return player.hasPermission(Permission.PERMISSION_ADMIN_PVP);
             case PLACE_BLOCK:
             default:
-                return BukkitUtil.adapt((Player) player).hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED);
+                return player.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED);
         }
     }
 }
