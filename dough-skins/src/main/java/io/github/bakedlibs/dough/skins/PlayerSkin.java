@@ -3,6 +3,7 @@ package io.github.bakedlibs.dough.skins;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -24,23 +25,41 @@ import com.google.gson.JsonParser;
 
 import io.github.bakedlibs.dough.common.DoughLogger;
 
-public final class PlayerSkin {
+public class PlayerSkin {
 
     private static final String ERROR_TOKEN = "error";
 
     private final CustomGameProfile profile;
 
-    PlayerSkin(@Nonnull UUID uuid, @Nullable String base64skinTexture) {
-        this.profile = new CustomGameProfile(uuid, base64skinTexture);
+    PlayerSkin(@Nonnull UUID uuid, @Nullable String base64skinTexture, @Nonnull URL url) {
+        this.profile = new CustomGameProfile(uuid, base64skinTexture, url);
     }
 
-    final @Nonnull CustomGameProfile getProfile() {
+    public final @Nonnull CustomGameProfile getProfile() {
         return profile;
     }
+    
+    @ParametersAreNonnullByDefault
+    public static @Nonnull PlayerSkin fromBase64(UUID uuid, String base64skinTexture, URL url) {
+        return new PlayerSkin(uuid, base64skinTexture, url);
+    }
 
+    /**
+     * @deprecated use {@link #fromBase64(UUID, String, URL)}
+     */
+    @Deprecated
     @ParametersAreNonnullByDefault
     public static @Nonnull PlayerSkin fromBase64(UUID uuid, String base64skinTexture) {
-        return new PlayerSkin(uuid, base64skinTexture);
+        String base64decode = new String(Base64.getDecoder().decode(base64skinTexture));
+        JsonObject jsonObject = new JsonParser().parse(base64decode).getAsJsonObject();
+        String url = jsonObject.getAsJsonObject("textures").getAsJsonObject("SKIN").get("url").getAsString();
+        URL skinUrl;
+        try {
+            skinUrl = URI.create(url).toURL();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return new PlayerSkin(uuid, base64skinTexture, skinUrl);
     }
 
     @ParametersAreNonnullByDefault
@@ -53,7 +72,13 @@ public final class PlayerSkin {
     public static @Nonnull PlayerSkin fromURL(UUID uuid, String url) {
         String value = "{\"textures\":{\"SKIN\":{\"url\":\"" + url + "\"}}}";
         String base64skinTexture = Base64.getEncoder().encodeToString(value.getBytes(StandardCharsets.UTF_8));
-        return fromBase64(uuid, base64skinTexture);
+        URL skinUrl;
+        try {
+           skinUrl = URI.create(url).toURL();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        return fromBase64(uuid, base64skinTexture, skinUrl);
     }
 
     @ParametersAreNonnullByDefault

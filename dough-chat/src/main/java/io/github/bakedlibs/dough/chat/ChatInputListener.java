@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -56,8 +55,7 @@ class ChatInputListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onChat(AsyncPlayerChatEvent e) {
-        String msg = e.getMessage().replace(ChatColor.COLOR_CHAR, '&');
-        checkInput(e, e.getPlayer(), msg);
+        checkInput(e, e.getPlayer(), e.getMessage());
     }
 
     @EventHandler

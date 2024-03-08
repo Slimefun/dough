@@ -2,9 +2,9 @@ package io.github.bakedlibs.dough.protection.modules;
 
 import io.github.bakedlibs.dough.protection.Interaction;
 import io.github.bakedlibs.dough.protection.ProtectionModule;
-import net.william278.husktowns.api.BukkitHuskTownsAPI;
-import net.william278.husktowns.libraries.cloplib.operation.Operation;
-import net.william278.husktowns.libraries.cloplib.operation.OperationType;
+import net.william278.huskclaims.api.BukkitHuskClaimsAPI;
+import net.william278.huskclaims.libraries.cloplib.operation.Operation;
+import net.william278.huskclaims.libraries.cloplib.operation.OperationType;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
@@ -12,22 +12,22 @@ import org.bukkit.plugin.Plugin;
 import javax.annotation.Nonnull;
 
 /**
- * Protection handling module for HuskTowns
+ * Protection handling module for HuskClaims
  *
  * @author William278
  */
-public class HuskTownsProtectionModule implements ProtectionModule {
+public class HuskClaimsProtectionModule implements ProtectionModule {
 
-    private BukkitHuskTownsAPI huskTownsAPI;
+    private BukkitHuskClaimsAPI huskClaimsAPI;
     private final Plugin plugin;
 
-    public HuskTownsProtectionModule(@Nonnull Plugin plugin) {
+    public HuskClaimsProtectionModule(@Nonnull Plugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public void load() {
-        huskTownsAPI = BukkitHuskTownsAPI.getInstance();
+        huskClaimsAPI = BukkitHuskClaimsAPI.getInstance();
     }
 
     @Override
@@ -42,21 +42,21 @@ public class HuskTownsProtectionModule implements ProtectionModule {
             return false;
         }
 
-        // Convert the dough interaction to HuskTowns' ActionType and check via the API
-        return huskTownsAPI.isOperationAllowed(Operation.of(
-                huskTownsAPI.getOnlineUser(p.getPlayer()),
-                getHuskTownsAction(action),
-                huskTownsAPI.getPosition(l)
+        // Convert the dough interaction to HuskClaims' ActionType and check via the API
+        return huskClaimsAPI.isOperationAllowed(Operation.of(
+                huskClaimsAPI.getOnlineUser(p.getPlayer()),
+                getHuskClaimsAction(action),
+                huskClaimsAPI.getPosition(l)
         ));
     }
 
     /**
-     * Returns the corresponding HuskTowns {@link OperationType} from the dough {@link Interaction}
+     * Returns the corresponding HuskClaims {@link OperationType} from the dough {@link Interaction}
      *
      * @param doughAction The dough {@link Interaction}
-     * @return The corresponding HuskTowns {@link OperationType}
+     * @return The corresponding HuskClaims {@link OperationType}
      */
-    public @Nonnull OperationType getHuskTownsAction(@Nonnull Interaction doughAction) {
+    public @Nonnull OperationType getHuskClaimsAction(@Nonnull Interaction doughAction) {
         switch (doughAction) {
             case BREAK_BLOCK:
                 return OperationType.BLOCK_BREAK;

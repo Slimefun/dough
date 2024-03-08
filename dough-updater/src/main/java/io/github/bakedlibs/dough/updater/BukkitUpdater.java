@@ -54,8 +54,10 @@ public class BukkitUpdater extends AbstractPluginUpdater<SemanticVersion> {
                     URL download = new URL(latest.get("downloadUrl").getAsString());
                     String remoteVersion = latest.getAsJsonObject().get("name").getAsString();
                     remoteVersion = remoteVersion.toLowerCase(Locale.ROOT);
+                    SemanticVersion latestVersion = SemanticVersion.parse(remoteVersion);
+                    getLatestVersion().complete(latestVersion);
 
-                    return new UpdateInfo(download, SemanticVersion.parse(remoteVersion));
+                    return new UpdateInfo(download, latestVersion);
                 }
 
             });

@@ -11,6 +11,7 @@ import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import io.github.bakedlibs.dough.versions.PrefixedVersion;
 import io.github.bakedlibs.dough.versions.Version;
 
 abstract class AbstractPluginUpdater<V extends Version> implements PluginUpdater<V> {
@@ -79,4 +80,16 @@ abstract class AbstractPluginUpdater<V extends Version> implements PluginUpdater
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, task);
     }
 
+    @ParametersAreNonnullByDefault
+    @Nonnull
+    protected static PrefixedVersion extractBuild(String prefix, Plugin plugin) {
+        String pluginVersion = plugin.getDescription().getVersion();
+
+        if (pluginVersion.startsWith(prefix)) {
+            int version = Integer.parseInt(pluginVersion.substring(prefix.length()).split(" ")[0], 10);
+            return new PrefixedVersion(prefix, version);
+        } else {
+            throw new IllegalArgumentException("Not a valid build version: " + pluginVersion);
+        }
+    }
 }
