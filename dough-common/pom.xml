@@ -7,10 +7,25 @@
     <parent>
         <groupId>io.github.baked-libs</groupId>
         <artifactId>dough</artifactId>
-        <version>1.1.2</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>dough-common</artifactId>
     <packaging>jar</packaging>
 
+    <repositories>
+        <repository>
+            <id>papermc-repo</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>    
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.papermc</groupId>
+            <artifactId>paperlib</artifactId>
+            <version>1.0.7</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>
