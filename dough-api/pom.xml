@@ -405,7 +405,7 @@
         <dependency>
             <groupId>com.github.angeschossen</groupId>
             <artifactId>ChestProtectAPI</artifactId>
-            <version>3.6.0</version>
+            <version>3.9.1</version>
             <scope>provided</scope>
         </dependency>
 
