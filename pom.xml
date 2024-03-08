@@ -215,7 +215,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.1</version>
             </plugin>
 
             <plugin>
@@ -238,7 +238,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.10</version>
+                <version>0.8.11</version>
 
                 <executions>
                     <execution>
@@ -263,7 +263,7 @@
             <plugin>
                 <groupId>com.outbrain.swinfra</groupId>
                 <artifactId>ci-friendly-flatten-maven-plugin</artifactId>
-                <version>1.0.17</version>
+                <version>1.0.18</version>
                 <executions>
                     <execution>
                         <goals>

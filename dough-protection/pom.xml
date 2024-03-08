@@ -50,6 +50,10 @@
             <id>logblock-repo</id>
             <url>https://www.iani.de/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>william278-repo</id>
+            <url>https://repo.william278.net/snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -76,7 +80,7 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.8</version>
+            <version>7.0.9</version>
             <scope>provided</scope>
         </dependency>
 
@@ -92,7 +96,7 @@
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
-            <version>21.2</version>
+            <version>21.3</version>
             <scope>provided</scope>
         </dependency>
 
@@ -116,7 +120,7 @@
         <dependency>
             <groupId>com.github.GriefPrevention</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.18.1</version>
+            <version>16.18.2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -132,13 +136,13 @@
         <dependency>
             <groupId>me.lucko</groupId>
             <artifactId>helper</artifactId>
-            <version>5.6.10</version>
+            <version>5.6.14</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>Factions</artifactId>
-            <version>1.6.9.5-2.7.0-STABLE</version>
+            <version>1.6.9.5-4.1.4-STABLE</version>
             <scope>provided</scope>
         </dependency>
 
@@ -228,9 +232,25 @@
 
         <!-- HuskTowns -->
         <dependency>
-            <groupId>net.william278</groupId>
-            <artifactId>HuskTowns</artifactId>
-            <version>2.5.3</version>
+            <groupId>net.william278.husktowns</groupId>
+            <artifactId>husktowns-bukkit</artifactId>
+            <version>3.0-988161b</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- HuskClaims -->
+        <dependency>
+            <groupId>net.william278.huskclaims</groupId>
+            <artifactId>huskclaims-bukkit</artifactId>
+            <version>1.0.2-e60150d</version>
+            <scope>provided</scope>
+        </dependency>
+      
+        <!-- ShopChest -->
+        <dependency>
+            <groupId>de.epiceric</groupId>
+            <artifactId>ShopChest</artifactId>
+            <version>1.13-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 

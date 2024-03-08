@@ -25,12 +25,14 @@ import io.github.bakedlibs.dough.protection.modules.FactionsUUIDProtectionModule
 import io.github.bakedlibs.dough.protection.modules.FunnyGuildsProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.GriefPreventionProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.HuskTownsProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.HuskClaimsProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LWCProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LandsProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LocketteProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PlotSquaredProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.ShopChestProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.WorldGuardProtectionModule;
 
@@ -91,6 +93,8 @@ public final class ProtectionManager {
         registerModule(pm, "FunnyGuilds", funnyGuilds -> new FunnyGuildsProtectionModule(funnyGuilds));
         registerModule(pm, "PlotSquared", plotSquared -> new PlotSquaredProtectionModule(plotSquared));
         registerModule(pm, "HuskTowns", huskTowns -> new HuskTownsProtectionModule(huskTowns));
+        registerModule(pm, "ShopChest", shopChest -> new ShopChestProtectionModule(shopChest));
+        registerModule(pm, "HuskClaims", huskClaims -> new HuskClaimsProtectionModule(huskClaims));
 
         /*
          * The following Plugins work by utilising one of the above listed
