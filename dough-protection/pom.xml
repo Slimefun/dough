@@ -245,6 +245,14 @@
             <version>1.0.2-e60150d</version>
             <scope>provided</scope>
         </dependency>
+      
+        <!-- ShopChest -->
+        <dependency>
+            <groupId>de.epiceric</groupId>
+            <artifactId>ShopChest</artifactId>
+            <version>1.13-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 

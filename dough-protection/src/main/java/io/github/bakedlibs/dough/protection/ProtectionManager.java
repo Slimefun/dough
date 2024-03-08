@@ -32,6 +32,7 @@ import io.github.bakedlibs.dough.protection.modules.LocketteProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PlotSquaredProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.ShopChestProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.WorldGuardProtectionModule;
 
@@ -92,6 +93,7 @@ public final class ProtectionManager {
         registerModule(pm, "FunnyGuilds", funnyGuilds -> new FunnyGuildsProtectionModule(funnyGuilds));
         registerModule(pm, "PlotSquared", plotSquared -> new PlotSquaredProtectionModule(plotSquared));
         registerModule(pm, "HuskTowns", huskTowns -> new HuskTownsProtectionModule(huskTowns));
+        registerModule(pm, "ShopChest", shopChest -> new ShopChestProtectionModule(shopChest));
         registerModule(pm, "HuskClaims", huskClaims -> new HuskClaimsProtectionModule(huskClaims));
 
         /*
