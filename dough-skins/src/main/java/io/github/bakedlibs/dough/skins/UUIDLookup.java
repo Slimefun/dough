@@ -31,7 +31,7 @@ public class UUIDLookup {
     private static final Pattern UUID_PATTERN = Pattern.compile("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})");
     private static final JsonParser JSON_PARSER = new JsonParser();
     private static final String ERROR_TOKEN = "error";
-    private static final Pattern NAME_PATTERN = Pattern.compile("[\\w]+");
+    private static final Pattern NAME_PATTERN = Pattern.compile("\\w{3,16}");
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
     private UUIDLookup() {}
