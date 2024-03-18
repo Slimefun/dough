@@ -432,6 +432,14 @@
             <version>1.13-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Bolt -->
+        <dependency>
+            <groupId>org.popcraft</groupId>
+            <artifactId>bolt-bukkit</artifactId>
+            <version>1.0.580</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
