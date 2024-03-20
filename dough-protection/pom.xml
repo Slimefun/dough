@@ -13,14 +13,23 @@
     <artifactId>dough-protection</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <plotsquared.version>7.3.6</plotsquared.version>
+    </properties>
+
+    <!-- TODO: Bring down this repo count -->
     <repositories>
-        <repository>
-            <id>sonatype-oss-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io/</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>sonatype-oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
         <repository>
             <id>coreprotect-repo</id>
@@ -54,23 +63,7 @@
             <id>william278-repo</id>
             <url>https://repo.william278.net/snapshots/</url>
         </repository>
-        <repository>
-            <id>papermc</id>
-            <url>https://repo.papermc.io/repository/maven-public/</url>
-        </repository>
     </repositories>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.intellectualsites.bom</groupId>
-                <artifactId>bom-newest</artifactId>
-                <version>1.42</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -182,6 +175,7 @@
         <dependency>
             <groupId>com.intellectualsites.plotsquared</groupId>
             <artifactId>plotsquared-core</artifactId>
+            <version>${plotsquared.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -193,6 +187,7 @@
         <dependency>
             <groupId>com.intellectualsites.plotsquared</groupId>
             <artifactId>plotsquared-bukkit</artifactId>
+            <version>${plotsquared.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
