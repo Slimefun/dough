@@ -18,7 +18,6 @@
             <groupId>io.github.baked-libs</groupId>
             <artifactId>dough-common</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
