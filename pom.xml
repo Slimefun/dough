@@ -263,7 +263,7 @@
             <plugin>
                 <groupId>com.outbrain.swinfra</groupId>
                 <artifactId>ci-friendly-flatten-maven-plugin</artifactId>
-                <version>1.0.18</version>
+                <version>1.0.19</version>
                 <executions>
                     <execution>
                         <goals>
