@@ -12,7 +12,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 public class PlayerHeadAdapterPaper implements PlayerHeadAdapter {
 
-
     @Override
     @ParametersAreNonnullByDefault
     public void setGameProfile(Block block, GameProfile profile, boolean sendBlockUpdate) {
