@@ -80,16 +80,7 @@ public final class PlayerHead {
 
         try {
             GameProfile profile = skin.getProfile();
-            Object tileEntity = adapter.getTileEntity(block);
-
-            if (tileEntity != null) {
-                adapter.setGameProfile(tileEntity, profile);
-
-                if (sendBlockUpdate) {
-                    block.getState().update(true, false);
-                }
-            }
-
+            adapter.setGameProfile(block, profile, sendBlockUpdate);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
