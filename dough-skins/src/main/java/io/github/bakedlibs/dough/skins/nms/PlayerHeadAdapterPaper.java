@@ -6,6 +6,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Skull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,9 +16,10 @@ public class PlayerHeadAdapterPaper implements PlayerHeadAdapter {
     @Override
     @ParametersAreNonnullByDefault
     public void setGameProfile(Block block, GameProfile profile, boolean sendBlockUpdate) {
-        if (!(block.getState() instanceof Skull)) return;
+        BlockState state = block.getState();
+        if (!(state instanceof Skull)) return;
 
-        Skull skull = (Skull) block.getState();
+        Skull skull = (Skull) state;
 
         Property property = profile.getProperties().get("textures").iterator().next();
 
