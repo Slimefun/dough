@@ -376,6 +376,11 @@
                     <artifactId>bukkit</artifactId>
                     <groupId>*</groupId>
                 </exclusion>
+                <!-- Exclude invalid dependency -->
+                <exclusion>
+                    <groupId>com.github.PikaMug</groupId>
+                    <artifactId>LocaleLib</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
