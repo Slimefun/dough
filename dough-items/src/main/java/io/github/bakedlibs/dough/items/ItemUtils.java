@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -174,8 +176,8 @@ public final class ItemUtils {
         if (item.getType() != Material.AIR && item.getAmount() > 0) {
             int remove = damage;
 
-            if (!ignoreEnchantments && item.getEnchantments().containsKey(Enchantment.DURABILITY)) {
-                int level = item.getEnchantmentLevel(Enchantment.DURABILITY);
+            if (!ignoreEnchantments && item.getEnchantments().containsKey(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("unbreaking")))) {
+                int level = item.getEnchantmentLevel(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("unbreaking")));
 
                 for (int i = 0; i < damage; i++) {
                     if (Math.random() * 100 <= (60 + Math.floorDiv(40, (level + 1)))) {
