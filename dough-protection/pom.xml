@@ -63,6 +63,10 @@
             <id>william278-repo</id>
             <url>https://repo.william278.net/snapshots/</url>
         </repository>
+        <repository>
+            <id>towny-repo</id>
+            <url>https://repo.glaremasters.me/repository/towny/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -157,9 +161,9 @@
 
         <!-- Towny -->
         <dependency>
-            <groupId>com.github.LlmDl</groupId>
-            <artifactId>Towny</artifactId>
-            <version>1b86d017c5</version>
+            <groupId>com.palmergames.bukkit.towny</groupId>
+            <artifactId>towny</artifactId>
+            <version>0.100.3.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -280,6 +284,14 @@
             <groupId>org.popcraft</groupId>
             <artifactId>bolt-bukkit</artifactId>
             <version>1.0.580</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Quarters -->
+        <dependency>
+            <groupId>com.github.jwkerr</groupId>
+            <artifactId>Quarters</artifactId>
+            <version>e9ed8a133a</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -32,6 +32,7 @@ import io.github.bakedlibs.dough.protection.modules.LandsProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.LocketteProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PlotSquaredProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.PreciousStonesProtectionModule;
+import io.github.bakedlibs.dough.protection.modules.QuartersProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.RedProtectProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.ShopChestProtectionModule;
 import io.github.bakedlibs.dough.protection.modules.TownyProtectionModule;
@@ -80,7 +81,6 @@ public final class ProtectionManager {
 
         // We sadly cannot use ModuleName::new as this would load the class into memory prematurely
         registerModule(pm, "WorldGuard", worldGuard -> new WorldGuardProtectionModule(worldGuard));
-        registerModule(pm, "Towny", towny -> new TownyProtectionModule(towny));
         registerModule(pm, "GriefPrevention", griefPrevention -> new GriefPreventionProtectionModule(griefPrevention));
         registerModule(pm, "LWC", lwc -> new LWCProtectionModule(lwc));
         registerModule(pm, "PreciousStones", preciousStones -> new PreciousStonesProtectionModule(preciousStones));
@@ -97,6 +97,13 @@ public final class ProtectionManager {
         registerModule(pm, "ShopChest", shopChest -> new ShopChestProtectionModule(shopChest));
         registerModule(pm, "HuskClaims", huskClaims -> new HuskClaimsProtectionModule(huskClaims));
         registerModule(pm, "Bolt", bolt -> new BoltProtectionModule(bolt));
+
+        // If Quarters is installed, the QuartersProtectionModule must be enabled instead of the Towny module.
+        if (pm.isPluginEnabled("Quarters")) {
+            registerModule(pm, "Quarters", quarters -> new QuartersProtectionModule(quarters));
+        } else {
+            registerModule(pm, "Towny", towny -> new TownyProtectionModule(towny));
+        }
 
         /*
          * The following Plugins work by utilising one of the above listed
