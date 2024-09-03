@@ -4,6 +4,7 @@ import au.lupine.quarters.api.manager.QuarterManager;
 import au.lupine.quarters.object.entity.Quarter;
 import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyPermission.ActionType;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 import io.github.bakedlibs.dough.protection.Interaction;
@@ -51,9 +52,13 @@ public class QuartersProtectionModule implements ProtectionModule {
 
     private boolean isInteractionAllowed(Player player, ActionType type, Location l) {
         boolean allowedInUnderlyingPlot = PlayerCacheUtil.getCachePermission(player, l, l.getBlock().getType(), type);
+        if (allowedInUnderlyingPlot) {
+            return true;
+        }
+
         Quarter quarter = QuarterManager.getInstance().getQuarter(l);
         if (quarter == null) {
-            return allowedInUnderlyingPlot;
+            return false;
         }
 
         Resident resident = TownyAPI.getInstance().getResident(player.getUniqueId());
