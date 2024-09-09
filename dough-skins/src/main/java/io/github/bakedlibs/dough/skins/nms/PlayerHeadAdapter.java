@@ -21,10 +21,6 @@ public interface PlayerHeadAdapter {
 
     public static @Nullable PlayerHeadAdapter get() {
         try {
-            if (PaperLib.isPaper()) {
-                return new PlayerHeadAdapterPaper();
-            }
-
             MinecraftVersion version = MinecraftVersion.get();
 
             if (version.isAtLeast(1, 20, 5)) {

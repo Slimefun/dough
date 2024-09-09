@@ -14,6 +14,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+// Not currently in use.
+// This does not correctly update heads on updates currently.
 public class PlayerHeadAdapterPaper implements PlayerHeadAdapter {
 
     @Override
