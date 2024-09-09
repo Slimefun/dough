@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import io.papermc.lib.PaperLib;
 import org.bukkit.inventory.ItemStack;
 
 import io.github.bakedlibs.dough.common.DoughLogger;
@@ -20,11 +21,19 @@ public interface ItemNameAdapter {
 
     public static @Nullable ItemNameAdapter get() {
         try {
-            MinecraftVersion version = MinecraftVersion.get();
-
             if (MinecraftVersion.isMocked()) {
                 // Special case for MockBukkit
                 return new ItemNameAdapterMockBukkit();
+            }
+
+            MinecraftVersion version = MinecraftVersion.get();
+
+            if (version.isAtLeast(1, 20, 4) && PaperLib.isPaper()) {
+                return new ItemNameAdapterPaper();
+            }
+
+            if (version.isAtLeast(1, 20, 5)) {
+                return new ItemNameAdapter20v5();
             } else if (version.isAtLeast(1, 20)) {
                 return new ItemNameAdapter20();
             } else if (version.isAtLeast(1, 19)) {

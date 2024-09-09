@@ -168,10 +168,6 @@
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
         <repository>
-            <id>IntellectualSites</id>
-            <url>https://mvn.intellectualsites.com/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
             <id>funnyguilds-repo</id>
             <url>https://repo.panda-lang.org/releases</url>
         </repository>
@@ -415,6 +411,13 @@
             <artifactId>plugin</artifactId>
             <version>4.12.0</version>
             <scope>provided</scope>
+            <exclusions>
+                <!-- Exclude invalid dependency -->
+                <exclusion>
+                    <groupId>com.github.PikaMug</groupId>
+                    <artifactId>LocaleLib</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- HuskTowns -->
