@@ -26,11 +26,11 @@ public interface ItemNameAdapter {
                 return new ItemNameAdapterMockBukkit();
             }
 
-            if (PaperLib.isPaper()) {
+            MinecraftVersion version = MinecraftVersion.get();
+
+            if (version.isAtLeast(1, 20, 4) && PaperLib.isPaper()) {
                 return new ItemNameAdapterPaper();
             }
-
-            MinecraftVersion version = MinecraftVersion.get();
 
             if (version.isAtLeast(1, 20, 5)) {
                 return new ItemNameAdapter20v5();
