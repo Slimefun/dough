@@ -32,7 +32,7 @@ public interface ItemNameAdapter {
                 return new ItemNameAdapterPaper();
             }
 
-            if (version.isAtLeast(1, 20, 5)) {
+            if (version.isAtLeast(1, 21)) {
                 return new ItemNameAdapter20v5();
             } else if (version.isAtLeast(1, 20)) {
                 return new ItemNameAdapter20();
