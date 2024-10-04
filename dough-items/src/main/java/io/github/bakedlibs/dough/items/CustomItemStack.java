@@ -27,10 +27,8 @@ import java.util.function.Consumer;
 public class CustomItemStack {
 
     private final ItemStack itemStack;
-    private Consumer<ItemMeta> metaTransform = meta -> {
-    };
-    private Consumer<ItemStack> stackTransform = stack -> {
-    };
+    private Consumer<ItemMeta> metaTransform;
+    private Consumer<ItemStack> stackTransform;
 
     public CustomItemStack(ItemStack item) {
         this.itemStack = item.clone();
@@ -125,6 +123,9 @@ public class CustomItemStack {
     }
 
     public CustomItemStack appendMetaConsumer(Consumer<ItemMeta> consumer) {
+        if (this.metaTransform == null) {
+            return setMetaConsumer(consumer);
+        }
         return setMetaConsumer(this.metaTransform.andThen(consumer));
     }
 
@@ -139,15 +140,10 @@ public class CustomItemStack {
     }
 
     public CustomItemStack appendStackConsumer(Consumer<ItemStack> consumer) {
+        if (this.stackTransform == null) {
+            return setStackConsumer(consumer);
+        }
         return setStackConsumer(this.stackTransform.andThen(consumer));
-    }
-
-    public Consumer<ItemMeta> getMetaTransform() {
-        return this.metaTransform;
-    }
-
-    public Consumer<ItemStack> getStackTransform() {
-        return this.stackTransform;
     }
 
     public ItemStack create() {
@@ -157,8 +153,12 @@ public class CustomItemStack {
     }
 
     public void applyTo(ItemStack itemStack) {
-        this.stackTransform.accept(itemStack);
-        ItemStackUtil.editMeta(itemStack, this.metaTransform);
+        if (this.stackTransform != null) {
+            this.stackTransform.accept(itemStack);
+        }
+        if (this.metaTransform != null) {
+            ItemStackUtil.editMeta(itemStack, this.metaTransform);
+        }
     }
 
 }

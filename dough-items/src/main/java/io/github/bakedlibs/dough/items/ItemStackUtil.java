@@ -67,7 +67,7 @@ public final class ItemStackUtil {
     public static Consumer<ItemMeta> editLore(@Nonnull List<String> lore) {
         return (meta) -> {
             if (lore.isEmpty()) {
-                meta.lore(Collections.emptyList());
+                meta.setLore(Collections.emptyList());
                 return;
             }
             List<String> newLore = new ArrayList<>(lore);
