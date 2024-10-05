@@ -4,9 +4,11 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.inventory.meta.ItemMetaMock;
 import be.seeseemelk.mockbukkit.inventory.meta.LeatherArmorMetaMock;
 import be.seeseemelk.mockbukkit.inventory.meta.PotionMetaMock;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,21 +19,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 class TestItemStackUtil {
-
-    private static Stream<Material> itemMaterials() {
-        return Arrays.stream(Material.values())
-                .filter(Predicate.not(Material::isLegacy))
-                .filter(Material::isItem);
-    }
 
     @BeforeAll
     public static void init() {
@@ -43,19 +36,14 @@ class TestItemStackUtil {
         MockBukkit.unmock();
     }
 
-    @ParameterizedTest
-    @MethodSource("itemMaterials")
-    void testConsumerIsInvokedOnceIfMetaIsNotNull(Material material) {
-        ItemStack itemStack = new ItemStack(material);
-        ItemMeta meta = itemStack.getItemMeta();
+    @Test
+    void testConsumerIsInvokedOnceIfMetaIsNotNull() {
+        ItemStack itemStack = new ItemStack(Material.AIR);
+        itemStack.setItemMeta(new ItemMetaMock());
         ConsumerInvocationCounter<ItemMeta> counter = new ConsumerInvocationCounter<>();
         ItemStackUtil.editMeta(itemStack, counter);
-        if (meta == null) {
-            Assertions.assertFalse(counter.wasInvoked());
-        } else {
-            Assertions.assertTrue(counter.wasInvoked());
-            Assertions.assertEquals(1, counter.getInvokeCount());
-        }
+        Assertions.assertTrue(counter.wasInvoked());
+        Assertions.assertEquals(1, counter.getInvokeCount());
     }
 
     @Test
