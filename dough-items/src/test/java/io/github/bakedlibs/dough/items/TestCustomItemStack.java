@@ -4,13 +4,9 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -53,20 +49,11 @@ class TestCustomItemStack {
         }
     }
 
-    private static Stream<Material> potionMaterials() {
-        return itemMaterials().filter(material -> getItemMeta(material) instanceof PotionMeta);
-    }
-
-    private static Stream<Material> leatherArmorMaterials() {
-        return itemMaterials().filter(material -> getItemMeta(material) instanceof LeatherArmorMeta);
-    }
-
     private static Stream<Function<ItemStack, ItemStack>> itemStackConstructors() {
         return Stream.of(
                 item -> CustomItemStack.create(item, "test"),
                 item -> CustomItemStack.create(item, "test", "test"),
                 item -> CustomItemStack.create(item, List.of("test", "test")),
-                item -> CustomItemStack.create(item, Color.AQUA, "test", "test"),
                 item -> CustomItemStack.create(item, meta -> {
                 }),
                 item -> CustomItemStack.create(item, item.getAmount())
@@ -81,8 +68,7 @@ class TestCustomItemStack {
                 name -> CustomItemStack.create(itemStack, name),
                 name -> CustomItemStack.create(material, name, "test"),
                 name -> CustomItemStack.create(itemStack, name, "test"),
-                name -> CustomItemStack.create(material, name, List.of("test")),
-                name -> CustomItemStack.create(itemStack, Color.AQUA, name, "test")
+                name -> CustomItemStack.create(material, name, List.of("test"))
         );
     }
 
@@ -118,8 +104,7 @@ class TestCustomItemStack {
         ItemStack itemStack = new ItemStack(material);
         return Stream.of(
                 lore -> CustomItemStack.create(material, null, lore),
-                lore -> CustomItemStack.create(itemStack, null, lore),
-                lore -> CustomItemStack.create(itemStack, Color.AQUA, null, lore)
+                lore -> CustomItemStack.create(itemStack, null, lore)
         );
     }
 
@@ -181,26 +166,6 @@ class TestCustomItemStack {
                 .map(s -> ChatColor.translateAlternateColorCodes('&', s)).collect(Collectors.toList());
         ItemMeta meta = constructor.apply(new String[]{"&btest"}).getItemMeta();
         Assertions.assertIterableEquals(expected, meta.getLore());
-    }
-
-    @ParameterizedTest
-    @MethodSource("potionMaterials")
-    void testConstructorColorChangedForPotionMeta(Material material) {
-        ItemMeta meta = CustomItemStack.create(new ItemStack(material), Color.AQUA, "test", "test")
-                .getItemMeta();
-        Assertions.assertInstanceOf(PotionMeta.class, meta);
-        PotionMeta potionMeta = (PotionMeta) meta;
-        Assertions.assertEquals(Color.AQUA, potionMeta.getColor());
-    }
-
-    @ParameterizedTest
-    @MethodSource("leatherArmorMaterials")
-    void testConstructorColorChangedForLeatherMeta(Material material) {
-        ItemMeta meta = CustomItemStack.create(new ItemStack(material), Color.AQUA, "test", "test")
-                .getItemMeta();
-        Assertions.assertInstanceOf(LeatherArmorMeta.class, meta);
-        LeatherArmorMeta armorMeta = (LeatherArmorMeta) meta;
-        Assertions.assertEquals(Color.AQUA, armorMeta.getColor());
     }
 
 }

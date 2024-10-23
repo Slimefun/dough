@@ -32,14 +32,6 @@ public final class CustomItemStack {
                 .create();
     }
 
-    public static ItemStack create(ItemStack item, Color color, @Nullable String name, String... lore) {
-        return new ItemStackEditor(item)
-                .setColor(color)
-                .setDisplayName(name)
-                .setLore(lore)
-                .create();
-    }
-
     public static ItemStack create(Material material, @Nullable String name, String... lore) {
         return create(new ItemStack(material), name, lore);
     }
