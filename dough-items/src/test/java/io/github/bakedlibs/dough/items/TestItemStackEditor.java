@@ -222,8 +222,7 @@ class TestItemStackEditor {
     @Test
     void testItemMetaNotSetIfMetaTransformIsNull() {
         ItemStack expected = new ItemStack(Material.AIR);
-        ItemStackEditor editor = new ItemStackEditor(Material.AIR);
-        editor.setMetaConsumer(null);
+        ItemStackEditor editor = new ItemStackEditor(Material.AIR).withMetaConsumer(null);
         Assertions.assertEquals(expected, editor.create());
     }
 
@@ -231,8 +230,7 @@ class TestItemStackEditor {
     void testItemMetaSetIfMetaTransformIsNotNull() {
         ItemStack expected = new ItemStack(Material.AIR);
         expected.setItemMeta(expected.getItemMeta());
-        ItemStackEditor editor = new ItemStackEditor(Material.AIR);
-        editor.setMetaConsumer(meta -> {});
+        ItemStackEditor editor = new ItemStackEditor(Material.AIR).withMetaConsumer(meta -> {});
         Assertions.assertEquals(expected, editor.create());
     }
 

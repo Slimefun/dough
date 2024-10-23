@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 /**
  * Fluent class to apply edits/transformations to an {@link ItemStack} and it's {@link ItemMeta} instance
  * <p>
- * All methods in this class which are not getters mutate this instance.<br>
+ * This class is immutable.
  * The {@link ItemStack} instance which this class holds on to is never mutated.
  *
  * @see #create()
@@ -27,35 +27,43 @@ import java.util.function.Consumer;
 public class ItemStackEditor {
 
     private final ItemStack itemStack;
-    private Consumer<ItemMeta> metaTransform = null;
-    private Consumer<ItemStack> stackTransform = null;
+    private final Consumer<ItemMeta> metaTransform;
+    private final Consumer<ItemStack> stackTransform;
+
+    private ItemStackEditor(ItemStack itemStack,
+                            @Nullable Consumer<ItemMeta> metaTransform,
+                            @Nullable Consumer<ItemStack> stackTransform) {
+        this.itemStack = itemStack;
+        this.metaTransform = metaTransform;
+        this.stackTransform = stackTransform;
+    }
 
     public ItemStackEditor(ItemStack item) {
-        this.itemStack = item.clone();
+        this(item.clone(), null, null);
     }
 
     public ItemStackEditor(Material type) {
-        this.itemStack = new ItemStack(type);
+        this(new ItemStack(type));
     }
 
     public ItemStackEditor addFlags(ItemFlag... flags) {
-        return appendMetaConsumer(ItemStackUtil.appendItemFlags(flags));
+        return andMetaConsumer(ItemStackUtil.appendItemFlags(flags));
     }
 
     public ItemStackEditor setCustomModel(int data) {
-        return appendMetaConsumer(ItemStackUtil.editCustomModelData(data));
+        return andMetaConsumer(ItemStackUtil.editCustomModelData(data));
     }
 
     public ItemStackEditor setCustomModel(@Nullable Integer data) {
-        return appendMetaConsumer(ItemStackUtil.editCustomModelData(data));
+        return andMetaConsumer(ItemStackUtil.editCustomModelData(data));
     }
 
     public ItemStackEditor setAmount(int amount) {
-        return appendStackConsumer(stack -> stack.setAmount(amount));
+        return andStackConsumer(stack -> stack.setAmount(amount));
     }
 
     public ItemStackEditor setColor(Color color) {
-        return appendMetaConsumer(meta -> {
+        return andMetaConsumer(meta -> {
             if (meta instanceof LeatherArmorMeta) {
                 ((LeatherArmorMeta) meta).setColor(color);
             }
@@ -70,35 +78,33 @@ public class ItemStackEditor {
     }
 
     public ItemStackEditor setLore(List<String> list) {
-        return appendMetaConsumer(ItemStackUtil.editLore(list));
+        return andMetaConsumer(ItemStackUtil.editLore(list));
     }
 
     public ItemStackEditor setDisplayName(@Nullable String name) {
-        return appendMetaConsumer(ItemStackUtil.editDisplayName(name));
+        return andMetaConsumer(ItemStackUtil.editDisplayName(name));
     }
 
-    public ItemStackEditor appendMetaConsumer(Consumer<ItemMeta> consumer) {
+    public ItemStackEditor andMetaConsumer(Consumer<ItemMeta> consumer) {
         if (this.metaTransform == null) {
-            return setMetaConsumer(consumer);
+            return withMetaConsumer(consumer);
         }
-        return setMetaConsumer(this.metaTransform.andThen(consumer));
+        return withMetaConsumer(this.metaTransform.andThen(consumer));
     }
 
-    public ItemStackEditor setMetaConsumer(@Nullable Consumer<ItemMeta> consumer) {
-        this.metaTransform = consumer;
-        return this;
+    public ItemStackEditor withMetaConsumer(@Nullable Consumer<ItemMeta> consumer) {
+        return new ItemStackEditor(this.itemStack, consumer, this.stackTransform);
     }
 
-    public ItemStackEditor setStackConsumer(@Nullable Consumer<ItemStack> consumer) {
-        this.stackTransform = consumer;
-        return this;
+    public ItemStackEditor withStackConsumer(@Nullable Consumer<ItemStack> consumer) {
+        return new ItemStackEditor(this.itemStack, this.metaTransform, consumer);
     }
 
-    public ItemStackEditor appendStackConsumer(Consumer<ItemStack> consumer) {
+    public ItemStackEditor andStackConsumer(Consumer<ItemStack> consumer) {
         if (this.stackTransform == null) {
-            return setStackConsumer(consumer);
+            return withStackConsumer(consumer);
         }
-        return setStackConsumer(this.stackTransform.andThen(consumer));
+        return withStackConsumer(this.stackTransform.andThen(consumer));
     }
 
     public ItemStack create() {

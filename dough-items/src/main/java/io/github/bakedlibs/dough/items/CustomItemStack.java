@@ -1,6 +1,5 @@
 package io.github.bakedlibs.dough.items;
 
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,11 +17,11 @@ public final class CustomItemStack {
     }
 
     public static ItemStack create(ItemStack itemStack, Consumer<ItemMeta> metaConsumer) {
-        return new ItemStackEditor(itemStack).appendMetaConsumer(metaConsumer).create();
+        return new ItemStackEditor(itemStack).andMetaConsumer(metaConsumer).create();
     }
 
     public static ItemStack create(Material material, Consumer<ItemMeta> metaConsumer) {
-        return new ItemStackEditor(material).appendMetaConsumer(metaConsumer).create();
+        return new ItemStackEditor(material).andMetaConsumer(metaConsumer).create();
     }
 
     public static ItemStack create(ItemStack item, @Nullable String name, String... lore) {
@@ -63,7 +62,7 @@ public final class CustomItemStack {
      */
     @Deprecated(forRemoval = true)
     public static ItemStack create(ItemStack itemStack, Material type) {
-        return new ItemStackEditor(itemStack).appendStackConsumer(item -> item.setType(type)).create();
+        return new ItemStackEditor(itemStack).andStackConsumer(item -> item.setType(type)).create();
     }
 
 }
