@@ -26,6 +26,16 @@ import java.util.stream.Stream;
 
 class TestItemStackEditor {
 
+    @BeforeAll
+    public static void init() {
+        MockBukkit.mock();
+    }
+
+    @AfterAll
+    public static void teardown() {
+        MockBukkit.unmock();
+    }
+
     private static Stream<Material> itemMaterials() {
         return Arrays.stream(Material.values())
                 .filter(Predicate.not(Material::isLegacy))
@@ -46,16 +56,6 @@ class TestItemStackEditor {
 
     private static Stream<Material> leatherArmorMaterials() {
         return itemMaterials().filter(material -> getItemMeta(material) instanceof LeatherArmorMeta);
-    }
-
-    @BeforeAll
-    public static void init() {
-        MockBukkit.mock();
-    }
-
-    @AfterAll
-    public static void teardown() {
-        MockBukkit.unmock();
     }
 
     @ParameterizedTest

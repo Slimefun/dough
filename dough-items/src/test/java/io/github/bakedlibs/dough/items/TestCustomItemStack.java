@@ -29,6 +29,16 @@ import java.util.stream.Stream;
 
 class TestCustomItemStack {
 
+    @BeforeAll
+    public static void init() {
+        MockBukkit.mock();
+    }
+
+    @AfterAll
+    public static void teardown() {
+        MockBukkit.unmock();
+    }
+
     private static Stream<Material> itemMaterials() {
         return Arrays.stream(Material.values())
                 .filter(Predicate.not(Material::isLegacy))
@@ -111,16 +121,6 @@ class TestCustomItemStack {
                 lore -> CustomItemStack.create(itemStack, null, lore),
                 lore -> CustomItemStack.create(itemStack, Color.AQUA, null, lore)
         );
-    }
-
-    @BeforeAll
-    public static void init() {
-        MockBukkit.mock();
-    }
-
-    @AfterAll
-    public static void teardown() {
-        MockBukkit.unmock();
     }
 
     @Test
