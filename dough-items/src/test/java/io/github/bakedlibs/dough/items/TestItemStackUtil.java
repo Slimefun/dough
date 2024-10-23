@@ -59,7 +59,8 @@ class TestItemStackUtil {
     void testLoreAsListChangedAndSanitized() {
         List<String> lore = List.of("&btest");
         List<String> expected = lore.stream()
-                .map(s -> ChatColor.translateAlternateColorCodes('&', s)).collect(Collectors.toList());
+                .map(s -> ChatColor.translateAlternateColorCodes('&', s))
+                .collect(Collectors.toList());
         ItemMeta meta = new ItemMetaMock();
         ItemStackUtil.editLore(lore).accept(meta);
         Assertions.assertIterableEquals(expected, meta.getLore());
