@@ -92,6 +92,14 @@ public class ItemStackEditor {
         return withMetaConsumer(this.metaTransform.andThen(consumer));
     }
 
+    public <T extends ItemMeta> ItemStackEditor andMetaConsumer(Class<T> clazz, Consumer<T> consumer) {
+        return andMetaConsumer(meta -> {
+            if (clazz.isInstance(meta)) {
+                consumer.accept(clazz.cast(meta));
+            }
+        });
+    }
+
     public ItemStackEditor withMetaConsumer(@Nullable Consumer<ItemMeta> consumer) {
         return new ItemStackEditor(this.itemStack, consumer, this.stackTransform);
     }
