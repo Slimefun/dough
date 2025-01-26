@@ -6,6 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
+import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 
@@ -40,7 +41,11 @@ public class FactionsUUIDProtectionModule implements ProtectionModule {
         if (faction == null || faction.getId().equals("0")) {
             return true;
         } else {
-            return faction.getId().equals(api.getByOfflinePlayer(p).getFaction().getId());
+            FPlayer player = api.getByOfflinePlayer(p);
+            if (player.isAdminBypassing()) {
+                return true;
+            }
+            return faction.getId().equals(player.getFaction().getId());
         }
     }
 
