@@ -439,6 +439,20 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- Dominion -->
+        <dependency>
+            <groupId>cn.lunadeer</groupId>
+            <artifactId>DominionAPI</artifactId>
+            <version>4.3</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bukkit</artifactId>
+                    <groupId>*</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
 </project>
