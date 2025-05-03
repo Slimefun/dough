@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -24,19 +25,17 @@ public final class CustomItemStack {
         return new ItemStackEditor(material).andMetaConsumer(metaConsumer).create();
     }
 
-    public static ItemStack create(ItemStack item, @Nullable String name, String... lore) {
-        return new ItemStackEditor(item)
-                .setDisplayName(name)
-                .setLore(lore)
-                .create();
+    public static ItemStack create(ItemStack item, @Nullable String name, @Nullable String... lore) {
+        ItemStackEditor editor = new ItemStackEditor(item).setDisplayName(name);
+        return (lore != null) ? editor.setLore(lore).create() : editor.create();
     }
 
-    public static ItemStack create(Material material, @Nullable String name, String... lore) {
+    public static ItemStack create(Material material, @Nullable String name, @Nullable String... lore) {
         return create(new ItemStack(material), name, lore);
     }
 
-    public static ItemStack create(Material type, @Nullable String name, List<String> lore) {
-        return create(new ItemStack(type), name, lore.toArray(String[]::new));
+    public static ItemStack create(Material type, @Nullable String name, @Nullable List<String> lore) {
+        return create(new ItemStack(type), name, (lore != null) ? lore.toArray(String[]::new): null);
     }
 
 
