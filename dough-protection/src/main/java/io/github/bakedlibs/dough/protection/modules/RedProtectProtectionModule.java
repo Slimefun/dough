@@ -2,6 +2,9 @@ package io.github.bakedlibs.dough.protection.modules;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Container;
+import org.bukkit.block.data.Openable;
+import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -46,7 +49,15 @@ public class RedProtectProtectionModule implements ProtectionModule {
         Player player = (Player) p;
         switch (action) {
             case INTERACT_BLOCK:
-                return region.canChest(player);
+                if (l.getBlock() instanceof Container){
+                    return region.canChest(player);
+                }
+                if (l.getBlock().getBlockData() instanceof Powerable){
+                    return region.canButton(player) || region.canLever(player);
+                }
+                if (l.getBlock().getBlockData() instanceof Openable){
+                    return region.canDoor(player);
+                }
             case ATTACK_ENTITY:
             case INTERACT_ENTITY:
                 return region.canInteractPassives(player);
