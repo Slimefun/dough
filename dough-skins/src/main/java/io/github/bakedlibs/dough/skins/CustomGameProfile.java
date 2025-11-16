@@ -33,9 +33,10 @@ public final class CustomGameProfile extends GameProfile {
 
     private final URL skinUrl;
     private final String texture;
-
-    CustomGameProfile(@Nonnull UUID uuid, @Nullable String texture, @Nonnull URL url) {
-        super(uuid, PLAYER_NAME);
+    private final GameProfile delegate;
+    
+    public CustomGameProfile(@Nonnull UUID uuid, @Nullable String texture, @Nonnull URL url) {
+        this.delegate = new GameProfile(uuid, PLAYER_NAME);
         this.skinUrl = url;
         this.texture = texture;
 
@@ -44,24 +45,22 @@ public final class CustomGameProfile extends GameProfile {
         }
     }
 
-    void apply(@Nonnull SkullMeta meta) throws NoSuchFieldException, IllegalAccessException, UnknownServerVersionException {
-        // setOwnerProfile was added in 1.18, but getOwningPlayer throws a NullPointerException since 1.20.2
+    public void apply(@Nonnull SkullMeta meta) throws NoSuchFieldException, IllegalAccessException, UnknownServerVersionException {
         if (MinecraftVersion.get().isAtLeast(MinecraftVersion.parse("1.20"))) {
-            PlayerProfile playerProfile = Bukkit.createPlayerProfile(this.getId(), PLAYER_NAME);
+            PlayerProfile playerProfile = Bukkit.createPlayerProfile(this.delegate.getId(), PLAYER_NAME);
             PlayerTextures playerTextures = playerProfile.getTextures();
             playerTextures.setSkin(this.skinUrl);
             playerProfile.setTextures(playerTextures);
             meta.setOwnerProfile(playerProfile);
         } else {
-            // Forces SkullMeta to properly deserialize and serialize the profile
-            ReflectionUtils.setFieldValue(meta, "profile", this);
+            // Force SkullMeta to use our wrapped GameProfile
+            ReflectionUtils.setFieldValue(meta, "profile", this.delegate);
 
             meta.setOwningPlayer(meta.getOwningPlayer());
 
-            // Now override the texture again
-            ReflectionUtils.setFieldValue(meta, "profile", this);
+            // Override the texture again
+            ReflectionUtils.setFieldValue(meta, "profile", this.delegate);
         }
-
     }
 
     /**
@@ -72,5 +71,9 @@ public final class CustomGameProfile extends GameProfile {
     @Nullable
     public String getBase64Texture() {
         return this.texture;
+    }
+    
+    public GameProfile getHandle() {
+        return this.delegate;
     }
 }
