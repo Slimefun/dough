@@ -18,7 +18,7 @@ import io.github.bakedlibs.dough.versions.UnknownServerVersionException;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
-public final class CustomGameProfile extends GameProfile {
+public final class CustomGameProfile {
 
     /**
      * The player name for this profile.
