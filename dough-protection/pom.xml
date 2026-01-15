@@ -365,6 +365,20 @@
             </exclusions>
         </dependency>
 
+        <!-- NoBuildPlus -->
+        <dependency>
+            <groupId>com.github.Ez4p1xEL</groupId>
+            <artifactId>NoBuildPlus</artifactId>
+            <version>1.5.54</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>bukkit</artifactId>
+                    <groupId>*</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- FunnyGuilds -->
         <dependency>
             <groupId>net.dzikoysk.funnyguilds</groupId>

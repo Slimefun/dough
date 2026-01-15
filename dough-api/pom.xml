@@ -427,6 +427,14 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- NoBuildPlus -->
+        <dependency>
+            <groupId>com.github.Ez4p1xEL</groupId>
+            <artifactId>NoBuildPlus</artifactId>
+            <version>1.5.54</version>
+            <scope>provided</scope>
+        </dependency>
         
         <!-- ShopChest -->
         <dependency>
