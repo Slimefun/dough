@@ -171,7 +171,7 @@
         <dependency>
             <groupId>com.github.GriefPrevention</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.18.2</version>
+            <version>16.18.7</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
